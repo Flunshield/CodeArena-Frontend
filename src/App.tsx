@@ -1,11 +1,12 @@
 import './App.css'
 import Layout from './ComposantsCommun/Layout'
+import LoginPage from "./login.tsx";
 
 function App() {
 
   return (
     <Layout>
-      <p>Ici c&lsquo;ets le milieu</p>
+            <LoginPage />
     </Layout>
   )
 }

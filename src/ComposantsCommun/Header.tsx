@@ -7,7 +7,7 @@ const Header = () => {
     const [showPopup, setShowPopup] = useState(false);
     const navItems: NavRoute[] = [
         {
-            route: "/",
+            route: "/home",
             label: "Home",
             displayLink: true,
         },

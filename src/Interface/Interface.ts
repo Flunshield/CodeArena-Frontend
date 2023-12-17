@@ -4,3 +4,19 @@ export interface NavRoute {
     value?: string;
     displayLink: boolean;
 }
+
+export interface User {
+    id?: number;
+    userName: string;
+    password: string;
+    email: string;
+    emailVerified?: boolean;
+    createdAt?: Date;
+    lastLogin?: Date;
+    status?: string;
+    avatar?: string;
+    firstName?: string;
+    lastName?: string;
+    groupsId?: number;
+    languagePreference?: string;
+}
