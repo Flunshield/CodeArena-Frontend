@@ -13,6 +13,8 @@ npm install
 
 ## Section Lancement
 
+Avant de démarrer l'environnement, renommer le fichier ``env-example`` en ``.env``
+
 Pour démarrer l'environnement de développement, exécutez :
 
 ```bash

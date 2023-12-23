@@ -27,7 +27,6 @@ const useAuth = ({ accessToken }: AuthHookProps) => {
                     // Si le jeton d'accès est expiré ou non fourni, demander un nouveau jeton avec le rafraîchissement
                     const newAccessToken = await refreshAccessToken();
                     let isAccessTokenValid = undefined;
-                    console.log("newAccessToken : ", newAccessToken)
                     if(newAccessToken) {
                         isAccessTokenValid = jwtDecode(newAccessToken);
                         setAuthState({

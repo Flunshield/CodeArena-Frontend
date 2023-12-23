@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { NavRoute } from "../Interface/Interface";
+import {useAuthContext} from "../AuthContext.tsx";
 // Assurez-vous que le chemin vers le logo est correct
 
 const Header = () => {
     const [showPopup, setShowPopup] = useState(false);
+    const authContext = useAuthContext();
+    const isConnected = authContext.connected;
     const navItems: NavRoute[] = [
         {
             route: "/home",
@@ -13,8 +16,13 @@ const Header = () => {
         },
         {
             route: "/",
-            label: "PasHome",
-            displayLink: true,
+            label: "Login",
+            displayLink: !isConnected,
+        },
+        {
+            route: "/logout",
+            label: "Logout",
+            displayLink: !!isConnected,
         },
     ];
 

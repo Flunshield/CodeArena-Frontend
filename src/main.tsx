@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import {AuthContextProvider} from "./AuthContext.tsx";
 import Home from "./Pages/home.tsx";
 import PrivateRoute from "./ComposantsCommun/PrivateRoute.tsx";
+import {LogoutPage} from "./Pages/logout.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,11 @@ const router = createBrowserRouter([
     {
         path: "/home",
         element: <PrivateRoute><Home /></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/logout",
+        element: <PrivateRoute><LogoutPage /></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     }
 ])

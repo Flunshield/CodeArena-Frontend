@@ -20,3 +20,8 @@ export interface User {
     groupsId?: number;
     languagePreference?: string;
 }
+
+export interface LoginForm {
+    userName: string;
+    password: string;
+}

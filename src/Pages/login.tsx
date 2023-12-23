@@ -2,12 +2,11 @@
 
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {useAuthContext} from "./AuthContext.tsx";
+import {useAuthContext} from "../AuthContext.tsx";
+import {login} from "../Helpers/apiHelper.ts";
+import {LoginForm} from "../Interface/Interface.ts";
 
-interface LoginForm {
-    userName: string;
-    password: string;
-}
+
 
 const LoginPage: React.FC = () => {
     const [userName, setUserName] = useState('');
@@ -21,17 +20,11 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3000/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    userName,
-                    password,
-                } as LoginForm),
-            });
+            const data: LoginForm = {
+                userName: userName,
+                password: password
+            }
+            const response = await login('auth/login', data)
 
             if (response.ok) {
                 window.location.reload();
