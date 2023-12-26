@@ -11,7 +11,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
 
     // Redirigez vers la page de connexion si l'utilisateur n'est pas connecté
     if (!authContext.connected) {
-        return <Navigate to="/" />;
+        return <Navigate to="/login" />;
     }
 
     // Rendu normal si l'utilisateur est connecté

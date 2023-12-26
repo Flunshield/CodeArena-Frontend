@@ -6,21 +6,27 @@ import {AuthContextProvider} from "./AuthContext.tsx";
 import Home from "./Pages/home.tsx";
 import PrivateRoute from "./ComposantsCommun/PrivateRoute.tsx";
 import {LogoutPage} from "./Pages/logout.tsx";
+import SignUpForm from "./Pages/signUpForm.tsx";
 
 const router = createBrowserRouter([
   {
-      path: "/",
+      path: "/login",
       element: <App/>,
       errorElement: "<ErrorPage/>",
   },
     {
-        path: "/home",
-        element: <PrivateRoute><Home /></PrivateRoute>,
+        path: "/",
+        element: <Home />,
         errorElement: "<ErrorPage/>"
     },
     {
         path: "/logout",
         element: <PrivateRoute><LogoutPage /></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/signUp",
+        element: <SignUpForm />,
         errorElement: "<ErrorPage/>"
     }
 ])

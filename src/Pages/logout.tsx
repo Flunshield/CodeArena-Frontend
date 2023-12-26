@@ -26,8 +26,7 @@ export const LogoutPage: React.FC = () => {
             navigate("/");
         }
         if(isConnected) {
-            logoutFunction().then(() =>
-                console.log("isConnected : ", isConnected));
+            logoutFunction();
         }
     }, [isConnected]);
 

@@ -1,6 +1,6 @@
 // api.ts
 
-import {LoginForm} from "../Interface/Interface.ts";
+import {LoginForm, User} from "../Interface/Interface.ts";
 
 const API_BASE_URL: string = import.meta.env.VITE_API_URL;
 
@@ -41,7 +41,7 @@ export const login = async (endpoint: string, data: LoginForm) => {
     });
 }
 
-export const logout= async (endpoint: string) => {
+export const logout = async (endpoint: string) => {
 
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
@@ -52,4 +52,19 @@ export const logout= async (endpoint: string) => {
     });
 }
 
+export const createUser = async (endpoint: string, data: User) => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            userName: data.userName,
+            password: data.password,
+            email: data.email
+        }),
+    });
+}
 // Ajoutez d'autres fonctions de requête selon vos besoins

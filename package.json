@@ -15,7 +15,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.2",
+    "formik": "^2.4.5",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
@@ -26,8 +28,8 @@
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.5",
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
     "@vitejs/plugin-react": "^4.0.3",

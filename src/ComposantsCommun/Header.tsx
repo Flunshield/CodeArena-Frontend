@@ -10,12 +10,12 @@ const Header = () => {
     const isConnected = authContext.connected;
     const navItems: NavRoute[] = [
         {
-            route: "/home",
+            route: "/",
             label: "Home",
             displayLink: true,
         },
         {
-            route: "/",
+            route: "/login",
             label: "Login",
             displayLink: !isConnected,
         },

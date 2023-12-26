@@ -36,7 +36,7 @@ const LoginPage: React.FC = () => {
     };
     useEffect(() => {
         if(isConnected) {
-            navigate("/home");
+            navigate("/");
         }
     }, [isConnected]);
 
@@ -67,6 +67,7 @@ const LoginPage: React.FC = () => {
                             <br/>
                             <button type="submit">Se connecter</button>
                         </form>
+                        <a href={"/signUp"}>Créer un compte</a>
                     </div>
             }
             {isConnected &&
