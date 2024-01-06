@@ -1,5 +1,4 @@
 import React from "react";
-import '../StyleCss/Card.css';
 
 interface CardContentProps {
     className?: string;

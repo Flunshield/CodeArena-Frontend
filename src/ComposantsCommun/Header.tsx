@@ -1,60 +1,54 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { NavRoute } from "../Interface/Interface";
+import {useNavigate} from "react-router-dom";
 import {useAuthContext} from "../AuthContext.tsx";
+import Button from "./Button.tsx";
+import {useTranslation} from "react-i18next";
+import {useEffect, useState} from "react";
+import {changeLanguage} from "../i18n.ts";
 // Assurez-vous que le chemin vers le logo est correct
 
 const Header = () => {
-    const [showPopup, setShowPopup] = useState(false);
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
-    const navItems: NavRoute[] = [
-        {
-            route: "/",
-            label: "Home",
-            displayLink: true,
-        },
-        {
-            route: "/login",
-            label: "Login",
-            displayLink: !isConnected,
-        },
-        {
-            route: "/logout",
-            label: "Logout",
-            displayLink: !!isConnected,
-        },
-    ];
+    const navigate = useNavigate();
+    const { t } = useTranslation();
 
-    const NavList = () => (
-        <ul className="flex flex-row">
-            {navItems.map((item) => item.displayLink && (
-                <li key={item.route} className="mr-2">
-                    <Link to={item.route} onClick={() => setShowPopup(false)}>
-                        {item.label}
-                    </Link>
-                </li>
-            ))}
-        </ul>
-    );
+    const handleClickSingIn = () => {
+        navigate("/login");
+    }
+    const handleClickSingUp = () => {
+        navigate("/register");
+    }
+
+
+    // Exemple de code pour changer la langue
+    // DEBUT
+    const [lang, setLang] = useState("fr"); // Définissez la langue par défaut
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const handleChangeLanguage = (language: string) => {
+        setLang(language);
+    };
+
+    useEffect(() => {
+        changeLanguage(lang);
+    }, [lang]);
+
+    //FIN
 
     return (
         <header>
-            <div>
-                <p>header</p>
-                {/* <div>
-                    <Link to="/">
-                        <img src={"logo"} alt="logo" />
-                    </Link>
-                </div> */}
-
-                {showPopup ? (
-                    <div className="fixed top-14 right-0 bg-black p-2 rounded shadow">
-                        <NavList />
+            <div className="absolute top-0 left-0 w-full h-full">
+                {/* Si l'utilisateur n'est pas connecté */}
+                {!isConnected &&
+                <div className="flex start-0 justify-between">
+                    <h1 className="text-white text-2xl m-3 font-bold">CodeArena</h1>
+                    <div className="flex items-baseline">
+                        <Button type="button" id="signIn" className="border-1 text-white text-1xl m-3" onClick={handleClickSingIn}> {t('connection')} </Button>
+                        <Button type="button" id="signUp"
+                                className="border-1 text-white text-1xl m-3 border-2 border-white rounded-md p-1" onClick={handleClickSingUp}> {t('inscription')} </Button>
                     </div>
-                ) : (
-                    <NavList />
-                )}
+                </div>
+                }
             </div>
         </header>
     );

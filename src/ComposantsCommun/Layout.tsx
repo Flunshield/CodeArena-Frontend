@@ -1,16 +1,19 @@
 import {ReactNode} from 'react';
-import Header from '../ComposantsCommun/Header';
 import Footer from '../ComposantsCommun/Footer';
+import Header from "./Header.tsx";
+
 
 type LayoutProps = {
     children: ReactNode
 }
 
 const Layout = ({children}: LayoutProps) => {
+    //const authContext = useAuthContext();
+
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen m-0 w-100 bg-primary">
             <Header/>
-            <main className="flex-grow m-5">
+            <main className="flex-grow">
                 {children}
             </main>
             <Footer/>

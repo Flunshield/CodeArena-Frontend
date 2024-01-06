@@ -18,11 +18,14 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.2",
     "formik": "^2.4.5",
+    "i18next": "^23.7.16",
+    "i18next-http-backend": "^2.4.2",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^14.0.0",
     "react-router-dom": "^6.18.0"
   },
   "devDependencies": {

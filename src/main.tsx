@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import {AuthContextProvider} from "./AuthContext.tsx";
@@ -7,11 +6,14 @@ import Home from "./Pages/home.tsx";
 import PrivateRoute from "./ComposantsCommun/PrivateRoute.tsx";
 import {LogoutPage} from "./Pages/logout.tsx";
 import SignUpForm from "./Pages/signUpForm.tsx";
+import Login from "./Pages/login.tsx";
+import {I18nextProvider} from "react-i18next";
+import i18n from "./i18n.ts";
 
 const router = createBrowserRouter([
   {
       path: "/login",
-      element: <App/>,
+      element: <Login/>,
       errorElement: "<ErrorPage/>",
   },
     {
@@ -32,7 +34,10 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+    <I18nextProvider i18n={i18n}>
     <AuthContextProvider>
+
         <RouterProvider router={router}/>
     </AuthContextProvider>
+    </I18nextProvider>
 )
