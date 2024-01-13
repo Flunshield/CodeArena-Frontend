@@ -11,7 +11,7 @@ const Layout = ({children}: LayoutProps) => {
     //const authContext = useAuthContext();
 
     return (
-        <div className="flex flex-col min-h-screen m-0 w-100 bg-primary">
+        <div className="flex flex-col min-h-screen m-0 w-100">
             <Header/>
             <main className="flex-grow">
                 {children}

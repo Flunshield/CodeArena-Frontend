@@ -11,12 +11,13 @@
     "cypress:run": "cypress run",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
-    "test": "npx cypress run --spec ./cypress/test-integration/**/*.cy.ts",
+    "test": "npx cypress run --spec ./cypress/e2e/TestUnitaire/*.cy.ts",
     "prepare": "husky install"
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.2",
+    "clsx": "^2.1.0",
     "formik": "^2.4.5",
     "i18next": "^23.7.16",
     "i18next-http-backend": "^2.4.2",

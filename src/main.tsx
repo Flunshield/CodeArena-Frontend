@@ -9,6 +9,8 @@ import SignUpForm from "./Pages/signUpForm.tsx";
 import Login from "./Pages/login.tsx";
 import {I18nextProvider} from "react-i18next";
 import i18n from "./i18n.ts";
+import ForgotPassword from "./Pages/ForgotPassword.tsx";
+import ChangePassword from "./Pages/changePassword.tsx";
 
 const router = createBrowserRouter([
   {
@@ -30,14 +32,23 @@ const router = createBrowserRouter([
         path: "/signUp",
         element: <SignUpForm />,
         errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/forgotPassword",
+        element: <ForgotPassword />,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/changePassword",
+        element: <ChangePassword />,
+        errorElement: "<ErrorPage/>"
     }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18n}>
-    <AuthContextProvider>
-
-        <RouterProvider router={router}/>
-    </AuthContextProvider>
+        <AuthContextProvider>
+            <RouterProvider router={router}/>
+        </AuthContextProvider>
     </I18nextProvider>
 )

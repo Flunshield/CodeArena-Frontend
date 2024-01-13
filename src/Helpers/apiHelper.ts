@@ -67,4 +67,31 @@ export const createUser = async (endpoint: string, data: User) => {
         }),
     });
 }
-// Ajoutez d'autres fonctions de requête selon vos besoins
+
+export const forgotPassword = async (endpoint: string, email: string) => {
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            email: email
+        }),
+    });
+}
+
+export const changePassword = async (endpoint: string, data: LoginForm) => {
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data.token}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            userName: data.userName,
+            password: data.password
+        }),
+    });
+}

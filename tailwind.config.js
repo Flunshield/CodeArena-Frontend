@@ -27,9 +27,9 @@ export default {
       colors: {
         primary: '#0D1117',
         secondary: '#30363D',
-        tertiari: '#848D97',
+        tertiari: '#E3E8EF',
         quaternary: '#0F1319',
-        kinderBuenoWhite: '#FFFFEE'
+        error: '#de2916'
       },
     },
   },
