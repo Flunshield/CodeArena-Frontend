@@ -26,3 +26,10 @@ export interface LoginForm {
     password: string;
     token?: string
 }
+
+export interface NavFlags {
+    value: string;
+    displayLink: boolean;
+    src?: string;
+    alt?: string;
+}
