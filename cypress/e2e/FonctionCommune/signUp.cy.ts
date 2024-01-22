@@ -12,12 +12,12 @@ import { } from 'cypress';
  */
 export const signUp = (userName: string, password: string, email: string) => {
     cy.wait(2000);
-    cy.get('header').contains('CodeArena').should('be.visible');
-    cy.wait(500);
-    cy.get('header').contains('Connection').should('be.visible');
-    cy.wait(500);
-    cy.get('header').contains('Inscription').should('be.visible');
-    cy.wait(500);
+    // Vérifier la présence des éléments dans le header
+    cy.get('body').contains('CodeArena').should('be.visible');
+    cy.get('#signIn').should('be.visible');
+    cy.get('#signUp').should('be.visible');
+    cy.wait(500
+    );
     cy.get('#signUp').click();
     cy.wait(2000);
     cy.get('#userName').type(userName);

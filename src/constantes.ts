@@ -1,0 +1,1 @@
+export const MAIL = "contact@codearena.fr"
