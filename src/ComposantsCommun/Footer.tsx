@@ -60,11 +60,13 @@ const Footer: React.FC<FooterProps> = () => {
                   <p className="mt-2 hover:underline"><a href="">{t('partenaire')}</a></p>
               </div>
               <div className="flex-col mt-5">
-                  <p className="font-bold text-2xl">{t('contact')}</p>
-                  <p className="mt-5 flex justify-between"><img src={iconeMail} alt="icone de mail"/>{MAIL}</p>
-                  <p className="mt-10 hover:underline"><a href="">{t('politiqueConfidentialite')}</a></p>
-                  <p className="mt-2 hover:underline"><a href="">{t('mentionLegal')}</a></p>
-                  <p className="mt-2 hover:underline"><a href="">{t('cgv')}</a></p>
+                  <ul>
+                  <li className="font-bold text-2xl">{t('contact')}</li>
+                  <li className="mt-5 flex justify-between"><img src={iconeMail} alt="icone de mail"/>{MAIL}</li>
+                  <li className="mt-10 hover:underline"><a href="">{t('politiqueConfidentialite')}</a></li>
+                  <li className="mt-2 hover:underline"><a href="">{t('mentionLegal')}</a></li>
+                  <li className="mt-2 hover:underline"><a href="">{t('cgv')}</a></li>
+                  </ul>
               </div>
               <div className="flex-col mt-5">
                   <p className="font-bold text-2xl">{t('retrouverNous')}</p>

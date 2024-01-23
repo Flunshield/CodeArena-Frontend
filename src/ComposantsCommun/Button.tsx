@@ -18,7 +18,7 @@ const Button = ({
                     disabled = false, // Valeur par défaut est false
                 }: ButtonProps) => {
     return (
-        <div className="button-container">
+        <div>
             <button
                 id={id}
                 type={type}

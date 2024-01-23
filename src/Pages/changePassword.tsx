@@ -111,6 +111,7 @@ const ChangePassword: React.FC = () => {
                     className="bg-primary ml-auto"
                     src={tree}
                     alt="arbre design"
+                    id="arbre"
                 />
             </div>
         </Layout>

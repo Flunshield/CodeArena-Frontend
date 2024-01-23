@@ -24,6 +24,7 @@ function Home() {
                     className="bg-primary"
                     src={tree}
                     alt="arbre design"
+                    id="arbre"
                 />
             </div>
         </Layout>
