@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
     const [errorUserName, setErrorUsername] = useState<boolean | null>(false)
     const [errorPassword, setErrorPassword] = useState<boolean | null>(false)
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
@@ -35,7 +35,7 @@ const LoginPage: React.FC = () => {
                 password: password
             }
 
-            if(userName && password) {
+            if (userName && password) {
                 setErrorUsername(false)
                 setErrorPassword(false)
                 const response = await login('auth/login', data)
@@ -53,7 +53,7 @@ const LoginPage: React.FC = () => {
                 setErrorUsername(true)
                 setErrorPassword(false)
                 setError(t('ndcMandatory'));
-            } else if(password === "") {
+            } else if (password === "") {
                 setErrorPassword(true)
                 setErrorUsername(false)
                 setError(t('mdpMandatory'));
@@ -65,7 +65,7 @@ const LoginPage: React.FC = () => {
     };
     useEffect(() => {
         if (isConnected) {
-            navigate("/");
+            navigate("/dashboard");
         }
     }, [isConnected]);
 
@@ -79,8 +79,9 @@ const LoginPage: React.FC = () => {
                                 <CardContent className="bg-tertiari text-white w-96 pb-6 pt-6">
                                     <div className="mt-2 mb-2">
                                         <div className="flex flex-col mb-5 text-center font-bold">
-                                        <p id="titleConnect" className="text-3xl text-primary">{t('signIntoCodeArena')}</p>
-                                        {error && <p className="text-error mt-2">{error}</p>}
+                                            <p id="titleConnect"
+                                               className="text-3xl text-primary">{t('signIntoCodeArena')}</p>
+                                            {error && <p className="text-error mt-2">{error}</p>}
                                         </div>
                                         <form onSubmit={handleSubmit} className="pr-12 pl-12">
                                             <Label id={"userName"} className="flex flex-col font-bold text-primary">
@@ -113,7 +114,7 @@ const LoginPage: React.FC = () => {
                                                     {t('connect')}
                                                 </Button>
                                                 <div className="flex flex-col mt-5">
-                                                    <a href="/forgotPassword"
+                                                    <a href="/src/Pages/forgotPassword"
                                                        className="text-center text-primary">{t('forgotPassword')}</a>
                                                     <a href="/signUp"
                                                        className="text-center text-primary">{t('register')}</a>
