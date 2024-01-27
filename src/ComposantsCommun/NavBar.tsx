@@ -4,7 +4,7 @@ import iconeMenu from "../assets/menu.png";
 import btnClose from "../assets/btnClose.png";
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.svg";
 import chat from "../assets/chat.png";
 import event from "../assets/event.png";
 import tournois from "../assets/tournois.png";
@@ -69,38 +69,32 @@ const NavBar = () => {
                             <li className="mt-5 ml-3 flex flex-row" id="link-dashboard">
                                 <img src={dashboard} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
                                 <a href="/dashboard" className="p-4" id="click-dashboard">
-                                    {t("home")}
-                                </a>
+                                    {t("home")}</a>
                             </li>
                             <li className="ml-3 flex flex-row" id="link-ranked">
                                 <img src={ranked} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
                                 <a href="#" className="p-4" id="click-ranked">
-                                    {t("ranked")}
-                                </a>
+                                    {t("ranked")}</a>
                             </li>
                             <li className="ml-3 flex flex-row" id="link-ranking">
                                 <img src={classement} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
                                 <a href="#" className="p-4" id="click-ranking">
-                                    {t("ranking")}
-                                </a>
+                                    {t("ranking")}</a>
                             </li>
                             <li className="ml-3 flex flex-row" id="link-tournaments">
                                 <img src={tournois} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
                                 <a href="#" className="p-4" id="click-tournaments">
-                                    {t("tournaments")}
-                                </a>
+                                    {t("tournaments")}</a>
                             </li>
                             <li className="ml-3 flex flex-row" id="link-event">
                                 <img src={event} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
                                 <a href="#" className="p-4" id="click-event">
-                                    {t("event")}
-                                </a>
+                                    {t("event")}</a>
                             </li>
-                            <li className="ml-3 flex flex-row" id="link-community">
+                            <li className="ml-3 flex flex-row" id="link-myAccount">
                                 <img src={chat} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="#" className="p-4" id="click-community">
-                                    {t("community")}
-                                </a>
+                                <a href="/myAccount" className="p-4" id="click-myAccount">
+                                    {t("myAccount")}</a>
                             </li>
                         </ul>
                     </nav>

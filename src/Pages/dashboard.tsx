@@ -13,7 +13,6 @@ function Dashboard() {
     const [infosUserRank, setInfosUserRank] = useState<userRangList>()
     const [infosTournament, setInfosTournament] = useState<Tournament>()
     const [infosEvents, setInfosEvents] = useState<Event[]>()
-
     const infosUser = authContext?.infosUser as JwtPayload
     const userId = infosUser?.sub as unknown as number
 

@@ -10,7 +10,6 @@ import NavBar from "./NavBar.tsx";
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-
     const handleClickSingIn = () => {
         navigate("/login");
     };

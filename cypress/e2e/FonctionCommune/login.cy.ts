@@ -39,7 +39,6 @@ export const login = (userName: string, password: string): Cypress.Chainable<boo
     // Attendre la fin de l'interception de la réponse du serveur
     return cy.wait('@getLoginRetour').then((interception) => {
         const statusCode = interception.response?.statusCode;
-        console.log('Statut de la réponse :', statusCode);
 
         if (statusCode === 403) {
             signUp(userName, password, userName + "@gmail.com")

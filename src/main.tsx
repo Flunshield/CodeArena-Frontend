@@ -12,6 +12,7 @@ import i18n from "./i18n.ts";
 import ForgotPassword from "./Pages/forgotPassword.tsx";
 import ChangePassword from "./Pages/changePassword.tsx";
 import Dashboard from "./Pages/dashboard.tsx";
+import MyAccount from "./Pages/myAccount.tsx";
 
 const router = createBrowserRouter([
     {
@@ -47,6 +48,11 @@ const router = createBrowserRouter([
     {
         path: "/dashboard",
         element: <PrivateRoute><Dashboard/></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/myAccount",
+        element: <PrivateRoute><MyAccount/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     }
 ])

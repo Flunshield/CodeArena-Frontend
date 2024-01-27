@@ -1,6 +1,6 @@
 // api.ts
 
-import {LoginForm, shortUser, UserRanking} from "../Interface/Interface.ts";
+import {LoginForm, shortUser, User, UserRanking} from "../Interface/Interface.ts";
 
 const API_BASE_URL: string = import.meta.env.VITE_API_URL;
 
@@ -83,3 +83,20 @@ export const infosDashboardRequest = async (endpoint?: string, data?: UserRankin
         credentials: 'include'
     });
 }
+
+export const updateUser = async (endpoint?: string, data?: User) => {
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            userName: data?.userName,
+            id: data?.id,
+            avatar: data?.avatar,
+            presentation: data?.presentation,
+        }),
+        credentials: 'include'
+    });
+};

@@ -7,8 +7,9 @@ export interface NavRoute {
 
 export interface User {
     id?: number;
+    token?: string;
     userName: string;
-    email: string;
+    email?: string;
     emailVerified?: boolean;
     createdAt?: Date;
     lastLogin?: Date;
@@ -25,6 +26,7 @@ export interface User {
     url?: string;
     school?: string;
     github?: string;
+    presentation?: string;
     userRanking?: UserRanking;
 }
 

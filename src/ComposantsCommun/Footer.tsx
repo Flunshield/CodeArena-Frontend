@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo.svg';
 import iconeMail from '../assets/iconeMail.png';
 import {useTranslation} from "react-i18next";
 import {MAIL} from "../constantes.ts";
