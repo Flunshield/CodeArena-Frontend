@@ -24,7 +24,7 @@ describe('Test du dashboard', () => {
         cy.get('#link-ranking').should('be.visible');
         cy.get('#link-tournaments').should('be.visible');
         cy.get('#link-event').should('be.visible');
-        cy.get('#link-community').should('be.visible');
+        cy.get('#link-myAccount').should('be.visible');
         cy.wait(500);
 
         cy.get('#click-dashboard').click();

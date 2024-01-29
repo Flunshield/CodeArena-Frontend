@@ -114,7 +114,7 @@ const LoginPage: React.FC = () => {
                                                     {t('connect')}
                                                 </Button>
                                                 <div className="flex flex-col mt-5">
-                                                    <a href="/src/Pages/forgotPassword"
+                                                    <a href="/forgotPassword"
                                                        className="text-center text-primary">{t('forgotPassword')}</a>
                                                     <a href="/signUp"
                                                        className="text-center text-primary">{t('register')}</a>

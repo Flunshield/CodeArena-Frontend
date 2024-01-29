@@ -22,7 +22,7 @@ function TableauEvent(value: TableauEventProps) {
                 <CardContent key={index} className="bg-secondary text-white border-2 rounded-lg m-5">
                     <p className="text-3xl font-bold mb-10">{item.title}</p>
                     <p className="text-xl mb-5"><span
-                        className="font-bold">{t("date")} </span>{formatDate(item.startDate, t)}</p>
+                        className="font-bold">{t("date")}</span>{formatDate(item.startDate, t)}</p>
                     <p className="text-xl mb-2"><span
                         className="font-bold">Le nombre de joueurs maximum : </span>{item.playerMax}</p>
                     <p className="text-gray-300">{item.description}</p>

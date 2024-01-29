@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {jwtDecode, JwtPayload} from 'jwt-decode';
+import { useEffect, useState } from 'react';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 export interface AuthHookProps {
     accessToken?: string | undefined;
@@ -9,33 +9,42 @@ export interface AuthHookProps {
 }
 
 const useAuth = ({ accessToken }: AuthHookProps) => {
-    const [authState, setAuthState] = useState<AuthHookProps | null>();
+    const [authState, setAuthState] = useState<AuthHookProps | null>(() => {
+        // Charger les données depuis localStorage lors du montage du composant
+        const storedAuthState = localStorage.getItem('authState');
+        return storedAuthState ? JSON.parse(storedAuthState) : null;
+    });
 
     const fetchData = async (): Promise<void> => {
+        try {
             // Vérifier si le jeton d'accès est expiré ou valide
-            let isAccessTokenValid: string | JwtPayload = "";
-            if(accessToken) {
+            let isAccessTokenValid: string | JwtPayload = '';
+            if (accessToken) {
                 isAccessTokenValid = jwtDecode(accessToken);
             }
+
             if (isAccessTokenValid) {
                 setAuthState({
                     accessToken: accessToken,
                     infosUser: isAccessTokenValid,
-                    connected: true
+                    connected: true,
                 });
             } else {
-                    // Si le jeton d'accès est expiré ou non fourni, demander un nouveau jeton avec le rafraîchissement
-                    const newAccessToken = await refreshAccessToken();
-                    let isAccessTokenValid = undefined;
-                    if(newAccessToken) {
-                        isAccessTokenValid = jwtDecode(newAccessToken);
-                        setAuthState({
-                            infosUser: isAccessTokenValid,
-                            accessToken: newAccessToken,
-                            connected: true
-                        });
-                    }
+                // Si le jeton d'accès est expiré ou non fourni, demander un nouveau jeton avec le rafraîchissement
+                const newAccessToken = await refreshAccessToken();
+                let isAccessTokenValid = undefined;
+                if (newAccessToken) {
+                    isAccessTokenValid = jwtDecode(newAccessToken);
+                    setAuthState({
+                        infosUser: isAccessTokenValid,
+                        accessToken: newAccessToken,
+                        connected: true,
+                    });
+                }
             }
+        } catch (error) {
+            console.error('Erreur lors du chargement des données d\'authentification', error);
+        }
     };
 
     const refreshAccessToken = async (): Promise<string> => {
@@ -50,7 +59,7 @@ const useAuth = ({ accessToken }: AuthHookProps) => {
             });
 
             if (!response.ok) {
-                return "";
+                return '';
             }
 
             const data = await response.json();
@@ -63,7 +72,12 @@ const useAuth = ({ accessToken }: AuthHookProps) => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [accessToken]); // Déclencher le chargement lorsque le jeton d'accès change
+
+    // Effet pour sauvegarder les données dans localStorage lorsqu'elles changent
+    useEffect(() => {
+        localStorage.setItem('authState', JSON.stringify(authState));
+    }, [authState]);
 
     return authState;
 };

@@ -8,7 +8,6 @@ interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
     const authContext = useAuthContext();
-
     // Redirigez vers la page de connexion si l'utilisateur n'est pas connecté
     if (!authContext.connected) {
         return <Navigate to="/login" />;

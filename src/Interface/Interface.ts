@@ -1,14 +1,8 @@
-export interface NavRoute {
-    route: string;
-    label?: string;
-    value?: string;
-    displayLink: boolean;
-}
-
 export interface User {
     id?: number;
-    userName: string;
-    email: string;
+    token?: string;
+    userName?: string;
+    email?: string;
     emailVerified?: boolean;
     createdAt?: Date;
     lastLogin?: Date;
@@ -19,13 +13,51 @@ export interface User {
     groupsId?: number;
     languagePreference?: string;
     localisation?: string;
-    titles?: string;
+    titlesId?: number;
+    titles?: Titles;
+    data?: string[];
     badges?: string;
     company?: string;
     url?: string;
     school?: string;
     github?: string;
+    presentation?: string;
     userRanking?: UserRanking;
+}
+
+export interface DataToken {
+    data: {
+        id?: number;
+        token?: string;
+        userName?: string;
+        email?: string;
+        emailVerified?: boolean;
+        createdAt?: Date;
+        lastLogin?: Date;
+        status?: string;
+        avatar?: string;
+        firstName?: string;
+        lastName?: string;
+        groupsId?: number;
+        languagePreference?: string;
+        localisation?: string;
+        titlesId?: number;
+        titles?: Titles;
+        titlesWin?: string[];
+        badgesWin?: string[];
+        company?: string;
+        url?: string;
+        school?: string;
+        github?: string;
+        presentation?: string;
+        userRanking?: UserRanking;
+    }
+}
+
+export interface Titles {
+    id: number;
+    value: string;
+    label: string;
 }
 
 export interface shortUser {
@@ -35,7 +67,7 @@ export interface shortUser {
     id?: number;
     firstName?: string;
     lastName?: string;
-  }
+}
 
 export interface LoginForm {
     userName: string;
@@ -60,7 +92,7 @@ export interface Tournament {
     displayStartDate?: string,
 }
 
-export interface UserRanking extends request{
+export interface UserRanking extends request {
     id?: number;
     userID?: User;
     user?: User;

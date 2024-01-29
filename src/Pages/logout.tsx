@@ -13,6 +13,8 @@ export const LogoutPage: React.FC = () => {
             const response = await logout('auth/logout')
 
             if (response.ok) {
+                //On n'oublie pas de supprimer notre localStorage et de recharger la page
+                localStorage.removeItem('authState');
                 window.location.reload();
             }
         } catch (error) {
