@@ -4,20 +4,19 @@ import {updateUser} from "../../Helpers/apiHelper.ts";
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
-import {User} from "../../Interface/Interface.ts";
+import {DataToken} from "../../Interface/Interface.ts";
 import clsx from "clsx";
 
 interface ProfilePictureProps {
     classname?: string;
 }
+
 function ProfilePicture(value: ProfilePictureProps) {
     const {t} = useTranslation();
     const authContext = useAuthContext();
-
-
     // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
     const infosUser = authContext?.infosUser as JwtPayload
-    const infos = infosUser.aud as unknown as User
+    const infos = infosUser.aud as unknown as DataToken
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isPictureClicked, setIsPictureClicked] = useState("");
 
@@ -27,8 +26,8 @@ function ProfilePicture(value: ProfilePictureProps) {
 
     const closePopup = async () => {
         const response = await updateUser("user/updateUser", {
-            id: infos.id,
-            userName: infos.userName,
+            id: infos.data.id,
+            userName: infos.data.userName,
             token: authContext.accessToken,
             avatar: `src/assets/photosProfiles/${isPictureClicked}`
         });
@@ -60,14 +59,14 @@ function ProfilePicture(value: ProfilePictureProps) {
     };
 
     return (
-        <div className={clsx(value.classname, "relative")}>
-            <img className="rounded-full w-48 h-48 border-2 border-white"
-                 src={isPictureClicked !== "" ? `src/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "noImage.png"}` : infos.avatar}
+        <div className={clsx(value.classname)}>
+            <img className="rounded-full w-48 h-48 border-2 border-white ml-32 mr-16 mb-10 md:ml-80 lg:ml-28"
+                 src={isPictureClicked !== "" ? `src/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "noImage.png"}` : infos.data.avatar}
                  alt="Avatar"
                  onClick={openPopup}/>
             {isPopupOpen && (
                 <div
-                    className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                    className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-90">
                     <div className="bg-secondary p-8 rounded-md flex flex-col">
                         <div className="flex flex-wrap w-96">
                             {imagePaths.map((path) => (

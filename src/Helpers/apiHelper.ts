@@ -85,6 +85,7 @@ export const infosDashboardRequest = async (endpoint?: string, data?: UserRankin
 }
 
 export const updateUser = async (endpoint?: string, data?: User) => {
+
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'PATCH',
         headers: {
@@ -96,7 +97,39 @@ export const updateUser = async (endpoint?: string, data?: User) => {
             id: data?.id,
             avatar: data?.avatar,
             presentation: data?.presentation,
+            localisation: data?.localisation,
+            company: data?.company,
+            school: data?.school,
+            github: data?.github,
+            url: data?.url,
+            titles: data?.titles,
+            lastName: data?.lastName,
+            firstName: data?.firstName,
+            titlesId: data?.titlesId as number,
         }),
         credentials: 'include'
     });
 };
+
+export const getTitles = async (endpoint: string, data: { token: string }): Promise<Response> => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${data.token}`,
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('La requête a échoué');
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Erreur lors de la requête', error);
+        throw error;
+    }
+};
+
