@@ -1,30 +1,8 @@
 // api.ts
 
-import {LoginForm, User} from "../Interface/Interface.ts";
+import {LoginForm, shortUser, User, UserRanking} from "../Interface/Interface.ts";
 
 const API_BASE_URL: string = import.meta.env.VITE_API_URL;
-
-export const apiGet = async (endpoint: string) => {
-    const response = await fetch(`${API_BASE_URL}/${endpoint}`);
-    if (!response.ok) {
-        throw new Error('Erreur lors de la requête');
-    }
-    return response.json();
-};
-
-export const apiPost = async (endpoint: string) => {
-    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-    });
-    if (!response.ok) {
-        throw new Error('Erreur lors de la requête');
-    }
-    return response.json();
-};
 
 export const login = async (endpoint: string, data: LoginForm) => {
 
@@ -52,8 +30,7 @@ export const logout = async (endpoint: string) => {
     });
 }
 
-export const createUser = async (endpoint: string, data: User) => {
-
+export const createUser = async (endpoint: string, data: shortUser) => {
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
         headers: {
@@ -95,3 +72,64 @@ export const changePassword = async (endpoint: string, data: LoginForm) => {
         }),
     });
 }
+
+export const infosDashboardRequest = async (endpoint?: string, data?: UserRanking) => {
+    return await fetch(`${API_BASE_URL}/${endpoint}?id=${data?.id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        credentials: 'include'
+    });
+}
+
+export const updateUser = async (endpoint?: string, data?: User) => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            userName: data?.userName,
+            id: data?.id,
+            avatar: data?.avatar,
+            presentation: data?.presentation,
+            localisation: data?.localisation,
+            company: data?.company,
+            school: data?.school,
+            github: data?.github,
+            url: data?.url,
+            titles: data?.titles,
+            lastName: data?.lastName,
+            firstName: data?.firstName,
+            titlesId: data?.titlesId as number,
+        }),
+        credentials: 'include'
+    });
+};
+
+export const getTitles = async (endpoint: string, data: { token: string }): Promise<Response> => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${data.token}`,
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('La requête a échoué');
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Erreur lors de la requête', error);
+        throw error;
+    }
+};
+
