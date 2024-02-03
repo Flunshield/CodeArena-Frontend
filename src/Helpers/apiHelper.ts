@@ -133,3 +133,25 @@ export const getTitles = async (endpoint: string, data: { token: string }): Prom
     }
 };
 
+export const getUserRanking = async (endpoint: string, data: { token: string, username?: string }): Promise<Response> => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/${endpoint}?userName=${data.username}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${data.token}`,
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('La requête a échoué');
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Erreur lors de la requête', error);
+        throw error;
+    }
+};
+
