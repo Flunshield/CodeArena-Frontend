@@ -100,7 +100,7 @@ const NavBar = () => {
                             </li>
                             <li className={clsx(currentPage === "myAccount" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-myAccount">
                                 <img src={chat} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/src/Pages/myAccount" className="p-4 hover:underline" id="click-myAccount">
+                                <a href="/myAccount" className="p-4 hover:underline" id="click-myAccount">
                                     {t("myAccount")}</a>
                             </li>
                         </ul>
