@@ -21,7 +21,7 @@ const ForgotPassword: React.FC = () => {
 
     const navigate = useNavigate();
     const error: string = "";
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const handleSubmit = async (value: SignUpFormValues) => {
         await forgotPassword('auth/forgotPassWord', value.email)
@@ -42,7 +42,7 @@ const ForgotPassword: React.FC = () => {
                                         {error && <p className="text-error mt-2">{error}</p>}
                                     </div>
                                     <Formik
-                                        initialValues={{email: ''}}
+                                        initialValues={{ email: ''}}
                                         validate={(values) => {
                                             const errors: Partial<SignUpFormValues> = {};
                                             if (!values.email) {
