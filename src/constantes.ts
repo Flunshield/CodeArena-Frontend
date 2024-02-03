@@ -22,3 +22,5 @@ export const badgesPath: string[] = [
     'badge8.png',
     'badge9.png'
 ];
+
+export const NO_PHOTO = "src/assets/photosProfiles/noImage.png"
