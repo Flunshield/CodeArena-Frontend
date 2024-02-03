@@ -85,7 +85,7 @@ const NavBar = () => {
                             </li>
                             <li className={clsx(currentPage === "ranking" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-ranking">
                                 <img src={classement} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="#" className="p-4 hover:underline" id="click-ranking">
+                                <a href="/ranking" className="p-4 hover:underline" id="click-ranking">
                                     {t("ranking")}</a>
                             </li>
                             <li className={clsx(currentPage === "tournaments" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-tournaments">

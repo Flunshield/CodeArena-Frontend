@@ -13,6 +13,7 @@ import ForgotPassword from "./Pages/forgotPassword.tsx";
 import ChangePassword from "./Pages/changePassword.tsx";
 import Dashboard from "./Pages/dashboard.tsx";
 import MyAccount from "./Pages/myAccount.tsx";
+import Classement from "./Pages/classement.tsx";
 
 const router = createBrowserRouter([
     {
@@ -54,7 +55,12 @@ const router = createBrowserRouter([
         path: "/myAccount",
         element: <PrivateRoute><MyAccount/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
-    }
+    },
+    {
+        path: "/ranking",
+        element: <PrivateRoute><Classement/></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

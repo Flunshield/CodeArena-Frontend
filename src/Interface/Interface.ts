@@ -22,7 +22,7 @@ export interface User {
     school?: string;
     github?: string;
     presentation?: string;
-    userRanking?: UserRanking;
+    userRanking?: UserRanking[];
 }
 
 export interface DataToken {
@@ -98,6 +98,7 @@ export interface UserRanking extends request {
     user?: User;
     rankingsID?: number;
     points?: number;
+    rankings?: Ranking;
 }
 
 export interface request {
