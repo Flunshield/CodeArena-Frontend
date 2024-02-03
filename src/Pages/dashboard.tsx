@@ -11,7 +11,7 @@ import TableauTournament from "../Composants/dashboard/TableauTournament.tsx";
 function Dashboard() {
     const authContext = useAuthContext();
     const [infosUserRank, setInfosUserRank] = useState<userRangList>()
-    const [infosTournament, setInfosTournament] = useState<Tournament>()
+    const [infosTournament, setInfosTournament] = useState<Tournament[]>([])
     const [infosEvents, setInfosEvents] = useState<Event[]>()
     const infosUser = authContext?.infosUser as JwtPayload
     const userId = infosUser?.sub as unknown as number
@@ -25,11 +25,13 @@ function Dashboard() {
             responsePromise.then(async (response) => {
                 const result = await response.json();
                 setInfosUserRank(result.userRanking);
-                setInfosTournament(result.tournament)
+                setInfosTournament([result.tournament])
                 setInfosEvents(result.events)
             });
         }
     })
+
+    console.log(infosTournament)
 
     return (
         <Layout>
@@ -37,7 +39,7 @@ function Dashboard() {
                 <TableauEvent infosEvents={infosEvents}/>
                 <div className="m-32">
                     <UserRank infosUserRank={infosUserRank}/>
-                    <TableauTournament infosTournament={infosTournament}/>
+                    <TableauTournament infosTournament={infosTournament} isImg={false}/>
                 </div>
             </div>
         </Layout>

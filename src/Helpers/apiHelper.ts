@@ -155,3 +155,25 @@ export const getUserRanking = async (endpoint: string, data: { token: string, us
     }
 };
 
+export const getAllTournaments = async (endpoint: string, data: { token: string }): Promise<Response> => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${data.token}`,
+            },
+            credentials: 'include'
+        });
+
+        if (!response.ok) {
+            throw new Error('La requête a échoué');
+        }
+
+        return response;
+    } catch (error) {
+        console.error('Erreur lors de la requête', error);
+        throw error;
+    }
+};
+

@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import {getUserRanking} from "../../Helpers/apiHelper.ts";
+import {NO_PHOTO} from "../../constantes.ts";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();
@@ -81,7 +82,7 @@ function Tableau(): JSX.Element {
                         <div>
                             <li className="flex flex-row justify-between border-t-2 border-white text-center font-bold p-5 text-white uppercase mb-5 lg:justify-between">
                                 <div className="hidden md:flex md:justify-center">
-                                    <img src={user?.avatar ?? "src/assets/drapeaux/gb.png"}
+                                    <img src={user?.avatar ?? NO_PHOTO}
                                          className="rounded-full w-20 h-20" alt="avatar"></img>
                                 </div>
                                 <p className="mt-6 overflow-hidden text-center overflow-ellipsis w-1/2 md:w1/3 lg:w-1/6">{user?.userName}</p>
@@ -92,7 +93,7 @@ function Tableau(): JSX.Element {
                                 <li key={index}
                                     className="flex flex-row justify-between border-t-2 border-white p-5 text-white uppercase mb-5 lg:justify-between">
                                     <div className="hidden md:flex md:justify-center">
-                                        <img src={elem.user?.avatar || "src/assets/drapeaux/gb.png"}
+                                        <img src={elem.user?.avatar || NO_PHOTO}
                                              className="rounded-full w-20 h-20" alt="avatar"></img>
                                     </div>
                                     <p className="mt-6 overflow-hidden text-center overflow-ellipsis w-1/2 md:w1/3 lg:w-1/6">{elem.user?.userName}</p>
@@ -107,7 +108,7 @@ function Tableau(): JSX.Element {
                                 <li key={index}
                                     className="flex flex-row justify-between border-t-2 border-white p-5 text-white uppercase mb-5 lg:justify-between">
                                     <div className="hidden md:flex md:justify-center">
-                                        <img src={elem.user?.avatar || "src/assets/drapeaux/gb.png"}
+                                        <img src={elem.user?.avatar || NO_PHOTO}
                                              className="rounded-full w-20 h-20" alt="avatar"></img>
                                     </div>
                                     <p className="mt-6 overflow-hidden text-center overflow-ellipsis w-1/2 md:w1/3 lg:w-1/6">{elem.user?.userName}</p>
