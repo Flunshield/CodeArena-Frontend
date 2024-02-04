@@ -9,7 +9,7 @@ import iconeTitle from "../../assets/iconeProfile/flag.png";
 import {useTranslation} from "react-i18next";
 import {DataToken, Titles, User} from "../../Interface/Interface.ts";
 import React, {useEffect} from "react";
-import {getTitles, updateUser} from "../../Helpers/apiHelper.ts";
+import {getElementByEndpoint, updateUser} from "../../Helpers/apiHelper.ts";
 import {JwtPayload} from "jwt-decode";
 import {useAuthContext} from "../../AuthContext.tsx";
 
@@ -25,7 +25,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
     const infosUser: JwtPayload = authContext?.infosUser as JwtPayload
     const infos: DataToken = infosUser.aud as unknown as DataToken
     const [titles, setTitles] = React.useState<Titles[]>();
-    const test = getTitles("user/getTitles", {token: authContext.accessToken ?? ""});
+    const getTitles = getElementByEndpoint("user/getTitles", {token: authContext.accessToken ?? ""});
 
     const initialValues: User = {
         localisation: infos.data.localisation ?? '',
@@ -79,7 +79,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
 
     useEffect(() => {
         if (!titles) {
-            test.then(async (response) => {
+            getTitles.then(async (response) => {
                 const result = await response.json();
                 const titlesUser = result
                     .filter((title: { id: number; }) => infos?.data?.titlesWin?.includes(String(title.id)))

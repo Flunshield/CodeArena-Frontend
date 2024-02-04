@@ -4,7 +4,14 @@ import {LoginForm, shortUser, User, UserRanking} from "../Interface/Interface.ts
 
 const API_BASE_URL: string = import.meta.env.VITE_API_URL;
 
-export const login = async (endpoint: string, data: LoginForm) => {
+/**
+ * Effectue une requête de connexion à l'API.
+ *
+ * @param {string} endpoint - Le point de terminaison de l'API pour la connexion.
+ * @param {LoginForm} data - Les données de connexion comprenant le nom d'utilisateur et le mot de passe.
+ * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
+ */
+export const login = async (endpoint: string, data: LoginForm): Promise<Response> => {
 
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
@@ -19,7 +26,13 @@ export const login = async (endpoint: string, data: LoginForm) => {
     });
 }
 
-export const logout = async (endpoint: string) => {
+/**
+ * Effectue une requête de déconnexion à l'API.
+ *
+ * @param {string} endpoint - Le point de terminaison de l'API pour la déconnexion.
+ * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
+ */
+export const logout = async (endpoint: string): Promise<Response> => {
 
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
@@ -30,7 +43,14 @@ export const logout = async (endpoint: string) => {
     });
 }
 
-export const createUser = async (endpoint: string, data: shortUser) => {
+/**
+ * Effectue une requête pour créer un nouvel utilisateur via l'API.
+ *
+ * @param {string} endpoint - Le point de terminaison de l'API pour la création d'un utilisateur.
+ * @param {shortUser} data - Les données de l'utilisateur comprenant le nom d'utilisateur, le mot de passe et l'adresse e-mail.
+ * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
+ */
+export const createUser = async (endpoint: string, data: shortUser): Promise<Response> => {
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
         headers: {
@@ -45,7 +65,14 @@ export const createUser = async (endpoint: string, data: shortUser) => {
     });
 }
 
-export const forgotPassword = async (endpoint: string, email: string) => {
+/**
+ * Effectue une requête pour initier le processus de récupération de mot de passe via l'API.
+ *
+ * @param {string} endpoint - Le point de terminaison de l'API pour la récupération de mot de passe oublié.
+ * @param {string} email - L'adresse e-mail associée au compte utilisateur pour la récupération de mot de passe.
+ * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
+ */
+export const forgotPassword = async (endpoint: string, email: string): Promise<Response> => {
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
         headers: {
@@ -58,7 +85,14 @@ export const forgotPassword = async (endpoint: string, email: string) => {
     });
 }
 
-export const changePassword = async (endpoint: string, data: LoginForm) => {
+/**
+ * Effectue une requête pour changer le mot de passe d'un utilisateur via l'API.
+ *
+ * @param {string} endpoint - Le point de terminaison de l'API pour la modification du mot de passe.
+ * @param {LoginForm} data - Les données nécessaires à la modification du mot de passe, comprenant le nom d'utilisateur, le mot de passe et le jeton d'authentification.
+ * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
+ */
+export const changePassword = async (endpoint: string, data: LoginForm): Promise<Response> => {
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
         headers: {
@@ -73,7 +107,14 @@ export const changePassword = async (endpoint: string, data: LoginForm) => {
     });
 }
 
-export const infosDashboardRequest = async (endpoint?: string, data?: UserRanking) => {
+/**
+ * Effectue une requête pour obtenir des informations sur le tableau de bord de l'utilisateur via l'API.
+ *
+ * @param {string | undefined} endpoint - Le point de terminaison de l'API pour les informations du tableau de bord.
+ * @param {UserRanking | undefined} data - Les données utilisateur, comprenant l'identifiant, le jeton d'authentification, utilisées dans la requête.
+ * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
+ */
+export const infosDashboardRequest = async (endpoint?: string, data?: UserRanking): Promise<Response> => {
     return await fetch(`${API_BASE_URL}/${endpoint}?id=${data?.id}`, {
         method: 'GET',
         headers: {
@@ -84,7 +125,14 @@ export const infosDashboardRequest = async (endpoint?: string, data?: UserRankin
     });
 }
 
-export const updateUser = async (endpoint?: string, data?: User) => {
+/**
+ * Effectue une requête pour mettre à jour les informations d'un utilisateur via l'API.
+ *
+ * @param {string | undefined} endpoint - Le point de terminaison de l'API pour la mise à jour des informations utilisateur.
+ * @param {User | undefined} data - Les données utilisateur à mettre à jour, comprenant l'identifiant, le jeton d'authentification, et les nouvelles informations.
+ * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
+ */
+export const updateUser = async (endpoint?: string, data?: User): Promise<Response> => {
 
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'PATCH',
@@ -111,7 +159,15 @@ export const updateUser = async (endpoint?: string, data?: User) => {
     });
 };
 
-export const getTitles = async (endpoint: string, data: { token: string }): Promise<Response> => {
+/**
+ * Effectue une requête GET pour récupérer des éléments à partir d'un point de terminaison spécifié via l'API.
+ *
+ * @param {string} endpoint - Le point de terminaison de l'API pour la récupération des éléments.
+ * @param {{ token: string }} data - Les données nécessaires à la requête, comprenant le jeton d'authentification.
+ * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
+ * @throws {Error} Lance une erreur si la requête échoue.
+ */
+export const getElementByEndpoint = async (endpoint: string, data: { token: string }): Promise<Response> => {
     try {
         const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
             method: 'GET',
@@ -133,7 +189,18 @@ export const getTitles = async (endpoint: string, data: { token: string }): Prom
     }
 };
 
-export const getUserRanking = async (endpoint: string, data: { token: string, username?: string }): Promise<Response> => {
+/**
+ * Effectue une requête GET pour obtenir le classement d'un utilisateur via l'API.
+ *
+ * @param {string} endpoint - Le point de terminaison de l'API pour la récupération du classement utilisateur.
+ * @param {{ token: string, username?: string }} data - Les données nécessaires à la requête, comprenant le jeton d'authentification et éventuellement le nom d'utilisateur.
+ * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
+ * @throws {Error} Lance une erreur si la requête échoue.
+ */
+export const getUserRanking = async (endpoint: string, data: {
+    token: string,
+    username?: string
+}): Promise<Response> => {
     try {
         const response = await fetch(`${API_BASE_URL}/${endpoint}?userName=${data.username}`, {
             method: 'GET',
@@ -155,25 +222,4 @@ export const getUserRanking = async (endpoint: string, data: { token: string, us
     }
 };
 
-export const getAllTournaments = async (endpoint: string, data: { token: string }): Promise<Response> => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${data.token}`,
-            },
-            credentials: 'include'
-        });
-
-        if (!response.ok) {
-            throw new Error('La requête a échoué');
-        }
-
-        return response;
-    } catch (error) {
-        console.error('Erreur lors de la requête', error);
-        throw error;
-    }
-};
 
