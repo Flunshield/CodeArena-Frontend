@@ -12,7 +12,7 @@ function TournamentDashboard() {
     const getAllTournaments = getElementByEndpoint('tournament/findTournaments', data);
 
     useEffect(() => {
-        if (!infosTournament) {
+        if (infosTournament.length === 0) {
             getAllTournaments.then(async (response) => {
                 const result = await response.json();
                 setInfosTournament(result);

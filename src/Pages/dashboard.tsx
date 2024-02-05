@@ -12,7 +12,7 @@ function Dashboard() {
     const authContext = useAuthContext();
     const [infosUserRank, setInfosUserRank] = useState<userRangList>()
     const [infosTournament, setInfosTournament] = useState<Tournament[]>([])
-    const [infosEvents, setInfosEvents] = useState<Event[]>()
+    const [infosEvents, setInfosEvents] = useState<Event[]>([])
     const infosUser = authContext?.infosUser as JwtPayload
     const userId = infosUser?.sub as unknown as number
 
@@ -31,12 +31,10 @@ function Dashboard() {
         }
     })
 
-    console.log(infosTournament)
-
     return (
         <Layout>
             <div className="flex flex-col xl:flex-row">
-                <TableauEvent infosEvents={infosEvents}/>
+                <TableauEvent infosEvents={infosEvents} isImg={false} className="mt-32 ml-32 w-2/4 h-3/4"/>
                 <div className="m-32">
                     <UserRank infosUserRank={infosUserRank}/>
                     <TableauTournament infosTournament={infosTournament} isImg={false}/>
