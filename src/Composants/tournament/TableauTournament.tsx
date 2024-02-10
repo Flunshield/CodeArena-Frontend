@@ -4,6 +4,7 @@ import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import arrowRight from "../../assets/arrowRightRed.svg";
 import {formatDate} from "../../Helpers/formatHelper.ts";
+import {Link} from "react-router-dom";
 
 interface TableauTournamentProps {
     infosTournament: Tournament[]
@@ -29,8 +30,8 @@ function TableauTournament(value: TableauTournamentProps) {
                                 <p className="mb-1">{formatDate(item.startDate, t)}</p>
                                 <p className="text-gray-600 max-w-lg text-justify">{item.description}</p>
                                 <div className="flex content-baseline mt-5 hover:underline">
-                                    <a href={"/tournament/" + item.id}
-                                       className="uppercase text-red font-bold mr-2">{t("seeMore")}</a>
+                                    <Link to={"/tournament/" + item.id}
+                                          className="uppercase text-red font-bold mr-2">{t("seeMore")}</Link>
                                     <img src={arrowRight} className="h-5 mt-0.5" alt="flèche rouge"/>
 
                                 </div>

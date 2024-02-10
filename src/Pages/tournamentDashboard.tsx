@@ -1,4 +1,4 @@
-import TableauTournament from "../Composants/dashboard/TableauTournament.tsx";
+import TableauTournament from "../Composants/tournament/TableauTournament.tsx";
 import Layout from "../ComposantsCommun/Layout.tsx";
 import {getElementByEndpoint} from "../Helpers/apiHelper.ts";
 import {useAuthContext} from "../AuthContext.tsx";

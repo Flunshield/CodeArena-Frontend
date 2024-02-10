@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import {infosDashboardRequest} from "../Helpers/apiHelper.ts";
 import TableauEvent from "../Composants/dashboard/TableauEvent.tsx";
 import UserRank from "../Composants/dashboard/UserRank.tsx";
-import TableauTournament from "../Composants/dashboard/TableauTournament.tsx";
+import TableauTournament from "../Composants/tournament/TableauTournament.tsx";
 
 function Dashboard() {
     const authContext = useAuthContext();

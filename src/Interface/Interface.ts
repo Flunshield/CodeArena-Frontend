@@ -50,7 +50,8 @@ export interface DataToken {
         school?: string;
         github?: string;
         presentation?: string;
-        userRanking?: UserRanking;
+        userRanking?: UserRanking[];
+        userTournament?: UserTournament[];
     }
 }
 
@@ -85,11 +86,12 @@ export interface NavFlags {
 export interface Tournament {
     id: number,
     startDate: Date,
-    endDate: Date | string,
+    endDate: Date,
     playerMax: number,
     title: string,
     description: string,
     displayStartDate?: string,
+    numberRegistered : number,
 }
 
 export interface UserRanking extends request {
@@ -155,4 +157,13 @@ export interface Ranking {
     rewards: string;
     matches: Match[];
     userRanking: UserRanking[];
+}
+
+export interface UserTournament {
+    id: number;
+    userID: number;
+    user: User;
+    tournamentID: number;
+    tournament: Tournament;
+    points: number;
 }

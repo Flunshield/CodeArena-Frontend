@@ -222,4 +222,48 @@ export const getUserRanking = async (endpoint: string, data: {
     }
 };
 
+/**
+ * Met à jour les données d'un tournoi.
+ * @param endpoint L'endpoint de l'API pour la mise à jour du tournoi.
+ * @param data Les données à envoyer pour la mise à jour du tournoi.
+ * @returns Une promesse qui se résout avec la réponse du serveur.
+ */
+export const updateTournament = async (endpoint?: string, data?: { token: string; userID?: string; tournamentID?: number; points?: number; }): Promise<Response> => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            userID: data?.userID,
+            tournamentID: data?.tournamentID,
+            points: data?.points,
+        }),
+        credentials: 'include'
+    });
+};
+
+/**
+ * Désinscrit un utilisateur d'un tournoi.
+ * @param endpoint L'endpoint de l'API pour la désinscription du tournoi.
+ * @param data Les données à envoyer pour la désinscription du tournoi.
+ * @returns Une promesse qui se résout avec la réponse du serveur.
+ */
+export const unsubscribeTournament = async (endpoint?: string, data?: { token: string; userID?: string; tournamentID?: number }): Promise<Response> => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            userID: data?.userID,
+            tournamentID: data?.tournamentID
+        }),
+        credentials: 'include'
+    });
+};
 

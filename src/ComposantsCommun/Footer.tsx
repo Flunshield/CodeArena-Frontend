@@ -39,7 +39,7 @@ const Footer: React.FC<FooterProps> = () => {
                 item.displayLink ? (
                     // Ajoutez une clé unique pour chaque élément
                     <button key={item.value} type="button" onClick={() => handleChangeLanguage(item.value)} className="mr-3">
-                        <img src={item.src} alt={item.alt} className="w-10 h-auto" />
+                        <img src={"../"+item.src} alt={item.alt} className="w-10 h-auto" />
                     </button>
                 ) : null
             )}
