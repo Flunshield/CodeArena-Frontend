@@ -1,6 +1,6 @@
 // api.ts
 
-import {LoginForm, shortUser, User, UserRanking} from "../Interface/Interface.ts";
+import {LoginForm, shortUser, User} from "../Interface/Interface.ts";
 
 const API_BASE_URL: string = import.meta.env.VITE_API_URL;
 
@@ -108,24 +108,6 @@ export const changePassword = async (endpoint: string, data: LoginForm): Promise
 }
 
 /**
- * Effectue une requête pour obtenir des informations sur le tableau de bord de l'utilisateur via l'API.
- *
- * @param {string | undefined} endpoint - Le point de terminaison de l'API pour les informations du tableau de bord.
- * @param {UserRanking | undefined} data - Les données utilisateur, comprenant l'identifiant, le jeton d'authentification, utilisées dans la requête.
- * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
- */
-export const infosDashboardRequest = async (endpoint?: string, data?: UserRanking): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}?id=${data?.id}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${data?.token}`,
-        },
-        credentials: 'include'
-    });
-}
-
-/**
  * Effectue une requête pour mettre à jour les informations d'un utilisateur via l'API.
  *
  * @param {string | undefined} endpoint - Le point de terminaison de l'API pour la mise à jour des informations utilisateur.
@@ -190,68 +172,16 @@ export const getElementByEndpoint = async (endpoint: string, data: { token: stri
 };
 
 /**
- * Effectue une requête GET pour obtenir le classement d'un utilisateur via l'API.
- *
- * @param {string} endpoint - Le point de terminaison de l'API pour la récupération du classement utilisateur.
- * @param {{ token: string, username?: string }} data - Les données nécessaires à la requête, comprenant le jeton d'authentification et éventuellement le nom d'utilisateur.
- * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
- * @throws {Error} Lance une erreur si la requête échoue.
- */
-export const getUserRanking = async (endpoint: string, data: {
-    token: string,
-    username?: string
-}): Promise<Response> => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/${endpoint}?userName=${data.username}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${data.token}`,
-            },
-            credentials: 'include'
-        });
-
-        if (!response.ok) {
-            throw new Error('La requête a échoué');
-        }
-
-        return response;
-    } catch (error) {
-        console.error('Erreur lors de la requête', error);
-        throw error;
-    }
-};
-
-/**
- * Met à jour les données d'un tournoi.
- * @param endpoint L'endpoint de l'API pour la mise à jour du tournoi.
- * @param data Les données à envoyer pour la mise à jour du tournoi.
- * @returns Une promesse qui se résout avec la réponse du serveur.
- */
-export const updateTournament = async (endpoint?: string, data?: { token: string; userID?: string; tournamentID?: number; points?: number; }): Promise<Response> => {
-
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${data?.token}`,
-        },
-        body: JSON.stringify({
-            userID: data?.userID,
-            tournamentID: data?.tournamentID,
-            points: data?.points,
-        }),
-        credentials: 'include'
-    });
-};
-
-/**
  * Désinscrit un utilisateur d'un tournoi.
  * @param endpoint L'endpoint de l'API pour la désinscription du tournoi.
  * @param data Les données à envoyer pour la désinscription du tournoi.
  * @returns Une promesse qui se résout avec la réponse du serveur.
  */
-export const unsubscribeTournament = async (endpoint?: string, data?: { token: string; userID?: string; tournamentID?: number }): Promise<Response> => {
+export const unsubscribeTournament = async (endpoint?: string, data?: {
+    token: string;
+    userID?: string;
+    tournamentID?: number
+}): Promise<Response> => {
 
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'DELETE',
@@ -267,3 +197,16 @@ export const unsubscribeTournament = async (endpoint?: string, data?: { token: s
     });
 };
 
+export const postElementByEndpoint = async (endpoint: string, data: { token: string, data: object }): Promise<Response> => {
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            data: data
+        }),
+        credentials: 'include'
+    });
+};

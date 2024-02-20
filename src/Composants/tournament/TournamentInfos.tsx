@@ -4,7 +4,11 @@ import {JwtPayload} from "jwt-decode";
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getElementByEndpoint, unsubscribeTournament, updateTournament} from "../../Helpers/apiHelper.ts";
+import {
+    getElementByEndpoint,
+    postElementByEndpoint,
+    unsubscribeTournament
+} from "../../Helpers/apiHelper.ts";
 import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import {formatDate} from "../../Helpers/formatHelper.ts";
@@ -24,11 +28,13 @@ function tournamentInfos() {
 
 
     const handleClickRegistered = () => {
-        updateTournament('tournament/inscription', {
+        postElementByEndpoint('tournament/inscription', {
             token: authContext.accessToken ?? "",
-            userID: infosUser?.sub,
-            tournamentID: infosTournament?.id,
-            points: infos?.data?.userRanking?.[0]?.points ?? 0
+            data: {
+                userID: infosUser?.sub,
+                tournamentID: infosTournament?.id,
+                points: infos?.data?.userRanking?.[0]?.points ?? 0
+            }
         }).then(response => {
             if (response.status === 201) {
                 setIsRegistered(true)
