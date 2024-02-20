@@ -205,7 +205,7 @@ export const postElementByEndpoint = async (endpoint: string, data: { token: str
             'Authorization': `Bearer ${data?.token}`,
         },
         body: JSON.stringify({
-            data: data
+            data: data.data
         }),
         credentials: 'include'
     });
