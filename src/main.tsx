@@ -15,6 +15,8 @@ import Dashboard from "./Pages/dashboard.tsx";
 import MyAccount from "./Pages/myAccount.tsx";
 import Classement from "./Pages/classement.tsx";
 import TournamentDashboard from "./Pages/tournamentDashboard.tsx";
+import EventDashboard from "./Pages/eventDashboard.tsx";
+import PageTournamentInfos from "./Pages/pageTournamentInfos.tsx";
 
 const router = createBrowserRouter([
     {
@@ -65,6 +67,16 @@ const router = createBrowserRouter([
     {
         path: "/tournament",
         element: <PrivateRoute><TournamentDashboard/></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/tournament/:id",
+        element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/event",
+        element: <PrivateRoute><EventDashboard/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
 ])

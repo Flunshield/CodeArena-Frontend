@@ -3,17 +3,22 @@ import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import {useTranslation} from "react-i18next";
 import {formatDate} from "../../Helpers/formatHelper.ts";
+import clsx from "clsx";
 
 interface TableauEventProps {
-    infosEvents: Event[] | undefined
+    infosEvents: Event[];
+    isImg: boolean;
+    className?: string;
 }
 
 function TableauEvent(value: TableauEventProps) {
-    const infosEvent = value.infosEvents
+    const infosEvent: Event[] = value.infosEvents
+    const className = value.className;
+    // const isImg = value.isImg;
     const {t} = useTranslation();
 
     return (
-        <Card className="rounded-xl mt-32 ml-32 w-2/4 h-3/4 border-white bg-secondary">
+        <Card className={clsx(className, "rounded-xl border-white bg-secondary ${className}")}>
             <CardContent className="bg-secondary text-white text-center">
                 <p className="font-bold text-5xl" id="title-event">{t("event")}</p>
             </CardContent>

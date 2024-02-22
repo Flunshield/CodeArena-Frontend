@@ -3,7 +3,7 @@ import {User, userRangList, UserRanking} from "../../Interface/Interface.ts";
 import React, {useEffect, useState} from "react";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
-import {getUserRanking} from "../../Helpers/apiHelper.ts";
+import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import {NO_PHOTO} from "../../constantes.ts";
 
 function Tableau(): JSX.Element {
@@ -25,7 +25,7 @@ function Tableau(): JSX.Element {
 
     function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
         if (event.key === "Enter") {
-            responsePromise = getUserRanking("user/getUserRanking", data);
+            responsePromise = getElementByEndpoint("user/getUserRanking?userName=" + data.username, data);
             if (username) {
                 responsePromise.then(async (response) => {
                     const result = await response.json();
@@ -47,7 +47,7 @@ function Tableau(): JSX.Element {
 
     useEffect(() => {
         if (!infosUserRankWithoutUserName) {
-            responsePromise = getUserRanking("user/getUserRanking", data);
+            responsePromise = getElementByEndpoint("user/getUserRanking?userName=" + data.username, data);
             responsePromise.then(async (response) => {
                 const result = await response.json();
                 setInfosUserRankWithoutUserName(result);

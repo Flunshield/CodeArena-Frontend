@@ -39,7 +39,7 @@ const Footer: React.FC<FooterProps> = () => {
                 item.displayLink ? (
                     // Ajoutez une clé unique pour chaque élément
                     <button key={item.value} type="button" onClick={() => handleChangeLanguage(item.value)} className="mr-3">
-                        <img src={item.src} alt={item.alt} />
+                        <img src={"../"+item.src} alt={item.alt} className="w-10 h-auto" />
                     </button>
                 ) : null
             )}
@@ -47,22 +47,22 @@ const Footer: React.FC<FooterProps> = () => {
 
   return (
       <footer className="w-full text-white p-4 z-0 bg-secondary">
-          <div className="flex mb-3 justify-between">
-              <div>
+          <div className="flex mb-3 flex-col md:flex-row md:justify-between">
+              <div className="max-lg:hidden">
                   <img
                       className=""
                       src={logo}
                       alt="logo du site web"/>
               </div>
-              <div className="flex-col mt-5">
+              <div className="mt-5 md:flex-col ">
                   <p className="font-bold text-2xl">{t('CodeArena')}</p>
                   <p className="mt-5 hover:underline"><a href="">{t('entreprise')}</a></p>
-                  <p className="mt-2 hover:underline"><a href="">{t('partenaire')}</a></p>
+                  <p className="mt-5 hover:underline"><a href="">{t('partenaire')}</a></p>
               </div>
-              <div className="flex-col mt-5">
+              <div className="md:flex-col mt-5">
                   <ul>
                   <li className="font-bold text-2xl">{t('contact')}</li>
-                  <li className="mt-5 flex justify-between"><img src={iconeMail} alt="icone de mail"/>{MAIL}</li>
+                  <li className="mt-5 flex md:justify-between"><img src={iconeMail} alt="icone de mail" className="mr-5"/>{MAIL}</li>
                   <li className="mt-10 hover:underline"><a href="">{t('politiqueConfidentialite')}</a></li>
                   <li className="mt-2 hover:underline"><a href="">{t('mentionLegal')}</a></li>
                   <li className="mt-2 hover:underline"><a href="">{t('cgv')}</a></li>
@@ -85,7 +85,7 @@ const Footer: React.FC<FooterProps> = () => {
                           alt="logo de discord"/>
                   </div>
               </div>
-              <div className="flex-col mt-5">
+              <div className="flex-col mt-24 md:mt-10">
                   <NavFlagsComponent />
               </div>
           </div>
