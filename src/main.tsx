@@ -17,6 +17,8 @@ import Classement from "./Pages/classement.tsx";
 import TournamentDashboard from "./Pages/tournamentDashboard.tsx";
 import EventDashboard from "./Pages/eventDashboard.tsx";
 import PageTournamentInfos from "./Pages/pageTournamentInfos.tsx";
+import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
+import AdminDashboard from "./Pages/AdminDashboard.tsx";
 
 const router = createBrowserRouter([
     {
@@ -77,6 +79,11 @@ const router = createBrowserRouter([
     {
         path: "/event",
         element: <PrivateRoute><EventDashboard/></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/admin",
+        element: <PrivateRouteAdmin><AdminDashboard/></PrivateRouteAdmin>,
         errorElement: "<ErrorPage/>"
     },
 ])

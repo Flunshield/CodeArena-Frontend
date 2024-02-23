@@ -12,9 +12,18 @@ import classement from "../assets/classement.png";
 import ranked from "../assets/ranked.png";
 import dashboard from "../assets/dashboard.png";
 import clsx from "clsx";
+import {useAuthContext} from "../AuthContext.tsx";
+import {JwtPayload} from "jwt-decode";
+import {DataToken} from "../Interface/Interface.ts";
+import {GROUPS} from "../constantes.ts";
 
 const NavBar = () => {
     const {t} = useTranslation();
+    const authContext = useAuthContext();
+    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    const infosUser = authContext?.infosUser as JwtPayload
+    const infos = infosUser.aud as unknown as DataToken
+    const role = infos.data.groups.roles
     const mainFooter = document.getElementById("mainFooter")
     const [currentPage, setCurrentPage] = useState<string>();
 
@@ -98,11 +107,22 @@ const NavBar = () => {
                                 <a href="/event" className="p-4 hover:underline" id="click-event">
                                     {t("event")}</a>
                             </li>
-                            <li className={clsx(currentPage === "myAccount" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-myAccount">
-                                <img src={chat} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/myAccount" className="p-4 hover:underline" id="click-myAccount">
-                                    {t("myAccount")}</a>
-                            </li>
+                            {role === GROUPS.ADMIN &&
+                                <li className={clsx(currentPage === "admin" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                    id="link-admin">
+                                    <img src={chat} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
+                                    <a href="/admin" className="p-4 hover:underline" id="click-admin">
+                                        {t("admin")}</a>
+                                </li>
+                            }
+                            {role === GROUPS.USER &&
+                                <li className={clsx(currentPage === "myAccount" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                    id="link-myAccount">
+                                    <img src={chat} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
+                                    <a href="/myAccount" className="p-4 hover:underline" id="click-myAccount">
+                                        {t("myAccount")}</a>
+                                </li>
+                            }
                         </ul>
                     </nav>
                 </Card>
