@@ -1,6 +1,6 @@
 // api.ts
 
-import {LoginForm, shortUser, User} from "../Interface/Interface.ts";
+import {LoginForm, shortUser, Titles, User} from "../Interface/Interface.ts";
 
 const API_BASE_URL: string = import.meta.env.VITE_API_URL;
 
@@ -197,6 +197,14 @@ export const unsubscribeTournament = async (endpoint?: string, data?: {
     });
 };
 
+/**
+ * Envoie une requête POST à un endpoint avec les données spécifiées.
+ * @param {string} endpoint - L'URL de l'endpoint auquel envoyer la requête POST.
+ * @param {object} data - Les données à envoyer dans le corps de la requête POST.
+ * @param {string} data.token - Le jeton d'authentification à inclure dans l'en-tête de la requête.
+ * @param {object} data.data - Les données à inclure dans le corps de la requête POST.
+ * @returns {Promise<Response>} Une promesse qui résoudra avec la réponse de la requête.
+ */
 export const postElementByEndpoint = async (endpoint: string, data: { token: string, data: object }): Promise<Response> => {
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
@@ -206,6 +214,24 @@ export const postElementByEndpoint = async (endpoint: string, data: { token: str
         },
         body: JSON.stringify({
             data: data.data
+        }),
+        credentials: 'include'
+    });
+};
+
+export const deleteTitle = async (endpoint?: string, data?: {
+    token: string;
+    title?: Titles;
+}): Promise<Response> => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            title: data?.title
         }),
         credentials: 'include'
     });
