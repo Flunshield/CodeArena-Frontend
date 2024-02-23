@@ -206,6 +206,7 @@ export const unsubscribeTournament = async (endpoint?: string, data?: {
  * @returns {Promise<Response>} Une promesse qui résoudra avec la réponse de la requête.
  */
 export const postElementByEndpoint = async (endpoint: string, data: { token: string, data: object }): Promise<Response> => {
+    console.log("data : ", data)
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
         headers: {

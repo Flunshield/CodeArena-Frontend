@@ -4,11 +4,7 @@ import {JwtPayload} from "jwt-decode";
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {
-    getElementByEndpoint,
-    postElementByEndpoint,
-    unsubscribeTournament
-} from "../../Helpers/apiHelper.ts";
+import {getElementByEndpoint, postElementByEndpoint, unsubscribeTournament} from "../../Helpers/apiHelper.ts";
 import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import {formatDate} from "../../Helpers/formatHelper.ts";
@@ -36,6 +32,7 @@ function tournamentInfos() {
                 points: infos?.data?.userRanking?.[0]?.points ?? 0
             }
         }).then(response => {
+            console.log(response.status)
             if (response.status === 201) {
                 setIsRegistered(true)
             } else {

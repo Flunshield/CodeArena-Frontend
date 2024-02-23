@@ -9,7 +9,7 @@ function TournamentDashboard() {
     const authContext = useAuthContext();
     const data = {token: authContext.accessToken ?? ""}
     const [infosTournament, setInfosTournament] = useState<Tournament[]>([])
-    const getAllTournaments = getElementByEndpoint('tournament/findTournaments', data);
+    const getAllTournaments = getElementByEndpoint('tournament/findNextTenTournament', data);
 
     useEffect(() => {
         if (infosTournament.length === 0) {
