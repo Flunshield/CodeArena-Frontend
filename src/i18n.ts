@@ -17,7 +17,7 @@ i18n
             escapeValue: false, // Ne pas échapper les valeurs HTML
         },
         backend: {
-            loadPath: `${API_BASE_URL}/traduction?pma_lang={{lng}}`, // Chemin vers le fichier de traduction
+            loadPath: import.meta.env.VITE_API_BASE_URL_BACK + `/traduction?pma_lang={{lng}}`, // Chemin vers le fichier de traduction
         },
     });
 

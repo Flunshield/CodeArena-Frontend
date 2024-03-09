@@ -211,3 +211,9 @@ export interface Pricing {
     url: string;
     idApi: string;
 }
+
+export interface responseTest {
+    success: boolean;
+    testPassed: string[];
+    testFailed: string[];
+}

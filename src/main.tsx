@@ -40,6 +40,7 @@ import LegalMentions from "./ComposantsCommun/LegalMentions.tsx";
 import Cgv from "./ComposantsCommun/Cgv.tsx";
 import PrivateRouteEntreprise from "./ComposantsCommun/PrivateRouteEntreprise.tsx";
 import DashboardEntreprise from "./Pages/Entreprise/dashboardEntreprise.tsx";
+import Game from "./Pages/game.tsx";
 
 const router = createBrowserRouter([
     {
@@ -145,6 +146,11 @@ const router = createBrowserRouter([
     {
         path: DASHBOARD_ENTREPRISE,
         element: <PrivateRouteEntreprise><DashboardEntreprise/></PrivateRouteEntreprise>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/game",
+        element: <PrivateRoute><Game/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
 ])

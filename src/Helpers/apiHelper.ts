@@ -1,9 +1,7 @@
-// api.ts
-
 import {LoginForm, PuzzlesEntreprise, shortUser, Titles, User} from "../Interface/Interface.ts";
 
-export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL_BACK;
-
+export const VITE_API_BASE_URL_BACK: string = import.meta.env.VITE_API_BASE_URL_BACK;
+const VITE_API_BASE_URL_TEST: string = import.meta.env.VITE_API_BASE_URL_TEST;
 /**
  * Effectue une requête de connexion à l'API.
  *
@@ -13,7 +11,7 @@ export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL_BACK;
  */
 export const login = async (endpoint: string, data: LoginForm): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -34,7 +32,7 @@ export const login = async (endpoint: string, data: LoginForm): Promise<Response
  */
 export const logout = async (endpoint: string): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -51,7 +49,7 @@ export const logout = async (endpoint: string): Promise<Response> => {
  * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
  */
 export const createUser = async (endpoint: string, data: shortUser): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -73,7 +71,7 @@ export const createUser = async (endpoint: string, data: shortUser): Promise<Res
  * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
  */
 export const forgotPassword = async (endpoint: string, email: string): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -93,7 +91,7 @@ export const forgotPassword = async (endpoint: string, email: string): Promise<R
  * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
  */
 export const changePassword = async (endpoint: string, data: LoginForm): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -116,7 +114,7 @@ export const changePassword = async (endpoint: string, data: LoginForm): Promise
  */
 export const updateUser = async (endpoint?: string, data?: User): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -151,7 +149,7 @@ export const updateUser = async (endpoint?: string, data?: User): Promise<Respon
  */
 export const getElementByEndpoint = async (endpoint: string, data: { token: string, data: string }): Promise<Response> => {
     try {
-        return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -177,7 +175,7 @@ export const unsubscribeTournament = async (endpoint?: string, data?: {
     tournamentID?: number
 }): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -203,7 +201,7 @@ export const postElementByEndpoint = async (endpoint: string, data: {
     token: string,
     data: object
 }): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         method: data.data.patch ? 'PATCH' : 'POST',
@@ -240,7 +238,7 @@ export const deleteTitle = async (endpoint?: string, data?: {
     title?: Titles;
 }): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -407,5 +405,21 @@ export const deletePuzzle = async (endpoint?: string, data?: {
             id: data?.puzzleId
         }),
         credentials: 'include'
+    });
+};
+
+export const postTest = async (endpoint: string, data: {
+    code: string,
+    tests: object
+}): Promise<Response> => {
+    return await fetch(`${VITE_API_BASE_URL_TEST}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            code: data.code,
+            tests: data.tests
+        })
     });
 };
