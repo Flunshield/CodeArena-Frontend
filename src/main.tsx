@@ -13,6 +13,7 @@ import ForgotPassword from "./Pages/forgotPassword.tsx";
 import ChangePassword from "./Pages/changePassword.tsx";
 import Dashboard from "./Pages/dashboard.tsx";
 import MyAccount from "./Pages/myAccount.tsx";
+import Ranked from "./Pages/ranked.tsx";
 import Classement from "./Pages/classement.tsx";
 import TournamentDashboard from "./Pages/tournamentDashboard.tsx";
 import EventDashboard from "./Pages/eventDashboard.tsx";
@@ -59,6 +60,11 @@ const router = createBrowserRouter([
     {
         path: "/myAccount",
         element: <PrivateRoute><MyAccount/></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: "/ranked",
+        element: <PrivateRoute><Ranked/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
