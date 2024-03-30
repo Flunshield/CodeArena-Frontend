@@ -5,25 +5,16 @@ import btnClose from "../assets/btnClose.png";
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import logo from "../assets/logo.svg";
-import chat from "../assets/chat.png";
 import event from "../assets/event.png";
 import tournois from "../assets/tournois.png";
 import classement from "../assets/classement.png";
 import ranked from "../assets/ranked.png";
 import dashboard from "../assets/dashboard.png";
 import clsx from "clsx";
-import {useAuthContext} from "../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
-import {DataToken} from "../Interface/Interface.ts";
-import {GROUPS} from "../constantes.ts";
+import {DASHBOARD, EVENT, RANKED, RANKING, TOURNAMENT} from "../constantes.ts";
 
 const NavBar = () => {
     const {t} = useTranslation();
-    const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
-    const infosUser = authContext?.infosUser as JwtPayload
-    const infos = infosUser.aud as unknown as DataToken
-    const role = infos.data.groups.roles
     const mainFooter = document.getElementById("mainFooter")
     const [currentPage, setCurrentPage] = useState<string>();
 
@@ -82,47 +73,36 @@ const NavBar = () => {
                             </Button>
                         </div>
                         <ul>
-                            <li className={clsx(currentPage === "dashboard" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-dashboard">
+                            <li className={clsx(currentPage === "dashboard" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-dashboard">
                                 <img src={dashboard} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/dashboard" className="p-4 hover:underline" id="click-dashboard">
+                                <a href={DASHBOARD} className="p-4 hover:underline" id="click-dashboard">
                                     {t("home")}</a>
                             </li>
-                            <li className={clsx(currentPage === "ranked" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-ranked">
+                            <li className={clsx(currentPage === "ranked" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-ranked">
                                 <img src={ranked} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="#" className="p-4 hover:underline" id="click-ranked">
+                                <a href={RANKED} className="p-4 hover:underline" id="click-ranked">
                                     {t("ranked")}</a>
                             </li>
-                            <li className={clsx(currentPage === "ranking" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-ranking">
+                            <li className={clsx(currentPage === "ranking" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-ranking">
                                 <img src={classement} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/ranking" className="p-4 hover:underline" id="click-ranking">
+                                <a href={RANKING} className="p-4 hover:underline" id="click-ranking">
                                     {t("ranking")}</a>
                             </li>
-                            <li className={clsx(currentPage === "tournaments" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-tournaments">
+                            <li className={clsx(currentPage === "tournaments" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-tournaments">
                                 <img src={tournois} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/tournament" className="p-4 hover:underline" id="click-tournaments">
+                                <a href={TOURNAMENT} className="p-4 hover:underline" id="click-tournaments">
                                     {t("tournaments")}</a>
                             </li>
-                            <li className={clsx(currentPage === "event" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-event">
+                            <li className={clsx(currentPage === "event" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-event">
                                 <img src={event} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/event" className="p-4 hover:underline" id="click-event">
+                                <a href={EVENT} className="p-4 hover:underline" id="click-event">
                                     {t("event")}</a>
                             </li>
-                            {role === GROUPS.ADMIN &&
-                                <li className={clsx(currentPage === "admin" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
-                                    id="link-admin">
-                                    <img src={chat} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                    <a href="/admin" className="p-4 hover:underline" id="click-admin">
-                                        {t("admin")}</a>
-                                </li>
-                            }
-                            {role === GROUPS.USER &&
-                                <li className={clsx(currentPage === "myAccount" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
-                                    id="link-myAccount">
-                                    <img src={chat} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                    <a href="/myAccount" className="p-4 hover:underline" id="click-myAccount">
-                                        {t("myAccount")}</a>
-                                </li>
-                            }
                         </ul>
                     </nav>
                 </Card>

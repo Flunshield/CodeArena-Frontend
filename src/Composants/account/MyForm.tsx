@@ -37,7 +37,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
         lastName: infos.data.lastName ?? '',
         firstName: infos.data.firstName ?? '',
     };
-    console.log(infos)
+
     const onSubmit = async (values: User) => {
         const response = await updateUser("user/updateUser", {
             id: infos.data.id,

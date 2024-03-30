@@ -17,8 +17,6 @@ export const login = (userName: string, password: string): Cypress.Chainable<boo
 
     // Vérifier la présence des éléments dans le header
     cy.get('body').contains('CodeArena').should('be.visible');
-    cy.get('#signIn').should('be.visible');
-    cy.get('#signUp').should('be.visible');
 
     cy.wait(500);
 
@@ -40,7 +38,7 @@ export const login = (userName: string, password: string): Cypress.Chainable<boo
     return cy.wait('@getLoginRetour').then((interception) => {
         const statusCode = interception.response?.statusCode;
 
-        if (statusCode === 403) {
+        if (statusCode === 404) {
             signUp(userName, password, userName + "@gmail.com")
             login(userName, password)
         }

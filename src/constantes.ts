@@ -29,3 +29,19 @@ export const GROUPS = {
     USER: "User",
     ENTREPRISE: "Entreprise",
 }
+
+// Routage interne
+
+export const COMPTE = "/myAccount"
+export const RANKED = "/ranked"
+export const RANKING = "/ranking"
+export const TOURNAMENT = "/tournament"
+export const EVENT = "/event"
+export const ADMIN = "/admin"
+export const LOGOUT = "/logout"
+export const DASHBOARD = "/dashboard"
+export const LOGIN = "/login"
+export const REGISTER = "/signUp"
+export const HOME = "/"
+export const FORGOT_PASSWORD = "/forgotPassword"
+export const RESET_PASSWORD = "/changePassword"

@@ -19,70 +19,82 @@ import EventDashboard from "./Pages/eventDashboard.tsx";
 import PageTournamentInfos from "./Pages/pageTournamentInfos.tsx";
 import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
 import AdminDashboard from "./Pages/AdminDashboard.tsx";
+import {
+    ADMIN,
+    COMPTE,
+    DASHBOARD, EVENT,
+    FORGOT_PASSWORD,
+    HOME,
+    LOGIN,
+    LOGOUT,
+    RANKING,
+    REGISTER,
+    RESET_PASSWORD, TOURNAMENT
+} from "./constantes.ts";
 
 const router = createBrowserRouter([
     {
-        path: "/login",
+        path: LOGIN,
         element: <Login/>,
         errorElement: "<ErrorPage/>",
     },
     {
-        path: "/",
+        path: HOME,
         element: <Home/>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/logout",
+        path: LOGOUT,
         element: <PrivateRoute><LogoutPage/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/signUp",
+        path: REGISTER,
         element: <SignUpForm/>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/forgotPassword",
+        path: FORGOT_PASSWORD,
         element: <ForgotPassword/>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/changePassword",
+        path: RESET_PASSWORD,
         element: <ChangePassword/>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/dashboard",
+        path: DASHBOARD,
         element: <PrivateRoute><Dashboard/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/myAccount",
+        path: COMPTE,
         element: <PrivateRoute><MyAccount/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/ranking",
+        path: RANKING,
         element: <PrivateRoute><Classement/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/tournament",
+        path: TOURNAMENT,
         element: <PrivateRoute><TournamentDashboard/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/tournament/:id",
+        path: `${TOURNAMENT}/:id`,
         element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/event",
+        path: EVENT,
         element: <PrivateRoute><EventDashboard/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/admin",
+        path: ADMIN,
         element: <PrivateRouteAdmin><AdminDashboard/></PrivateRouteAdmin>,
         errorElement: "<ErrorPage/>"
     },

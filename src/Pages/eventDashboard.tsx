@@ -19,7 +19,7 @@ function EventDashboard() {
             });
         }
     }, []);
-console.log(infosEvent)
+
     return (
         <Layout>
             <div className="m-32 mb-64">
