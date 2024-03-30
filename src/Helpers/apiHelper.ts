@@ -237,3 +237,39 @@ export const deleteTitle = async (endpoint?: string, data?: {
         credentials: 'include'
     });
 };
+
+export const deleteUser = async (endpoint?: string, data?: {
+    token: string;
+    user: User;
+}): Promise<Response> => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            user: data?.user
+        }),
+        credentials: 'include'
+    });
+}
+
+export const resetPointsUser = async (endpoint?: string, data?: {
+    token: string;
+    user: User;
+}): Promise<Response> => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            user: data?.user
+        }),
+        credentials: 'include'
+    });
+}
