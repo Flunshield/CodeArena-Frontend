@@ -57,6 +57,7 @@ const SignUpForm: React.FC = () => {
                                         initialValues={{userName: '', password: '', email: ''}}
                                         validate={(values) => {
                                             const errors: Partial<SignUpFormValues> = {};
+                                            const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
                                             // Validation des champs
                                             if (!values.userName) {
@@ -64,6 +65,9 @@ const SignUpForm: React.FC = () => {
                                             }
                                             if (!values.password) {
                                                 errors.password = 'Ce champ est requis';
+                                            } else if (!regexPassword.test(values.password)) {
+                                                errors.password = 'Mot de passe invalide. Il doit contenir au moins une lettre minuscule, ' +
+                                                    'une lettre majuscule, un chiffre, un caractère spécial et faire au moins 8 caractères.';
                                             }
                                             if (!values.email) {
                                                 errors.email = 'Ce champ est requis';
@@ -81,7 +85,7 @@ const SignUpForm: React.FC = () => {
                                                        className="flex flex-col font-bold text-primary">{t('userName')}</Label>
                                                 <Field type="text" id="userName" name="userName"
                                                        className={clsx("h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-primary")}/>
-                                                <ErrorMessage name="userName" component="div"/>
+                                                <ErrorMessage name="userName" component="div" className="text-error"/>
                                             </div>
                                             <br/>
 
@@ -90,7 +94,8 @@ const SignUpForm: React.FC = () => {
                                                 <Label htmlFor="password" id={"passwordLabel"}>{t('password')}</Label>
                                                 <Field type="password" id="password" name="password"
                                                        className={"h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-primary"}/>
-                                                <ErrorMessage name="password" component="div"/>
+                                                <ErrorMessage name="password" component="div"
+                                                              className="text-error text-justify"/>
                                             </div>
                                             <br/>
 
