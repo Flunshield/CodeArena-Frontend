@@ -22,7 +22,7 @@ import AdminDashboard from "./Pages/AdminDashboard.tsx";
 import {
     ADMIN,
     COMPTE,
-    DASHBOARD, EVENT,
+    DASHBOARD, ENTREPRISE, EVENT,
     FORGOT_PASSWORD,
     HOME,
     LOGIN,
@@ -31,6 +31,7 @@ import {
     REGISTER,
     RESET_PASSWORD, TOURNAMENT
 } from "./constantes.ts";
+import Entreprise from "./Pages/entreprise.tsx";
 
 const router = createBrowserRouter([
     {
@@ -61,6 +62,11 @@ const router = createBrowserRouter([
     {
         path: RESET_PASSWORD,
         element: <ChangePassword/>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: ENTREPRISE,
+        element: <Entreprise/>,
         errorElement: "<ErrorPage/>"
     },
     {

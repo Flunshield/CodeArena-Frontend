@@ -34,7 +34,7 @@ const BouttonProfile = () => {
         <>
             <div
                 id="id-bouton-profile"
-                className="relative"
+                className="relative cursor-pointer rounded-full m-5"
                 onMouseEnter={() => setShowPopup(true)}
                 onMouseLeave={() => setShowPopup(false)}
             >

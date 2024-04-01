@@ -22,7 +22,7 @@ import BouttonProfile from "../Composants/BouttonProfile.tsx";
 
 
     return (
-        <header className="z-20">
+        <header className="z-50">
                 <div className="flex start-0 top-0 absolute w-full">
                     {isConnected && <NavBar/>}
                     <div className="flex justify-between w-full">

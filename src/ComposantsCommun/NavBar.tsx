@@ -12,6 +12,7 @@ import ranked from "../assets/ranked.png";
 import dashboard from "../assets/dashboard.png";
 import clsx from "clsx";
 import {DASHBOARD, EVENT, RANKED, RANKING, TOURNAMENT} from "../constantes.ts";
+import {checkUrl} from "../Helpers/methodeHelper.ts";
 
 const NavBar = () => {
     const {t} = useTranslation();
@@ -38,10 +39,7 @@ const NavBar = () => {
             document.body.style.overflow = "auto";
         }
 
-        const currentUrl = window.location.href;
-        const segments = currentUrl.split('/');
-        const lastSegment = segments[segments.length - 1];
-        setCurrentPage(lastSegment)
+        setCurrentPage(checkUrl())
     }, [isOpen]);
     return (
         <div>

@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../assets/logo.svg';
 import iconeMail from '../assets/iconeMail.png';
 import {useTranslation} from "react-i18next";
-import {MAIL} from "../constantes.ts";
+import {ENTREPRISE, MAIL} from "../constantes.ts";
 import facebook from "../assets/facebook.png";
 import twitter from "../assets/twitter.png";
 import discord from "../assets/discord.png"
@@ -56,7 +56,7 @@ const Footer: React.FC<FooterProps> = () => {
               </div>
               <div className="mt-5 md:flex-col ">
                   <p className="font-bold text-2xl">{t('CodeArena')}</p>
-                  <p className="mt-5 hover:underline"><a href="">{t('entreprise')}</a></p>
+                  <p className="mt-5 hover:underline"><a href={ENTREPRISE}>{t('entreprise')}</a></p>
                   <p className="mt-5 hover:underline"><a href="">{t('partenaire')}</a></p>
               </div>
               <div className="md:flex-col mt-5">
