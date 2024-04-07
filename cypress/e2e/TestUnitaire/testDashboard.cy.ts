@@ -7,7 +7,7 @@ describe('Test du dashboard', () => {
 
         cy.visit('http://localhost:5173');
 
-        login('cacapouettcocotessdsvsv', 'password1');
+        login();
         cy.wait(2000);
         cy.get('body').contains('CodeArena').should('be.visible');
         cy.get('#navBarButton').should('be.visible');

@@ -1,7 +1,7 @@
-import Layout from "../ComposantsCommun/Layout.tsx";
-import CardExplainSection from "../Composants/home/homeEntreprise/cardExplainSection.tsx";
-import PricingSection from "../Composants/home/homeEntreprise/PricingSection.tsx";
-import TrustSection from "../Composants/home/homeEntreprise/trustSection.tsx";
+import Layout from "../../ComposantsCommun/Layout.tsx";
+import CardExplainSection from "../../Composants/home/homeEntreprise/cardExplainSection.tsx";
+import PricingSection from "../../Composants/home/homeEntreprise/PricingSection.tsx";
+import TrustSection from "../../Composants/home/homeEntreprise/trustSection.tsx";
 
 const Entreprise = () => {
     return (

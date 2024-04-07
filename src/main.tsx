@@ -20,7 +20,7 @@ import PageTournamentInfos from "./Pages/pageTournamentInfos.tsx";
 import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
 import AdminDashboard from "./Pages/AdminDashboard.tsx";
 import {
-    ADMIN,
+    ADMIN, CANCEL,
     COMPTE,
     DASHBOARD, ENTREPRISE, EVENT,
     FORGOT_PASSWORD,
@@ -29,9 +29,11 @@ import {
     LOGOUT,
     RANKING,
     REGISTER,
-    RESET_PASSWORD, TOURNAMENT
+    RESET_PASSWORD, SUCCESS, TOURNAMENT
 } from "./constantes.ts";
-import Entreprise from "./Pages/entreprise.tsx";
+import Entreprise from "./Pages/Entreprise/entreprise.tsx";
+import Success from "./Pages/Entreprise/success.tsx";
+import Cancel from "./Pages/Entreprise/cancel.tsx";
 
 const router = createBrowserRouter([
     {
@@ -102,6 +104,16 @@ const router = createBrowserRouter([
     {
         path: ADMIN,
         element: <PrivateRouteAdmin><AdminDashboard/></PrivateRouteAdmin>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: SUCCESS,
+        element: <PrivateRoute><Success/></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: CANCEL,
+        element: <PrivateRoute><Cancel/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
 ])

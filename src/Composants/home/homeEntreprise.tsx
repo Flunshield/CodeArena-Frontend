@@ -8,7 +8,7 @@ const HomeEntreprise = () => {
     return (
         <Layout>
             <div className="flex flex-row justify-between top-0 mr-60">
-                <div className="container mx-auto py-8 pt-32 z-20  ml-32 mr-32">
+                <div className="mx-auto py-8 pt-32 z-20  ml-32 mr-32">
                     <CardExplainSection/>
                     <PricingSection/>
                     <TrustSection/>

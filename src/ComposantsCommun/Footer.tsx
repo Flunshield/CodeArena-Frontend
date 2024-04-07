@@ -7,11 +7,14 @@ import facebook from "../assets/facebook.png";
 import twitter from "../assets/twitter.png";
 import discord from "../assets/discord.png"
 import {NavFlags} from "../Interface/Interface.ts";
+import {useAuthContext} from "../AuthContext.tsx";
 
 interface FooterProps {
 }
 
 const Footer: React.FC<FooterProps> = () => {
+    const authContext = useAuthContext();
+    const isConnected = authContext.connected;
     const { t, i18n } = useTranslation();
 
     const handleChangeLanguage = async (language: string) => {
@@ -54,11 +57,13 @@ const Footer: React.FC<FooterProps> = () => {
                       src={logo}
                       alt="logo du site web"/>
               </div>
+              {isConnected &&
               <div className="mt-5 md:flex-col ">
                   <p className="font-bold text-2xl">{t('CodeArena')}</p>
                   <p className="mt-5 hover:underline"><a href={ENTREPRISE}>{t('entreprise')}</a></p>
                   <p className="mt-5 hover:underline"><a href="">{t('partenaire')}</a></p>
               </div>
+              }
               <div className="md:flex-col mt-5">
                   <ul>
                   <li className="font-bold text-2xl">{t('contact')}</li>

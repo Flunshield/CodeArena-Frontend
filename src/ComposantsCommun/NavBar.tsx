@@ -32,7 +32,7 @@ const NavBar = () => {
             window.scroll({
                 top: 0,
                 left: 0,
-                behavior: "smooth" // Ajoute une animation douce
+                behavior: "smooth"
             });
         } else {
             mainFooter?.classList.remove("blur-sm")

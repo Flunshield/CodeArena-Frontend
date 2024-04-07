@@ -46,6 +46,10 @@ export const HOME = "/"
 export const FORGOT_PASSWORD = "/forgotPassword"
 export const RESET_PASSWORD = "/changePassword"
 export const ENTREPRISE = "/entreprise"
+export const SUCCESS = "/success"
+export const CANCEL = "/cancel"
+
+const URL_STRIPE = "stripe/create-checkout-session"
 
 export const CARD_EXPLANATION = [
     {
@@ -76,9 +80,9 @@ export const PRICING = [
             "Support de base par e-mail"
         ],
         idealFor: "Parfait pour les petites équipes et les débutants qui veulent explorer Coding Game.",
-        onclick: () => {
-            console.log("Essentiel")
-        }
+        price: "Gratuit",
+        url: "",
+        idApi: ""
     },
     {
         title: "Premium",
@@ -90,9 +94,9 @@ export const PRICING = [
             "Statistiques détaillées sur les performances"
         ],
         idealFor: "Idéal pour les équipes en pleine croissance qui ont besoin d'un soutien supplémentaire.",
-        onclick: () => {
-            console.log("Premium")
-        }
+        price: "49,99€",
+        url: URL_STRIPE,
+        idApi: "price_1P2aZvFoLa8m0nzy2y836Oek"
     },
     {
         title: "Entreprise",
@@ -105,9 +109,9 @@ export const PRICING = [
             "Formation et intégration sur mesure"
         ],
         idealFor: "Conçu pour les entreprises ambitieuses qui visent l'excellence et la croissance.",
-        onclick: () => {
-            console.log("Entreprise")
-        }
+        price: "199,99€",
+        url: URL_STRIPE,
+        idApi: "price_1P2rhEFoLa8m0nzygBawhBWC"
     }
 ];
 
