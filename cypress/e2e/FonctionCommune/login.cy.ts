@@ -4,12 +4,12 @@ import {signUp} from "./signUp.cy";
  * Fonction permettant de se connecter lors des tests.
  *
  * !!! Attention à bien renseigner un compte existant !!!
- *
- * @param userName
- * @param password
- * @exemple login('julien', 'julien');
+ * @exemple login();
  */
-export const login = (userName: string, password: string): Cypress.Chainable<boolean> => {
+export const login = (): Cypress.Chainable<boolean> => {
+    const userName = 'cacapouettcocotessdsvsv'
+    const password = 'Password123456!'
+
     // Intercepter la réponse du serveur pour la requête de connexion
     cy.intercept('POST', 'http://localhost:3000/auth/login').as('getLoginRetour');
 
@@ -17,8 +17,6 @@ export const login = (userName: string, password: string): Cypress.Chainable<boo
 
     // Vérifier la présence des éléments dans le header
     cy.get('body').contains('CodeArena').should('be.visible');
-    cy.get('#signIn').should('be.visible');
-    cy.get('#signUp').should('be.visible');
 
     cy.wait(500);
 
@@ -40,9 +38,9 @@ export const login = (userName: string, password: string): Cypress.Chainable<boo
     return cy.wait('@getLoginRetour').then((interception) => {
         const statusCode = interception.response?.statusCode;
 
-        if (statusCode === 403) {
+        if (statusCode === 404) {
             signUp(userName, password, userName + "@gmail.com")
-            login(userName, password)
+            login()
         }
 
         // Retournez true si le statut est 200

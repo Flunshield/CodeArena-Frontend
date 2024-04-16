@@ -25,7 +25,7 @@ function Tableau(): JSX.Element {
 
     function handleKeyPress(event: React.KeyboardEvent<HTMLInputElement>) {
         if (event.key === "Enter") {
-            responsePromise = getElementByEndpoint("user/getUserRanking?userName=" + data.username, data);
+            responsePromise = getElementByEndpoint("user/getUserRanking?userName=" + data.username, {token: data.token, data: data.username});
             if (username) {
                 responsePromise.then(async (response) => {
                     const result = await response.json();
@@ -47,7 +47,7 @@ function Tableau(): JSX.Element {
 
     useEffect(() => {
         if (!infosUserRankWithoutUserName) {
-            responsePromise = getElementByEndpoint("user/getUserRanking?userName=" + data.username, data);
+            responsePromise = getElementByEndpoint("user/getUserRanking?userName=" + data.username, {token: data.token, data: data.username});
             responsePromise.then(async (response) => {
                 const result = await response.json();
                 setInfosUserRankWithoutUserName(result);

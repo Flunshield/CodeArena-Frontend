@@ -4,11 +4,7 @@ import {JwtPayload} from "jwt-decode";
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {
-    getElementByEndpoint,
-    postElementByEndpoint,
-    unsubscribeTournament
-} from "../../Helpers/apiHelper.ts";
+import {getElementByEndpoint, postElementByEndpoint, unsubscribeTournament} from "../../Helpers/apiHelper.ts";
 import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import {formatDate} from "../../Helpers/formatHelper.ts";
@@ -22,7 +18,7 @@ function tournamentInfos() {
     const data = {token: authContext.accessToken ?? ""}
     const {id} = useParams<{ id: string }>();
     const [infosTournament, setInfosTournament] = useState<Tournament>()
-    const getTournament = getElementByEndpoint('tournament/findTournament?id=' + id, data);
+    const getTournament = getElementByEndpoint('tournament/findTournament?id=' + id, {token: data.token, data: ""});
     const [isRegistered, setIsRegistered] = useState<boolean>();
     const [canSubscribe, setCanSubscribe] = useState<boolean>(true);
 
@@ -64,7 +60,6 @@ function tournamentInfos() {
             setInfosTournament(result);
             if (result) {
                 infos?.data.userTournament?.find((tournament) => {
-                    console.log(tournament)
                     if (tournament?.tournamentID === parseInt(id ?? "")) {
                         setIsRegistered(true)
                     } else {

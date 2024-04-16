@@ -25,7 +25,10 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
     const infosUser: JwtPayload = authContext?.infosUser as JwtPayload
     const infos: DataToken = infosUser.aud as unknown as DataToken
     const [titles, setTitles] = React.useState<Titles[]>();
-    const getTitles = getElementByEndpoint("user/getTitles", {token: authContext.accessToken ?? ""});
+    const getTitles = getElementByEndpoint("user/getTitles", {
+        token: authContext.accessToken ?? "",
+        data: ''
+    });
 
     const initialValues: User = {
         localisation: infos.data.localisation ?? '',
@@ -37,7 +40,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
         lastName: infos.data.lastName ?? '',
         firstName: infos.data.firstName ?? '',
     };
-    console.log(infos)
+
     const onSubmit = async (values: User) => {
         const response = await updateUser("user/updateUser", {
             id: infos.data.id,

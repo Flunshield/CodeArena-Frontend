@@ -1,8 +1,8 @@
 // api.ts
 
-import {LoginForm, shortUser, User} from "../Interface/Interface.ts";
+import {LoginForm, shortUser, Titles, User} from "../Interface/Interface.ts";
 
-const API_BASE_URL: string = import.meta.env.VITE_API_URL;
+export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL_BACK;
 
 /**
  * Effectue une requête de connexion à l'API.
@@ -149,9 +149,13 @@ export const updateUser = async (endpoint?: string, data?: User): Promise<Respon
  * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
  * @throws {Error} Lance une erreur si la requête échoue.
  */
-export const getElementByEndpoint = async (endpoint: string, data: { token: string }): Promise<Response> => {
+export const getElementByEndpoint = async (endpoint: string, data: { token: string, data: string }): Promise<Response> => {
     try {
-        const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+        const queryString = new URLSearchParams({
+            session_id: data.data
+        }).toString();
+
+        const response = await fetch(`${API_BASE_URL}/${endpoint}?${queryString}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -197,7 +201,18 @@ export const unsubscribeTournament = async (endpoint?: string, data?: {
     });
 };
 
-export const postElementByEndpoint = async (endpoint: string, data: { token: string, data: object }): Promise<Response> => {
+/**
+ * Envoie une requête POST à un endpoint avec les données spécifiées.
+ * @param {string} endpoint - L'URL de l'endpoint auquel envoyer la requête POST.
+ * @param {object} data - Les données à envoyer dans le corps de la requête POST.
+ * @param {string} data.token - Le jeton d'authentification à inclure dans l'en-tête de la requête.
+ * @param {object} data.data - Les données à inclure dans le corps de la requête POST.
+ * @returns {Promise<Response>} Une promesse qui résoudra avec la réponse de la requête.
+ */
+export const postElementByEndpoint = async (endpoint: string, data: {
+    token: string,
+    data: object
+}): Promise<Response> => {
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'POST',
         headers: {
@@ -210,3 +225,74 @@ export const postElementByEndpoint = async (endpoint: string, data: { token: str
         credentials: 'include'
     });
 };
+
+export const deleteTitle = async (endpoint?: string, data?: {
+    token: string;
+    title?: Titles;
+}): Promise<Response> => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            title: data?.title
+        }),
+        credentials: 'include'
+    });
+};
+
+export const deleteUser = async (endpoint?: string, data?: {
+    token: string;
+    user: User;
+}): Promise<Response> => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            user: data?.user
+        }),
+        credentials: 'include'
+    });
+}
+
+export const resetPointsUser = async (endpoint?: string, data?: {
+    token: string;
+    user: User;
+}): Promise<Response> => {
+
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            user: data?.user
+        }),
+        credentials: 'include'
+    });
+}
+
+export const handleCheckout = async (endpoint: string, data?: {
+    token: string;
+    idApi: string;
+}): Promise<Response> => {
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            idApi: data?.idApi
+        }),
+    });
+}

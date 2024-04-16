@@ -17,7 +17,7 @@ function Dashboard() {
     const userId = infosUser?.sub as unknown as number
 
     const data = {id: userId, token: authContext.accessToken ?? ""}
-    const responsePromise = getElementByEndpoint('dashboard/checkDashboard?id=' + data.id, data);
+    const responsePromise = getElementByEndpoint('dashboard/checkDashboard?id=' + data.id, {token: data.token, data: ""});
 
     useEffect(() => {
         // On réalise la requete pour récupérer la liste des utilisateurs a afficher dans la section rang

@@ -22,6 +22,7 @@ export interface User {
     school?: string;
     github?: string;
     presentation?: string;
+    nbGames?: string;
     userRanking?: UserRanking[];
 }
 
@@ -52,11 +53,18 @@ export interface DataToken {
         presentation?: string;
         userRanking?: UserRanking[];
         userTournament?: UserTournament[];
+        groups: Groups;
     }
 }
 
-export interface Titles {
+export interface Groups {
     id: number;
+    name: string;
+    roles: string;
+}
+
+export interface Titles {
+    id?: number;
     value: string;
     label: string;
 }
@@ -157,6 +165,8 @@ export interface Ranking {
     rewards: string;
     matches: Match[];
     userRanking: UserRanking[];
+    minPoints: string;
+    maxPoints: string;
 }
 
 export interface UserTournament {

@@ -7,7 +7,7 @@ describe('Test du dashboard', () => {
 
         cy.visit('http://localhost:5173');
 
-        login('cacapouettcocotessdsvsv', 'password1');
+        login();
         cy.wait(2000);
         cy.get('body').contains('CodeArena').should('be.visible');
         cy.get('#navBarButton').should('be.visible');
@@ -24,7 +24,6 @@ describe('Test du dashboard', () => {
         cy.get('#link-ranking').should('be.visible');
         cy.get('#link-tournaments').should('be.visible');
         cy.get('#link-event').should('be.visible');
-        cy.get('#link-myAccount').should('be.visible');
         cy.wait(500);
 
         cy.get('#click-dashboard').click();

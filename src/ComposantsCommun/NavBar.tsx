@@ -5,13 +5,14 @@ import btnClose from "../assets/btnClose.png";
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import logo from "../assets/logo.svg";
-import chat from "../assets/chat.png";
 import event from "../assets/event.png";
 import tournois from "../assets/tournois.png";
 import classement from "../assets/classement.png";
 import ranked from "../assets/ranked.png";
 import dashboard from "../assets/dashboard.png";
 import clsx from "clsx";
+import {DASHBOARD, EVENT, RANKED, RANKING, TOURNAMENT} from "../constantes.ts";
+import {checkUrl} from "../Helpers/methodeHelper.ts";
 
 const NavBar = () => {
     const {t} = useTranslation();
@@ -31,17 +32,14 @@ const NavBar = () => {
             window.scroll({
                 top: 0,
                 left: 0,
-                behavior: "smooth" // Ajoute une animation douce
+                behavior: "smooth"
             });
         } else {
             mainFooter?.classList.remove("blur-sm")
             document.body.style.overflow = "auto";
         }
 
-        const currentUrl = window.location.href;
-        const segments = currentUrl.split('/');
-        const lastSegment = segments[segments.length - 1];
-        setCurrentPage(lastSegment)
+        setCurrentPage(checkUrl())
     }, [isOpen]);
     return (
         <div>
@@ -73,35 +71,35 @@ const NavBar = () => {
                             </Button>
                         </div>
                         <ul>
-                            <li className={clsx(currentPage === "dashboard" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-dashboard">
+                            <li className={clsx(currentPage === "dashboard" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-dashboard">
                                 <img src={dashboard} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/dashboard" className="p-4 hover:underline" id="click-dashboard">
+                                <a href={DASHBOARD} className="p-4 hover:underline" id="click-dashboard">
                                     {t("home")}</a>
                             </li>
-                            <li className={clsx(currentPage === "ranked" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-ranked">
+                            <li className={clsx(currentPage === "ranked" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-ranked">
                                 <img src={ranked} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="#" className="p-4 hover:underline" id="click-ranked">
+                                <a href={RANKED} className="p-4 hover:underline" id="click-ranked">
                                     {t("ranked")}</a>
                             </li>
-                            <li className={clsx(currentPage === "ranking" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-ranking">
+                            <li className={clsx(currentPage === "ranking" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-ranking">
                                 <img src={classement} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/ranking" className="p-4 hover:underline" id="click-ranking">
+                                <a href={RANKING} className="p-4 hover:underline" id="click-ranking">
                                     {t("ranking")}</a>
                             </li>
-                            <li className={clsx(currentPage === "tournaments" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-tournaments">
+                            <li className={clsx(currentPage === "tournaments" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-tournaments">
                                 <img src={tournois} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/tournament" className="p-4 hover:underline" id="click-tournaments">
+                                <a href={TOURNAMENT} className="p-4 hover:underline" id="click-tournaments">
                                     {t("tournaments")}</a>
                             </li>
-                            <li className={clsx(currentPage === "event" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-event">
+                            <li className={clsx(currentPage === "event" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")}
+                                id="link-event">
                                 <img src={event} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/event" className="p-4 hover:underline" id="click-event">
+                                <a href={EVENT} className="p-4 hover:underline" id="click-event">
                                     {t("event")}</a>
-                            </li>
-                            <li className={clsx(currentPage === "myAccount" ? " bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-myAccount">
-                                <img src={chat} alt="icone bouton clsoe" className="w-6 h-6 mt-5"/>
-                                <a href="/myAccount" className="p-4 hover:underline" id="click-myAccount">
-                                    {t("myAccount")}</a>
                             </li>
                         </ul>
                     </nav>
