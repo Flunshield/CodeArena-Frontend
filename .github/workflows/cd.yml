@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v2
+
+    - name: Déploiement sur le VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd frontWebAppQrcoffee/
+          docker-compose down
+          git pull
+          npm install
+          npm run build
+          sudo rm -rf /usr/share/nginx/html/*
+          sudo cp -r dist/* /usr/share/nginx/html/
+          docker-compose up --build -d

@@ -9,7 +9,7 @@ function EventDashboard() {
     const authContext = useAuthContext();
     const data = {token: authContext.accessToken ?? ""}
     const [infosEvent, setInfosEvent] = useState<Event[]>([])
-    const getAllEvents = getElementByEndpoint('evenement/findEvents', data);
+    const getAllEvents = getElementByEndpoint('evenement/findEvents', {token: data.token, data: ""});
 
     useEffect(() => {
         if (infosEvent.length === 0) {

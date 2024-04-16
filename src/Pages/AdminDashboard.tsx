@@ -17,10 +17,11 @@ const AdminDashboard: React.FC = () => {
     const [ranks, setRanks] = useState<Ranking[]>([]);
     const [users, setUsers] = useState<User[]>([]);
     const [page, setPage] = useState<number>(0);
-    const getTitle = getElementByEndpoint("user/getTitles", {token: token});
-    const getRank = getElementByEndpoint("admin/getRanks", {token: token});
+    const getTitle = getElementByEndpoint("user/getTitles", {token: token, data: ""});
+    const getRank = getElementByEndpoint("admin/getRanks", {token: token, data: ""});
     const getUsers = getElementByEndpoint("admin/getUsers?page=" + page, {
         token: token,
+        data: ""
     });
 
     const nbPageUser = users.length / 10; // permet de compter le nombre de page possible pour la pagination

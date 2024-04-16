@@ -18,7 +18,7 @@ function tournamentInfos() {
     const data = {token: authContext.accessToken ?? ""}
     const {id} = useParams<{ id: string }>();
     const [infosTournament, setInfosTournament] = useState<Tournament>()
-    const getTournament = getElementByEndpoint('tournament/findTournament?id=' + id, data);
+    const getTournament = getElementByEndpoint('tournament/findTournament?id=' + id, {token: data.token, data: ""});
     const [isRegistered, setIsRegistered] = useState<boolean>();
     const [canSubscribe, setCanSubscribe] = useState<boolean>(true);
 
