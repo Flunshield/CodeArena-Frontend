@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout du code
+      - name: ⏳ Checkout
         uses: actions/checkout@v2
 
-      - name: Cache node modules
+      - name: 🗂️ Cache node modules
         id: cache-npm
         uses: actions/cache@v3
         env:
@@ -32,12 +32,12 @@ jobs:
             ${{ runner.os }}-
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
+        name: 📋 List the state of node modules
         continue-on-error: true
         run: npm list
 
-      - name: Install dependencies
+      - name: 🔄 Install dependencies
         run: npm install
-      - name: Exécuter les tests
+      - name: 🚀 Run tests
         run: |
           npx cypress run
