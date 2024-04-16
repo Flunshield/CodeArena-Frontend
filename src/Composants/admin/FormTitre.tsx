@@ -25,11 +25,10 @@ const FormTitre: React.FC<formTitreProps> = ({onClose, title, type}) => {
     const onSubmit = async (values: Titles) => {
         if(type === 1) {
             values.id = title.id;
-            console.log(values)
-            postElementByEndpoint("admin/updateTitles", {token: authContext.accessToken ?? "", data: values});
+            await postElementByEndpoint("admin/updateTitles", {token: authContext.accessToken ?? "", data: values});
         }
         if(type === 2) {
-            postElementByEndpoint("admin/createTitles", {token: authContext.accessToken ?? "", data: values});
+            await postElementByEndpoint("admin/createTitles", {token: authContext.accessToken ?? "", data: values});
         }
         navigate(0);
         onClose();

@@ -32,7 +32,7 @@ function UserRank(value: UserRankProps): JSX.Element {
                     <div>
                         <div className="flex justify-between pt-6 pb-6">
                             <div className="flex">
-                                <img src={infosUserRank?.user?.user?.avatar ?? NO_PHOTO}
+                                <img src={infosUserRank?.user?.user?.avatar !== "" ? infosUserRank?.user?.user?.avatar : NO_PHOTO}
                                      className="rounded-3xl w-10 h-10 mr-4" alt="photo de Profile"></img>
                                 <p className=" truncate overflow-ellipsis w-64 font-bold mt-1">{infosUserRank?.user?.user?.userName}</p>
                             </div>

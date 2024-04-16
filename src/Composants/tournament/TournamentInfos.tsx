@@ -32,7 +32,6 @@ function tournamentInfos() {
                 points: infos?.data?.userRanking?.[0]?.points ?? 0
             }
         }).then(response => {
-            console.log(response.status)
             if (response.status === 201) {
                 setIsRegistered(true)
             } else {
@@ -61,7 +60,6 @@ function tournamentInfos() {
             setInfosTournament(result);
             if (result) {
                 infos?.data.userTournament?.find((tournament) => {
-                    console.log(tournament)
                     if (tournament?.tournamentID === parseInt(id ?? "")) {
                         setIsRegistered(true)
                     } else {

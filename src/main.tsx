@@ -20,76 +20,110 @@ import EventDashboard from "./Pages/eventDashboard.tsx";
 import PageTournamentInfos from "./Pages/pageTournamentInfos.tsx";
 import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
 import AdminDashboard from "./Pages/AdminDashboard.tsx";
+import {
+    ADMIN, CANCEL,
+    COMPTE,
+    DASHBOARD, ENTREPRISE, EVENT,
+    FORGOT_PASSWORD,
+    HOME,
+    LOGIN,
+    LOGOUT,
+    RANKING,
+    REGISTER,
+    RESET_PASSWORD, SUCCESS, TOURNAMENT
+} from "./constantes.ts";
+import Entreprise from "./Pages/Entreprise/entreprise.tsx";
+import Success from "./Pages/Entreprise/success.tsx";
+import Cancel from "./Pages/Entreprise/cancel.tsx";
 
 const router = createBrowserRouter([
     {
-        path: "/login",
+        path: LOGIN,
         element: <Login/>,
         errorElement: "<ErrorPage/>",
     },
     {
-        path: "/",
+        path: HOME,
         element: <Home/>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/logout",
+        path: LOGOUT,
         element: <PrivateRoute><LogoutPage/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/signUp",
+        path: REGISTER,
         element: <SignUpForm/>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/forgotPassword",
+        path: FORGOT_PASSWORD,
         element: <ForgotPassword/>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/changePassword",
+        path: RESET_PASSWORD,
         element: <ChangePassword/>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/dashboard",
+        path: ENTREPRISE,
+        element: <Entreprise/>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: DASHBOARD,
         element: <PrivateRoute><Dashboard/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/myAccount",
+        path: COMPTE,
         element: <PrivateRoute><MyAccount/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
+<<<<<<< HEAD
         path: "/ranked",
         element: <PrivateRoute><Ranked/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
         path: "/ranking",
+=======
+        path: RANKING,
+>>>>>>> 74faada8eadac341d48134bebf2c6f9aa4f0c6c2
         element: <PrivateRoute><Classement/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/tournament",
+        path: TOURNAMENT,
         element: <PrivateRoute><TournamentDashboard/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/tournament/:id",
+        path: `${TOURNAMENT}/:id`,
         element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/event",
+        path: EVENT,
         element: <PrivateRoute><EventDashboard/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
     {
-        path: "/admin",
+        path: ADMIN,
         element: <PrivateRouteAdmin><AdminDashboard/></PrivateRouteAdmin>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: SUCCESS,
+        element: <PrivateRoute><Success/></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: CANCEL,
+        element: <PrivateRoute><Cancel/></PrivateRoute>,
         errorElement: "<ErrorPage/>"
     },
 ])
