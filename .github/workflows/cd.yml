@@ -26,6 +26,6 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd front-app/
-          docker-compose down
+          docker compose down
           git pull
-          docker-compose up --build -d
+          docker compose up --build -d
