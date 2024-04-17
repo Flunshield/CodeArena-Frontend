@@ -1,5 +1,4 @@
 import {signUp} from "./signUp.cy";
-import {API_BASE_URL} from "../../../src/Helpers/apiHelper";
 
 /**
  * Fonction permettant de se connecter lors des tests.
@@ -12,7 +11,7 @@ export const login = (): Cypress.Chainable<boolean> => {
     const password = 'Password123456!'
 
     // Intercepter la réponse du serveur pour la requête de connexion
-    cy.intercept('POST', `${API_BASE_URL}/auth/login`).as('getLoginRetour');
+    cy.intercept('POST', `https://code.kbegot.fr/auth/login`).as('getLoginRetour');
 
     cy.wait(2000);
 
