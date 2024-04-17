@@ -22,6 +22,7 @@ describe('Test de la navBar', () => {
         cy.get('#link-tournaments').should('be.visible');
         cy.get('#link-event').should('be.visible');
         cy.wait(500);
+        logout();
 
     });
 });

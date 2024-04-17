@@ -34,6 +34,7 @@ describe('Test du dashboard', () => {
         cy.get('#title-futurTournament').should('be.visible');
         cy.get('#title-yourRank').should('be.visible');
         cy.get('#title-event').should('be.visible');
+        logout();
 
     });
 });
