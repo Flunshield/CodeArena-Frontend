@@ -18,6 +18,14 @@ jobs:
       - name: Checkout du code
         uses: actions/checkout@v2
 
+      - name: Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
+        env:
+          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
+        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
+
+      - name: Afficher le contenu du fichier .env
+        run: cat .env
+
       - name: Cache node modules
         id: cache-npm
         uses: actions/cache@v3
@@ -38,10 +46,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
-        id: get-api-base-url
-        run: echo "export API_BASE_URL=$VITE_API_BASE_URL_BACK" >> $GITHUB_ENV
 
       - name: Lintage du code
         run: npm run lint
