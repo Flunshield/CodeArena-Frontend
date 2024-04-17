@@ -24,7 +24,6 @@ const useAuth = ({accessToken}: AuthHookProps) => {
             if (accessToken) {
                 isAccessTokenValid = jwtDecode(accessToken);
             }
-
             if (isAccessTokenValid) {
                 setAuthState((prevState) => ({
                     ...prevState,

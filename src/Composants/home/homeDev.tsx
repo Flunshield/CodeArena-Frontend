@@ -8,7 +8,7 @@ const HomeDev = () => {
         <Layout>
             <div className="flex flex-row justify-between top-0 mr-60">
                 <div className="mx-auto py-8 pt-32 z-20  ml-32 mr-32">
-                    <h1 id="slogan" className="text-white text-6xl font-bold"> {t('slogan')}</h1>
+                    <h1 id="slogan" className="text-white text-6xl font-bold"> {t('test')}</h1>
                     <iframe width="74%" height="585px"
                             src="https://www.youtube.com/embed/6MOrkDPTnLk?si=ABq0UmWjCbjcfkNu"
                             title="YouTube video player"
