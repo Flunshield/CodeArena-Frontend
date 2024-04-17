@@ -8,6 +8,8 @@ export interface AuthHookProps {
     fetchData?: () => Promise<void>;
 }
 
+export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL_BACK;
+
 const useAuth = ({accessToken}: AuthHookProps) => {
     const [authState, setAuthState] = useState<AuthHookProps | null>(() => {
         // Charger les données depuis localStorage lors du montage du composant
@@ -53,7 +55,7 @@ const useAuth = ({accessToken}: AuthHookProps) => {
     const refreshAccessToken = async (): Promise<string> => {
         try {
             // Effectuer la requête pour rafraîchir le jeton d'accès avec fetch
-            const response = await fetch('http://localhost:3000/auth/refresh-access-token', {
+            const response = await fetch(`${API_BASE_URL}/auth/refresh-access-token`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

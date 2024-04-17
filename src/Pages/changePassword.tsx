@@ -36,7 +36,7 @@ const ChangePassword: React.FC = () => {
         };
 
             const response = await changePassword('auth/changePassword', data);
-            if(response.status === 201) {
+            if(response.status === 200) {
                 window.alert(t('passwordChange'));
                 navigate("/");
             } else {
