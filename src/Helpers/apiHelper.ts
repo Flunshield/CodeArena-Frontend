@@ -2,7 +2,7 @@
 
 import {LoginForm, shortUser, Titles, User} from "../Interface/Interface.ts";
 
-export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL_BACK;
+export const API_BASE_URL: string = "https://code.kbegot.fr";
 
 /**
  * Effectue une requête de connexion à l'API.

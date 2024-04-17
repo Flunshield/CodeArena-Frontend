@@ -2,6 +2,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import HttpBackend from 'i18next-http-backend';
+import {API_BASE_URL} from "./Helpers/apiHelper.ts";
 
 i18n
     .use(HttpBackend)
@@ -14,7 +15,7 @@ i18n
             escapeValue: false, // Ne pas échapper les valeurs HTML
         },
         backend: {
-            loadPath: import.meta.env.VITE_API_BASE_URL_BACK + `/traduction?pma_lang={{lng}}`, // Chemin vers le fichier de traduction
+            loadPath: `${API_BASE_URL} /traduction?pma_lang={{lng}}`, // Chemin vers le fichier de traduction
         },
     });
 
