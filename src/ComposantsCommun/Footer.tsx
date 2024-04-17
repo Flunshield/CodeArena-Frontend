@@ -8,6 +8,8 @@ import twitter from "../assets/twitter.png";
 import discord from "../assets/discord.png"
 import {NavFlags} from "../Interface/Interface.ts";
 import {useAuthContext} from "../AuthContext.tsx";
+import drapFr from "../assets/drapeaux/fr.png";
+import drapEn from "../assets/drapeaux/gb.png";
 
 interface FooterProps {
 }
@@ -24,13 +26,13 @@ const Footer: React.FC<FooterProps> = () => {
 
     const navItems: NavFlags[] = [
         {
-            src: "src/assets/drapeaux/fr.png",
+            src: drapFr,
             value: "fr",
             displayLink: true,
             alt: "drapeau français"
         },
         {
-            src: "src/assets/drapeaux/gb.png",
+            src: drapEn,
             value: "en",
             displayLink: true
         }
