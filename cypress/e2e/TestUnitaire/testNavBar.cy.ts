@@ -23,7 +23,6 @@ describe('Test de la navBar', () => {
         cy.get('#link-event').should('be.visible');
         cy.wait(500);
 
-        logout();
     });
 });
 

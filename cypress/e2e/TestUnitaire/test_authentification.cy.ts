@@ -12,7 +12,6 @@ describe('Test de l\'authentification', () => {
     login();
     cy.wait(2000);
 
-    logout();
 
   });
 });
