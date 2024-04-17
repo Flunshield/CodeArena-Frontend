@@ -3,11 +3,9 @@ name: CI - Tests de l'application
 on:
   pull_request:
     branches:
-      - main
       - dev
   push:
     branches:
-      - main
       - dev
 
 jobs:

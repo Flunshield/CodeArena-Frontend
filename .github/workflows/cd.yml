@@ -9,7 +9,6 @@ jobs:
   deploy:
     if: github.ref == 'refs/heads/main' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.name == 'CI - Tests de l'application'
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: Checkout du code
