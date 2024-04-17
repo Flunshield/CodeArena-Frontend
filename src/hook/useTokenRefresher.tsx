@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {jwtDecode, JwtPayload} from 'jwt-decode';
-import {API_BASE_URL} from "../Helpers/apiHelper.ts";
 
 export interface AuthHookProps {
     accessToken?: string | undefined;
@@ -8,6 +7,8 @@ export interface AuthHookProps {
     infosUser?: JwtPayload | string;
     fetchData?: () => Promise<void>;
 }
+
+export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL_BACK;
 
 const useAuth = ({accessToken}: AuthHookProps) => {
     const [authState, setAuthState] = useState<AuthHookProps | null>(() => {
