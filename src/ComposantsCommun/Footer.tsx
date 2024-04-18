@@ -1,15 +1,15 @@
 import React from 'react';
-import logo from '../assets/logo.svg';
-import iconeMail from '../assets/iconeMail.png';
+import logo from '/assets/logo.svg';
+import iconeMail from '/assets/iconeMail.png';
 import {useTranslation} from "react-i18next";
 import {ENTREPRISE, MAIL} from "../constantes.ts";
-import facebook from "../assets/facebook.png";
-import twitter from "../assets/twitter.png";
-import discord from "../assets/discord.png"
+import facebook from "/assets/facebook.png";
+import twitter from "/assets/twitter.png";
+import discord from "/assets/discord.png"
 import {NavFlags} from "../Interface/Interface.ts";
 import {useAuthContext} from "../AuthContext.tsx";
-import drapFr from "../assets/drapeaux/fr.png";
-import drapEn from "../assets/drapeaux/gb.png";
+import drapFr from "/assets/drapeaux/fr.png";
+import drapEn from "/assets/drapeaux/gb.png";
 
 interface FooterProps {
 }

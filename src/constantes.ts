@@ -1,5 +1,5 @@
 export const MAIL = "contact@codearena.fr"
-export const NO_PHOTO = "src/assets/photosProfiles/noImage.png"
+export const NO_PHOTO = "/assets/photosProfiles/noImage.png"
 
 export const imagePaths: string[] = [
     'badge2.png',

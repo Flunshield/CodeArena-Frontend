@@ -1,11 +1,11 @@
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import company from "../../assets/iconeProfile/company.png";
-import github from "../../assets/iconeProfile/github.png";
-import link from "../../assets/iconeProfile/link.png";
-import map from "../../assets/iconeProfile/map-marker.png";
-import school from "../../assets/iconeProfile/school.png";
-import iconeTitle from "../../assets/iconeProfile/flag.png";
+import company from "/assets/iconeProfile/company.png";
+import github from "/assets/iconeProfile/github.png";
+import link from "/assets/iconeProfile/link.png";
+import map from "/assets/iconeProfile/map-marker.png";
+import school from "/assets/iconeProfile/school.png";
+import iconeTitle from "/assets/iconeProfile/flag.png";
 import {useTranslation} from "react-i18next";
 import {DataToken, Titles, User} from "../../Interface/Interface.ts";
 import React, {useEffect} from "react";

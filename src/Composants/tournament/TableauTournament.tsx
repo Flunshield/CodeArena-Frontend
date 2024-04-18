@@ -2,7 +2,6 @@ import {useTranslation} from "react-i18next";
 import {Tournament} from "../../Interface/Interface.ts";
 import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
-import arrowRight from "../../assets/arrowRightRed.svg";
 import {formatDate} from "../../Helpers/formatHelper.ts";
 import {Link} from "react-router-dom";
 
@@ -32,7 +31,7 @@ function TableauTournament(value: TableauTournamentProps) {
                                 <div className="flex content-baseline mt-5 hover:underline">
                                     <Link to={"/tournament/" + item.id}
                                           className="uppercase text-red font-bold mr-2">{t("seeMore")}</Link>
-                                    <img src={arrowRight} className="h-5 mt-0.5" alt="flèche rouge"/>
+                                    <img src="/assets/arrowRightRed.svg" className="h-5 mt-0.5" alt="flèche rouge"/>
 
                                 </div>
                             </div>

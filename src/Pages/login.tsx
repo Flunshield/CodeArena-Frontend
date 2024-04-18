@@ -1,5 +1,3 @@
-// LoginPage.tsx
-
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useAuthContext} from "../AuthContext.tsx";
@@ -7,7 +5,7 @@ import {login} from "../Helpers/apiHelper.ts";
 import {LoginForm} from "../Interface/Interface.ts";
 import Card from "../ComposantsCommun/Card.tsx";
 import CardContent from "../ComposantsCommun/CardContent.tsx";
-import tree from "../assets/tree.svg";
+import tree from "/assets/tree.svg";
 import {useTranslation} from "react-i18next";
 import Label from "../ComposantsCommun/Label.tsx";
 import Button from "../ComposantsCommun/Button.tsx";
