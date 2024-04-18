@@ -104,7 +104,7 @@ export const PRICING = [
         features: [
             "Tests illimités",
             "Accès à tous les défis disponibles",
-            "Support premium 24/7",
+            "Support premium 23/7",
             "Personnalisation de l'environnement de travail",
             "Formation et intégration sur mesure"
         ],
