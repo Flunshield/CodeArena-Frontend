@@ -118,32 +118,32 @@ export const PRICING = [
 
 export const ENTREPRISE_TRUST = [
     {
-        src: "/src/assets/logoEntreprisetrust/OIG1.jpeg",
+        src: "/assets/logoEntreprisetrust/OIG1.jpeg",
         alt: "AuroraTech ",
         name: "AuroraTech"
     },
     {
-        src: "/src/assets/logoEntreprisetrust/OIG2.jpeg",
+        src: "/assets/logoEntreprisetrust/OIG2.jpeg",
         alt: "BistroVibe",
         name: "BistroVibe"
     },
     {
-        src: "/src/assets/logoEntreprisetrust/OIG3.jpeg",
+        src: "/assets/logoEntreprisetrust/OIG3.jpeg",
         alt: "EcoVenture",
         name: "EcoVenture"
     },
     {
-        src: "/src/assets/logoEntreprisetrust/OIG1.jpeg",
+        src: "/assets/logoEntreprisetrust/OIG1.jpeg",
         alt: "InnovaSphere",
         name: "InnovaSphere"
     },
     {
-        src: "/src/assets/logoEntreprisetrust/OIG2.jpeg",
+        src: "/assets/logoEntreprisetrust/OIG2.jpeg",
         alt: "GastronHome ",
         name: "GastronHome "
     },
     {
-        src: "/src/assets/logoEntreprisetrust/OIG3.jpeg",
+        src: "/assets/logoEntreprisetrust/OIG3.jpeg",
         alt: "TechNova",
         name: "TechNova"
     }
