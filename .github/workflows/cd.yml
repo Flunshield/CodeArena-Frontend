@@ -47,12 +47,14 @@ jobs:
           sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
 
       - name: Exécuter les tests
+        id: test
         run: |
           npx cypress run
 
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' && needs.test.result == 'success' }}
     runs-on: ubuntu-latest
+    needs: test
 
     steps:
       - name: Checkout du code
