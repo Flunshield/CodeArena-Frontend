@@ -16,14 +16,6 @@ jobs:
       - name: Checkout du code
         uses: actions/checkout@v2
 
-      - name: Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
-        env:
-          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
-        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
-
-      - name: Afficher le contenu du fichier .env
-        run: cat .env
-
       - name: Cache node modules
         id: cache-npm
         uses: actions/cache@v3
@@ -50,29 +42,36 @@ jobs:
 
       - name: Lancement du projet en arrière-plan
         run: |
+          docker compose -f front-app/docker-compose.yml down
           npm run dev &
           sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
 
       - name: Exécuter les tests
         run: |
           npx cypress run
+
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.name == 'CI - Tests de l'application'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout du code
-      uses: actions/checkout@v2
+      - name: Checkout du code
+        uses: actions/checkout@v2
 
-    - name: Déploiement sur le VPS
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd front-app/
-          docker compose down
-          git pull
-          docker compose up --build -d
+      - name: Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
+        env:
+          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
+        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
+
+      - name: Déploiement sur le VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd front-app/
+            docker compose -f docker-compose.yml down
+            git pull
+            docker compose -f docker-compose.yml up --build -d
