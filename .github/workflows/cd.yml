@@ -54,6 +54,10 @@ jobs:
          run: |
            npx cypress run
 
+       - name: Génération du changeLog
+         run: |
+            changelog -m & npm version minor
+            
   deploy:
     if: ${{ github.ref == 'refs/heads/main' && needs.test.result == 'success' }}
     runs-on: ubuntu-latest
