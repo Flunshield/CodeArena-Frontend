@@ -4,25 +4,74 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
-  deploy:
-    if: github.ref == 'refs/heads/main' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.name == 'CI - Tests de l'application'
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout du code
-      uses: actions/checkout@v2
+      - name: Checkout du code
+        uses: actions/checkout@v2
 
-    - name: Déploiement sur le VPS
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd front-app/
-          docker compose down
-          git pull
-          docker compose up --build -d
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lintage du code
+        run: npm run lint
+
+      - name: Lancement du projet en arrière-plan
+        run: |
+          docker compose -f front-app/docker-compose.yml down
+          npm run dev &
+          sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
+
+      - name: Exécuter les tests
+        run: |
+          npx cypress run
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v2
+
+      - name: Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
+        env:
+          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
+        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
+
+      - name: Déploiement sur le VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd front-app/
+            docker compose -f docker-compose.yml down
+            git pull
+            docker compose -f docker-compose.yml up --build -d
