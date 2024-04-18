@@ -53,3 +53,31 @@ jobs:
       - name: Exécuter les tests
         run: |
           npx cypress run
+
+      - name: Déterminer l'état des tests
+        id: determine-test-status
+        run: |
+          if [ -s "cypress/results/*/*.json" ]; then
+            echo "Tests passed"
+          else
+            echo "Tests failed"
+          fi
+
+      - name: Set build status
+        if: ${{ always() }}
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { context, github } = require('@actions/github');
+            const state = '${{ steps.determine-test-status.outputs }}' === 'Tests passed';
+            const description = state ? 'Tests passed' : 'Tests failed';
+            const targetUrl = /* URL vers les détails des tests, par exemple, les logs */;
+            github.repos.createCommitStatus({
+              ...context.repo,
+              sha: context.sha,
+              state: state ? 'success' : 'failure',
+              target_url: targetUrl,
+              description: description,
+              context: 'GitHub Actions - Tests'
+            });
