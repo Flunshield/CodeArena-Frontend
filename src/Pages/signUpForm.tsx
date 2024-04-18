@@ -6,7 +6,7 @@ import {shortUser} from "../Interface/Interface.ts";
 import {createUser} from "../Helpers/apiHelper.ts";
 import {useNavigate} from "react-router-dom";
 import Layout from "../ComposantsCommun/Layout.tsx";
-import tree from "../assets/tree.svg";
+import tree from "/assets/tree.svg";
 import CardContent from '../ComposantsCommun/CardContent.tsx';
 import Card from '../ComposantsCommun/Card.tsx';
 import {useTranslation} from "react-i18next";

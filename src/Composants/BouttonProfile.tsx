@@ -6,7 +6,7 @@ import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";
 import {DataToken} from "../Interface/Interface.ts";
 import {ADMIN, COMPTE, GROUPS, LOGOUT} from "../constantes.ts";
-import noImage from '../assets/photosProfiles/noImage.png';
+import noImage from '/assets/photosProfiles/noImage.png';
 
 const BouttonProfile = () => {
 

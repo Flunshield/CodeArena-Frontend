@@ -1,5 +1,4 @@
 import Layout from "../../ComposantsCommun/Layout.tsx";
-import tree from "../../assets/tree.svg";
 import PricingSection from "./homeEntreprise/PricingSection.tsx";
 import CardExplainSection from "./homeEntreprise/cardExplainSection.tsx";
 import TrustSection from "./homeEntreprise/trustSection.tsx";
@@ -15,7 +14,7 @@ const HomeEntreprise = () => {
                 </div>
                 <img
                     className="bg-primary hidden xl:block absolute right-0 -z-10"
-                    src={tree}
+                    src="/assets/tree.svg"
                     alt="arbre design"
                     id="arbre"
                 />

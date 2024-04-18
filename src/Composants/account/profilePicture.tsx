@@ -29,10 +29,11 @@ function ProfilePicture(value: ProfilePictureProps) {
             id: infos.data.id,
             userName: infos.data.userName,
             token: authContext.accessToken,
-            avatar: `src/assets/photosProfiles/${isPictureClicked}`
+            avatar: `/assets/photosProfiles/${isPictureClicked}`
         });
         if (response.ok) {
             setPopupOpen(false);
+            window.location.reload();
         } else {
             alert("Erreur lors de la mise à jour de l'avatar");
         }
@@ -72,7 +73,7 @@ function ProfilePicture(value: ProfilePictureProps) {
                             {imagePaths.map((path) => (
                                 <img className="rounded-full w-20 h-20 m-5" key={path} id={path}
                                      onClick={() => addPicture(path)}
-                                     src={`src/assets/photosProfiles/${path}`} alt={`Image ${path}`}/>
+                                     src={`/assets/photosProfiles/${path}`} alt={`Image ${path}`}/>
                             ))}
                         </div>
                         <button onClick={closePopup} className="text-white mr-6">{t("update")}</button>

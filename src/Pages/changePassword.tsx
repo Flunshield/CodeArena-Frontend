@@ -4,7 +4,7 @@ import Label from "../ComposantsCommun/Label.tsx";
 import { changePassword } from "../Helpers/apiHelper.ts";
 import {useLocation, useNavigate} from "react-router-dom";
 import Layout from "../ComposantsCommun/Layout.tsx";
-import tree from "../assets/tree.svg";
+import tree from "/assets/tree.svg";
 import CardContent from '../ComposantsCommun/CardContent.tsx';
 import Card from '../ComposantsCommun/Card.tsx';
 import { useTranslation } from "react-i18next";

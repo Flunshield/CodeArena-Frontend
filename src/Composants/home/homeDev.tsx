@@ -1,4 +1,4 @@
-import tree from "../../assets/tree.svg";
+import tree from "/assets/tree.svg";
 import Layout from "../../ComposantsCommun/Layout.tsx";
 import {useTranslation} from "react-i18next";
 

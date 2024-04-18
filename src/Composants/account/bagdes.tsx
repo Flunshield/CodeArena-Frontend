@@ -20,7 +20,7 @@ function Badges(): JSX.Element {
             <div className="flex flex-wrap mt-5">
                 {badges.map((badge, index) => (
                     <div key={index} className="flex flex-col">
-                        <img src={`src/assets/badges/${badge}`} alt="badge" title={badge}
+                        <img src={`/assets/badges/${badge}`} alt="badge" title={badge}
                              className="rounded-full w-20 h-20 border-2 border-white m-5"/>
                     </div>
                 ))}
