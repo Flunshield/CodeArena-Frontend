@@ -54,9 +54,23 @@ jobs:
          run: |
            npx cypress run
 
-       - name: Génération du changeLog
+       - name: Obtenir le type de changement du dernier commit
+         id: get_commit_type
          run: |
-            changelog -m & npm version minor
+           COMMIT_MESSAGE=$(git log --format="%s" -n 1)
+           if echo "$COMMIT_MESSAGE" | grep -qE '\[(minor|major|patch)\]'; then
+             CHANGE_TYPE=$(echo "$COMMIT_MESSAGE" | grep -oE '\[(minor|major|patch)\]' | sed 's/[][]//g')
+           else
+             CHANGE_TYPE="patch"  # Si aucun type n'est spécifié, utiliser "patch" par défaut
+           fi
+           echo "::set-output name=type::$CHANGE_TYPE"
+
+       - name: Génération du changelog et mise à jour de la version
+         run: |
+           # Obtenir le type de changement à partir du commit
+           CHANGE_TYPE="${{ steps.get_commit_type.outputs.type }}"
+           # Exécuter la commande npm version en fonction du type de changement
+           npm version $CHANGE_TYPE
             
   deploy:
     if: ${{ github.ref == 'refs/heads/main' && needs.test.result == 'success' }}
