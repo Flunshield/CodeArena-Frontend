@@ -3,6 +3,7 @@ import Switcher from "../ComposantsCommun/Switcher.tsx";
 import {useState} from "react";
 import HomeEntreprise from "../Composants/home/homeEntreprise.tsx";
 import {useAuthContext} from "../AuthContext.tsx";
+import Layout from "../ComposantsCommun/Layout.tsx";
 
 
 function Home() {
@@ -13,11 +14,12 @@ function Home() {
     return (
         <div>
             {!isConnected &&
-            <Switcher setCurrentHome={setCurrentHome} currentHome={currentHome}/>
+                <Switcher setCurrentHome={setCurrentHome} currentHome={currentHome}
+                          className="mt-16 absolute w-full z-50"/>
             }
-            {currentHome ? <HomeEntreprise/> : <HomeDev/>}
-
-
+            <Layout>
+                {currentHome ? <HomeEntreprise/> : <HomeDev/>}
+            </Layout>
         </div>
     );
 }

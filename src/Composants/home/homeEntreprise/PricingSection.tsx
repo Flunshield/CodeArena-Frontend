@@ -2,6 +2,9 @@ import {PRICING} from "../../../constantes.ts";
 import {useAuthContext} from "../../../AuthContext.tsx";
 import {handleCheckout} from "../../../Helpers/apiHelper.ts";
 import {useNavigate} from "react-router-dom";
+import {isMobile} from 'react-device-detect';
+import clsx from "clsx";
+
 
 const PricingSection = () => {
     const authContext = useAuthContext();
@@ -25,15 +28,15 @@ const PricingSection = () => {
             navigate("/success")
         }
     }
-
+console.log(isMobile)
     return (
         <div className="container mx-auto py-8">
-            <h2 className="text-3xl text-tertiari font-bold mb-4">Choisissez le plan qui convient le mieux à vos
+            <h2 className="text-tertiari m-2 text-center text-xl sm:text-6xl font-bold">Choisissez le plan qui convient le mieux à vos
                 besoins</h2>
             <div className="flex flex-col xl:grid grid-cols-1 md:grid-cols-3 gap-6">
                 {PRICING.map((plan, index) => (
                     <div key={index}
-                         className="bg-tertiari rounded-lg p-6 shadow-md flex flex-col justify-between transition duration-300 ease-in-out transform hover:scale-105"
+                         className={clsx(isMobile ? "" : "transition duration-300 ease-in-out transform hover:scale-105", "bg-tertiari m-10 rounded-lg p-6 shadow-md flex flex-col justify-between")}
                     >
                         <h3 className="text-4xl font-semibold mb-4 text-center">{plan.title}</h3>
                         <p className="text-gray-700">{plan.description}</p>
