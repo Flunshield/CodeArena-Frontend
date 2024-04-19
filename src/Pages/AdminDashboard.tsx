@@ -49,7 +49,7 @@ const AdminDashboard: React.FC = () => {
     return (
         <Layout>
             <div className="m-32">
-                <Card className="bg-secondary text-white">
+                <Card className="bg-secondary text-tertiari">
                     <CardContent>
                         <h1>Admin Dashboard</h1>
                         <Card className="mt-10">

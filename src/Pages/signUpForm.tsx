@@ -47,7 +47,7 @@ const SignUpForm: React.FC = () => {
                 <div className="relative left-1/3 flex items-center ">
                     <div>
                         <Card className="mt-32 rounded-none w-96">
-                            <CardContent className="bg-tertiari text-white w-96 pb-6 pt-6">
+                            <CardContent className="bg-tertiari text-tertiari w-96 pb-6 pt-6">
                                 <div className="mt-2 mb-2">
                                     <div className="flex flex-col mb-5 text-center font-bold">
                                         <p className="text-3xl text-primary">{t('signIntoCodeArena')}</p>

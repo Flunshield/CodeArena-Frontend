@@ -75,10 +75,10 @@ function tournamentInfos() {
 
     return (
 
-        <div className="m-16 lg:m-56">
-            <Card className="border-white bg-secondary">
+        <div className="m-16 mt-32 lg:m-56">
+            <Card className="border-tertiari bg-secondary">
                 <CardContent>
-                    <ul className="text-white flex flex-col">
+                    <ul className="text-tertiari flex flex-col">
                         <li className="text-3xl text-center font-bold">{infosTournament?.title}</li>
                         <div className="mt-10 flex flex-col md:flex-row justify-around text-2xl">
                             <div className="flex flex-col text-center">
@@ -102,12 +102,12 @@ function tournamentInfos() {
                             {canSubscribe &&
                                 (isRegistered ?
                                         <Button type="button" id="inscription" onClick={handleClickUnsubscribe}
-                                                className="border-2 border-white rounded-xl p-3 font-bold text-2xl">
+                                                className="border-2 border-tertiari rounded-xl p-3 font-bold text-2xl">
                                             {t("unsubscribe")}
                                         </Button>
                                         :
                                         <Button type="button" id="inscription" onClick={handleClickRegistered}
-                                                className="border-2 border-white rounded-xl p-3 font-bold text-2xl">
+                                                className="border-2 border-tertiari rounded-xl p-3 font-bold text-2xl">
                                             {t("inscription")}
                                         </Button>
                                 )

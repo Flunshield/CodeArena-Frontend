@@ -46,13 +46,13 @@ const Success = () => {
         <Layout>
             <div className="m-64 text-center">
                 {isError ?
-                    <Card className="bg-secondary text-white p-32">
+                    <Card className="bg-secondary text-tertiari p-32">
                         <h1 className="text-2xl mb-10">Erreur lors de la transaction</h1>
                         <p> Veuillez contacter le support. (Code erreur {isCodeError})</p>
                     </Card>
                     :
-                    <Card className="bg-secondary text-white p-32">
-                        <h1 className="text-white">Vous allez être redirigé</h1>
+                    <Card className="bg-secondary text-tertiari p-32">
+                        <h1 className="text-tertiari">Vous allez être redirigé</h1>
                         {/* eslint-disable-next-line react/no-unescaped-entities */}
                         <p> Si vous n'êtes pas redirigé, vous pouvez cliquez sur ce <a href={"/"}
                                                                                        className="text-blue-700">lien.</a>

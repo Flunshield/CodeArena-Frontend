@@ -42,50 +42,57 @@ const InfosUser: React.FC<InfosUserProps> = ({openPopup}) => {
     }
 
     return (
-        <div className="ml-28 mb-10 flex flex-col">
+        <div className="m-5 flex flex-col">
             <div className="">
-                <p className="text-white mb-1 uppercase font-bold text-xl ml-2">{infos.data.firstName && infos.data.lastName ? infos.data.firstName + " " + infos.data.lastName : infos.data.userName}</p>
+                <p className="text-tertiari mb-1 uppercase font-bold text-xl ml-2">{infos.data.firstName && infos.data.lastName ? infos.data.firstName + " " + infos.data.lastName : infos.data.userName}</p>
                 <p className="text-gray-600 mb-5 uppercase font-bold text-xl">{infos.data.firstName && infos.data.lastName ? infos.data.userName : ""}</p>
             </div>
             {emailVerified === false &&
                 <div className="flex flex-row">
-                <p className="text-white text-center bg-error rounded-lg p-2 w-36 mr-5">{t("emailNotVerified")}</p>
+                    <p className="text-tertiari text-center bg-error rounded-lg p-2 w-36 mr-5">{t("emailNotVerified")}</p>
                     {!isSendMail &&
-                        <Button id={"button-valid-mail"} type="button" onClick={valdMail} className="h-auto w-40 border-2 rounded-lg p-2 bg-green-800 text-white"> {t("validMail")} </Button>
+                        <Button id={"button-valid-mail"} type="button" onClick={valdMail}
+                                className="h-auto w-40 border-2 rounded-lg p-2 bg-green-800 text-tertiari"> {t("validMail")} </Button>
                     }
                 </div>
             }
-            <ul className="flex flex-col mt-5 md:flex-row md:flex-wrap lg:flex-col">
+            <div className="flex flex-col md:flex-row md:justify-around text-tertiari m-5 p-5 border-2 rounded-lg">
+            <ul>
                 <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
                     <img src={map} alt="map" className="mr-1"/>
-                    <p id="map" className="bg-primary text-white">{infos.data.localisation}</p>
+                    <p id="map" className="bg-primary text-tertiary p-2 rounded-md">{infos.data.localisation}</p>
                 </li>
                 <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
-                    <img src={company} alt="map" className="mr-1"/>
-                    <p id="company" className="bg-primary text-white">{infos.data.company}</p>
+                    <img src={company} alt="company" className="mr-1"/>
+                    <p id="company" className="bg-primary text-tertiary p-2 rounded-md">{infos.data.company}</p>
                 </li>
                 <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
-                    <img src={school} alt="map" className="mr-1"/>
-                    <p id="school" className="bg-primary text-white">{infos.data.school}</p>
+                    <img src={school} alt="school" className="mr-1"/>
+                    <p id="school" className="bg-primary text-tertiary p-2 rounded-md">{infos.data.school}</p>
+                </li>
+            </ul>
+
+            <ul>
+                <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
+                    <img src={github} alt="github" className="mr-1"/>
+                    <p id="github" className="bg-primary text-tertiary p-2 rounded-md">{infos.data.github}</p>
                 </li>
                 <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
-                    <img src={github} alt="map" className="mr-1"/>
-                    <p id="github" className="bg-primary text-white">{infos.data.github}</p>
-                </li>
-                <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
-                    <img src={link} alt="map" className="mr-1"/>
-                    <p id="link" className="bg-primary text-white">{infos.data.url}</p>
+                    <img src={link} alt="link" className="mr-1"/>
+                    <p id="link" className="bg-primary text-tertiary p-2 rounded-md">{infos.data.url}</p>
                 </li>
                 <li className="flex flex-row mb-2">
-                    <img src={titles} alt="map" className="mr-1"/>
-                    <p id="titles" className="bg-primary text-white">
-                        {title && title || "Aucun titre"}
+                    <img src={titles} alt="titles" className="mr-1"/>
+                    <p id="titles" className="bg-primary text-tertiary p-2 rounded-md">
+                        {title ? title : "Aucun titre"}
                     </p>
                 </li>
             </ul>
+            </div>
             <Button type="button" onClick={openPopup}
-                    className="border-2 bg-tertiari rounded-lg text-secondary p-2 w-40"
-                    id="save">{t("update")}</Button>
+                    className="border-2 bg-tertiary rounded-lg text-tertiari p-2 w-40" id="save">
+                {t("update")}
+            </Button>
         </div>
     );
 }

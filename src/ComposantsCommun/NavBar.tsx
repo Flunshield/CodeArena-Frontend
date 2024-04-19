@@ -53,8 +53,8 @@ const NavBar = () => {
             </Button>
             {isOpen && (
                 <Card
-                    className="w-full md:w-1/3 border-0 border-r border-b h-screen absolute rounded-tr-2xl rounded-br-2xl rounded-tl-none rounded-bl-none top-0 bg-primary border-white">
-                    <nav className="block flex-col text-white text-2xl font-bold">
+                    className="w-full z-10 md:w-1/3 border-0 border-r border-b h-screen absolute rounded-tr-2xl rounded-br-2xl rounded-tl-none rounded-bl-none top-0 bg-primary border-tertiari">
+                    <nav className="block flex-col text-tertiari text-2xl font-bold">
                         <div className="flex flex-row justify-between">
                             <img
                                 className="w-12 mt-3 ml-3"

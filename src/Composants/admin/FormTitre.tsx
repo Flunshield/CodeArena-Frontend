@@ -45,33 +45,33 @@ const FormTitre: React.FC<formTitreProps> = ({onClose, title, type}) => {
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className="flex flex-col w-full mb-10">
-                <p className="text-white font-bold text-2xl text-center mb-6">{t("TitlesUpdate")}</p>
+                <p className="text-tertiari font-bold text-2xl text-center mb-6">{t("TitlesUpdate")}</p>
                 <ul className="flex flex-col mt-5">
                     <li className="flex flex-row mb-2">
-                        <p className="font-bold text-white mr-10">{t("label")} : </p>
+                        <p className="font-bold text-tertiari mr-10">{t("label")} : </p>
                         <input
                             type="text"
                             id="label"
-                            className="bg-primary text-white"
+                            className="bg-primary text-tertiari"
                             {...formik.getFieldProps('label')}
                         />
                     </li>
                     <li className="flex flex-row mb-2">
-                        <p className="font-bold text-white mr-5">{t("value")} : </p>
+                        <p className="font-bold text-tertiari mr-5">{t("value")} : </p>
                         <input
                             type="text"
                             id="value"
-                            className="bg-primary text-white ml-4"
+                            className="bg-primary text-tertiari ml-4"
                             {...formik.getFieldProps('value')}
                         />
                     </li>
                 </ul>
             </div>
             <div className="flex flex-row justify-center">
-                <button type="submit" className="text-white mr-6 border-2 border-white rounded-lg p-2">
+                <button type="submit" className="text-tertiari mr-6 border-2 border-tertiari rounded-lg p-2">
                     {t("update")}
                 </button>
-                <button type="button" onClick={onClose} className="text-white mr-6 bg-secondary rounded-lg p-2">
+                <button type="button" onClick={onClose} className="text-tertiari mr-6 bg-secondary rounded-lg p-2">
                     {t("close")}
                 </button>
             </div>
