@@ -31,7 +31,7 @@ function Presentation() {
         }
     };
     return (
-        <div className="flex flex-col ml-20 mr-20 lg:ml-36 ">
+        <div className="flex flex-col m-5">
             <Label id={"labelTextArea"} className="text-tertiari text-3xl font-bold">{t("presentation")}</Label>
             <textarea id="presentation" name="presentation" rows={8} cols={75}
                       className="rounded-xl bg-secondary text-tertiari border-tertiari border-2 p-5 mt-5"

@@ -1,6 +1,6 @@
-import { useAuthContext } from "../../AuthContext.tsx";
-import { JwtPayload } from "jwt-decode";
-import { DataToken } from "../../Interface/Interface.ts";
+import {useAuthContext} from "../../AuthContext.tsx";
+import {JwtPayload} from "jwt-decode";
+import {DataToken} from "../../Interface/Interface.ts";
 import {useTranslation} from "react-i18next";
 
 function Badges(): JSX.Element {
@@ -13,21 +13,23 @@ function Badges(): JSX.Element {
     const badges: string[] = infos.data.badgesWin ?? [];
 
     return (
-        <div className="flex flex-col ml-20 lg:ml-40 mt-10">
-            <p className={"text-2xl font-bold text-tertiari"}>{t("yourBadges")}</p>
+        (
+            badges.length > 0 && (
+                <div className="flex flex-col ml-5">
+                    <p className={"text-2xl font-bold text-tertiari"}>{t("yourBadges")}</p>
 
-            {badges.length > 0 && (
-            <div className="flex flex-wrap mt-5">
-                {badges.map((badge, index) => (
-                    <div key={index} className="flex flex-col">
-                        <img src={`/assets/badges/${badge}`} alt="badge" title={badge}
-                             className="rounded-full w-20 h-20 border-2 border-tertiari m-5"/>
+                    <div className="flex flex-wrap m-5">
+                        {badges.map((badge, index) => (
+                            <div key={index}>
+                                <img src={`/assets/badges/${badge}`} alt="badge" title={badge}
+                                     className="rounded-full w-20 h-20 border-2 border-tertiari m-5"/>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-            )}
-        </div>
-    );
+                </div>
+            )
+        )
+    ) as JSX.Element;
 }
 
 export default Badges;
