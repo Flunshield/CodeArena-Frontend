@@ -75,7 +75,7 @@ function tournamentInfos() {
 
     return (
 
-        <div className="m-16 lg:m-56">
+        <div className="m-16 mt-32 lg:m-56">
             <Card className="border-tertiari bg-secondary">
                 <CardContent>
                     <ul className="text-tertiari flex flex-col">

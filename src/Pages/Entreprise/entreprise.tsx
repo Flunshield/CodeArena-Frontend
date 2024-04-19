@@ -6,8 +6,8 @@ import TrustSection from "../../Composants/home/homeEntreprise/trustSection.tsx"
 const Entreprise = () => {
     return (
         <Layout>
-            <div className="flex flex-row justify-between top-0 mr-60">
-                <div className="container mx-auto py-8 pt-32 z-20  ml-32 mr-32">
+            <div className="md:flex md:flex-row md:justify-between mt-16 mb-24 w-full">
+                <div className="pt-32 z-20 flex flex-col justify-center">
                     <CardExplainSection/>
                     <PricingSection/>
                     <TrustSection/>

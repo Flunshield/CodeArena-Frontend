@@ -22,7 +22,7 @@ function TournamentDashboard() {
 
     return (
         <Layout>
-            <div className="m-32 mb-64">
+            <div className="mt-32">
                 <TableauTournament infosTournament={infosTournament} isImg={true}></TableauTournament>
             </div>
         </Layout>

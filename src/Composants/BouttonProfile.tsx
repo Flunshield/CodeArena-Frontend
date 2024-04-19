@@ -34,7 +34,7 @@ const BouttonProfile = () => {
 
         setCurrentPage(checkUrl())
     }, [infos?.data?.avatar]);
-console.log(infos.data.groups)
+
     return (
         <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "hidden" : "block")}>
             <div
