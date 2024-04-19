@@ -20,15 +20,14 @@ function MyAccount() {
 
     return (
         <Layout>
-            <div className="flex flex-col lg:flex-row mt-60 mb-60 justify-center">
-                <div className="flex flex-col">
-                    <ProfilePicture/>
+            <div className="flex flex-col mt-32 mb-10 text-center">
+                <div className="flex flex-col ">
+                    <ProfilePicture classname="mr-auto ml-auto"/>
                     <InfosUser openPopup={openPopup}/>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col text-left">
                     <Presentation/>
                     <Badges/>
-
                 </div>
             </div>
             {isPopupOpen && (

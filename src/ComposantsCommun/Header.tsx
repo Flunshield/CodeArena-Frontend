@@ -26,17 +26,17 @@ import BouttonProfile from "../Composants/BouttonProfile.tsx";
                 <div className="flex start-0 top-0 absolute w-full">
                     {isConnected && <NavBar/>}
                     <div className="flex justify-between w-full">
-                        <h1 className="text-white text-2xl m-3 font-bold">{t('CodeArena')}</h1>
+                        <h1 className="text-tertiari text-2xl m-3 font-bold">{t('CodeArena')}</h1>
                     {!isConnected && (
                         <div className="flex items-baseline">
-                            <Button type="button" id="signIn" className="border-1 text-white text-1xl m-3"
+                            <Button type="button" id="signIn" className="border-1 text-tertiari text-1xl m-3"
                                     onClick={handleClickSingIn}>
                                 {t('connection')}
                             </Button>
                             <Button
                                 type="button"
                                 id="signUp"
-                                className="border-1 text-white text-1xl m-3 border-2 border-white rounded-md p-1"
+                                className="border-1 text-tertiari text-1xl m-3 border-2 border-tertiari rounded-md p-1"
                                 onClick={handleClickSingUp}
                             >
                                 {t('inscription')}
