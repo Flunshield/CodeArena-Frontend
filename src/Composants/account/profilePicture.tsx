@@ -51,17 +51,17 @@ function ProfilePicture(value: ProfilePictureProps) {
 
             // Supprimer les classes des images non sélectionnées
             pictureToDelete?.classList.remove("border-4");
-            pictureToDelete?.classList.remove("border-white");
+            pictureToDelete?.classList.remove("border-tertiari");
         });
 
         // Ajouter les classes à l'image sélectionnée
         picture?.classList.add("border-4");
-        picture?.classList.add("border-white");
+        picture?.classList.add("border-tertiari");
     };
 
     return (
         <div className={clsx(value.classname)}>
-            <img className="rounded-full w-48 h-48 border-2 border-white ml-32 mr-16 mb-10 md:ml-80 lg:ml-28"
+            <img className="rounded-full w-48 h-48 border-2 border-tertiari ml-32 mr-16 mb-10 md:ml-80 lg:ml-28"
                  src={isPictureClicked !== "" ? `src/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "noImage.png"}` : infos.data.avatar}
                  alt="Avatar"
                  onClick={openPopup}/>
@@ -76,7 +76,7 @@ function ProfilePicture(value: ProfilePictureProps) {
                                      src={`/assets/photosProfiles/${path}`} alt={`Image ${path}`}/>
                             ))}
                         </div>
-                        <button onClick={closePopup} className="text-white mr-6">{t("update")}</button>
+                        <button onClick={closePopup} className="text-tertiari mr-6">{t("update")}</button>
                     </div>
                 </div>
             )}

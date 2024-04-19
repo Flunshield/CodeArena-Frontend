@@ -51,7 +51,7 @@ const Footer: React.FC<FooterProps> = () => {
         </div>)
 
   return (
-      <footer className="w-full text-white p-4 z-0 bg-secondary">
+      <footer className="w-full text-tertiari p-4 z-0 bg-secondary">
           <div className="flex mb-3 flex-col md:flex-row md:justify-between">
               <div className="max-lg:hidden">
                   <img

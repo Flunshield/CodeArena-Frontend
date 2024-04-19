@@ -28,12 +28,12 @@ const PricingSection = () => {
 
     return (
         <div className="container mx-auto py-8">
-            <h2 className="text-3xl text-white font-bold mb-4">Choisissez le plan qui convient le mieux à vos
+            <h2 className="text-3xl text-tertiari font-bold mb-4">Choisissez le plan qui convient le mieux à vos
                 besoins</h2>
             <div className="flex flex-col xl:grid grid-cols-1 md:grid-cols-3 gap-6">
                 {PRICING.map((plan, index) => (
                     <div key={index}
-                         className="bg-white rounded-lg p-6 shadow-md flex flex-col justify-between transition duration-300 ease-in-out transform hover:scale-105"
+                         className="bg-tertiari rounded-lg p-6 shadow-md flex flex-col justify-between transition duration-300 ease-in-out transform hover:scale-105"
                     >
                         <h3 className="text-4xl font-semibold mb-4 text-center">{plan.title}</h3>
                         <p className="text-gray-700">{plan.description}</p>
@@ -49,7 +49,7 @@ const PricingSection = () => {
                                     Prix : <span className="text-green-400 font-bold">{plan.price}</span>
                                 </h2>
                                 <button onClick={() => handleCheckoutBtn(plan.url ?? "", plan.idApi ?? "")}
-                                        className="block w-full mt-10 border-2 border-secondary bg-secondary text-white rounded-lg p-2">
+                                        className="block w-full mt-10 border-2 border-secondary bg-secondary text-tertiari rounded-lg p-2">
                                     Acheter
                                 </button>
                             </div>

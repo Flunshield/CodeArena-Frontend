@@ -18,13 +18,13 @@ function TableauEvent(value: TableauEventProps) {
     const {t} = useTranslation();
 
     return (
-        <Card className={clsx(className, "rounded-xl border-white bg-secondary ${className}")}>
-            <CardContent className="bg-secondary text-white text-center">
+        <Card className={clsx(className, "rounded-xl border-tertiari bg-secondary ${className}")}>
+            <CardContent className="bg-secondary text-tertiari text-center">
                 <p className="font-bold text-5xl" id="title-event">{t("event")}</p>
             </CardContent>
             {infosEvent && infosEvent?.length > 0 ?
             infosEvent?.map((item: Event, index: number) => (
-                <CardContent key={index} className="bg-secondary text-white border-2 rounded-lg m-5">
+                <CardContent key={index} className="bg-secondary text-tertiari border-2 rounded-lg m-5">
                     <p className="text-3xl font-bold mb-10">{item.title}</p>
                     <p className="text-xl mb-5"><span
                         className="font-bold">{t("date")}</span>{formatDate(item.startDate, t)}</p>
@@ -33,7 +33,7 @@ function TableauEvent(value: TableauEventProps) {
                     <p className="text-gray-300">{item.description}</p>
                 </CardContent>))
                 :
-                <CardContent className="bg-secondary text-white border-2 rounded-lg m-5 flex justify-center">
+                <CardContent className="bg-secondary text-tertiari border-2 rounded-lg m-5 flex justify-center">
                     <p className="text-3xl font-bold mb-10 mt-10">{t("noEvent")}</p>
                 </CardContent>
             }

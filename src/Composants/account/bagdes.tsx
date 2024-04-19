@@ -14,14 +14,14 @@ function Badges(): JSX.Element {
 
     return (
         <div className="flex flex-col ml-20 lg:ml-40 mt-10">
-            <p className={"text-2xl font-bold text-white"}>{t("yourBadges")}</p>
+            <p className={"text-2xl font-bold text-tertiari"}>{t("yourBadges")}</p>
 
             {badges.length > 0 && (
             <div className="flex flex-wrap mt-5">
                 {badges.map((badge, index) => (
                     <div key={index} className="flex flex-col">
                         <img src={`/assets/badges/${badge}`} alt="badge" title={badge}
-                             className="rounded-full w-20 h-20 border-2 border-white m-5"/>
+                             className="rounded-full w-20 h-20 border-2 border-tertiari m-5"/>
                     </div>
                 ))}
             </div>

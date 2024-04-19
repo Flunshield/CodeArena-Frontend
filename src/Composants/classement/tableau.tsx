@@ -57,7 +57,7 @@ function Tableau(): JSX.Element {
     return (
         <div className="m-32 h-full bg-secondary rounded-lg">
             <div className="flex flex-row justify-between mb-2">
-                <p className="text-white font-bold text-3xl m-10">{t("ranking")}</p>
+                <p className="text-tertiari font-bold text-3xl m-10">{t("ranking")}</p>
                 <input
                     placeholder="Rechercher"
                     value={username}
@@ -67,7 +67,7 @@ function Tableau(): JSX.Element {
                 />
             </div>
             <ul className="flex flex-col p-12">
-                <li className={clsx(errorMessage ? "border-b-2 mb-5" : "", "flex flex-row justify-between w-full border-white p-5 text-white uppercase mb-5 font-bold")}>
+                <li className={clsx(errorMessage ? "border-b-2 mb-5" : "", "flex flex-row justify-between w-full border-tertiari p-5 text-tertiari uppercase mb-5 font-bold")}>
                     <p className="ml-5 hidden md:block">{t("avatar")}</p>
                     <p className="text-center">{t("userName")}</p>
                     <p className="text-center">{t("points")}</p>
@@ -80,7 +80,7 @@ function Tableau(): JSX.Element {
                 }
                 {isFindWithUserName ? (
                         <div>
-                            <li className="flex flex-row justify-between border-t-2 border-white text-center font-bold p-5 text-white uppercase mb-5 lg:justify-between">
+                            <li className="flex flex-row justify-between border-t-2 border-tertiari text-center font-bold p-5 text-tertiari uppercase mb-5 lg:justify-between">
                                 <div className="hidden md:flex md:justify-center">
                                     <img src={user?.avatar ?? NO_PHOTO}
                                          className="rounded-full w-20 h-20" alt="avatar"></img>
@@ -91,7 +91,7 @@ function Tableau(): JSX.Element {
                             </li>
                             {usersBelow.map((elem: UserRanking, index: number) => (
                                 <li key={index}
-                                    className="flex flex-row justify-between border-t-2 border-white p-5 text-white uppercase mb-5 lg:justify-between">
+                                    className="flex flex-row justify-between border-t-2 border-tertiari p-5 text-tertiari uppercase mb-5 lg:justify-between">
                                     <div className="hidden md:flex md:justify-center">
                                         <img src={elem.user?.avatar || NO_PHOTO}
                                              className="rounded-full w-20 h-20" alt="avatar"></img>
@@ -106,7 +106,7 @@ function Tableau(): JSX.Element {
                         <div>
                             {infosUserRankWithoutUserName?.map((elem: UserRanking, index: number) => (
                                 <li key={index}
-                                    className="flex flex-row justify-between border-t-2 border-white p-5 text-white uppercase mb-5 lg:justify-between">
+                                    className="flex flex-row justify-between border-t-2 border-tertiari p-5 text-tertiari uppercase mb-5 lg:justify-between">
                                     <div className="hidden md:flex md:justify-center">
                                         <img src={elem.user?.avatar || NO_PHOTO}
                                              className="rounded-full w-20 h-20" alt="avatar"></img>

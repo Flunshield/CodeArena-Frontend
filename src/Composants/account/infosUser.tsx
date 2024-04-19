@@ -44,41 +44,41 @@ const InfosUser: React.FC<InfosUserProps> = ({openPopup}) => {
     return (
         <div className="ml-28 mb-10 flex flex-col">
             <div className="">
-                <p className="text-white mb-1 uppercase font-bold text-xl ml-2">{infos.data.firstName && infos.data.lastName ? infos.data.firstName + " " + infos.data.lastName : infos.data.userName}</p>
+                <p className="text-tertiari mb-1 uppercase font-bold text-xl ml-2">{infos.data.firstName && infos.data.lastName ? infos.data.firstName + " " + infos.data.lastName : infos.data.userName}</p>
                 <p className="text-gray-600 mb-5 uppercase font-bold text-xl">{infos.data.firstName && infos.data.lastName ? infos.data.userName : ""}</p>
             </div>
             {emailVerified === false &&
                 <div className="flex flex-row">
-                <p className="text-white text-center bg-error rounded-lg p-2 w-36 mr-5">{t("emailNotVerified")}</p>
+                <p className="text-tertiari text-center bg-error rounded-lg p-2 w-36 mr-5">{t("emailNotVerified")}</p>
                     {!isSendMail &&
-                        <Button id={"button-valid-mail"} type="button" onClick={valdMail} className="h-auto w-40 border-2 rounded-lg p-2 bg-green-800 text-white"> {t("validMail")} </Button>
+                        <Button id={"button-valid-mail"} type="button" onClick={valdMail} className="h-auto w-40 border-2 rounded-lg p-2 bg-green-800 text-tertiari"> {t("validMail")} </Button>
                     }
                 </div>
             }
             <ul className="flex flex-col mt-5 md:flex-row md:flex-wrap lg:flex-col">
                 <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
                     <img src={map} alt="map" className="mr-1"/>
-                    <p id="map" className="bg-primary text-white">{infos.data.localisation}</p>
+                    <p id="map" className="bg-primary text-tertiari">{infos.data.localisation}</p>
                 </li>
                 <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
                     <img src={company} alt="map" className="mr-1"/>
-                    <p id="company" className="bg-primary text-white">{infos.data.company}</p>
+                    <p id="company" className="bg-primary text-tertiari">{infos.data.company}</p>
                 </li>
                 <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
                     <img src={school} alt="map" className="mr-1"/>
-                    <p id="school" className="bg-primary text-white">{infos.data.school}</p>
+                    <p id="school" className="bg-primary text-tertiari">{infos.data.school}</p>
                 </li>
                 <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
                     <img src={github} alt="map" className="mr-1"/>
-                    <p id="github" className="bg-primary text-white">{infos.data.github}</p>
+                    <p id="github" className="bg-primary text-tertiari">{infos.data.github}</p>
                 </li>
                 <li className="flex flex-row mb-2 md:mr-14 lg:mr-0">
                     <img src={link} alt="map" className="mr-1"/>
-                    <p id="link" className="bg-primary text-white">{infos.data.url}</p>
+                    <p id="link" className="bg-primary text-tertiari">{infos.data.url}</p>
                 </li>
                 <li className="flex flex-row mb-2">
                     <img src={titles} alt="map" className="mr-1"/>
-                    <p id="titles" className="bg-primary text-white">
+                    <p id="titles" className="bg-primary text-tertiari">
                         {title && title || "Aucun titre"}
                     </p>
                 </li>

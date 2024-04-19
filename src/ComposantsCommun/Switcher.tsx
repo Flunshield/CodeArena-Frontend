@@ -27,7 +27,7 @@ const Switcher: React.FC<SwitcherProps> = (data) => {
                     <Button
                         id="btnDev"
                         type={'button'}
-                        className={clsx(!currentHome ? "bg-gray-700 text-white" : "bg-primary text-white", "p-2 w-52 px-4 py-2 rounded-lg  font-bold transition duration-300 ease-in-out hover:bg-white hover:text-black")}
+                        className={clsx(!currentHome ? "bg-gray-700 text-tertiari" : "bg-primary text-tertiari", "p-2 w-52 px-4 py-2 rounded-lg  font-bold transition duration-300 ease-in-out hover:bg-tertiari hover:text-black")}
                         onClick={() => goToDevHome()}
                     >
                         <p>DEV</p>
@@ -35,7 +35,7 @@ const Switcher: React.FC<SwitcherProps> = (data) => {
                     <Button
                         id="btnEntreprise"
                         type={'button'}
-                        className={clsx(currentHome ? "bg-gray-700 text-white" : "bg-primary text-white", "p-2 w-52 px-4 py-2 rounded-lg font-bold transition duration-300 ease-in-out hover:bg-white hover:text-black")}
+                        className={clsx(currentHome ? "bg-gray-700 text-tertiari" : "bg-primary text-tertiari", "p-2 w-52 px-4 py-2 rounded-lg font-bold transition duration-300 ease-in-out hover:bg-tertiari hover:text-black")}
                         onClick={() => goToWorkOffice()}
                     >
                         Entreprise

@@ -12,8 +12,8 @@ function UserRank(value: UserRankProps): JSX.Element {
     const infosUserRank = value.infosUserRank;
 
     return (
-        <Card className="rounded-xl border-white h-auto mb-16">
-            <div className=" bg-secondary text-white pt-3 pb-3">
+        <Card className="rounded-xl border-tertiari h-auto mb-16">
+            <div className=" bg-secondary text-tertiari pt-3 pb-3">
                 <p className="font-bold text-5xl text-center" id="title-yourRank">{t("yourRank")}</p>
                 <div className="pr-10 pl-10 mt-10">
                     <div>

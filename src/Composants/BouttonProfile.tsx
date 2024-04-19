@@ -44,7 +44,7 @@ const BouttonProfile = () => {
                     className="w-20 h-20 rounded-full cursor-pointer m-5"
                 />
                 {showPopup && (
-                    <div className="fixed right-5 bg-secondary text-white border-2 border-tertiari p-2 text-xl rounded shadow">
+                    <div className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow">
                         <div className='p-2'>
                             <div className='flex flex-col justify-center'>
                             <Button id='button-compte' type={'button'}>
@@ -59,7 +59,7 @@ const BouttonProfile = () => {
                             <Button
                                 type="button"
                                 id="signOut"
-                                className="border-1 text-white text-1xl m-3 border-2 border-white rounded-md p-2 mt-10"
+                                className="border-1 text-tertiari text-1xl m-3 border-2 border-tertiari rounded-md p-2 mt-10"
                                 onClick={handleClickSingOut}
                             >
                                 {t('disonnect')}
