@@ -25,7 +25,7 @@ const BouttonProfile = () => {
     };
 
     useEffect(() => {
-        if(infos.data.avatar !== "") {
+        if (infos.data.avatar !== "") {
             setAvatar(infos?.data?.avatar ?? noImage);
         }
     }, [infos?.data?.avatar]);
@@ -34,7 +34,7 @@ const BouttonProfile = () => {
         <>
             <div
                 id="id-bouton-profile"
-                className="relative cursor-pointer rounded-full m-5"
+                className="relative cursor-pointer w-max p-10 pt-0"
                 onMouseEnter={() => setShowPopup(true)}
                 onMouseLeave={() => setShowPopup(false)}
             >
@@ -44,17 +44,18 @@ const BouttonProfile = () => {
                     className="w-20 h-20 rounded-full cursor-pointer m-5"
                 />
                 {showPopup && (
-                    <div className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow">
+                    <div
+                        className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow">
                         <div className='p-2'>
                             <div className='flex flex-col justify-center'>
-                            <Button id='button-compte' type={'button'}>
-                                <Link to={COMPTE}>Mon Compte</Link>
-                            </Button>
-                            {role === GROUPS.ADMIN &&
-                                <Button id='button-compte' type={'button'} className="mt-5">
-                                    <Link to={ADMIN}>Administration</Link>
+                                <Button id='button-compte' type={'button'}>
+                                    <Link to={COMPTE}>Mon Compte</Link>
                                 </Button>
-                            }
+                                {role === GROUPS.ADMIN &&
+                                    <Button id='button-compte' type={'button'} className="mt-5">
+                                        <Link to={ADMIN}>Administration</Link>
+                                    </Button>
+                                }
                             </div>
                             <Button
                                 type="button"
