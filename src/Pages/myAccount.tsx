@@ -20,12 +20,12 @@ function MyAccount() {
 
     return (
         <Layout>
-            <div className="flex flex-col lg:flex-row mt-60 mb-60 justify-center">
-                <div className="flex flex-col">
+            <div className="flex flex-col lg:flex-row mt-32 justify-around">
+                <div className="flex flex-col justify-between">
                     <ProfilePicture/>
                     <InfosUser openPopup={openPopup}/>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col justify-between">
                     <Presentation/>
                     <Badges/>
 

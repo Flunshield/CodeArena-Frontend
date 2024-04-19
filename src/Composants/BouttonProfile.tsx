@@ -5,8 +5,10 @@ import {useAuthContext} from "../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";
 import {DataToken} from "../Interface/Interface.ts";
-import {ADMIN, COMPTE, GROUPS, LOGOUT} from "../constantes.ts";
+import {ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT} from "../constantes.ts";
 import noImage from '/assets/photosProfiles/noImage.png';
+import {checkUrl} from "../Helpers/methodeHelper.ts";
+import clsx from "clsx";
 
 const BouttonProfile = () => {
 
@@ -19,6 +21,7 @@ const BouttonProfile = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [avatar, setAvatar] = useState<string>(noImage);
     const role = infos.data.groups.roles
+    const [currentPage, setCurrentPage] = useState<string>();
 
     const handleClickSingOut = () => {
         navigate(LOGOUT);
@@ -28,10 +31,12 @@ const BouttonProfile = () => {
         if (infos.data.avatar !== "") {
             setAvatar(infos?.data?.avatar ?? noImage);
         }
-    }, [infos?.data?.avatar]);
 
+        setCurrentPage(checkUrl())
+    }, [infos?.data?.avatar]);
+console.log(infos.data.groups)
     return (
-        <>
+        <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "hidden" : "block")}>
             <div
                 id="id-bouton-profile"
                 className="relative cursor-pointer w-max p-10 pt-0"
@@ -48,12 +53,17 @@ const BouttonProfile = () => {
                         className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow">
                         <div className='p-2'>
                             <div className='flex flex-col justify-center'>
-                                <Button id='button-compte' type={'button'}>
+                                <Button id='button-compte' type={'button'} className={clsx(currentPage === "myAccount" ? "hidden" : "block", "mb-5")}>
                                     <Link to={COMPTE}>Mon Compte</Link>
                                 </Button>
                                 {role === GROUPS.ADMIN &&
-                                    <Button id='button-compte' type={'button'} className="mt-5">
+                                    <Button id='button-compte' type={'button'} className={clsx(currentPage === "admin" ? "hidden" : "block", "mb-5")}>
                                         <Link to={ADMIN}>Administration</Link>
+                                    </Button>
+                                }
+                                {role === GROUPS.ENTREPRISE &&
+                                    <Button id='button-compte' type={'button'} className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5")}>
+                                        <Link to={DASHBOARD_ENTREPRISE}>Dashboard Entreprise</Link>
                                     </Button>
                                 }
                             </div>
@@ -71,7 +81,7 @@ const BouttonProfile = () => {
                     </div>
                 )}
             </div>
-        </>
+        </div>
     )
 }
 
