@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '/assets/logo.svg';
 import iconeMail from '/assets/iconeMail.png';
 import {useTranslation} from "react-i18next";
-import {ENTREPRISE, MAIL} from "../constantes/constantes.ts";
+import {ENTREPRISE, LEGAL, MAIL, PRIVACY_POLICY, TERMS} from "../constantes/constantes.ts";
 import facebook from "/assets/facebook.png";
 import twitter from "/assets/twitter.png";
 import discord from "/assets/discord.png"
@@ -70,9 +70,9 @@ const Footer: React.FC<FooterProps> = () => {
                   <ul>
                   <li className="font-bold text-2xl">{t('contact')}</li>
                   <li className="mt-5 flex md:justify-between"><img src={iconeMail} alt="icone de mail" className="mr-5"/>{MAIL}</li>
-                  <li className="mt-10 hover:underline"><a href="">{t('politiqueConfidentialite')}</a></li>
-                  <li className="mt-2 hover:underline"><a href="">{t('mentionLegal')}</a></li>
-                  <li className="mt-2 hover:underline"><a href="">{t('cgv')}</a></li>
+                  <li className="mt-10 hover:underline"><a href={PRIVACY_POLICY}>{t('politiqueConfidentialite')}</a></li>
+                  <li className="mt-2 hover:underline"><a href={LEGAL}>{t('mentionLegal')}</a></li>
+                  <li className="mt-2 hover:underline"><a href={TERMS}>{t('cgv')}</a></li>
                   </ul>
               </div>
               <div className="flex-col mt-5">
