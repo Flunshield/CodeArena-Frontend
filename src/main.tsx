@@ -24,17 +24,20 @@ import {
     COMPTE, COOKIE_POLICY,
     DASHBOARD, ENTREPRISE, EVENT,
     FORGOT_PASSWORD,
-    HOME,
+    HOME, LEGAL,
     LOGIN,
-    LOGOUT,
+    LOGOUT, PRIVACY_POLICY,
     RANKING,
     REGISTER,
-    RESET_PASSWORD, SUCCESS, TOURNAMENT
+    RESET_PASSWORD, SUCCESS, TERMS, TOURNAMENT
 } from "./constantes/constantes.ts";
 import Entreprise from "./Pages/Entreprise/entreprise.tsx";
 import Success from "./Pages/Entreprise/success.tsx";
 import Cancel from "./Pages/Entreprise/cancel.tsx";
 import CookiePolicyPage from "./ComposantsCommun/CookiePolicyPage.tsx";
+import PrivacyPolicy from "./ComposantsCommun/PrivacyPolicy.tsx";
+import LegalMentions from "./ComposantsCommun/LegalMentions.tsx";
+import Cgv from "./ComposantsCommun/Cgv.tsx";
 
 const router = createBrowserRouter([
     {
@@ -75,6 +78,21 @@ const router = createBrowserRouter([
     {
         path: COOKIE_POLICY,
         element: <CookiePolicyPage/>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: PRIVACY_POLICY,
+        element: <PrivacyPolicy/>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: LEGAL,
+        element: <LegalMentions/>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: TERMS,
+        element: <Cgv/>,
         errorElement: "<ErrorPage/>"
     },
     {
