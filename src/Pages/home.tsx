@@ -7,13 +7,11 @@ import Layout from "../ComposantsCommun/Layout.tsx";
 
 
 function Home() {
-    const authContext = useAuthContext();
-    const isConnected = authContext.connected;
     const [currentHome, setCurrentHome] = useState<boolean>(false);
 
     return (
         <div>
-            {!isConnected &&
+            {!useAuthContext().connected &&
                 <Switcher setCurrentHome={setCurrentHome} currentHome={currentHome}
                           className="mt-16 absolute w-full z-50"/>
             }

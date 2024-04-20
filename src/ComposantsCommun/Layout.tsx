@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
 import Footer from '../ComposantsCommun/Footer';
 import Header from "./Header.tsx";
+import CookieConsentBanner from "./CookieConsentBanner.tsx";
 
 
 type LayoutProps = {
@@ -9,15 +10,16 @@ type LayoutProps = {
 
 const Layout = ({children}: LayoutProps) => {
     return (
-            <div className="flex flex-col min-h-screen w-auto">
-                <Header/>
-                <div id="mainFooter" className="z-10">
-                    <main className="flex-grow" id="main">
-                        {children}
-                    </main>
-                    <Footer/>
-                </div>
+        <div className="flex flex-col min-h-screen w-auto">
+            <Header/>
+            <div id="mainFooter" className="z-10">
+                <main className="flex-grow" id="main">
+                    {children}
+                </main>
+                <CookieConsentBanner />
+                <Footer/>
             </div>
+        </div>
     )
 }
 

@@ -91,6 +91,7 @@ const LoginPage: React.FC = () => {
                                                     placeholder={t('userName')}
                                                     type="text"
                                                     value={userName}
+                                                    autoComplete="current-username"
                                                     onChange={(e) => setUserName(e.target.value)}
                                                 />
                                             </Label>
@@ -102,6 +103,7 @@ const LoginPage: React.FC = () => {
                                                     className={clsx(errorPassword && "border-error border-4", "h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300")}
                                                     type="password"
                                                     placeholder={t('password')}
+                                                    autoComplete="current-password"
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                 />

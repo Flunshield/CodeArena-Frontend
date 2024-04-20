@@ -49,7 +49,6 @@ const useAuth = ({accessToken}: AuthHookProps) => {
         }
     };
 
-
     const refreshAccessToken = async (): Promise<string> => {
         try {
             // Effectuer la requête pour rafraîchir le jeton d'accès avec fetch
@@ -74,7 +73,7 @@ const useAuth = ({accessToken}: AuthHookProps) => {
     };
 
     useEffect(() => {
-            fetchData().then(r => r);
+        fetchData().then(r => r);
     }, [accessToken]); // Déclencher le chargement lorsque le jeton d'accès change
 
     // Effet pour sauvegarder les données dans localStorage lorsqu'elles changent
