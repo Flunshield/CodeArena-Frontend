@@ -28,7 +28,7 @@ const PricingSection = () => {
             navigate("/success")
         }
     }
-console.log(isMobile)
+
     return (
         <div className="container mx-auto py-8">
             <h2 className="text-tertiari m-2 text-center text-xl sm:text-6xl font-bold">Choisissez le plan qui convient le mieux à vos

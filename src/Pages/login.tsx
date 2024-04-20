@@ -62,7 +62,7 @@ const LoginPage: React.FC = () => {
         }
     };
     useEffect(() => {
-        console.log("authContext : ", authContext)
+
         if (isConnected) {
             navigate("/dashboard");
         }
