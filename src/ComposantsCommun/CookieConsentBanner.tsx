@@ -1,7 +1,9 @@
 import {useEffect, useState} from 'react';
+import {useTranslation} from "react-i18next";
 
 const CookieConsentBanner = () => {
     const [consentGiven, setConsentGiven] = useState(false);
+    const {t} = useTranslation();
 
     // Fonction pour accepter les cookies
     const acceptCookies = () => {
@@ -19,7 +21,7 @@ const CookieConsentBanner = () => {
         !consentGiven && (
             <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 text-center z-50">
                 <p>
-                    Ce site utilise des cookies pour améliorer votre expérience. En continuant à naviguer sur ce site, vous acceptez notre utilisation des cookies.
+                    {t('utiliseCookiePrevent')}
                     <button onClick={acceptCookies} className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Accepter
                     </button>

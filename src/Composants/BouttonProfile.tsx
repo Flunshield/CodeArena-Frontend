@@ -5,7 +5,7 @@ import {useAuthContext} from "../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";
 import {DataToken} from "../Interface/Interface.ts";
-import {ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT} from "../constantes.ts";
+import {ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT} from "../constantes/constantes.ts";
 import noImage from '/assets/photosProfiles/noImage.png';
 import {checkUrl} from "../Helpers/methodeHelper.ts";
 import clsx from "clsx";
@@ -54,16 +54,16 @@ const BouttonProfile = () => {
                         <div className='p-2'>
                             <div className='flex flex-col justify-center'>
                                 <Button id='button-compte' type={'button'} className={clsx(currentPage === "myAccount" ? "hidden" : "block", "mb-5")}>
-                                    <Link to={COMPTE}>Mon Compte</Link>
+                                    <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
                                 {role === GROUPS.ADMIN &&
                                     <Button id='button-compte' type={'button'} className={clsx(currentPage === "admin" ? "hidden" : "block", "mb-5")}>
-                                        <Link to={ADMIN}>Administration</Link>
+                                        <Link to={ADMIN}>{t('administration')}</Link>
                                     </Button>
                                 }
                                 {role === GROUPS.ENTREPRISE &&
                                     <Button id='button-compte' type={'button'} className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5")}>
-                                        <Link to={DASHBOARD_ENTREPRISE}>Dashboard Entreprise</Link>
+                                        <Link to={DASHBOARD_ENTREPRISE}>{t('dashboardEntreprise')}</Link>
                                     </Button>
                                 }
                             </div>

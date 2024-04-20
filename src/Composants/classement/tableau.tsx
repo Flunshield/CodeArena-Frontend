@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
-import {NO_PHOTO} from "../../constantes.ts";
+import {NO_PHOTO} from "../../constantes/constantes.ts";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();

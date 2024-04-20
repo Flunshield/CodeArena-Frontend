@@ -1,7 +1,7 @@
 import Card from "../../ComposantsCommun/Card.tsx";
 import {userRangList} from "../../Interface/Interface.ts";
 import {useTranslation} from "react-i18next";
-import {NO_PHOTO} from "../../constantes.ts";
+import {NO_PHOTO} from "../../constantes/constantes.ts";
 import clsx from "clsx";
 
 interface UserRankProps {
