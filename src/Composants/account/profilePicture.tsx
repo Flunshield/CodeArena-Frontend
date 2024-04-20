@@ -1,4 +1,4 @@
-import {imagePaths} from "../../constantes.ts";
+import {imagePaths} from "../../constantes/constantes.ts";
 import {useState} from "react";
 import {updateUser} from "../../Helpers/apiHelper.ts";
 import {useTranslation} from "react-i18next";

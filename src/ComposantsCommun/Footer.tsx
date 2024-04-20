@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '/assets/logo.svg';
 import iconeMail from '/assets/iconeMail.png';
 import {useTranslation} from "react-i18next";
-import {ENTREPRISE, MAIL} from "../constantes.ts";
+import {ENTREPRISE, MAIL} from "../constantes/constantes.ts";
 import facebook from "/assets/facebook.png";
 import twitter from "/assets/twitter.png";
 import discord from "/assets/discord.png"

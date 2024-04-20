@@ -30,7 +30,7 @@ import {
     RANKING,
     REGISTER,
     RESET_PASSWORD, SUCCESS, TOURNAMENT
-} from "./constantes.ts";
+} from "./constantes/constantes.ts";
 import Entreprise from "./Pages/Entreprise/entreprise.tsx";
 import Success from "./Pages/Entreprise/success.tsx";
 import Cancel from "./Pages/Entreprise/cancel.tsx";
