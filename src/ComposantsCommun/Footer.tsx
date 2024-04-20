@@ -10,6 +10,7 @@ import {NavFlags} from "../Interface/Interface.ts";
 import {useAuthContext} from "../AuthContext.tsx";
 import drapFr from "/assets/drapeaux/fr.png";
 import drapEn from "/assets/drapeaux/gb.png";
+import {changeLanguage} from "../i18n.ts";
 
 interface FooterProps {
 }
@@ -20,7 +21,7 @@ const Footer: React.FC<FooterProps> = () => {
     const { t, i18n } = useTranslation();
 
     const handleChangeLanguage = async (language: string) => {
-        await i18n.changeLanguage(language);
+        await changeLanguage(language);
         await i18n.reloadResources();
     };
 
