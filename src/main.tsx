@@ -21,7 +21,7 @@ import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
 import AdminDashboard from "./Pages/AdminDashboard.tsx";
 import {
     ADMIN, CANCEL,
-    COMPTE,
+    COMPTE, COOKIE_POLICY,
     DASHBOARD, ENTREPRISE, EVENT,
     FORGOT_PASSWORD,
     HOME,
@@ -34,6 +34,7 @@ import {
 import Entreprise from "./Pages/Entreprise/entreprise.tsx";
 import Success from "./Pages/Entreprise/success.tsx";
 import Cancel from "./Pages/Entreprise/cancel.tsx";
+import CookiePolicyPage from "./ComposantsCommun/CookiePolicyPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -69,6 +70,11 @@ const router = createBrowserRouter([
     {
         path: ENTREPRISE,
         element: <Entreprise/>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: COOKIE_POLICY,
+        element: <CookiePolicyPage/>,
         errorElement: "<ErrorPage/>"
     },
     {

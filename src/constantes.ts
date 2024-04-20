@@ -49,6 +49,7 @@ export const RESET_PASSWORD = "/changePassword"
 export const ENTREPRISE = "/entreprise"
 export const SUCCESS = "/success"
 export const CANCEL = "/cancel"
+export const COOKIE_POLICY = "/politique-de-cookies"
 
 const URL_STRIPE = "stripe/create-checkout-session"
 
