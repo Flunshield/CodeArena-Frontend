@@ -39,7 +39,7 @@ const BouttonProfile = () => {
         <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "hidden" : "block")}>
             <div
                 id="id-bouton-profile"
-                className="relative cursor-pointer w-max p-10 pt-0"
+                className="relative cursor-pointer w-max xl:p-10 xl:pt-0"
                 onMouseEnter={() => setShowPopup(true)}
                 onMouseLeave={() => setShowPopup(false)}
             >
@@ -53,16 +53,16 @@ const BouttonProfile = () => {
                         className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow">
                         <div className='p-2'>
                             <div className='flex flex-col justify-center'>
-                                <Button id='button-compte' type={'button'} className={clsx(currentPage === "myAccount" ? "hidden" : "block", "mb-5")}>
+                                <Button id='button-compte' type={'button'} className={clsx(currentPage === "myAccount" ? "hidden" : "block", "mb-5 hover:underline")}>
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
                                 {role === GROUPS.ADMIN &&
-                                    <Button id='button-compte' type={'button'} className={clsx(currentPage === "admin" ? "hidden" : "block", "mb-5")}>
+                                    <Button id='button-compte' type={'button'} className={clsx(currentPage === "admin" ? "hidden" : "block", "mb-5 hover:underline")}>
                                         <Link to={ADMIN}>{t('administration')}</Link>
                                     </Button>
                                 }
                                 {role === GROUPS.ENTREPRISE &&
-                                    <Button id='button-compte' type={'button'} className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5")}>
+                                    <Button id='button-compte' type={'button'} className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5 hover:underline")}>
                                         <Link to={DASHBOARD_ENTREPRISE}>{t('dashboardEntreprise')}</Link>
                                     </Button>
                                 }
@@ -70,7 +70,7 @@ const BouttonProfile = () => {
                             <Button
                                 type="button"
                                 id="signOut"
-                                className="border-1 text-tertiari text-1xl m-3 border-2 border-tertiari rounded-md p-2 mt-10"
+                                className="border-1 text-tertiari text-1xl m-3 border-2 border-tertiari rounded-md p-2 mt-10 hover:underline"
                                 onClick={handleClickSingOut}
                             >
                                 {t('disonnect')}

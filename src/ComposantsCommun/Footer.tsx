@@ -11,11 +11,13 @@ import {useAuthContext} from "../AuthContext.tsx";
 import drapFr from "/assets/drapeaux/fr.png";
 import drapEn from "/assets/drapeaux/gb.png";
 import {changeLanguage} from "../i18n.ts";
+import clsx from "clsx";
 
 interface FooterProps {
+    className?: string;
 }
 
-const Footer: React.FC<FooterProps> = () => {
+const Footer: React.FC<FooterProps> = ({className}) => {
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
     const { t, i18n } = useTranslation();
@@ -52,7 +54,7 @@ const Footer: React.FC<FooterProps> = () => {
         </div>)
 
   return (
-      <footer className="w-full text-tertiari p-4 z-0 bg-secondary">
+      <footer className={clsx(className,"w-full h-auto text-tertiari bottom-0 relative p-4 z-0 bg-secondary")}>
           <div className="flex mb-3 flex-col md:flex-row md:justify-between">
               <div className="max-lg:hidden">
                   <img

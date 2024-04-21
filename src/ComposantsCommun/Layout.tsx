@@ -8,9 +8,10 @@ import clsx from "clsx";
 type LayoutProps = {
     children: ReactNode
     classnameMain?: string
+    classnameFooter?: string
 }
 
-const Layout = ({children, classnameMain}: LayoutProps) => {
+const Layout = ({children, classnameMain, classnameFooter}: LayoutProps) => {
     return (
         <div className="flex flex-col min-h-screen w-auto">
             <Header/>
@@ -19,7 +20,7 @@ const Layout = ({children, classnameMain}: LayoutProps) => {
                     {children}
                 </main>
                 <CookieConsentBanner />
-                <Footer/>
+                <Footer className={classnameFooter}/>
             </div>
         </div>
     )
