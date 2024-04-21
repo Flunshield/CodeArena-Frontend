@@ -5,7 +5,7 @@ const TermsAndConditions = () => {
     const {t} = useTranslation();
     return (
         <Layout>
-            <div className="container mx-auto p-6 text-tertiari mt-32 mb-32">
+            <div className="container mx-auto p-6 text-tertiari ">
                 <h1 className="text-2xl font-bold mb-4">{t("conditionsGeneralesVente")}</h1>
                 <h2 className="text-xl font-bold mb-2">{t("article1Objet")}</h2>
                 <p className="mb-4">{t("article1Content")}</p>

@@ -4,6 +4,7 @@ import Button from "./Button.tsx";
 import { useTranslation } from "react-i18next";
 import NavBar from "./NavBar.tsx";
 import BouttonProfile from "../Composants/BouttonProfile.tsx";
+import {DASHBOARD, HOME} from "../constantes/constantes.ts";
 
     const Header = () => {
     const authContext = useAuthContext();
@@ -26,7 +27,7 @@ import BouttonProfile from "../Composants/BouttonProfile.tsx";
                 <div className="flex start-0 top-0 absolute w-full">
                     {isConnected && <NavBar/>}
                     <div className="flex justify-between w-full">
-                        <h1 className="text-tertiari text-2xl m-3 font-bold">{t('CodeArena')}</h1>
+                        <a className="text-tertiari text-2xl m-3 font-bold" href={isConnected ? DASHBOARD : HOME}>{t('CodeArena')}</a>
                     {!isConnected && (
                         <div className="flex items-baseline">
                             <Button type="button" id="signIn" className="border-1 text-tertiari text-1xl m-3"
@@ -44,7 +45,7 @@ import BouttonProfile from "../Composants/BouttonProfile.tsx";
                         </div>
                     )}
                     {isConnected && (
-                        <div className="flex items-baseline">
+                        <div className="flex items-baseline sticky">
                             <BouttonProfile/>
                         </div>
                     )}

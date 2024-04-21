@@ -13,9 +13,9 @@ function Home() {
         <div>
             {!useAuthContext().connected &&
                 <Switcher setCurrentHome={setCurrentHome} currentHome={currentHome}
-                          className="mt-16 absolute w-full z-50"/>
+                          className="mt-20 absolute w-full z-50"/>
             }
-            <Layout>
+            <Layout classnameMain="-mt-32">
                 {currentHome ? <HomeEntreprise/> : <HomeDev/>}
             </Layout>
         </div>
