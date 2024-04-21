@@ -20,7 +20,7 @@ function MyAccount() {
 
     return (
         <Layout>
-            <div className="flex flex-col mt-32 mb-10 text-center">
+            <div className="flex flex-col text-center">
                 <div className="flex flex-col ">
                     <ProfilePicture classname="mr-auto ml-auto"/>
                     <InfosUser openPopup={openPopup}/>

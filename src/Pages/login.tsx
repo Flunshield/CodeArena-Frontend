@@ -69,66 +69,62 @@ const LoginPage: React.FC = () => {
     }, [isConnected]);
 
     return (
-        <Layout>
+        <Layout classnameMain="-mt-16">
             {!isConnected &&
-                <div className="flex flex-row justify-around">
-                    <div className="relative left-1/3 flex items-center ">
-                        <div>
-                            <Card className="mt-32 rounded-none w-96">
-                                <CardContent className="bg-tertiari text-tertiari w-96 pb-6 pt-6">
-                                    <div className="mt-2 mb-2">
-                                        <div className="flex flex-col mb-5 text-center font-bold">
-                                            <p id="titleConnect"
-                                               className="text-3xl text-primary">{t('signIntoCodeArena')}</p>
-                                            {error && <p className="text-error mt-2">{error}</p>}
+                <div className="flex flex-row justify-around mb-64">
+                    <Card className="rounded-xl w-96 mt-32 m-5">
+                        <CardContent className="bg-tertiari text-tertiari w-full pb-6 pt-6">
+                            <div className="mt-2 mb-2">
+                                <div className="flex flex-col mb-5 text-center font-bold">
+                                    <p id="titleConnect"
+                                       className="text-3xl text-primary">{t('signIntoCodeArena')}</p>
+                                    {error && <p className="text-error mt-2">{error}</p>}
+                                </div>
+                                <form onSubmit={handleSubmit} className="pr-12 pl-12">
+                                    <Label id={"userName"} className="flex flex-col font-bold text-primary">
+                                        {t('userName')}
+                                        <input
+                                            id="userName"
+                                            className={clsx(errorUserName && "border-error border-4", "h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300")}
+                                            placeholder={t('userName')}
+                                            type="text"
+                                            value={userName}
+                                            autoComplete="current-username"
+                                            onChange={(e) => setUserName(e.target.value)}
+                                        />
+                                    </Label>
+                                    <br/>
+                                    <Label id={"password"} className="flex flex-col font-bold text-primary">
+                                        {t('password')}
+                                        <input
+                                            id="password"
+                                            className={clsx(errorPassword && "border-error border-4", "h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300")}
+                                            type="password"
+                                            placeholder={t('password')}
+                                            autoComplete="current-password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                    </Label>
+                                    <br/>
+                                    <div className="flex flex-col justify-center mt-10">
+                                        <Button type="submit" id="connect"
+                                                className="bg-secondary w-full h-12 rounded-md uppercase">
+                                            {t('connect')}
+                                        </Button>
+                                        <div className="flex flex-col mt-5">
+                                            <a href="/forgotPassword"
+                                               className="text-center text-primary">{t('forgotPassword')}</a>
+                                            <a href="/signUp"
+                                               className="text-center text-primary">{t('register')}</a>
                                         </div>
-                                        <form onSubmit={handleSubmit} className="pr-12 pl-12">
-                                            <Label id={"userName"} className="flex flex-col font-bold text-primary">
-                                                {t('userName')}
-                                                <input
-                                                    id="userName"
-                                                    className={clsx(errorUserName && "border-error border-4", "h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300")}
-                                                    placeholder={t('userName')}
-                                                    type="text"
-                                                    value={userName}
-                                                    autoComplete="current-username"
-                                                    onChange={(e) => setUserName(e.target.value)}
-                                                />
-                                            </Label>
-                                            <br/>
-                                            <Label id={"password"} className="flex flex-col font-bold text-primary">
-                                                {t('password')}
-                                                <input
-                                                    id="password"
-                                                    className={clsx(errorPassword && "border-error border-4", "h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300")}
-                                                    type="password"
-                                                    placeholder={t('password')}
-                                                    autoComplete="current-password"
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)}
-                                                />
-                                            </Label>
-                                            <br/>
-                                            <div className="flex flex-col justify-center mt-10">
-                                                <Button type="submit" id="connect"
-                                                        className="bg-secondary w-full h-12 rounded-md uppercase">
-                                                    {t('connect')}
-                                                </Button>
-                                                <div className="flex flex-col mt-5">
-                                                    <a href="/forgotPassword"
-                                                       className="text-center text-primary">{t('forgotPassword')}</a>
-                                                    <a href="/signUp"
-                                                       className="text-center text-primary">{t('register')}</a>
-                                                </div>
-                                            </div>
-                                        </form>
                                     </div>
-                                </CardContent>
-                            </Card>
-                        </div>
-                    </div>
+                                </form>
+                            </div>
+                        </CardContent>
+                    </Card>
                     <img
-                        className="bg-primary ml-auto"
+                        className="bg-primary hidden xl:block absolute right-0 -z-10"
                         src={tree}
                         alt="arbre design"
                         id="arbre"

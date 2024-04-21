@@ -6,7 +6,7 @@ const CookiePolicyPage = () => {
 
     return (
         <Layout>
-            <div className="container mx-auto p-6 text-tertiari mt-32 mb-32">
+            <div className="container mx-auto p-6 text-tertiari ">
                 <h1 className="text-2xl font-bold mb-4">{t('cookieTitle1')}</h1>
                 <p className="mb-4">
                     {t('cookie1')}

@@ -30,10 +30,10 @@ const ForgotPassword: React.FC = () => {
     };
 
     return (
-        <Layout>
+        <Layout classnameMain="-mt-32 -mb-0">
             <div className="flex flex-row justify-center mt-16">
                 <div className="m-5 xl:ml-auto">
-                    <Card className="mt-32 lg:mt-64 mb-32 rounded-none w-full">
+                    <Card className="lg:mt-64 mb-32 rounded-none w-full">
                         <CardContent className="bg-tertiari text-tertiari w-full pb-6 pt-6">
                             <div className="mt-2 mb-2">
                                 <div className="flex flex-col mb-5 text-center font-bold">

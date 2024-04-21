@@ -10,7 +10,6 @@ import {useTranslation} from "react-i18next";
 const PricingSection = () => {
     const {t} = useTranslation();
     const authContext = useAuthContext();
-    const isConnect = authContext?.connected;
     const navigate = useNavigate();
 
     const handleCheckoutBtn = (url: string, idApi: string) => {
@@ -46,17 +45,15 @@ const PricingSection = () => {
                             ))}
                         </ul>
                         <p className="text-gray-700 mt-4">{t(plan.idealFor)}</p>
-                        {isConnect && (
-                            <div>
-                                <h2 className="text-2xl mt-10">
-                                    Prix : <span className="text-green-400 font-bold">{t(plan.price)}</span>
-                                </h2>
-                                <button onClick={() => handleCheckoutBtn(plan.url ?? "", plan.idApi ?? "")}
-                                        className="block w-full mt-10 border-2 border-secondary bg-secondary text-tertiari rounded-lg p-2">
-                                    {t("buy")}
-                                </button>
-                            </div>
-                        )}
+                        <div>
+                            <h2 className="text-2xl mt-10 text-center">
+                                <span className="font-bold">{t(plan.price)}</span> <span className="text-sm">/{t("perYear")}</span>
+                            </h2>
+                            <button onClick={() => handleCheckoutBtn(plan.url ?? "", plan.idApi ?? "")}
+                                    className="block w-full mt-10 border-2 border-secondary bg-secondary text-tertiari rounded-lg p-2">
+                                {t("buy")}
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>

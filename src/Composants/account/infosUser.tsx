@@ -42,8 +42,8 @@ const InfosUser: React.FC<InfosUserProps> = ({openPopup}) => {
     }
 
     return (
-        <div className="m-5 flex flex-col">
-            <div className="">
+        <div className="m-auto flex flex-col">
+            <div className="mt-10">
                 <p className="text-tertiari mb-1 uppercase font-bold text-xl ml-2">{infos.data.firstName && infos.data.lastName ? infos.data.firstName + " " + infos.data.lastName : infos.data.userName}</p>
                 <p className="text-gray-600 mb-5 uppercase font-bold text-xl">{infos.data.firstName && infos.data.lastName ? infos.data.userName : ""}</p>
             </div>

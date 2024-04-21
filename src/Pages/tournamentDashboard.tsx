@@ -22,8 +22,9 @@ function TournamentDashboard() {
 
     return (
         <Layout>
-            <div className="mt-32">
-                <TableauTournament infosTournament={infosTournament} isImg={true}></TableauTournament>
+            <div className="h-screen">
+            <TableauTournament infosTournament={infosTournament} isImg={true}
+                               className="border-0"></TableauTournament>
             </div>
         </Layout>
     );
