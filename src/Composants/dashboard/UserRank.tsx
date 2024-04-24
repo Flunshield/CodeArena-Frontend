@@ -16,7 +16,7 @@ function UserRank(value: UserRankProps): JSX.Element {
     return (
         <Card className={clsx(className)}>
             <div className=" bg-secondary text-tertiari pt-3 pb-3">
-                <p className="font-bold text-5xl text-center" id="title-yourRank">{t("yourRank")}</p>
+                <p className="font-bold text-2xl lg:text-5xl text-center" id="title-yourRank">{t("yourRank")}</p>
                 <div className="pr-10 pl-10 mt-10">
                     <div>
                         {infosUserRank?.usersAbove && infosUserRank?.usersAbove.map((element) => (

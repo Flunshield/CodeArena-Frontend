@@ -22,7 +22,7 @@ import AdminDashboard from "./Pages/AdminDashboard.tsx";
 import {
     ADMIN, CANCEL,
     COMPTE, COOKIE_POLICY,
-    DASHBOARD, ENTREPRISE, EVENT,
+    DASHBOARD, DASHBOARD_ENTREPRISE, ENTREPRISE, EVENT,
     FORGOT_PASSWORD,
     HOME, LEGAL,
     LOGIN,
@@ -38,6 +38,8 @@ import CookiePolicyPage from "./ComposantsCommun/CookiePolicyPage.tsx";
 import PrivacyPolicy from "./ComposantsCommun/PrivacyPolicy.tsx";
 import LegalMentions from "./ComposantsCommun/LegalMentions.tsx";
 import Cgv from "./ComposantsCommun/Cgv.tsx";
+import PrivateRouteEntreprise from "./ComposantsCommun/PrivateRouteEntreprise.tsx";
+import DashboardEntreprise from "./Pages/Entreprise/dashboardEntreprise.tsx";
 
 const router = createBrowserRouter([
     {
@@ -138,6 +140,11 @@ const router = createBrowserRouter([
     {
         path: CANCEL,
         element: <PrivateRoute><Cancel/></PrivateRoute>,
+        errorElement: "<ErrorPage/>"
+    },
+    {
+        path: DASHBOARD_ENTREPRISE,
+        element: <PrivateRouteEntreprise><DashboardEntreprise/></PrivateRouteEntreprise>,
         errorElement: "<ErrorPage/>"
     },
 ])

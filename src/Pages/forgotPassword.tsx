@@ -25,7 +25,7 @@ const ForgotPassword: React.FC = () => {
 
     const handleSubmit = async (value: SignUpFormValues) => {
         await forgotPassword('auth/forgotPassWord', value.email)
-        window.alert("Un mail pour confirmer votre adresse mail a été envoyé si le compte existe");
+        window.alert("Un mail pour modifier votre mot de passe a été envoyé");
         navigate("/");
     };
 

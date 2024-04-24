@@ -22,7 +22,8 @@ export const CARD_EXPLANATION = [
 
 export const PRICING = [
     {
-        title: "essentiel",
+        title: "Essentiel",
+        nbCreateTest: "10",
         description: "essentielDesciption",
         features: [
             "essentielFeature1",
@@ -35,7 +36,8 @@ export const PRICING = [
         idApi: ""
     },
     {
-        title: "premium",
+        title: "Premium",
+        nbCreateTest: "100",
         description: "premiumDescription",
         features: [
             "premiumFeature1",
@@ -49,7 +51,8 @@ export const PRICING = [
         idApi: "price_1P2aZvFoLa8m0nzy2y836Oek"
     },
     {
-        title: "entreprise",
+        title: "Entreprise",
+        nbCreateTest: "99999",
         description: "entrepriseDescription",
         features: [
             "entrepriseFeature1",

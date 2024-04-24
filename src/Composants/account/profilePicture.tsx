@@ -25,23 +25,25 @@ function ProfilePicture(value: ProfilePictureProps) {
     };
 
     const closePopup = async () => {
-        const response = await updateUser("user/updateUser", {
-            id: infos.data.id,
-            userName: infos.data.userName,
-            token: authContext.accessToken,
-            avatar: `/assets/photosProfiles/${isPictureClicked}`
-        });
-        if (response.ok) {
-            setPopupOpen(false);
-            window.location.reload();
-        } else {
-            alert("Erreur lors de la mise à jour de l'avatar");
+        if(isPictureClicked !== "") {
+            const response = await updateUser("user/updateUser", {
+                id: infos.data.id,
+                userName: infos.data.userName,
+                token: authContext.accessToken,
+                avatar: `/assets/photosProfiles/${isPictureClicked}`
+            });
+            if (response.ok) {
+                setPopupOpen(false);
+                window.location.reload();
+            } else {
+                alert("Erreur lors de la mise à jour de l'avatar");
+            }
         }
     };
 
-    const addPicture = (id: string) => {
-        const picture = document.getElementById(id);
-        setIsPictureClicked(id ?? "");
+    const addPicture = (id: string|undefined) => {
+        const picture = document.getElementById(id ?? "noImage.png");
+        setIsPictureClicked(id ?? "noImage.png");
 
         // Filtrer les éléments qui ne répondent pas à la condition (différents de l'id)
         const picturesNotSelected = imagePaths.filter((path) => path !== id);

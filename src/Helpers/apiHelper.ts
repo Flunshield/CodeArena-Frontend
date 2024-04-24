@@ -1,6 +1,6 @@
 // api.ts
 
-import {LoginForm, shortUser, Titles, User} from "../Interface/Interface.ts";
+import {LoginForm, PuzzlesEntreprise, shortUser, Titles, User} from "../Interface/Interface.ts";
 
 export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL_BACK;
 
@@ -151,11 +151,7 @@ export const updateUser = async (endpoint?: string, data?: User): Promise<Respon
  */
 export const getElementByEndpoint = async (endpoint: string, data: { token: string, data: string }): Promise<Response> => {
     try {
-        const queryString = new URLSearchParams({
-            session_id: data.data
-        }).toString();
-
-        const response = await fetch(`${API_BASE_URL}/${endpoint}?${queryString}`, {
+        return await fetch(`${API_BASE_URL}/${endpoint}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -163,12 +159,6 @@ export const getElementByEndpoint = async (endpoint: string, data: { token: stri
             },
             credentials: 'include'
         });
-
-        if (!response.ok) {
-            throw new Error('La requête a échoué');
-        }
-
-        return response;
     } catch (error) {
         console.error('Erreur lors de la requête', error);
         throw error;
@@ -364,3 +354,36 @@ export const handleCheckout = async (endpoint: string, data?: {
         }),
     });
 }
+
+export const updatePuzzle = async (token: string, data?: PuzzlesEntreprise): Promise<Response> => {
+    return await fetch(`${API_BASE_URL}/puzzle/updatePuzzle`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            details: data?.details,
+            tests: data?.tests,
+            id: data?.id
+        }),
+        credentials: 'include' // Assure l'envoi des cookies si nécessaire
+    });
+};
+
+export const deletePuzzle = async (endpoint?: string, data?: {
+    token: string;
+    puzzleId?: number;
+}): Promise<Response> => {
+    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            id: data?.puzzleId
+        }),
+        credentials: 'include'
+    });
+};

@@ -54,6 +54,8 @@ export interface DataToken {
         userRanking?: UserRanking[];
         userTournament?: UserTournament[];
         groups: Groups;
+        commandeEntreprise?: CommandeEntreprise[];
+        puzzlesEntreprise: PuzzlesEntreprise[];
     }
 }
 
@@ -176,4 +178,25 @@ export interface UserTournament {
     tournamentID: number;
     tournament: Tournament;
     points: number;
+}
+
+export interface CommandeEntreprise {
+    id: number;
+    idSession: string;
+    objetSession: JSON;
+    idPayment: string;
+    item: string;
+    userID: number;
+    user: User;
+    dateCommande: Date;
+    etatCommande: string;
+    nbCreateTest: number;
+}
+
+export interface PuzzlesEntreprise {
+    id?: number;
+    userID?: number;
+    user?: User;
+    tests?: JSON;
+    details?: string;
 }

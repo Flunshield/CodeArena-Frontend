@@ -19,7 +19,7 @@ function TableauTournament(value: TableauTournamentProps) {
     return (
         <Card className={clsx(className)}>
             <CardContent className="text-tertiari">
-                <p className="font-bold text-5xl" id="title-futurTournament">{t("futurTournament")}</p>
+                <p className="font-bold text-2xl lg:text-5xl" id="title-futurTournament">{t("futurTournament")}</p>
             </CardContent>
             {infosTournament && infosTournament.length > 0 ?
                 infosTournament.map((item: Tournament, index: number) => (

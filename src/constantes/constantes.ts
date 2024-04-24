@@ -9,7 +9,8 @@ export const imagePaths: string[] = [
     'badge6.png',
     'badge7.png',
     'badge8.png',
-    'badge9.png'
+    'badge9.png',
+    "noImage.png"
 ];
 
 export const badgesPath: string[] = [

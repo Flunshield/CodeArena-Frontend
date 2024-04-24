@@ -58,7 +58,7 @@ const BouttonProfile = () => {
         <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "hidden" : "block")}>
             <div
                 id="id-bouton-profile"
-                className="relative cursor-pointer w-max xl:p-10 xl:pt-0"
+                className="relative cursor-pointer w-max pr-5 xs:p-10 xs:pt-0"
             >
                 <img
                     src={avatar}
