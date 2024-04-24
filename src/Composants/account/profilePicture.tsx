@@ -64,7 +64,7 @@ function ProfilePicture(value: ProfilePictureProps) {
     return (
         <div className={clsx(value.classname)}>
             <img className="rounded-full w-48 h-48 border-2 border-tertiari"
-                 src={isPictureClicked !== "" ? `assets/photosProfiles/${isPictureClicked ? isPictureClicked : "iconsLogin.svg"}` : infos.data.avatar}
+                 src={isPictureClicked !== "" ? `/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "iconsLogin.svg"}` : infos.data.avatar}
                  alt="Avatar"
                  onClick={openPopup}/>
             {isPopupOpen && (
