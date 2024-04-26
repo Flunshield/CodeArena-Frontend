@@ -16,13 +16,12 @@ function TableauTournament(value: TableauTournamentProps) {
     const {className, infosTournament} = value;
     const {t} = useTranslation();
     // const displayImg = value.isImg; => Pour quand on aura des images à afficher
-
     return (
         <Card className={clsx(className)}>
             <CardContent className="text-tertiari">
                 <p className="font-bold text-5xl" id="title-futurTournament">{t("futurTournament")}</p>
             </CardContent>
-            {infosTournament.length > 0 ?
+            {infosTournament.length > 0 && infosTournament[0] !== null ?
                 infosTournament.map((item: Tournament, index: number) => (
                     <Card key={index} className="rounded-xl m-5 border-tertiari">
                         <CardContent className="text-tertiari p-5">

@@ -25,7 +25,7 @@ function Dashboard() {
             responsePromise.then(async (response) => {
                 const result = await response.json();
                 setInfosUserRank(result.userRanking);
-                setInfosTournament([result.tournament])
+                setInfosTournament(result.tournament)
                 setInfosEvents(result.events)
             });
         }
