@@ -24,8 +24,9 @@ function Dashboard() {
         if (!infosUserRank) {
             responsePromise.then(async (response) => {
                 const result = await response.json();
+                console.log(result.tournament)
                 setInfosUserRank(result.userRanking);
-                setInfosTournament([result.tournament])
+                setInfosTournament(result.tournament)
                 setInfosEvents(result.events)
             });
         }
