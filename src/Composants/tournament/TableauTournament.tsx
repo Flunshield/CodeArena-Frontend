@@ -16,7 +16,6 @@ function TableauTournament(value: TableauTournamentProps) {
     const {className, infosTournament} = value;
     const {t} = useTranslation();
     // const displayImg = value.isImg; => Pour quand on aura des images à afficher
-console.log(infosTournament)
     return (
         <Card className={clsx(className)}>
             <CardContent className="text-tertiari">
