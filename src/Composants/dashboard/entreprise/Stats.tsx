@@ -1,5 +1,4 @@
 import {Pricing, PuzzlesEntreprise} from "../../../Interface/Interface.ts";
-import {useTranslation} from "react-i18next";
 
 interface StatsProps {
     tabPuzzlesEntreprise: PuzzlesEntreprise[];
@@ -7,11 +6,10 @@ interface StatsProps {
 }
 
 const stats = ({tabPuzzlesEntreprise, lastCommande}: StatsProps) => {
-    const {t} = useTranslation();
     const stats = [
-        {id: 1, title: t("abonnement"), value: lastCommande?.title ?? t("noAbonnement")},
-        {id: 2, title: t("nbTestCreate"), value: tabPuzzlesEntreprise.length + "/" + lastCommande?.nbCreateTest},
-        {id: 3, title: t("nbTestRealized"), value: "58"} // TODO: Récupérer le nombre de test réalisé
+        {id: 1, title: "Abonnement", value: lastCommande?.title ?? "Aucun abonnement"},
+        {id: 2, title: "Nombre de test créé", value: tabPuzzlesEntreprise.length + "/" + lastCommande?.nbCreateTest},
+        {id: 3, title: "Nombre de test réalisé", value: "58"} // TODO: Récupérer le nombre de test réalisé
     ];
 
 
