@@ -100,3 +100,24 @@ export const ENTREPRISE_TRUST = [
         name: "TechNova"
     }
 ]
+
+export const DONNEES_TESTS = [
+    {
+        "name": "Test 1",
+        "condition": "add(1, 2) === 3",
+        "successMessage": "Test 1 réussi",
+        "failureMessage": "Test 1 échoué"
+    },
+    {
+        "name": "Test 2",
+        "condition": "add(2, 6) === 8",
+        "successMessage": "Test 2 réussi",
+        "failureMessage": "Test 2 échoué"
+    },
+    {
+        "name": "Test 3",
+        "condition": "add(2, 3) === 5",
+        "successMessage": "Test 3 réussi",
+        "failureMessage": "Test 3 échoué"
+    }
+]

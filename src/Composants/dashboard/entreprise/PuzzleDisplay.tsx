@@ -7,6 +7,7 @@ import PuzzleForm from "./PuzzleForm.tsx";
 import {useState} from "react";
 import SendPuzzle from "./SendPuzzle.tsx";
 import clsx from "clsx";
+import {useTranslation} from "react-i18next";
 
 interface PuzzleDisplayProps {
     tabPuzzlesEntreprise: PuzzlesEntreprise[];
@@ -27,6 +28,7 @@ const PuzzleDisplay = (
     const [isPopupOpenModify, setPopupOpenModify] = useState(false);
     const [isPopupOpenSend, setPopupOpenSend] = useState(false);
     const authContext = useAuthContext();
+    const {t} = useTranslation();
 
     /**
      * Gère de manière asynchrone la suppression d'un puzzle en effectuant un appel API.
@@ -78,7 +80,7 @@ const PuzzleDisplay = (
         <div className="m-5">
             <div className="bg-tertiari shadow-xl overflow-hidden rounded-lg">
                 <div className="px-4 py-5 sm:p-6">
-                    <h3 className="text-lg leading-6 font-medium text-quaternary">Puzzle créé</h3>
+                    <h3 className="text-lg leading-6 font-medium text-quaternary">{t("puzzleCreate")}</h3>
                     <ul className="mt-3 w-full text-sm text-quaternary flex flex-wrap justify-center">
                         {tabPuzzlesEntreprise.map((puzzle: PuzzlesEntreprise) => (
                             <li key={puzzle.id} className="bg-gris-chaud p-5 m-2 rounded-lg shadow">
@@ -88,15 +90,15 @@ const PuzzleDisplay = (
                                         className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center items-center m-5">
                                         <Button type="button" onClick={() => openPopup(puzzle, "1")}
                                                 className="bg-petroleum-blue hover:shadow-md hover:shadow-light-blue text-white font-bold py-2 px-4 rounded"
-                                                id="updateTitle">Modifier</Button>
+                                                id="updateTitle">{t("modify")}</Button>
                                         <Button type="button"
                                                 className="bg-olive-green hover:shadow-lg hover:shadow-olive-green text-white font-bold py-2 px-4 rounded"
                                                 id="deleteTitle"
-                                                onClick={() => openPopup(puzzle, "2")}>Envoyer un puzzle</Button>
+                                                onClick={() => openPopup(puzzle, "2")}>{t("sendPuzzle")}</Button>
                                         <Button type="button"
                                                 className="bg-red hover:shadow-lg hover:shadow-rose-300 text-white font-bold py-2 px-4 rounded"
                                                 id="deleteTitle"
-                                                onClick={() => handleClickDelete(puzzle.id)}>Supprimer</Button>
+                                                onClick={() => handleClickDelete(puzzle.id)}>{t("delete")}</Button>
                                     </div>
                                 </Card>
                             </li>

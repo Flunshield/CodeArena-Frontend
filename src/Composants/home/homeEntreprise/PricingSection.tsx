@@ -42,7 +42,6 @@ const PricingSection = () => {
             })
             findLastCommande.then(async (response) => {
                 const result = await response.json();
-                console.log('result', result)
                 setLastCommande(PRICING.find((elem) => {
                     return elem.idApi === result?.item
                 }));
