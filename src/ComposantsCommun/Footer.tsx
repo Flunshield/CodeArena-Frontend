@@ -66,7 +66,7 @@ const Footer: React.FC<FooterProps> = ({className}) => {
               <div className="mt-5 md:flex-col ">
                   <p className="font-bold text-2xl">{t('CodeArena')}</p>
                   <p className="mt-5 hover:underline"><a href={ENTREPRISE}>{t('entreprise')}</a></p>
-                  <p className="mt-5 hover:underline"><a href="">{t('partenaire')}</a></p>
+                  {/*<p className="mt-5 hover:underline"><a href="">{t('partenaire')}</a></p>*/}
               </div>
               }
               <div className="md:flex-col mt-5">

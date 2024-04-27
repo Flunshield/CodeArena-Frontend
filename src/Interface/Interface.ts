@@ -200,3 +200,14 @@ export interface PuzzlesEntreprise {
     tests?: JSON;
     details?: string;
 }
+
+export interface Pricing {
+    title: string;
+    nbCreateTest: string;
+    description: string;
+    features: string[];
+    idealFor: string;
+    price: string;
+    url: string;
+    idApi: string;
+}

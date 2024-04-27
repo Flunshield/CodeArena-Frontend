@@ -22,6 +22,13 @@ export default {
                 red: '#D63864',
                 'petroleum-blue': '#336699',
                 'gris-chaud': '#505A67',
+                'light-blue': '#7eb5ec',
+                'soft-gray': '#B0BEC5',
+                'olive-green': '#8A9A5B',
+                'golden-yellow': '#FFD700',
+            },
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
             },
         },
     },

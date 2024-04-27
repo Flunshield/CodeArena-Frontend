@@ -204,7 +204,9 @@ export const postElementByEndpoint = async (endpoint: string, data: {
     data: object
 }): Promise<Response> => {
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
-        method: 'POST',
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        method: data.data.patch ? 'PATCH' : 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${data?.token}`,
@@ -355,6 +357,17 @@ export const handleCheckout = async (endpoint: string, data?: {
     });
 }
 
+/**
+ * Effectue une requête HTTP PATCH pour mettre à jour les détails d'un puzzle spécifique.
+ * La fonction envoie une requête à un endpoint API prédéfini avec des en-têtes d'authentification
+ * et les données du puzzle à mettre à jour.
+ *
+ * @param token - Le token d'authentification JWT utilisé pour valider la requête auprès de l'API.
+ * @param data - Un objet de type `PuzzlesEntreprise` contenant les nouvelles valeurs pour les détails du puzzle,
+ *               les tests associés, et l'identifiant du puzzle. Ce paramètre est optionnel.
+ * @returns Une promesse qui résout en un objet `Response` de l'API Fetch, représentant la réponse du serveur.
+ */
+
 export const updatePuzzle = async (token: string, data?: PuzzlesEntreprise): Promise<Response> => {
     return await fetch(`${API_BASE_URL}/puzzle/updatePuzzle`, {
         method: 'PATCH',
@@ -370,6 +383,15 @@ export const updatePuzzle = async (token: string, data?: PuzzlesEntreprise): Pro
         credentials: 'include' // Assure l'envoi des cookies si nécessaire
     });
 };
+
+/**
+ * Effectue une requête HTTP DELETE pour supprimer un puzzle spécifié par son identifiant.
+ * Cette fonction envoie la requête à l'endpoint API fourni, en utilisant un token d'authentification.
+ *
+ * @param endpoint - L'endpoint API où envoyer la requête de suppression. Ce paramètre est optionnel.
+ * @param data - Un objet contenant le token d'authentification et l'identifiant optionnel du puzzle à supprimer.
+ * @returns Une promesse qui résout en un objet `Response` de l'API Fetch, représentant la réponse du serveur.
+ */
 
 export const deletePuzzle = async (endpoint?: string, data?: {
     token: string;
