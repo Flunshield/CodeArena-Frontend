@@ -11,7 +11,7 @@ export const login = (): Cypress.Chainable<boolean> => {
     const password = 'Password123456!'
 
     // Intercepter la réponse du serveur pour la requête de connexion
-    cy.intercept('POST', `http://localhost:3000/auth/login`).as('getLoginRetour');
+    cy.intercept('POST', `https://code.kbegot.fr/auth/login`).as('getLoginRetour');
 
     cy.wait(2000);
 
