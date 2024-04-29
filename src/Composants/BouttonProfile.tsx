@@ -1,58 +1,78 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState, useRef } from "react";
 import Button from '../ComposantsCommun/Button';
-import {Link, useNavigate} from 'react-router-dom';
-import {useAuthContext} from "../AuthContext.tsx";
-import {useTranslation} from "react-i18next";
-import {JwtPayload} from "jwt-decode";
-import {DataToken} from "../Interface/Interface.ts";
-import {ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT} from "../constantes/constantes.ts";
-import noImage from '/assets/photosProfiles/noImage.png';
-import {checkUrl} from "../Helpers/methodeHelper.ts";
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthContext } from "../AuthContext.tsx";
+import { useTranslation } from "react-i18next";
+import { JwtPayload } from "jwt-decode";
+import { DataToken } from "../Interface/Interface.ts";
+import { ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT } from "../constantes/constantes.ts";
+import loginIcons from "/assets/iconsLogin.svg";
+import { checkUrl } from "../Helpers/methodeHelper.ts";
 import clsx from "clsx";
 
 const BouttonProfile = () => {
-
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
-    const infosUser = authContext?.infosUser as JwtPayload
-    const infos = infosUser.aud as unknown as DataToken
+    const infosUser = authContext?.infosUser as JwtPayload;
+    const infos = infosUser.aud as unknown as DataToken;
     const navigate = useNavigate();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [showPopup, setShowPopup] = useState(false);
-    const [avatar, setAvatar] = useState<string>(noImage);
-    const role = infos.data.groups.roles
+    const [avatar, setAvatar] = useState<string>(loginIcons);
+    const role = infos.data.groups.roles;
     const [currentPage, setCurrentPage] = useState<string>();
+    const popupRef:any = useRef(null);
 
     const handleClickSingOut = () => {
         navigate(LOGOUT);
     };
 
+    const handlerPopUp = () => {
+        setShowPopup(!showPopup);
+    };
+
     useEffect(() => {
         if (infos.data.avatar !== "") {
-            setAvatar(infos?.data?.avatar ?? noImage);
+            setAvatar(infos?.data?.avatar ?? loginIcons);
         }
-
-        setCurrentPage(checkUrl())
+        setCurrentPage(checkUrl());
     }, [infos?.data?.avatar]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: any) => {
+            if (popupRef.current && !popupRef.current.contains(event.target)) {
+                setShowPopup(false);
+            }
+        };
+        const handleScroll = () => {
+            setShowPopup(false);
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     return (
         <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "hidden" : "block")}>
             <div
                 id="id-bouton-profile"
                 className="relative cursor-pointer w-max xl:p-10 xl:pt-0"
-                onMouseEnter={() => setShowPopup(true)}
-                onMouseLeave={() => setShowPopup(false)}
             >
                 <img
                     src={avatar}
                     alt="profile"
-                    className="w-20 h-20 rounded-full cursor-pointer m-5"
+                    className="h-16 transform hover:scale-110 transition-transform duration-300"
+                    onClick={handlerPopUp}
                 />
                 {showPopup && (
                     <div
-                        className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow">
+                        ref={popupRef}
+                        className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow"
+                    >
                         <div className='p-2'>
-                            <div className='flex flex-col justify-center'>
+                            <div className='flex flex-col items-center'>
                                 <Button id='button-compte' type={'button'} className={clsx(currentPage === "myAccount" ? "hidden" : "block", "mb-5 hover:underline")}>
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
@@ -76,13 +96,11 @@ const BouttonProfile = () => {
                                 {t('disonnect')}
                             </Button>
                         </div>
-                        <div>
-                        </div>
                     </div>
                 )}
             </div>
         </div>
-    )
+    );
 }
 
-export default BouttonProfile
+export default BouttonProfile;
