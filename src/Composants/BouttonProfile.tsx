@@ -20,7 +20,7 @@ const BouttonProfile = () => {
     const [avatar, setAvatar] = useState<string>(loginIcons);
     const role = infos.data.groups.roles;
     const [currentPage, setCurrentPage] = useState<string>();
-    const popupRef:any = useRef(null);
+    const popupRef = useRef<HTMLDivElement | null>(null);
 
     const handleClickSingOut = () => {
         navigate(LOGOUT);
@@ -38,8 +38,8 @@ const BouttonProfile = () => {
     }, [infos?.data?.avatar]);
 
     useEffect(() => {
-        const handleClickOutside = (event: any) => {
-            if (popupRef.current && !popupRef.current.contains(event.target)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
                 setShowPopup(false);
             }
         };
