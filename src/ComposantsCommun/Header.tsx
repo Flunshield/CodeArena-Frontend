@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import NavBar from "./NavBar.tsx";
 import BouttonProfile from "../Composants/BouttonProfile.tsx";
 import { DASHBOARD, HOME } from "../constantes/constantes.ts";
-import loginIcons from "/assets/iconsLogin.svg";
+import loginIcons from "/assets/icons/iconsLogin.svg";
 
 const Header = () => {
     const authContext = useAuthContext();
@@ -37,6 +37,7 @@ const Header = () => {
                         <div className="flex items-baseline">
                             <div className="block sm:hidden relative">
                                 <img 
+                                    id="login icons"
                                     src={loginIcons}
                                     alt="logo du site web"
                                     onMouseEnter={() => setShowIconsPopUp(true)}
