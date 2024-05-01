@@ -5,13 +5,12 @@ import Card from "../../../ComposantsCommun/Card.tsx";
 import {postElementByEndpoint} from "../../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
+import {PuzzlesEntreprise} from "../../../Interface/Interface.ts";
 
 interface SendPuzzleProps {
     className?: string;
     closePopup?: () => void;
-    idPuzzle?: string;
-    details?: string;
-    tests?: JSON;
+    puzzleToPopup?: PuzzlesEntreprise;
 }
 
 // Schema de validation pour les entrées du formulaire
@@ -21,9 +20,10 @@ const SendPuzzleSchema = Yup.object().shape({
     email: Yup.string().email('Adresse email invalide').required('L’adresse email est obligatoire')
 });
 
-const SendPuzzle = ({className, closePopup, idPuzzle, details, tests}: SendPuzzleProps) => {
+const SendPuzzle = ({className, closePopup, puzzleToPopup}: SendPuzzleProps) => {
     const authContext = useAuthContext();
     const {t} = useTranslation();
+    const idPuzzle = puzzleToPopup?.id?.toString();
     return (
         <div id={idPuzzle} className={clsx(className, "rounded-lg bg-tertiari shadow-lg p-2 sm:p-6")}>
             <h3 className="text-sm sm:text-lg font-semibold text-quaternary mb-4 text-center">Envoyer un Puzzle</h3>
@@ -99,10 +99,15 @@ const SendPuzzle = ({className, closePopup, idPuzzle, details, tests}: SendPuzzl
                 </div>
                 <div className="flex-1 mt-4 xl:mt-0 sm:ml-4 h-full">
                     <Card className="flex flex-col">
-                        <p className="text-center m-3 sm:m-5">{details}</p>
+                        <h2></h2>
+                        <p className="text-center m-3 sm:m-5 font-bold">{puzzleToPopup?.title}</p>
+                        <div className="m-3 sm:m-5">
+                            <p className="underline font-bold">{t("detailsPuzzle")} : </p>
+                            <p className="text-justify">{puzzleToPopup?.details}</p>
+                            </div>
                         <pre
                             className="text-xs overflow-scroll h-auto sm:text-sm border p-2 sm:p-3 bg-gray-100 m-3 sm:m-5 rounded-lg">
-                            {JSON.stringify(tests, null, 2)}
+                            {JSON.stringify(puzzleToPopup?.tests, null, 2)}
                         </pre>
                     </Card>
                 </div>

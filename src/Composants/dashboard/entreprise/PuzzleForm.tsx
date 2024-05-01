@@ -12,6 +12,7 @@ import {DONNEES_TESTS} from "../../../constantes/constanteEntreprise.ts";
 import {useTranslation} from "react-i18next";
 
 interface PuzzleFormValues {
+    title: string;
     details: string;
     tests: string;
 }
@@ -19,6 +20,7 @@ interface PuzzleFormValues {
 interface PuzzleFormProps {
     className?: string;
     id?: string;
+    title?: string;
     details?: string;
     tests?: JSON;
     closePopup?: () => void;
@@ -29,6 +31,7 @@ interface PuzzleFormProps {
 }
 
 const PuzzleSchema = Yup.object().shape({
+    title: Yup.string().required('Champ obligatoire'),
     details: Yup.string().required('Champ obligatoire'),
     tests: Yup.string().required('Champ obligatoire').test(
         'is-json',
@@ -47,6 +50,7 @@ const PuzzleSchema = Yup.object().shape({
 const PuzzleForm = ({
                         className,
                         id,
+                        title,
                         details,
                         tests,
                         closePopup,
@@ -62,8 +66,9 @@ const PuzzleForm = ({
     const [canCreateTest, setCanCreateTest] = useState<boolean>(true);
 
     const initialValues: PuzzleFormValues = {
-        details: details || t("titlePuzzle"),
-        tests: tests ? JSON.stringify(tests, null, 2) : JSON.stringify(DONNEES_TESTS, null, 2)
+        title: title || t("titlePuzzle"),
+        tests: tests ? JSON.stringify(tests, null, 2) : JSON.stringify(DONNEES_TESTS, null, 2),
+        details: details || "Sujet du puzzle"
     };
 
     useEffect(() => {
@@ -87,11 +92,13 @@ const PuzzleForm = ({
 
                     const endpoint = id ? "puzzle/updatePuzzle" : "puzzle/create";
                     const data = id ? {
+                        title: values.title,
                         details: values.details,
                         tests: JSON.parse(values.tests),
                         id: parseInt(id),
                         patch: true
                     } : {
+                        "title": values.title,
                         "details": values.details,
                         "tests": JSON.parse(values.tests),
                         "user": infos.data,
@@ -112,8 +119,16 @@ const PuzzleForm = ({
                 {({isSubmitting}) => (
                     <Form className="space-y-6">
                         <div>
-                            <label htmlFor="details" className="block text-sm font-medium text-quaternary">{t("titlePuzzle")}</label>
-                            <Field id="details" name="details" type="text"
+                            <label htmlFor="title"
+                                   className="block text-sm font-medium text-quaternary">{t("titlePuzzle")}</label>
+                            <Field id="title" name="title" type="text"
+                                   className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"/>
+                            <ErrorMessage name="title" component="div" className="text-error text-xs mt-1"/>
+                        </div>
+                        <div>
+                            <label htmlFor="details"
+                                   className="block text-sm font-medium text-quaternary">Sujet du puzzle</label>
+                            <Field as="textarea" id="details" name="details" type="text"
                                    className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"/>
                             <ErrorMessage name="details" component="div" className="text-error text-xs mt-1"/>
                         </div>

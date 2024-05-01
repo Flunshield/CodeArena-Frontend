@@ -56,13 +56,16 @@ const PuzzleDisplay = (
 
     const openPopup = (puzzle?: PuzzlesEntreprise, type?: string) => {
         document.body.style.overflow = "hidden";
+        // TYPE 1 = MODIFIER
         if (type === "1") {
             setPopupOpenModify(true);
             if (setPuzzleToPopup) {
                 setPuzzleToPopup(puzzle);
             }
         }
+        // TYPE 2 = ENVOYER
         if (type === "2") {
+            console.log(puzzle)
             setPopupOpenSend(true);
             if (setPuzzleToPopup) {
                 setPuzzleToPopup(puzzle);
@@ -85,7 +88,7 @@ const PuzzleDisplay = (
                         {tabPuzzlesEntreprise.map((puzzle: PuzzlesEntreprise) => (
                             <li key={puzzle.id} className="bg-gris-chaud p-5 m-2 rounded-lg shadow">
                                 <Card className="border-0">
-                                    <h1 className="text-xl text-center font-bold uppercase m-3 sm:m-5 text-tertiari">{puzzle.details}</h1>
+                                    <h1 className="text-xl text-center font-bold uppercase m-3 sm:m-5 text-tertiari">{puzzle.title}</h1>
                                     <div
                                         className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center items-center m-5">
                                         <Button type="button" onClick={() => openPopup(puzzle, "1")}
@@ -109,7 +112,7 @@ const PuzzleDisplay = (
             {isPopupOpenModify && (
                 <div
                     className="fixed top-0 left-0 w-full h-full overflow-auto flex items-center justify-center bg-black bg-opacity-100 md:bg-opacity-75 z-50">
-                    <PuzzleForm className="w-full max-w-4xl mx-auto m-auto p-4 rounded-lg shadow" details={puzzleToPopup?.details} tests={puzzleToPopup?.tests}
+                    <PuzzleForm className="w-full max-w-4xl mx-auto m-auto p-4 rounded-lg shadow" title={puzzleToPopup?.title} details={puzzleToPopup?.details} tests={puzzleToPopup?.tests}
                                 id={puzzleToPopup?.id?.toString()}
                                 closePopup={closePopup} setIsSubmitted={() => setIsSubmitted()}
                                 lastCommande={lastCommande} tabPuzzlesEntreprise={tabPuzzlesEntreprise}/>
@@ -118,8 +121,7 @@ const PuzzleDisplay = (
             {isPopupOpenSend && (
                 <div
                     className={clsx("fixed top-0 pt-10 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-100 md:bg-opacity-75 z-50")}>
-                    <SendPuzzle className="flex flex-col w-full m-10 h-full overflow-scroll sm:overflow-auto" closePopup={closePopup} details={puzzleToPopup?.details} tests={puzzleToPopup?.tests}
-                                idPuzzle={puzzleToPopup?.id?.toString()}/>
+                    <SendPuzzle className="flex flex-col w-full m-10 h-full overflow-scroll sm:overflow-auto" closePopup={closePopup} puzzleToPopup={puzzleToPopup}/>
                 </div>
             )}
         </div>

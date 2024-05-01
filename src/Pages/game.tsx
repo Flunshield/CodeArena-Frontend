@@ -18,6 +18,7 @@ const Game = () => {
     const [isDisabled, setIsDisabled] = useState(false);
     const [testPassed, setTestPassed] = useState<string[]>([]);
     const [testFailed, setTestFailed] = useState<string[]>([]);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [success, setSuccess] = useState(false);
 
     const testsAjouer = [

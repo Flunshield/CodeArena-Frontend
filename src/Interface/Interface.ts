@@ -180,17 +180,10 @@ export interface UserTournament {
     points: number;
 }
 
-export interface CommandeEntreprise {
-    id: number;
-    idSession: string;
-    objetSession: JSON;
-    idPayment: string;
-    item: string;
-    userID: number;
-    user: User;
-    dateCommande: Date;
-    etatCommande: string;
-    nbCreateTest: number;
+export interface responseTest {
+    success: boolean;
+    testPassed: string[];
+    testFailed: string[];
 }
 
 export interface PuzzlesEntreprise {
@@ -199,6 +192,7 @@ export interface PuzzlesEntreprise {
     user?: User;
     tests?: JSON;
     details?: string;
+    title?: string;
 }
 
 export interface Pricing {
@@ -212,8 +206,15 @@ export interface Pricing {
     idApi: string;
 }
 
-export interface responseTest {
-    success: boolean;
-    testPassed: string[];
-    testFailed: string[];
+export interface CommandeEntreprise {
+    id: number;
+    idSession: string;
+    objetSession: JSON;
+    idPayment: string;
+    item: string;
+    userID: number;
+    user: User;
+    dateCommande: Date;
+    etatCommande: string;
+    nbCreateTest: number;
 }
