@@ -56,3 +56,6 @@ export const ALL_THEME = [
     "twilight",
     "vibrant_ink",
     "xcode"];
+
+
+export const DIX_MIN = 600;

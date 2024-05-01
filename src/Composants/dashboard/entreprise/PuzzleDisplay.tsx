@@ -65,7 +65,6 @@ const PuzzleDisplay = (
         }
         // TYPE 2 = ENVOYER
         if (type === "2") {
-            console.log(puzzle)
             setPopupOpenSend(true);
             if (setPuzzleToPopup) {
                 setPuzzleToPopup(puzzle);

@@ -21,16 +21,28 @@ import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
 import AdminDashboard from "./Pages/AdminDashboard.tsx";
 import GameEntreprise from "./Pages/Entreprise/gameEntreprise.tsx";
 import {
-    ADMIN, CANCEL,
-    COMPTE, COOKIE_POLICY,
-    DASHBOARD, DASHBOARD_ENTREPRISE, ENTREPRISE, EVENT,
-    FORGOT_PASSWORD, GAME, GAME_ENTREPRISE,
-    HOME, LEGAL, LOAD_GAME,
+    ADMIN,
+    CANCEL,
+    COMPTE,
+    COOKIE_POLICY,
+    DASHBOARD,
+    DASHBOARD_ENTREPRISE,
+    ENTREPRISE, ERROR_PAGE,
+    EVENT,
+    FORGOT_PASSWORD,
+    GAME_ENTREPRISE,
+    HOME,
+    LEGAL,
+    LOAD_GAME,
     LOGIN,
-    LOGOUT, PRIVACY_POLICY,
+    LOGOUT,
+    PRIVACY_POLICY,
     RANKING,
     REGISTER,
-    RESET_PASSWORD, SUCCESS, TERMS, TOURNAMENT
+    RESET_PASSWORD, RESULT_PAGE,
+    SUCCESS,
+    TERMS,
+    TOURNAMENT
 } from "./constantes/constantes.ts";
 import Entreprise from "./Pages/Entreprise/entreprise.tsx";
 import Success from "./Pages/Entreprise/success.tsx";
@@ -43,7 +55,7 @@ import LoadGame from "./Pages/Entreprise/LoadGame.tsx";
 import PrivateRouteEntreprise from "./ComposantsCommun/PrivateRouteEntreprise.tsx";
 import DashboardEntreprise from "./Pages/Entreprise/dashboardEntreprise.tsx";
 import ErrorPage from "./Pages/ErrorPage.tsx";
-import Game from "./Pages/game.tsx";
+import ResultPage from "./Pages/Entreprise/ResultPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -137,13 +149,8 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage/>
     },
     {
-        path: GAME,
-        element: <PrivateRoute><Game/></PrivateRoute>,
-        errorElement: <ErrorPage/>
-    },
-    {
         path: GAME_ENTREPRISE,
-        element: <PrivateRoute><GameEntreprise/></PrivateRoute>,
+        element: <GameEntreprise/>,
         errorElement: <ErrorPage/>
     },
     {
@@ -166,6 +173,15 @@ const router = createBrowserRouter([
         element: <PrivateRouteEntreprise><DashboardEntreprise/></PrivateRouteEntreprise>,
         errorElement: <ErrorPage/>
     },
+    {
+        path: ERROR_PAGE,
+        element: <ErrorPage/>
+    },
+    {
+        path: RESULT_PAGE,
+        element: <ResultPage/>,
+        errorElement: <ErrorPage/>
+    }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

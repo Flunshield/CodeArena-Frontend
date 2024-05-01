@@ -5,7 +5,8 @@ import Card from "../../../ComposantsCommun/Card.tsx";
 import {postElementByEndpoint} from "../../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
-import {PuzzlesEntreprise} from "../../../Interface/Interface.ts";
+import {DataToken, PuzzlesEntreprise} from "../../../Interface/Interface.ts";
+import {JwtPayload} from "jwt-decode";
 
 interface SendPuzzleProps {
     className?: string;
@@ -22,8 +23,12 @@ const SendPuzzleSchema = Yup.object().shape({
 
 const SendPuzzle = ({className, closePopup, puzzleToPopup}: SendPuzzleProps) => {
     const authContext = useAuthContext();
+    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    const infosUser: JwtPayload = authContext?.infosUser as JwtPayload
+    const infos: DataToken = infosUser.aud as unknown as DataToken
     const {t} = useTranslation();
     const idPuzzle = puzzleToPopup?.id?.toString();
+
     return (
         <div id={idPuzzle} className={clsx(className, "rounded-lg bg-tertiari shadow-lg p-2 sm:p-6")}>
             <h3 className="text-sm sm:text-lg font-semibold text-quaternary mb-4 text-center">Envoyer un Puzzle</h3>
@@ -34,11 +39,12 @@ const SendPuzzle = ({className, closePopup, puzzleToPopup}: SendPuzzleProps) => 
                         validationSchema={SendPuzzleSchema}
                         onSubmit={async (values, {setSubmitting, resetForm}) => {
                             const dataSend = {
+                                "userID": infos.data.id,
                                 "firstName": values.firstName,
                                 "lastName": values.lastName,
                                 "email": values.email,
                                 "commentaire": values.commentaire,
-                                "idPuzzle": idPuzzle
+                                "idPuzzle": idPuzzle,
                             };
                             await postElementByEndpoint("entreprise/sendPuzzle", {
                                 token: authContext.accessToken ?? "",
@@ -104,7 +110,7 @@ const SendPuzzle = ({className, closePopup, puzzleToPopup}: SendPuzzleProps) => 
                         <div className="m-3 sm:m-5">
                             <p className="underline font-bold">{t("detailsPuzzle")} : </p>
                             <p className="text-justify">{puzzleToPopup?.details}</p>
-                            </div>
+                        </div>
                         <pre
                             className="text-xs overflow-scroll h-auto sm:text-sm border p-2 sm:p-3 bg-gray-100 m-3 sm:m-5 rounded-lg">
                             {JSON.stringify(puzzleToPopup?.tests, null, 2)}

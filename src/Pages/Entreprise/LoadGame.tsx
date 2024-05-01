@@ -1,18 +1,20 @@
 import Layout from "../../ComposantsCommun/Layout.tsx";
 import ProgressBar from "../../ComposantsCommun/ProgressBar.tsx";
-import { useEffect, useState } from "react";
-import { getQueryParamValue } from "../../Helpers/methodeHelper.ts";
+import {useEffect, useState} from "react";
+import {getQueryParamValue} from "../../Helpers/methodeHelper.ts";
 import {useNavigate} from "react-router-dom";
-import {GAME_ENTREPRISE} from "../../constantes/constantes.ts";
+import {ERROR_PAGE, GAME_ENTREPRISE} from "../../constantes/constantes.ts";
+import {VITE_API_BASE_URL_BACK} from "../../Helpers/apiHelper.ts";
+import {useTranslation} from "react-i18next";
 
 const LoadGame = () => {
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
+    const {t} = useTranslation();
+    const token = getQueryParamValue("token");
 
     useEffect(() => {
-        const token = getQueryParamValue("token");
-        console.log(token);
-        const url = `http://localhost:3000/entreprise/puzzleGame?token=${token}`;
+        const url = `${VITE_API_BASE_URL_BACK}/entreprise/puzzleGame?token=${token}`;
         const controller = new AbortController();
 
         const simulateLoading = () => {
@@ -52,7 +54,7 @@ const LoadGame = () => {
                 const chunks = [];
                 // eslint-disable-next-line no-constant-condition
                 while (true) {
-                    const { done, value } = await reader.read();
+                    const {done, value} = await reader.read();
                     if (done) {
                         break;
                     }
@@ -67,12 +69,12 @@ const LoadGame = () => {
                     position += chunk.length;
                 }
                 const result = new TextDecoder("utf-8").decode(chunksAll);
-                if(response.status === 401 || response.status === 404) {
-                    navigate("/ErrorPage");
+                if (response.status === 401 || response.status === 404) {
+                    navigate(ERROR_PAGE);
                 }
-                if(response.status === 200) {
-                    const puzzle = JSON.parse(result);
-                    navigate(GAME_ENTREPRISE, { state: { puzzle } });
+                if (response.status === 200) {
+                    const reponse = JSON.parse(result);
+                    navigate(GAME_ENTREPRISE, {state: {puzzle: reponse.puzzle, mailID: reponse.mailID, token: token}});
                 }
             } catch (error) {
                 console.error('Fetching error:', error);
@@ -89,8 +91,8 @@ const LoadGame = () => {
     return (
         <Layout>
             <div className="flex flex-col items-center justify-center w-full min-h-screen">
-                <div className="text-lg mb-4 text-tertiari">Chargement en cours... {parseInt(String(progress))}%</div>
-                <ProgressBar progress={progress} />
+                <div className="text-lg mb-4 text-tertiari">{t('chargement')} {parseInt(String(progress))}%</div>
+                <ProgressBar progress={progress}/>
             </div>
         </Layout>
     );
