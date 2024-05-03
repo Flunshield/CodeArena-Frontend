@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuthContext } from "../AuthContext.tsx";
 import Button from "./Button.tsx";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,24 @@ const Header = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [showIconsPopUp, setShowIconsPopUp] = useState(false);
+    const popupRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+                setShowIconsPopUp(false);
+            }
+        };
+        const handleScroll = () => {
+            setShowIconsPopUp(false);
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     const handleClickSingIn = () => {
         navigate("/login");
@@ -43,7 +61,8 @@ const Header = () => {
                                     onMouseEnter={() => setShowIconsPopUp(true)}
                                     onMouseLeave={() => setShowIconsPopUp(false)} />
                                 {showIconsPopUp && (
-                                    <div className=" absolute top-12 right-0 z-10 border-2 shadow-md p-2">
+                                    <div ref={popupRef}
+                                        className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow">
                                         <Button type="button" id="signIn" className="border-1 text-tertiari text-1xl m-4 " onClick={handleClickSingIn}>
                                             {t('connection')}
                                         </Button>
