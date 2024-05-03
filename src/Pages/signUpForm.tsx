@@ -26,6 +26,7 @@ const SignUpForm: React.FC = () => {
     const navigate = useNavigate();
     const [error, setError] = useState("")
     const {t} = useTranslation();
+    const allowedDomains = ['gmail.com','gmail.fr', 'yahoo.com','yahoo.fr', 'hotmail.com','hotmail.fr', 'outlook.fr', 'outlook.com'];
     const handleSubmit = async (values: SignUpFormValues) => {
         const data: shortUser = {
             userName: values.userName,
@@ -40,6 +41,15 @@ const SignUpForm: React.FC = () => {
             setError(t('mailOrUserNameExist'))
         }
     };
+    const validateEmail = (email: string) => {
+        const domain = email.split('@')[1]; // Récupère le domaine de l'e-mail
+        
+        if (!allowedDomains.includes(domain)) {
+            return false; // Le domaine n'est pas autorisé
+        }
+    
+        return true; // Le domaine est autorisé
+    };
 
     return (
         <Layout classnameMain="-mt-16">
@@ -48,7 +58,7 @@ const SignUpForm: React.FC = () => {
                     <CardContent className="bg-tertiari text-tertiari w-full pb-6 pt-6">
                         <div className="mt-2 mb-2">
                             <div className="flex flex-col mb-5 text-center font-bold">
-                                <p className="text-3xl text-primary">{t('signIntoCodeArena')}</p>
+                                <p className="text-3xl text-primary">{t('signUp')}</p>
                                 {error && <p className="text-error mt-2">{error}</p>}
                             </div>
                             <Formik
@@ -71,6 +81,8 @@ const SignUpForm: React.FC = () => {
                                         errors.email = 'Ce champ est requis';
                                     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                                         errors.email = 'Adresse e-mail invalide';
+                                    } else if (!validateEmail(values.email)) {  
+                                        errors.email = 'Domaine de l\'adresse e-mail non autorisé';
                                     }
 
                                     return errors;
@@ -81,7 +93,7 @@ const SignUpForm: React.FC = () => {
                                     <div>
                                         <Label htmlFor="userName" id={"userNameLabel"}
                                                className="flex flex-col font-bold text-primary">{t('userName')}</Label>
-                                        <Field type="text" id="userName" name="userName"
+                                        <Field type="text" id="userName" name="userName" placeholder={t('userName')}
                                                className={clsx("h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-primary")}/>
                                         <ErrorMessage name="userName" component="div" className="text-error"/>
                                     </div>
@@ -90,7 +102,7 @@ const SignUpForm: React.FC = () => {
                                     {/* Champ password */}
                                     <div>
                                         <Label htmlFor="password" id={"passwordLabel"}>{t('password')}</Label>
-                                        <Field type="password" id="password" name="password"
+                                        <Field type="password" id="password" name="password" placeholder={t('password')}
                                                className={"h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-primary"}/>
                                         <ErrorMessage name="password" component="div"
                                                       className="text-error text-justify"/>
@@ -100,8 +112,10 @@ const SignUpForm: React.FC = () => {
                                     {/* Champ email */}
                                     <div>
                                         <Label htmlFor="email" id={"emailLabel"}>{t('email')}</Label>
-                                        <Field type="email" id="email" name="email"
+                                        <Field type="email" id="email" name="email" placeholder={t('email')}
                                                className={"h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-primary"}/>
+                                        <ErrorMessage name="email" component="div"
+                                                    className="text-error text-justify"/>
                                     </div>
                                     <br/>
 

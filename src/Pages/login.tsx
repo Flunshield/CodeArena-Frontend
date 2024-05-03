@@ -132,7 +132,7 @@ const LoginPage: React.FC = () => {
                 </div>
             }
             {isConnected &&
-                <p>You are déja connected !</p>
+                <p>You are already connected !</p>
             }
         </Layout>
     );

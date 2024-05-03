@@ -20,6 +20,16 @@ interface MyFormProps {
 const MyForm: React.FC<MyFormProps> = ({onClose}) => {
     const {t} = useTranslation();
     const authContext = useAuthContext();
+    
+    useEffect(() => {
+        // Désactive le défilement lorsque le formulaire est ouvert
+        document.body.style.overflow = 'hidden';
+
+        // Réactive le défilement lorsque le formulaire est fermé
+        return () => {
+            document.body.style.overflow = 'visible';
+        };
+    }, []);
 
     // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
     const infosUser: JwtPayload = authContext?.infosUser as JwtPayload
@@ -105,7 +115,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="firstName"
-                            className="bg-primary text-tertiari"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('firstName')}
                         />
                     </li>
@@ -114,7 +124,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="lastName"
-                            className="bg-primary text-tertiari"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('lastName')}
                         />
                     </li>
@@ -123,7 +133,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="localisation"
-                            className="bg-primary text-tertiari"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('localisation')}
                         />
                     </li>
@@ -132,7 +142,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="company"
-                            className="bg-primary text-tertiari"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('company')}
                         />
                     </li>
@@ -141,7 +151,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="school"
-                            className="bg-primary text-tertiari"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('school')}
                         />
                     </li>
@@ -150,7 +160,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="github"
-                            className="bg-primary text-tertiari"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('github')}
                         />
                     </li>
@@ -159,7 +169,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="url"
-                            className="bg-primary text-tertiari"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('url')}
                         />
                     </li>
@@ -167,7 +177,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <img src={iconeTitle} alt="titles" className="mr-10 ml-6"/>
                         <select
                             id="titlesId"
-                            className="bg-primary text-tertiari"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('titlesId')}
                         >
                             <option value="" label={t('SelectTitle')}/>
