@@ -1,10 +1,10 @@
 import {SetStateAction, useEffect, useState} from 'react';
-import {formatSeconds} from '../../Helpers/formatHelper';
-import {DataToken, PuzzleSend} from '../../Interface/Interface';
-import CodeBlock from "../../ComposantsCommun/CodeBlock";
-import Button from "../../ComposantsCommun/Button.tsx";
-import {deletePuzzle, getElementByEndpoint} from "../../Helpers/apiHelper.ts";
-import {useAuthContext} from "../../AuthContext.tsx";
+import {formatSeconds} from '../../../Helpers/formatHelper.ts';
+import {DataToken, PuzzleSend} from '../../../Interface/Interface.ts';
+import CodeBlock from "../../../ComposantsCommun/CodeBlock.tsx";
+import Button from "../../../ComposantsCommun/Button.tsx";
+import {deletePuzzle, getElementByEndpoint} from "../../../Helpers/apiHelper.ts";
+import {useAuthContext} from "../../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
 
 interface PuzzleListProps {
@@ -12,14 +12,16 @@ interface PuzzleListProps {
     submitCount: number;
 }
 
-const PuzzleList = ({setIsSubmitted, submitCount}: PuzzleListProps) => {
-    const authContext = useAuthContext();
-    const infosUser = authContext?.infosUser as JwtPayload;
-    const infos = infosUser.aud as unknown as DataToken;
+const PuzzleList = ({
+                        setIsSubmitted, submitCount,
+                    }: PuzzleListProps) => {
     const [sortKey, setSortKey] = useState<string>('sendDate');
     const [isAscending, setIsAscending] = useState<boolean>(true);
     const [selectedTitle, setSelectedTitle] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const authContext = useAuthContext();
+    const infosUser = authContext?.infosUser as JwtPayload;
+    const infos = infosUser.aud as unknown as DataToken;
 
     const [puzzleFinish, setPuzzleFinish] = useState<PuzzleSend[]>([]);
 
@@ -42,14 +44,13 @@ const PuzzleList = ({setIsSubmitted, submitCount}: PuzzleListProps) => {
 
     const sortedData = filteredData.sort((a, b) => {
         if (sortKey === 'sendDate') {
-            // Convertissez les dates en timestamps pour un tri numérique
             return isAscending ?
                 (new Date(a.sendDate).getTime() - new Date(b.sendDate).getTime()) :
                 (new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime());
         } else {
             const valueA = a[sortKey as keyof PuzzleSend];
             const valueB = b[sortKey as keyof PuzzleSend];
-            if(valueA && valueB) {
+            if (valueA && valueB) {
                 if (valueA < valueB) {
                     return isAscending ? -1 : 1;
                 } else if (valueA > valueB) {
@@ -70,7 +71,7 @@ const PuzzleList = ({setIsSubmitted, submitCount}: PuzzleListProps) => {
 
     const deleteOnePuzzle = async (id: number) => {
         const result = await deletePuzzle("puzzle/deletePuzzleSend", {
-            token: authContext.accessToken ?? "",
+            token: authContext?.accessToken ?? "",
             puzzleId: id
         });
         if (result.status === 200) {
@@ -79,7 +80,7 @@ const PuzzleList = ({setIsSubmitted, submitCount}: PuzzleListProps) => {
     }
     const deleteOldPuzzlePuzzle = async () => {
         const result = await deletePuzzle("puzzle/deletePuzzleSend", {
-            token: authContext.accessToken ?? "",
+            token: authContext?.accessToken ?? "",
             puzzleId: "old"
         });
         if (result.status === 200) {
@@ -88,8 +89,8 @@ const PuzzleList = ({setIsSubmitted, submitCount}: PuzzleListProps) => {
     }
 
     useEffect(() => {
-        if (authContext.connected) {
-            getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infos.data.id}&page=${currentPage}`, {
+        if (authContext?.connected) {
+            getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infos?.data.id}&page=${currentPage}`, {
                 token: authContext.accessToken ?? "",
                 data: ''
             }).then(async (response) => {
@@ -97,14 +98,14 @@ const PuzzleList = ({setIsSubmitted, submitCount}: PuzzleListProps) => {
                 setPuzzleFinish(result);
             });
         }
-    }, [currentPage, submitCount, authContext.connected]);
+    }, [currentPage, submitCount, authContext?.connected]);
 
     return (
         <div className="m-5 rounded-lg bg-tertiari shadow-xl p-6">
             <h1 className="text-center font-bold text-3xl">Puzzle réalisé</h1>
             <div className="flex justify-end space-x-2 mb-4">
                 <select
-                    className="px-4 py-2 rounded bg-blue-500 text-white cursor-pointer"
+                    className="px-4 py-2 rounded bg-petroleum-blue text-white cursor-pointer"
                     value={selectedTitle}
                     onChange={e => setSelectedTitle(e.target.value)}
                 >
@@ -115,7 +116,8 @@ const PuzzleList = ({setIsSubmitted, submitCount}: PuzzleListProps) => {
                         </option>
                     ))}
                 </select>
-                <button className="px-4 py-2 rounded bg-blue-500 text-white" onClick={() => handleSort('sendDate')}>Tri
+                <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
+                        onClick={() => handleSort('sendDate')}>Tri
                     par Date
                 </button>
                 <Button type={"submit"} id={"delete"}
@@ -158,13 +160,15 @@ const PuzzleList = ({setIsSubmitted, submitCount}: PuzzleListProps) => {
             ))}
             <div className="flex justify-between items-center w-full">
                 {currentPage > 1 ? (
-                    <button className="px-4 py-2 rounded bg-blue-500 text-white" onClick={prevPage}>Précédent</button>
+                    <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
+                            onClick={prevPage}>Précédent</button>
                 ) : (
                     <div className="px-4 py-2 invisible">Précédent</div>  // Invisible spacer
                 )}
                 <p className="text-center flex-grow">{currentPage}</p>
                 {puzzleFinish.length > 0 ? (
-                    <button className="px-4 py-2 rounded bg-blue-500 text-white" onClick={nextPage}>Suivant</button>
+                    <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
+                            onClick={nextPage}>Suivant</button>
                 ) : (
                     <div className="px-4 py-2 invisible">Suivant</div>  // Invisible spacer
                 )}

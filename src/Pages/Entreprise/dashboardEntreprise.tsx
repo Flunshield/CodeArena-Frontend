@@ -8,44 +8,34 @@ import {DataToken, Pricing, PuzzlesEntreprise} from "../../Interface/Interface.t
 import PuzzleDisplay from "../../Composants/dashboard/entreprise/PuzzleDisplay.tsx";
 import Stats from "../../Composants/dashboard/entreprise/Stats.tsx";
 import {PRICING} from "../../constantes/constanteEntreprise.ts";
-import PuzzleList from "../../Composants/entreprise/PuzzleList.tsx";
+import PuzzleList from "../../Composants/dashboard/entreprise/PuzzleList.tsx";
+
+interface result {
+    puzzlesPlayed: number;
+    puzzleCreate: number;
+}
 
 const DashboardEntreprise: React.FC = () => {
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
-    const [tabPuzzlesEntreprise, setTabPuzzlesEntreprise] = useState<PuzzlesEntreprise[]>([]);
     const [submitCount, setSubmitCount] = useState(0);
     const [puzzleToPopup, setPuzzleToPopup] = useState<PuzzlesEntreprise>();
-
     const [lastCommande, setLastCommande] = useState<Pricing>();
     const findLastCommande = getElementByEndpoint('user/lastCommande?id=' + infos.data.id, {
         data: "",
         token: authContext.accessToken ?? ""
     })
-
-
-    /**
-     * Effectue une requête asynchrone pour récupérer les données d'un puzzle spécifique via un endpoint API.
-     * Utilise un identifiant de puzzle extrait d'un objet `infos` pour construire l'URL de la requête.
-     *
-     * @returns Promise qui résout les données du puzzle ou rejette une erreur en cas d'échec de la requête.
-     */
-    const fetchData = async () => {
-        return await getElementByEndpoint('puzzle/findPuzzles?id=' + infos.data.id, {
+    const [nbPuzzlesPlayed, setNbPuzzlesPlayed] = useState(0);
+    const [nbPuzzleCreated, setNbPuzzleCreated] = useState(0);
+    const countPuzzles = async () => {
+        return await getElementByEndpoint(`puzzle/countPuzzles?id=${infos.data.id}`, {
             token: authContext.accessToken ?? "",
-            data: ""
+            data: ''
         });
     };
 
     useEffect(() => {
-        fetchData().then(async (response) => {
-            if (response.status === 200) {
-                setTabPuzzlesEntreprise(await response.json());
-            } else {
-                setTabPuzzlesEntreprise([])
-            }
-        });
         if (authContext.connected) {
             findLastCommande.then(async (response) => {
                 const result = await response.json();
@@ -53,18 +43,27 @@ const DashboardEntreprise: React.FC = () => {
                     return elem.idApi === result?.item
                 }));
             });
+            countPuzzles().then(async (response) => {
+                const result: result = await response.json();
+                if (response.status === 200) {
+                    setNbPuzzlesPlayed(result.puzzlesPlayed);
+                    setNbPuzzleCreated(result.puzzleCreate);
+                }
+            });
         }
     }, [submitCount]);
     return (
         <Layout>
             <div className="py-10">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <Stats lastCommande={lastCommande} submitCount={submitCount}/>
+                    <Stats lastCommande={lastCommande} submitCount={submitCount} nbPuzzlesPlayed={nbPuzzlesPlayed}
+                           nbPuzzleCreated={nbPuzzleCreated}/>
                     <PuzzleForm setIsSubmitted={() => setSubmitCount(count => count + 1)}
-                                tabPuzzlesEntreprise={tabPuzzlesEntreprise} lastCommande={lastCommande}/>
-                    <PuzzleDisplay tabPuzzlesEntreprise={tabPuzzlesEntreprise} puzzleToPopup={puzzleToPopup}
+                                nbPuzzleCreated={nbPuzzleCreated} lastCommande={lastCommande}/>
+                    <PuzzleDisplay puzzleToPopup={puzzleToPopup}
                                    setIsSubmitted={() => setSubmitCount(count => count + 1)}
-                                   setPuzzleToPopup={setPuzzleToPopup} lastCommande={lastCommande}/>
+                                   setPuzzleToPopup={setPuzzleToPopup} lastCommande={lastCommande}
+                                   nbPuzzleCreated={nbPuzzleCreated} submitCount={submitCount}/>
                     <PuzzleList setIsSubmitted={() => setSubmitCount(count => count + 1)} submitCount={submitCount}/>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from 'yup';
-import {JwtPayload} from "jwt-decode";
-import {DataToken, Pricing, PuzzlesEntreprise} from "../../../Interface/Interface.ts";
+import {DataToken, Pricing} from "../../../Interface/Interface.ts";
 import {postElementByEndpoint} from "../../../Helpers/apiHelper.ts";
 import clsx from "clsx";
 import {useAuthContext} from "../../../AuthContext.tsx";
@@ -10,6 +9,7 @@ import {useEffect, useState} from "react";
 import {GROUPS} from "../../../constantes/constantes.ts";
 import {DONNEES_TESTS} from "../../../constantes/constanteEntreprise.ts";
 import {useTranslation} from "react-i18next";
+import {JwtPayload} from "jwt-decode";
 
 interface PuzzleFormValues {
     title: string;
@@ -25,7 +25,7 @@ interface PuzzleFormProps {
     tests?: JSON | JSON[];
     closePopup?: () => void;
     setIsSubmitted?: () => void;
-    tabPuzzlesEntreprise?: PuzzlesEntreprise[];
+    nbPuzzleCreated: number;
     lastCommande?: Pricing;
     sendPuzzle?: boolean;
 }
@@ -55,15 +55,15 @@ const PuzzleForm = ({
                         tests,
                         closePopup,
                         setIsSubmitted,
-                        tabPuzzlesEntreprise = [],
+                        nbPuzzleCreated,
                         lastCommande = {} as Pricing,
                         sendPuzzle = false
                     }: PuzzleFormProps) => {
+    const {t} = useTranslation();
+    const [canCreateTest, setCanCreateTest] = useState<boolean>(true);
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
-    const {t} = useTranslation();
-    const [canCreateTest, setCanCreateTest] = useState<boolean>(true);
 
     const initialValues: PuzzleFormValues = {
         title: title || t("titlePuzzle"),
@@ -72,10 +72,10 @@ const PuzzleForm = ({
     };
 
     useEffect(() => {
-        if (infos.data.groups.roles === GROUPS.ENTREPRISE) {
-            setCanCreateTest(checkNbTestCreated(tabPuzzlesEntreprise, lastCommande));
+        if (infos?.data.groups.roles === GROUPS.ENTREPRISE) {
+            setCanCreateTest(checkNbTestCreated(nbPuzzleCreated, lastCommande));
         }
-    }, [tabPuzzlesEntreprise, lastCommande]);
+    }, [nbPuzzleCreated, lastCommande]);
 
     return (
         <div id={id} className={clsx(className, "m-5 rounded-lg bg-tertiari shadow-lg p-6")}>
@@ -101,7 +101,7 @@ const PuzzleForm = ({
                         "title": values.title,
                         "details": values.details,
                         "tests": JSON.parse(values.tests),
-                        "user": infos.data,
+                        "user": infos?.data,
                     };
 
                     const result = await postElementByEndpoint(endpoint, {

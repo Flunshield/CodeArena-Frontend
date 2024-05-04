@@ -1,4 +1,4 @@
-import {Pricing, PuzzlesEntreprise} from "../Interface/Interface.ts";
+import {Pricing} from "../Interface/Interface.ts";
 
 export function checkUrl(): string {
     const currentUrl = window.location.href;
@@ -12,8 +12,8 @@ export function getValueInUrl(value: string): string {
     return segments[segments.indexOf(value) + 1];
 }
 
-export function checkNbTestCreated(tabPuzzlesEntreprise: PuzzlesEntreprise[], lastCommande: Pricing): boolean {
-    return tabPuzzlesEntreprise.length < parseInt(lastCommande?.nbCreateTest);
+export function checkNbTestCreated(nbPuzzleCreated: number, lastCommande: Pricing): boolean {
+    return nbPuzzleCreated < parseInt(lastCommande?.nbCreateTest);
 }
 
 /**
