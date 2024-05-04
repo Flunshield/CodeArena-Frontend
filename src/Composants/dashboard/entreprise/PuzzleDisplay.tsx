@@ -117,7 +117,7 @@ const PuzzleDisplay = (
     }, [currentPage, submitCount]);
 
     return (
-        <div className="m-5">
+        <div id="PuzzleDisplay" className="m-5">
             <div className="bg-tertiari shadow-xl overflow-hidden rounded-lg">
                 <div className="px-4 py-5 sm:p-6">
                     <h3 className="text-lg leading-6 font-medium text-quaternary">{t("puzzleCreated")}</h3>

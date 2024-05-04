@@ -103,7 +103,7 @@ const PuzzleList = ({
     }, [currentPage, submitCount, authContext?.connected]);
 
     return (
-        <div className="m-5 rounded-lg bg-tertiari shadow-xl p-6">
+        <div id="PuzzleList" className="m-5 rounded-lg bg-tertiari shadow-xl p-6">
             <h1 className="text-center font-bold text-3xl">{t("puzzleRealized")}</h1>
             <div className="flex justify-end space-x-2 mb-4">
                 <select

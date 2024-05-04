@@ -8,6 +8,7 @@ import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {DataToken, Pricing} from "../../../Interface/Interface.ts";
 import {JwtPayload} from "jwt-decode";
+import Button from "../../../ComposantsCommun/Button.tsx";
 
 const PricingSection = () => {
     const {t} = useTranslation();
@@ -34,12 +35,13 @@ const PricingSection = () => {
         }
     }
 
+    const findLastCommande = getElementByEndpoint('user/lastCommande?id=' + infos.data.id, {
+        data: "",
+        token: authContext.accessToken ?? ""
+    });
+
     useEffect(() => {
         if (authContext.connected) {
-            const findLastCommande = getElementByEndpoint('user/lastCommande?id=' + infos.data.id, {
-                data: "",
-                token: authContext.accessToken ?? ""
-            })
             findLastCommande.then(async (response) => {
                 const result = await response.json();
                 setLastCommande(PRICING.find((elem) => {
@@ -48,9 +50,8 @@ const PricingSection = () => {
             });
         }
     }, []);
-
     return (
-        <div className="container mx-auto py-8">
+        <div id="PricingSection" className="container mx-auto py-8">
             <h2 className="text-tertiari m-2 text-center text-xl sm:text-6xl font-bold">{t("choosePlan")}</h2>
             {lastCommande &&
                 <div className="bg-red rounded-lg border-l-4 border-red-500 text-tertiari p-4 m-10 mb-0" role="alert">
@@ -77,10 +78,10 @@ const PricingSection = () => {
                                 className="text-sm">/{t("perYear")}</span>
                             </h2>
                             {authContext.connected &&
-                                <button onClick={() => handleCheckoutBtn(plan.url ?? "", plan.idApi ?? "")}
+                                <Button type="submit" id={plan.title} onClick={() => handleCheckoutBtn(plan.url ?? "", plan.idApi ?? "")}
                                         className="block w-full mt-10 border-2 border-secondary bg-secondary text-tertiari rounded-lg p-2">
                                     {t("buy")}
-                                </button>
+                                </Button>
                             }
                         </div>
                     </div>
