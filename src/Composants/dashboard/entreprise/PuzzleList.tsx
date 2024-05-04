@@ -6,6 +6,7 @@ import Button from "../../../ComposantsCommun/Button.tsx";
 import {deletePuzzle, getElementByEndpoint} from "../../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
+import {useTranslation} from "react-i18next";
 
 interface PuzzleListProps {
     setIsSubmitted: () => void;
@@ -15,6 +16,7 @@ interface PuzzleListProps {
 const PuzzleList = ({
                         setIsSubmitted, submitCount,
                     }: PuzzleListProps) => {
+    const {t} = useTranslation();
     const [sortKey, setSortKey] = useState<string>('sendDate');
     const [isAscending, setIsAscending] = useState<boolean>(true);
     const [selectedTitle, setSelectedTitle] = useState<string>('');
@@ -102,7 +104,7 @@ const PuzzleList = ({
 
     return (
         <div className="m-5 rounded-lg bg-tertiari shadow-xl p-6">
-            <h1 className="text-center font-bold text-3xl">Puzzle réalisé</h1>
+            <h1 className="text-center font-bold text-3xl">{t("puzzleRealized")}</h1>
             <div className="flex justify-end space-x-2 mb-4">
                 <select
                     className="px-4 py-2 rounded bg-petroleum-blue text-white cursor-pointer"
@@ -117,12 +119,11 @@ const PuzzleList = ({
                     ))}
                 </select>
                 <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                        onClick={() => handleSort('sendDate')}>Tri
-                    par Date
+                        onClick={() => handleSort('sendDate')}>{t("triDate")}
                 </button>
                 <Button type={"submit"} id={"delete"}
                         className={"px-4 py-2 rounded bg-red text-white font-bold"}
-                        onClick={() => deleteOldPuzzlePuzzle()}>X (+ 1 mois)</Button>
+                        onClick={() => deleteOldPuzzlePuzzle()}>X ({'>'} 1 {t("month")})</Button>
             </div>
             {sortedData.map(result => (
                 <div key={result.id} className="rounded-lg p-4 mb-4 border border-gray-300 bg-white">
@@ -134,43 +135,43 @@ const PuzzleList = ({
                     </div>
                     <h2 className="text-lg font-semibold text-gray-800">{result.firstName} {result.lastName}</h2>
                     <p className="text-gray-600">
-                        <strong>Envoyé le:</strong> {new Date(result.sendDate).toLocaleDateString()}
+                        <strong>{t("sendAt")}</strong> {new Date(result.sendDate).toLocaleDateString()}
                     </p>
                     <p className="text-gray-600">
-                        <strong>Email:</strong> {result.email}
+                        <strong>{t("email")} :</strong> {result.email}
                     </p>
                     <p className="text-gray-600">
-                        <strong>Commentaire:</strong> {result.commentaire !== "" ? result.commentaire : "Aucun commentaire"}
+                        <strong>{t("commentary")} :</strong> {result.commentaire !== "" ? result.commentaire : t("notCommentary")}
                     </p>
                     <p className="text-gray-600">
-                        <strong>Nombre de tests validés: </strong>
+                        <strong>{t("nbTestPassing")} : </strong>
                         <span
                             className="text-blue-500">{result.testValidated} / {result.puzzlesEntreprise.tests?.length}</span>
                     </p>
                     <p className="text-gray-600">
-                        <strong>Réalisé en : </strong>
+                        <strong>{t("realizedIn")} : </strong>
                         <span
                             className="text-blue-500">{result.time && formatSeconds(600 - parseInt(result.time))}</span>
                     </p>
                     <div>
-                        <h3 className="font-semibold text-gray-800">Code Soumis:</h3>
-                        <CodeBlock code={result.result || 'Aucun code à afficher'}/>
+                        <h3 className="font-semibold text-gray-800">{t("codeSend")} :</h3>
+                        <CodeBlock code={result.result || t("anyCodeDisplay")}/>
                     </div>
                 </div>
             ))}
             <div className="flex justify-between items-center w-full">
                 {currentPage > 1 ? (
                     <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                            onClick={prevPage}>Précédent</button>
+                            onClick={prevPage}>{t("previous")}</button>
                 ) : (
-                    <div className="px-4 py-2 invisible">Précédent</div>  // Invisible spacer
+                    <div className="px-4 py-2 invisible">{t("previous")}</div>  // Invisible spacer
                 )}
                 <p className="text-center flex-grow">{currentPage}</p>
                 {puzzleFinish.length > 0 ? (
                     <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                            onClick={nextPage}>Suivant</button>
+                            onClick={nextPage}>{t("next")}</button>
                 ) : (
-                    <div className="px-4 py-2 invisible">Suivant</div>  // Invisible spacer
+                    <div className="px-4 py-2 invisible">{t("next")}</div>  // Invisible spacer
                 )}
             </div>
         </div>
