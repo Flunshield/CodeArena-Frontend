@@ -273,7 +273,7 @@ export const deleteUser = async (endpoint?: string, data?: {
     user: User;
 }): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -308,7 +308,7 @@ export const resetPointsUser = async (endpoint?: string, data?: {
     user: User;
 }): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -342,7 +342,7 @@ export const handleCheckout = async (endpoint: string, data?: {
     token: string;
     idApi: string;
 }): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -367,7 +367,7 @@ export const handleCheckout = async (endpoint: string, data?: {
  */
 
 export const updatePuzzle = async (token: string, data?: PuzzlesEntreprise): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/puzzle/updatePuzzle`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/puzzle/updatePuzzle`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -395,7 +395,7 @@ export const deletePuzzle = async (endpoint?: string, data?: {
     token: string;
     puzzleId?: number | string;
 }): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

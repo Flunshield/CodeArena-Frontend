@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {jwtDecode, JwtPayload} from 'jwt-decode';
-import {API_BASE_URL} from "../Helpers/apiHelper.ts";
+import {VITE_API_BASE_URL_BACK} from "../Helpers/apiHelper.ts";
 
 export interface AuthHookProps {
     accessToken?: string | undefined;
@@ -52,7 +52,7 @@ const useAuth = ({accessToken}: AuthHookProps) => {
     const refreshAccessToken = async (): Promise<string> => {
         try {
             // Effectuer la requête pour rafraîchir le jeton d'accès avec fetch
-            const response = await fetch(`${API_BASE_URL}/auth/refresh-access-token`, {
+            const response = await fetch(`${VITE_API_BASE_URL_BACK}/auth/refresh-access-token`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
