@@ -8,6 +8,7 @@ import {DataToken, Pricing, PuzzlesEntreprise} from "../../Interface/Interface.t
 import PuzzleDisplay from "../../Composants/dashboard/entreprise/PuzzleDisplay.tsx";
 import Stats from "../../Composants/dashboard/entreprise/Stats.tsx";
 import {PRICING} from "../../constantes/constanteEntreprise.ts";
+import PuzzleList from "../../Composants/entreprise/PuzzleList.tsx";
 
 const DashboardEntreprise: React.FC = () => {
     const authContext = useAuthContext();
@@ -54,17 +55,17 @@ const DashboardEntreprise: React.FC = () => {
             });
         }
     }, [submitCount]);
-
     return (
         <Layout>
             <div className="py-10">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <Stats tabPuzzlesEntreprise={tabPuzzlesEntreprise} lastCommande={lastCommande}/>
+                    <Stats lastCommande={lastCommande} submitCount={submitCount}/>
                     <PuzzleForm setIsSubmitted={() => setSubmitCount(count => count + 1)}
                                 tabPuzzlesEntreprise={tabPuzzlesEntreprise} lastCommande={lastCommande}/>
                     <PuzzleDisplay tabPuzzlesEntreprise={tabPuzzlesEntreprise} puzzleToPopup={puzzleToPopup}
                                    setIsSubmitted={() => setSubmitCount(count => count + 1)}
                                    setPuzzleToPopup={setPuzzleToPopup} lastCommande={lastCommande}/>
+                    <PuzzleList setIsSubmitted={() => setSubmitCount(count => count + 1)} submitCount={submitCount}/>
                 </div>
             </div>
         </Layout>

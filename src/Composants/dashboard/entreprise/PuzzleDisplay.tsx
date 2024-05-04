@@ -39,6 +39,7 @@ const PuzzleDisplay = (
      * mais peut échouer si l'API requiert un identifiant.
      */
     const handleClickDelete = async (id?: number) => {
+        console.log(id)
         await deletePuzzle('puzzle/deletePuzzle', {
             token: authContext?.accessToken ?? "",
             puzzleId: id
@@ -82,7 +83,7 @@ const PuzzleDisplay = (
         <div className="m-5">
             <div className="bg-tertiari shadow-xl overflow-hidden rounded-lg">
                 <div className="px-4 py-5 sm:p-6">
-                    <h3 className="text-lg leading-6 font-medium text-quaternary">{t("puzzleCreate")}</h3>
+                    <h3 className="text-lg leading-6 font-medium text-quaternary">{t("puzzleCreated")}</h3>
                     <ul className="mt-3 w-full text-sm text-quaternary flex flex-wrap justify-center">
                         {tabPuzzlesEntreprise.map((puzzle: PuzzlesEntreprise) => (
                             <li key={puzzle.id} className="bg-gris-chaud p-5 m-2 rounded-lg shadow">

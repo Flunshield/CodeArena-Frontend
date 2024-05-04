@@ -22,7 +22,7 @@ interface PuzzleFormProps {
     id?: string;
     title?: string;
     details?: string;
-    tests?: JSON;
+    tests?: JSON | JSON[];
     closePopup?: () => void;
     setIsSubmitted?: () => void;
     tabPuzzlesEntreprise?: PuzzlesEntreprise[];

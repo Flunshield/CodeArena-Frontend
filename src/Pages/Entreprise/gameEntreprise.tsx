@@ -23,6 +23,8 @@ const GameEntreprise = () => {
     const [isDisabled, setIsDisabled] = useState(false);
     const [testPassed, setTestPassed] = useState<string[]>([]);
     const [testFailed, setTestFailed] = useState<string[]>([]);
+    const [results, setResults] = useState<responseTest>();
+    const [testTested, setTestTested] = useState(false);
     const location = useLocation();
     const puzzle = location.state.puzzle;
     const mailID = location.state.mailID;
@@ -39,29 +41,31 @@ const GameEntreprise = () => {
             if (result) {
                 setTestPassed(result.testPassed);
                 setTestFailed(result.testFailed);
-
-                if (result.success) {
-                    const sendData = await postElementByEndpoint("entreprise/puzzleGame", {
-                        token: token,
-                        data: {
-                            "mailID": mailID,
-                            "validated": true,
-                            "result": code,
-                            "testValidated": result.testPassed.length,
-                            "remainingTime": DIX_MIN - remainingTime,
-                        }
-                    });
-
-                    if (sendData.status === 201) {
-                        navigate(RESULT_PAGE, {state: {success: true}});
-                    }
-                    if (sendData.status === 404) {
-                        navigate(RESULT_PAGE, {state: {success: false}});
-                    }
-                }
+                setResults(result);
+                setTestTested(true);
             }
         });
     };
+
+    const handleSendCode = async () => {
+        const sendData = await postElementByEndpoint("entreprise/puzzleGame", {
+            token: token,
+            data: {
+                "mailID": mailID,
+                "validated": true,
+                "result": code,
+                "testValidated": results?.testPassed.length,
+                "remainingTime": DIX_MIN - remainingTime,
+            }
+        });
+
+        if (sendData.status === 201) {
+            navigate(RESULT_PAGE, {state: {success: true}});
+        }
+        if (sendData.status === 404) {
+            navigate(RESULT_PAGE, {state: {success: false}});
+        }
+    }
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -136,6 +140,11 @@ const GameEntreprise = () => {
                         <Button id="btn-send-test" type="button"
                                 className="border-2 rounded-md mt-5 p-2 w-auto text-white bg-green-800"
                                 onClick={handleSendTest}>{t('testYourCode')}</Button>
+                        {testTested &&
+                        <Button id="btn-send-test" type="button"
+                                className="border-2 rounded-md mt-5 p-2 w-auto text-white bg-green-800"
+                                onClick={handleSendCode}>{t('sendYourCode')}</Button>
+                        }
                     </Card>
                 </div>
             </div>

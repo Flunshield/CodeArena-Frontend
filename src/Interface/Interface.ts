@@ -190,7 +190,7 @@ export interface PuzzlesEntreprise {
     id?: number;
     userID?: number;
     user?: User;
-    tests?: JSON;
+    tests?: JSON[];
     details?: string;
     title?: string;
 }
@@ -217,4 +217,21 @@ export interface CommandeEntreprise {
     dateCommande: Date;
     etatCommande: string;
     nbCreateTest: number;
+}
+
+export interface PuzzleSend {
+    id: number;
+    userID: number;
+    user: User;
+    puzzlesEntreprise: PuzzlesEntreprise;
+    puzzlesEntrepriseId: number;
+    sendDate: Date;
+    firstName: string;
+    lastName: string;
+    email: string;
+    commentaire: string;
+    validated: boolean;
+    result?: JSON;  // Devrait être adapté au format JSON attendu
+    testValidated?: number;
+    time?: string;
 }

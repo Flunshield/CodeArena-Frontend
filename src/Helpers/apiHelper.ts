@@ -393,7 +393,7 @@ export const updatePuzzle = async (token: string, data?: PuzzlesEntreprise): Pro
 
 export const deletePuzzle = async (endpoint?: string, data?: {
     token: string;
-    puzzleId?: number;
+    puzzleId?: number | string;
 }): Promise<Response> => {
     return await fetch(`${API_BASE_URL}/${endpoint}`, {
         method: 'DELETE',

@@ -1,41 +1,45 @@
-import {DataToken, Pricing, PuzzlesEntreprise} from "../../../Interface/Interface.ts";
+import {DataToken, Pricing} from "../../../Interface/Interface.ts";
 import {useTranslation} from "react-i18next";
+import {useEffect, useState} from "react";
 import {getElementByEndpoint} from "../../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
-import {useEffect, useState} from "react";
 
 interface StatsProps {
-    tabPuzzlesEntreprise: PuzzlesEntreprise[];
     lastCommande: Pricing | undefined;
+    submitCount: number;
 }
 
-const stats = ({tabPuzzlesEntreprise, lastCommande}: StatsProps) => {
-    const {t} = useTranslation();
+const stats = ({lastCommande, submitCount}: StatsProps) => {
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
-    const infosUser: JwtPayload = authContext?.infosUser as JwtPayload
-    const infos: DataToken = infosUser.aud as unknown as DataToken
-    const [puzzleFinish, setPuzzleFinish] = useState<PuzzlesEntreprise[]>([]);
+    const infosUser = authContext?.infosUser as JwtPayload;
+    const infos = infosUser.aud as unknown as DataToken;
+    const {t} = useTranslation();
+    const [nbPuzzlesPlayed, setNbPuzzlesPlayed] = useState();
+    const [nbPuzzleCreated, setNbPuzzleCreated] = useState();
+
+    const fetchData = async () => {
+        return await getElementByEndpoint(`puzzle/countPuzzles?id=${infos.data.id}`, {
+            token: authContext.accessToken ?? "",
+            data: ''
+        });
+    };
     const stats = [
         {id: 1, title: t("abonnement"), value: lastCommande?.title ?? t("noAbonnement")},
-        {id: 2, title: t("nbTestCreate"), value: tabPuzzlesEntreprise.length + "/" + lastCommande?.nbCreateTest},
-        {id: 3, title: t("nbTestRealized"), value: puzzleFinish.length}
+        {id: 2, title: t("nbTestCreate"), value: nbPuzzleCreated + "/" + lastCommande?.nbCreateTest},
+        {id: 3, title: t("nbTestRealized"), value: nbPuzzlesPlayed}
     ];
-    const getPuzzleFinish = getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infos.data.id}`, {
-        token: authContext.accessToken ?? "",
-        data: ''
-    });
 
     useEffect(() => {
-        if (authContext.connected) {
-            getPuzzleFinish.then(async (response) => {
-                const result = await response.json();
-                setPuzzleFinish(result);
-            });
-        }
-    }, []);
-
+        fetchData().then(async (response) => {
+            const result = await response.json();
+            if (response.status === 200) {
+                console.log(result)
+                setNbPuzzlesPlayed(result.puzzlesPlayed);
+                setNbPuzzleCreated(result.puzzleCreate);
+            }
+        });
+    }, [submitCount]);
     return (
         <div className="font-sans m-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {stats.map(stat => (
