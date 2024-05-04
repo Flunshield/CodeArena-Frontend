@@ -1,7 +1,7 @@
 import React, {createContext, ReactNode, useContext, useEffect} from 'react';
 import useAuth, {AuthHookProps} from "./hook/useTokenRefresher.tsx";
 
-interface AuthContextProps extends AuthHookProps {
+export interface AuthContextProps extends AuthHookProps {
     fetchData?: () => Promise<void>;
 }
 

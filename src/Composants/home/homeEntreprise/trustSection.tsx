@@ -37,7 +37,7 @@ const TrustSection = () => {
     };
 
     return (
-        <div className="bg-gray-100 py-8 rounded-lg m-auto w-2/3">
+        <div id="TrustSection" className="bg-gray-100 py-8 rounded-lg m-auto w-2/3">
             <div className="container mx-auto">
                 <h2 className="text-3xl font-bold text-center mb-6">{t("trustSection")}</h2>
                 <Slider {...settings}>

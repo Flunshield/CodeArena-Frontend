@@ -1,15 +1,15 @@
 import React from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import {ErrorMessage, Field, Form, Formik} from 'formik';
 import Label from "../ComposantsCommun/Label.tsx";
-import { changePassword } from "../Helpers/apiHelper.ts";
+import {changePassword} from "../Helpers/apiHelper.ts";
 import {useLocation, useNavigate} from "react-router-dom";
 import Layout from "../ComposantsCommun/Layout.tsx";
 import tree from "/assets/tree.svg";
 import CardContent from '../ComposantsCommun/CardContent.tsx';
 import Card from '../ComposantsCommun/Card.tsx';
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import Button from "../ComposantsCommun/Button.tsx";
-import { LoginForm } from "../Interface/Interface.ts";
+import {LoginForm} from "../Interface/Interface.ts";
 
 // Interface pour définir la structure des données du formulaire
 interface SignUpFormValues {
@@ -21,7 +21,7 @@ interface SignUpFormValues {
 // Composant fonctionnel ChangePassword
 const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const location = useLocation();
 
     // Récupérez les paramètres de la query string
@@ -35,14 +35,14 @@ const ChangePassword: React.FC = () => {
             password: values.password
         };
 
-            const response = await changePassword('auth/changePassword', data);
-            if(response.status === 200) {
-                window.alert(t('passwordChange'));
-                navigate("/");
-            } else {
-                window.alert(t('tokenchangePasswordExpired'));
-                navigate("/");
-            }
+        const response = await changePassword('auth/changePassword', data);
+        if (response.status === 201) {
+            window.alert(t('passwordChange'));
+            navigate("/");
+        } else {
+            window.alert(t('tokenchangePasswordExpired'));
+            navigate("/");
+        }
     };
 
     return (
@@ -57,17 +57,17 @@ const ChangePassword: React.FC = () => {
                                         <p className="text-3xl text-primary">{t('forgotPasswordTitle')}</p>
                                     </div>
                                     <Formik
-                                        initialValues={{ password: '', confirmePassword: '', errorPassword: '' }}
+                                        initialValues={{password: '', confirmePassword: '', errorPassword: ''}}
                                         validate={(values) => {
                                             const errors: Partial<SignUpFormValues> = {};
                                             if (!values.password || !values.confirmePassword) {
-                                                if(!values.password) {
+                                                if (!values.password) {
                                                     errors.password = 'Ce champ est requis';
                                                 }
-                                                if(!values.confirmePassword) {
+                                                if (!values.confirmePassword) {
                                                     errors.confirmePassword = 'Ce champ est requis';
                                                 }
-                                            }else if (values.password !== values.confirmePassword) {
+                                            } else if (values.password !== values.confirmePassword) {
                                                 errors.errorPassword = 'Les mots de passes ne sont pas identiques';
                                             }
 
@@ -87,10 +87,12 @@ const ChangePassword: React.FC = () => {
                                             <br/>
                                             {/* Champ confirmePassword */}
                                             <div>
-                                                <Label htmlFor="confirmePassword" id={"confirmePassword"}>{t('confirmePassword')}</Label>
+                                                <Label htmlFor="confirmePassword"
+                                                       id={"confirmePassword"}>{t('confirmePassword')}</Label>
                                                 <Field type="password" id="confirmePassword" name="confirmePassword"
                                                        className={"h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-primary"}/>
-                                                <ErrorMessage name="confirmePassword" component="div" className="text-error"/>
+                                                <ErrorMessage name="confirmePassword" component="div"
+                                                              className="text-error"/>
                                             </div>
                                             <br/>
                                             {/* Bouton de soumission du formulaire */}

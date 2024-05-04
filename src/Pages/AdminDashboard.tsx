@@ -12,7 +12,6 @@ import ListUsers from "../Composants/admin/ListUsers.tsx";
 const AdminDashboard: React.FC = () => {
     const authContext = useAuthContext();
     const token = authContext?.accessToken ?? "";
-
     const [titles, setTitles] = useState<Titles[]>([]);
     const [ranks, setRanks] = useState<Ranking[]>([]);
     const [users, setUsers] = useState<User[]>([]);

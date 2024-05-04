@@ -58,7 +58,7 @@ const BouttonProfile = () => {
         <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "hidden" : "block")}>
             <div
                 id="id-bouton-profile"
-                className="relative cursor-pointer w-max xl:p-10 xl:pt-0"
+                className="relative cursor-pointer w-max pr-5 xs:p-10 xs:pt-0"
             >
                 <img
                     src={avatar}
@@ -77,12 +77,12 @@ const BouttonProfile = () => {
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
                                 {role === GROUPS.ADMIN &&
-                                    <Button id='button-compte' type={'button'} className={clsx(currentPage === "admin" ? "hidden" : "block", "mb-5 hover:underline")}>
+                                    <Button id='button-compte-admin' type={'button'} className={clsx(currentPage === "admin" ? "hidden" : "block", "mb-5 hover:underline")}>
                                         <Link to={ADMIN}>{t('administration')}</Link>
                                     </Button>
                                 }
                                 {role === GROUPS.ENTREPRISE &&
-                                    <Button id='button-compte' type={'button'} className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5 hover:underline")}>
+                                    <Button id='button-compte-entreprise' type={'button'} className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5 hover:underline")}>
                                         <Link to={DASHBOARD_ENTREPRISE}>{t('dashboardEntreprise')}</Link>
                                     </Button>
                                 }

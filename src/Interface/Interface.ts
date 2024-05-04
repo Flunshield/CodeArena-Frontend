@@ -54,6 +54,8 @@ export interface DataToken {
         userRanking?: UserRanking[];
         userTournament?: UserTournament[];
         groups: Groups;
+        commandeEntreprise?: CommandeEntreprise[];
+        puzzlesEntreprise: PuzzlesEntreprise[];
     }
 }
 
@@ -176,4 +178,60 @@ export interface UserTournament {
     tournamentID: number;
     tournament: Tournament;
     points: number;
+}
+
+export interface responseTest {
+    success: boolean;
+    testPassed: string[];
+    testFailed: string[];
+}
+
+export interface PuzzlesEntreprise {
+    id?: number;
+    userID?: number;
+    user?: User;
+    tests?: JSON[];
+    details?: string;
+    title?: string;
+}
+
+export interface Pricing {
+    title: string;
+    nbCreateTest: string;
+    description: string;
+    features: string[];
+    idealFor: string;
+    price: string;
+    url: string;
+    idApi: string;
+}
+
+export interface CommandeEntreprise {
+    id: number;
+    idSession: string;
+    objetSession: JSON;
+    idPayment: string;
+    item: string;
+    userID: number;
+    user: User;
+    dateCommande: Date;
+    etatCommande: string;
+    nbCreateTest: number;
+}
+
+export interface PuzzleSend {
+    id: number;
+    userID: number;
+    user: User;
+    puzzlesEntreprise: PuzzlesEntreprise;
+    puzzlesEntrepriseId: number;
+    sendDate: Date;
+    firstName: string;
+    lastName: string;
+    email: string;
+    commentaire: string;
+    validated: boolean;
+    result?: JSON;  // Devrait être adapté au format JSON attendu
+    testValidated?: number;
+    time?: string;
 }

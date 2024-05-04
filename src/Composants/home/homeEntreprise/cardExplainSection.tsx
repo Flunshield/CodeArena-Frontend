@@ -6,7 +6,7 @@ const CardExplainSection = () => {
     const {t} = useTranslation();
 
     return (
-        <div>
+        <div id="CardExplainSection">
             <h2 className="text-tertiari m-2 text-center text-xl sm:text-6xl font-bold">{t("avantageCodeArena")}</h2>
             <ul className="flex flex-col m-10 xl:grid grid-cols-1 md:grid-cols-2 gap-6">
                 {CARD_EXPLANATION.map((card, index) => (

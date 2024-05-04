@@ -9,7 +9,8 @@ export const imagePaths: string[] = [
     'badge6.png',
     'badge7.png',
     'badge8.png',
-    'badge9.png'
+    'badge9.png',
+    "noImage.png"
 ];
 
 export const badgesPath: string[] = [
@@ -53,3 +54,9 @@ export const COOKIE_POLICY = "/politique-de-cookies"
 export const PRIVACY_POLICY = "/politique-de-confidentialite"
 export const TERMS = "/cgv"
 export const LEGAL = "/mention-legale"
+export const LOAD_GAME = "/loadGame"
+export const GAME = "/game"
+export const GAME_ENTREPRISE = "/gameEntreprise"
+export const ERROR_PAGE = "/errorPage"
+export const RESULT_PAGE = "/resultPage"
+export const TEST_JS = "testsJs"
