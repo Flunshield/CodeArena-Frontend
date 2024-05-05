@@ -77,6 +77,8 @@ jobs:
       - name: Push changes
         run: |
           git push --follow-tags origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
   deploy:
     needs: release
