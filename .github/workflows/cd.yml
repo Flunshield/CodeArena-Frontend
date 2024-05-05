@@ -59,7 +59,7 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && needs.release.result == 'success'
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - name: Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
