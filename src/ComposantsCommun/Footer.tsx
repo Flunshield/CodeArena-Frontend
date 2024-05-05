@@ -65,8 +65,8 @@ const Footer: React.FC<FooterProps> = ({className}) => {
               {isConnected &&
               <div className="mt-5 md:flex-col ">
                   <p className="font-bold text-2xl">{t('CodeArena')}</p>
-                  <p className="mt-5 hover:underline"><a href={ENTREPRISE}>{t('entreprise')}</a></p>
-                  <p className="mt-5 hover:underline"><a href="">{t('partenaire')}</a></p>
+                  <p className="mt-5 hover:underline"><a href={ENTREPRISE} id="entrepriseAchat">{t('entreprise')}</a></p>
+                  {/*<p className="mt-5 hover:underline"><a href="">{t('partenaire')}</a></p>*/}
               </div>
               }
               <div className="md:flex-col mt-5">
@@ -95,12 +95,13 @@ const Footer: React.FC<FooterProps> = ({className}) => {
                           alt="logo de discord"/>
                   </div>
               </div>
-              <div className="flex-col mt-24 md:mt-10">
+              <div className="flex-col mt-24 md:mt-10 text-center">
                   <NavFlagsComponent />
               </div>
           </div>
-          <div className="mt-16">
-              <p>copyright © {new Date().getFullYear()} codeArena</p>
+          <div className="mx-auto border-t-2 border-white w-2/3"></div>
+          <div className="mt-16 text-center">
+              <p>Copyright © {new Date().getFullYear()} CodeArena</p>
           </div>
       </footer>
   );

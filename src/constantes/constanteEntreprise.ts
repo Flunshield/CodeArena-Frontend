@@ -22,7 +22,8 @@ export const CARD_EXPLANATION = [
 
 export const PRICING = [
     {
-        title: "essentiel",
+        title: "Essentiel",
+        nbCreateTest: "10",
         description: "essentielDesciption",
         features: [
             "essentielFeature1",
@@ -35,7 +36,8 @@ export const PRICING = [
         idApi: ""
     },
     {
-        title: "premium",
+        title: "Premium",
+        nbCreateTest: "100",
         description: "premiumDescription",
         features: [
             "premiumFeature1",
@@ -49,7 +51,8 @@ export const PRICING = [
         idApi: "price_1P2aZvFoLa8m0nzy2y836Oek"
     },
     {
-        title: "entreprise",
+        title: "Entreprise",
+        nbCreateTest: "99999",
         description: "entrepriseDescription",
         features: [
             "entrepriseFeature1",
@@ -95,5 +98,26 @@ export const ENTREPRISE_TRUST = [
         src: "/assets/logoEntreprisetrust/OIG3.jpeg",
         alt: "TechNova",
         name: "TechNova"
+    }
+]
+
+export const DONNEES_TESTS = [
+    {
+        "name": "Test 1",
+        "condition": "add(1, 2) === 3",
+        "successMessage": "Test 1 réussi",
+        "failureMessage": "Test 1 échoué"
+    },
+    {
+        "name": "Test 2",
+        "condition": "add(2, 6) === 8",
+        "successMessage": "Test 2 réussi",
+        "failureMessage": "Test 2 échoué"
+    },
+    {
+        "name": "Test 3",
+        "condition": "add(2, 3) === 5",
+        "successMessage": "Test 3 réussi",
+        "failureMessage": "Test 3 échoué"
     }
 ]

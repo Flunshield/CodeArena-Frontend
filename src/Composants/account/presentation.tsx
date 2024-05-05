@@ -35,7 +35,8 @@ function Presentation() {
             <Label id={"labelTextArea"} className="text-tertiari text-3xl font-bold">{t("presentation")}</Label>
             <textarea id="presentation" name="presentation" rows={8} cols={75}
                       className="rounded-xl bg-secondary text-tertiari border-tertiari border-2 p-5 mt-5"
-                      defaultValue={infos.data.presentation || 'Aucune description'}/>
+                      placeholder="Aucune description ..."
+                      defaultValue={infos.data.presentation}/>
             <button onClick={updatePresentation} className="text-tertiari text-right mt-2">{t("update")}</button>
         </div>
     )

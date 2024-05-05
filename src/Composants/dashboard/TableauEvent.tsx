@@ -20,15 +20,15 @@ function TableauEvent(value: TableauEventProps) {
     return (
         <Card className={clsx(className)}>
             <CardContent className="bg-secondary text-tertiari text-center">
-                <p className="font-bold text-5xl" id="title-event">{t("event")}</p>
+                <p className="font-bold text-2xl lg:text-5xl" id="title-event">{t("event")}</p>
             </CardContent>
             {infosEvent && infosEvent?.length > 0 ?
             infosEvent?.map((item: Event, index: number) => (
                 <CardContent key={index} className="bg-secondary text-tertiari border-2 rounded-lg mb-5">
-                    <p className="text-3xl font-bold mb-10">{item.title}</p>
-                    <p className="text-xl mb-5"><span
+                    <p className="text-xl lg:text-3xl font-bold mb-10">{item.title}</p>
+                    <p className="text-md lg:text-xl mb-5"><span
                         className="font-bold">{t("date")}</span>{formatDate(item.startDate, t)}</p>
-                    <p className="text-xl mb-2"><span
+                    <p className="text-md lg:text-xl mb-2"><span
                         className="font-bold">Le nombre de joueurs maximum : </span>{item.playerMax}</p>
                     <p className="text-gray-300">{item.description}</p>
                 </CardContent>))

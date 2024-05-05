@@ -11,9 +11,10 @@ import Label from "../ComposantsCommun/Label.tsx";
 import Button from "../ComposantsCommun/Button.tsx";
 import Layout from "../ComposantsCommun/Layout.tsx";
 import clsx from "clsx";
+import Notification from "../ComposantsCommun/Notification.tsx";
 
 
-const LoginPage: React.FC = () => {
+function LoginPage () {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
@@ -21,6 +22,9 @@ const LoginPage: React.FC = () => {
     const [errorPassword, setErrorPassword] = useState<boolean | null>(false)
     const navigate = useNavigate();
     const {t} = useTranslation();
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
@@ -39,8 +43,17 @@ const LoginPage: React.FC = () => {
                 const response = await login('auth/login', data)
 
                 if (response.ok) {
-                    window.location.reload();
+                    setNotificationMessage(t('connectSuccess'));
+                    setNotificationType('success');
+                    setShowNotification(true);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+
                 } else {
+                    setNotificationMessage(t('errorNdcMdp'));
+                    setNotificationType('error');
+                    setShowNotification(true);
                     setError(t('errorNdcMdp'));
                 }
             } else if (!userName && !password) {
@@ -70,6 +83,13 @@ const LoginPage: React.FC = () => {
 
     return (
         <Layout classnameMain="-mt-16">
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             {!isConnected &&
                 <div className="flex flex-row justify-around mb-64">
                     <Card className="rounded-xl w-96 mt-32 m-5">
@@ -132,10 +152,10 @@ const LoginPage: React.FC = () => {
                 </div>
             }
             {isConnected &&
-                <p>You are déja connected !</p>
+                <p>You are already connected !</p>
             }
         </Layout>
     );
-};
+}
 
 export default LoginPage;

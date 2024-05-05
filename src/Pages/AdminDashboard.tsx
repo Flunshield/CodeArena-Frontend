@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Layout from "../ComposantsCommun/Layout.tsx";
 import Card from "../ComposantsCommun/Card.tsx";
 import CardContent from "../ComposantsCommun/CardContent.tsx";
@@ -9,10 +9,9 @@ import ListTitle from "../Composants/admin/ListTitle.tsx";
 import ListRank from "../Composants/admin/ListRank.tsx";
 import ListUsers from "../Composants/admin/ListUsers.tsx";
 
-const AdminDashboard: React.FC = () => {
+function AdminDashboard () {
     const authContext = useAuthContext();
     const token = authContext?.accessToken ?? "";
-
     const [titles, setTitles] = useState<Titles[]>([]);
     const [ranks, setRanks] = useState<Ranking[]>([]);
     const [users, setUsers] = useState<User[]>([]);
@@ -64,6 +63,6 @@ const AdminDashboard: React.FC = () => {
             </div>
         </Layout>
     );
-};
+}
 
 export default AdminDashboard;

@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import Card from "../../ComposantsCommun/Card.tsx";
 import {useTranslation} from "react-i18next";
 
-const Success = () => {
+function Success (){
     const {search} = useLocation();
     const {t} = useTranslation();
     const params = new URLSearchParams(search);
