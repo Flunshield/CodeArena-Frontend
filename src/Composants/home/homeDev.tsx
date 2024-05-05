@@ -7,7 +7,7 @@ const HomeDev = () => {
         <div className="flex flex-row justify-between mt-16 mb-24">
             <div className="flex flex-col mx-auto py-8 pt-32 z-20">
                 <h1 id="slogan"
-                    className="text-tertiari m-2 text-center text-xl sm:text-6xl font-bold"> {t('slogandxcxc')}</h1>
+                    className="text-tertiari m-2 text-center text-xl sm:text-6xl font-bold"> {t('slogan')}</h1>
                 <iframe width="90%" height="500px"
                         src="https://www.youtube.com/embed/6MOrkDPTnLk?si=ABq0UmWjCbjcfkNu"
                         title="YouTube video player"
