@@ -35,7 +35,7 @@ const PricingSection = () => {
         }
     }
 
-    const findLastCommande = getElementByEndpoint('user/lastCommande?id=' + infos.data.id, {
+    const findLastCommande = getElementByEndpoint('user/lastCommande?id=' + infos?.data?.id, {
         data: "",
         token: authContext.accessToken ?? ""
     });
