@@ -10,22 +10,51 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
+      - name: ⏳ Checkout du code
+        uses: actions/checkout@v2
+
+      - name: ⏳ Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
+        env:
+          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
+        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
+
+      - name: ⏳ Afficher le contenu du fichier .env
+        run: cat .env
+
+      - name: 🚧 Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
         with:
-          node-version: '20.8.1'
-      - name: Install dependencies
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: ⏳ List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: ⏳ Install dependencies
         run: npm install
-      - name: Lintage du code
+
+      - name: ⏳ Lintage du code
         run: npm run lint
-      - name: Lancement du projet en arrière-plan
+
+      - name: 🚀 Lancement du projet en arrière-plan
         run: |
           npm run dev &
           sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
-      - name: Exécuter les tests
-        run: npx cypress run
+
+      - name: 🚧 Exécuter les tests
+        run: |
+          npx cypress run
 
   release:
     needs: test
