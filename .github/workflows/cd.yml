@@ -59,7 +59,7 @@ jobs:
       - run: npx semantic-release
 
   deploy:
-    needs: [test, update-release-draft]
+    needs: [test, release]
     if: github.ref == 'refs/heads/main' && needs.release.result == 'success'
     runs-on: ubuntu-latest
 
