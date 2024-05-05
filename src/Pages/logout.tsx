@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useAuthContext} from "../AuthContext.tsx";
 import {useNavigate} from "react-router-dom";
 import {logout} from "../Helpers/apiHelper.ts";
 
-export const LogoutPage: React.FC = () => {
+export function LogoutPage() {
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
     const navigate = useNavigate();
     const [error, setError] = useState<string | null>(null);
-    const logoutFunction  = async () => {
+    const logoutFunction = async () => {
         try {
             const response = await logout('auth/logout')
 
@@ -27,7 +27,7 @@ export const LogoutPage: React.FC = () => {
         if (!isConnected) {
             navigate("/");
         }
-        if(isConnected) {
+        if (isConnected) {
             logoutFunction();
         }
     }, [isConnected]);

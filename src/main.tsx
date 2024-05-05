@@ -27,7 +27,8 @@ import {
     COOKIE_POLICY,
     DASHBOARD,
     DASHBOARD_ENTREPRISE,
-    ENTREPRISE, ERROR_PAGE,
+    ENTREPRISE,
+    ERROR_PAGE,
     EVENT,
     FORGOT_PASSWORD,
     GAME_ENTREPRISE,
@@ -39,7 +40,8 @@ import {
     PRIVACY_POLICY,
     RANKING,
     REGISTER,
-    RESET_PASSWORD, RESULT_PAGE,
+    RESET_PASSWORD,
+    RESULT_PAGE,
     SUCCESS,
     TERMS,
     TOURNAMENT
@@ -56,6 +58,7 @@ import PrivateRouteEntreprise from "./ComposantsCommun/PrivateRouteEntreprise.ts
 import DashboardEntreprise from "./Pages/Entreprise/dashboardEntreprise.tsx";
 import ErrorPage from "./Pages/ErrorPage.tsx";
 import ResultPage from "./Pages/Entreprise/ResultPage.tsx";
+import {NotificationProvider} from "./NotificationContext.tsx";
 
 const router = createBrowserRouter([
     {
@@ -187,7 +190,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18n}>
         <AuthContextProvider>
-            <RouterProvider router={router}/>
+            <NotificationProvider>
+                <RouterProvider router={router}/>
+            </NotificationProvider>
         </AuthContextProvider>
     </I18nextProvider>
 )

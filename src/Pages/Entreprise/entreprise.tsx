@@ -3,7 +3,7 @@ import CardExplainSection from "../../Composants/home/homeEntreprise/cardExplain
 import PricingSection from "../../Composants/home/homeEntreprise/PricingSection.tsx";
 import TrustSection from "../../Composants/home/homeEntreprise/trustSection.tsx";
 
-const Entreprise = () => {
+function Entreprise () {
     return (
         <Layout>
             <div className="md:flex md:flex-row md:justify-between mt-16 mb-24 w-full">

@@ -4,7 +4,7 @@ import playerNotHappy from "/assets/playerNotHappy.jpeg";
 import partieTerminer from "/assets/partieTermine.jpeg";
 import {useTranslation} from "react-i18next";
 
-const ResultPage = () => {
+function ResultPage () {
     const location = useLocation();
     const {t} = useTranslation();
     const resultat = location.state.success;

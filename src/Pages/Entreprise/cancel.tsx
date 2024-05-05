@@ -2,7 +2,7 @@ import Layout from "../../ComposantsCommun/Layout.tsx";
 import Card from "../../ComposantsCommun/Card.tsx";
 import {useTranslation} from "react-i18next";
 
-const Cancel = () => {
+function Cancel () {
     const {t} = useTranslation();
 
     return (

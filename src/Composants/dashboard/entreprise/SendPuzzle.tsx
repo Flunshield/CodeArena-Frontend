@@ -7,6 +7,8 @@ import {useAuthContext} from "../../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import {DataToken, PuzzlesEntreprise} from "../../../Interface/Interface.ts";
 import {JwtPayload} from "jwt-decode";
+import {useState} from "react";
+import Notification from "../../../ComposantsCommun/Notification.tsx";
 
 interface SendPuzzleProps {
     className?: string;
@@ -28,10 +30,20 @@ const SendPuzzle = ({className, closePopup, puzzleToPopup}: SendPuzzleProps) => 
     const infos: DataToken = infosUser.aud as unknown as DataToken
     const {t} = useTranslation();
     const idPuzzle = puzzleToPopup?.id?.toString();
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     return (
         <div id={idPuzzle} className={clsx(className, "rounded-lg bg-tertiari shadow-lg p-2 sm:p-6")}>
-            <h3 className="text-sm sm:text-lg font-semibold text-quaternary mb-4 text-center">Envoyer un Puzzle</h3>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
+            <h3 className="text-sm sm:text-lg font-semibold text-quaternary mb-4 text-center">{t("sendPuzzle")}</h3>
             <div className="flex flex-col xl:flex-row">
                 <div className="flex-1">
                     <Formik
@@ -52,8 +64,12 @@ const SendPuzzle = ({className, closePopup, puzzleToPopup}: SendPuzzleProps) => 
                             });
                             setSubmitting(false);
                             resetForm();
-                            closePopup && closePopup();
-                            window.alert('Mail envoyé')
+                            setNotificationMessage(t("mailToSend"));
+                            setNotificationType('success');
+                            setShowNotification(true);
+                            setTimeout(() => {
+                                closePopup && closePopup();
+                            }, 3000);
                         }}
                     >
                         {({isSubmitting}) => (

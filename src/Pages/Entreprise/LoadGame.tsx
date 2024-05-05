@@ -7,7 +7,7 @@ import {ERROR_PAGE, GAME_ENTREPRISE} from "../../constantes/constantes.ts";
 import {VITE_API_BASE_URL_BACK} from "../../Helpers/apiHelper.ts";
 import {useTranslation} from "react-i18next";
 
-const LoadGame = () => {
+function LoadGame (){
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
     const {t} = useTranslation();
@@ -96,6 +96,6 @@ const LoadGame = () => {
             </div>
         </Layout>
     );
-};
+}
 
 export default LoadGame;

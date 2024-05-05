@@ -14,7 +14,7 @@ import {DIX_MIN} from "../../constantes.ts";
 import {RESULT_PAGE, TEST_JS} from "../../constantes/constantes.ts";
 import {useTranslation} from "react-i18next";
 
-const GameEntreprise = () => {
+function GameEntreprise () {
     const navigate = useNavigate();
     const {t} = useTranslation();
     const [code, setCode] = useState('');
@@ -150,6 +150,6 @@ const GameEntreprise = () => {
             </div>
         </Layout>
     );
-};
+}
 
 export default GameEntreprise;

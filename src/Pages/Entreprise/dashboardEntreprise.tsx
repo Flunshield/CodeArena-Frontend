@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Layout from "../../ComposantsCommun/Layout.tsx";
 import PuzzleForm from "../../Composants/dashboard/entreprise/PuzzleForm.tsx";
 import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
@@ -15,7 +15,7 @@ interface result {
     puzzleCreate: number;
 }
 
-const DashboardEntreprise: React.FC = () => {
+function DashboardEntreprise () {
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
@@ -69,6 +69,6 @@ const DashboardEntreprise: React.FC = () => {
             </div>
         </Layout>
     );
-};
+}
 
 export default DashboardEntreprise;

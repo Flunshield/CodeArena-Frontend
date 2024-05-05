@@ -1,5 +1,4 @@
-// Importez les dépendances nécessaires
-import React from 'react';
+import {useState} from 'react';
 import {Field, Form, Formik} from 'formik';
 import Label from "../ComposantsCommun/Label.tsx";
 import {forgotPassword} from "../Helpers/apiHelper.ts";
@@ -10,27 +9,46 @@ import CardContent from '../ComposantsCommun/CardContent.tsx';
 import Card from '../ComposantsCommun/Card.tsx';
 import {useTranslation} from "react-i18next";
 import Button from "../ComposantsCommun/Button.tsx";
+import Notification from "../ComposantsCommun/Notification.tsx";
 
-// Interface pour définir la structure des données du formulaire
 interface SignUpFormValues {
     email: string;
 }
 
-// Composant fonctionnel SignUpForm
-const ForgotPassword: React.FC = () => {
-
+function ForgotPassword() {
     const navigate = useNavigate();
     const error: string = "";
     const {t} = useTranslation();
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const handleSubmit = async (value: SignUpFormValues) => {
-        await forgotPassword('auth/forgotPassWord', value.email)
-        window.alert("Un mail pour modifier votre mot de passe a été envoyé");
-        navigate("/");
+        const test = await forgotPassword('auth/forgotPassWord', value.email)
+        console.log(test)
+        if (test.status === 201) {
+            setNotificationMessage("Un mail pour modifier votre mot de passe a été envoyé");
+            setNotificationType('success');
+            setShowNotification(true);
+            setTimeout(() => {
+                navigate("/");
+            }, 3000);
+        } else {
+            setNotificationMessage("Une erreur est survenue");
+            setNotificationType('error');
+            setShowNotification(true);
+        }
     };
 
     return (
         <Layout classnameMain="-mt-32 -mb-0">
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <div className="flex flex-row justify-center mt-16">
                 <div className="m-5 xl:ml-auto">
                     <Card className="lg:mt-64 mb-32 rounded-none w-full">
@@ -84,6 +102,6 @@ const ForgotPassword: React.FC = () => {
             </div>
         </Layout>
     );
-};
+}
 
 export default ForgotPassword;

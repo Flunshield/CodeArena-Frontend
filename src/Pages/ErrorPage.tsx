@@ -1,6 +1,6 @@
 import Layout from "../ComposantsCommun/Layout.tsx";
 
-const ErrorPage = () => {
+function ErrorPage () {
     return (
         <Layout>
             <div className="flex items-center justify-center min-h-screen">

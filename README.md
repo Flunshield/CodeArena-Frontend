@@ -59,6 +59,10 @@ feat(auth): add login functionality
 fix(server): resolve memory leak issue
 ```
 
+## Section gestion des laertes
+
+Ne plus utiliser de window.alert mais plutot le composant <Notification> (voir sur la page login)
+
 # Bonnes Pratiques
 
 - Documenter un maximum les fonctions créés comme ceci :
@@ -84,4 +88,3 @@ fix(server): resolve memory leak issue
 - Gardez vos commits atomiques, c'est-à-dire focalisés sur une seule tâche ou correction.
 
 - Écrivez des messages de commit clairs et descriptifs pour expliquer pourquoi et comment les changements ont été faits.
-

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import Label from "../ComposantsCommun/Label.tsx";
 import {changePassword} from "../Helpers/apiHelper.ts";
@@ -10,6 +10,7 @@ import Card from '../ComposantsCommun/Card.tsx';
 import {useTranslation} from "react-i18next";
 import Button from "../ComposantsCommun/Button.tsx";
 import {LoginForm} from "../Interface/Interface.ts";
+import Notification from "../ComposantsCommun/Notification.tsx";
 
 // Interface pour définir la structure des données du formulaire
 interface SignUpFormValues {
@@ -23,6 +24,9 @@ const ChangePassword: React.FC = () => {
     const navigate = useNavigate();
     const {t} = useTranslation();
     const location = useLocation();
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     // Récupérez les paramètres de la query string
     const params = new URLSearchParams(location.search);
@@ -37,16 +41,32 @@ const ChangePassword: React.FC = () => {
 
         const response = await changePassword('auth/changePassword', data);
         if (response.status === 201) {
-            window.alert(t('passwordChange'));
-            navigate("/");
+            setNotificationMessage(t('passwordChange'));
+            setNotificationType('success');
+            setShowNotification(true);
+            setTimeout(() => {
+                navigate("/");
+            }, 3000);
+
         } else {
-            window.alert(t('tokenchangePasswordExpired'));
-            navigate("/");
+            setNotificationMessage(t('tokenchangePasswordExpired'));
+            setNotificationType('error');
+            setShowNotification(true);
+            setTimeout(() => {
+                navigate("/");
+            }, 3000);
         }
     };
 
     return (
         <Layout>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <div className="flex flex-row justify-around">
                 <div className="relative left-1/3 flex items-center ">
                     <div>
