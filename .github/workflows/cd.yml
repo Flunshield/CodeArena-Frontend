@@ -57,9 +57,9 @@ jobs:
           npx cypress run
 
   release:
-    needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    needs: test
+    #if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - name: Setup Node.js
@@ -68,13 +68,15 @@ jobs:
           node-version: '20.8.1'
       - name: Install dependencies
         run: npm install
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
       - name: Run standard-version
         run: npx standard-version
       - name: Push changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git push --follow-tags
+          git push --follow-tags origin main
 
   deploy:
     needs: release
