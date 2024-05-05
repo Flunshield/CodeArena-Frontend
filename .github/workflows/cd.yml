@@ -56,7 +56,10 @@ jobs:
         with:
           node-version: '20.8.1'
       - run: npm install
-      - run: npx semantic-release
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
 
   deploy:
     needs: [test, release]
