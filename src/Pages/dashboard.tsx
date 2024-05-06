@@ -34,8 +34,8 @@ function Dashboard() {
     return (
         <Layout>
             <div className="flex flex-col xl:flex-row xl:justify-around">
-                <TableauEvent infosEvents={infosEvents} isImg={false} className="m-5 rounded-xl border-tertiari bg-secondary p-5 h-full xl:mr-20"/>
-                <div className="flex flex-col xl:mt-28">
+                <TableauEvent infosEvents={infosEvents} isImg={false} className="m-5 rounded-xl border-tertiari bg-secondary p-5 h-full xl:w-full xl:mr-20"/>
+                <div className="flex flex-col">
                     <UserRank infosUserRank={infosUserRank} className="rounded-xl border-tertiari h-auto mb-16 m-5"/>
                     <TableauTournament infosTournament={infosTournament} isImg={false} className="rounded-xl border-tertiari m-5 bg-secondary"/>
                 </div>

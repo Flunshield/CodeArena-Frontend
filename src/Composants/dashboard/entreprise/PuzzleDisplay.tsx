@@ -9,6 +9,7 @@ import clsx from "clsx";
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
+import Notification from "../../../ComposantsCommun/Notification.tsx";
 
 interface PuzzleDisplayProps {
     setIsSubmitted: () => void;
@@ -35,6 +36,9 @@ const PuzzleDisplay = (
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const [tabPuzzlesEntreprise, setTabPuzzlesEntreprise] = useState<PuzzlesEntreprise[]>([]);
     /**
@@ -64,11 +68,18 @@ const PuzzleDisplay = (
         }).then(response => {
             if (response.ok) {
                 setIsSubmitted();
+                setNotificationMessage(t('puzzleDeleted'));
+                setNotificationType('success');
+                setShowNotification(true);
             } else {
-                console.error("Failed to delete the puzzle.");
+                setNotificationMessage(t('failedDeletePuzzle'));
+                setNotificationType('error');
+                setShowNotification(true);
             }
         }).catch(error => {
-            console.error("Error when calling the API:", error);
+            setNotificationMessage(`${t('failedDeletePuzzle')} ${error}`);
+            setNotificationType('error');
+            setShowNotification(true);
         });
     }
 
@@ -118,6 +129,13 @@ const PuzzleDisplay = (
 
     return (
         <div id="PuzzleDisplay" className="m-5">
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <div className="bg-tertiari shadow-xl overflow-hidden rounded-lg">
                 <div className="px-4 py-5 sm:p-6">
                     <h3 className="text-lg leading-6 font-medium text-quaternary">{t("puzzleCreated")}</h3>

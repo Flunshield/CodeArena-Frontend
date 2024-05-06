@@ -16,22 +16,30 @@ jobs:
         uses: actions/checkout@v2
 
       - name: ⏳ Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
-        run: echo "VITE_API_BASE_URL_BACK=${{ secrets.VITE_API_BASE_URL_BACK }}" >> .env
         env:
           VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
+        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
 
       - name: ⏳ Afficher le contenu du fichier .env
         run: cat .env
 
       - name: 🚧 Cache node modules
+        id: cache-npm
         uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}-
+            ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: ⏳ List the state of node modules
+        continue-on-error: true
+        run: npm list
 
       - name: ⏳ Install dependencies
         run: npm install
@@ -45,37 +53,20 @@ jobs:
           sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
 
       - name: 🚧 Exécuter les tests
-        run: npx cypress run
-
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '20.8.1'
-      - run: npm install
-      - name: Run semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        run: npx semantic-release
+        run: |
+          npx cypress run
 
   deploy:
-    needs: [test, release]
-    if: github.ref == 'refs/heads/main' && needs.release.result == 'success'
+    needs: test
     runs-on: ubuntu-latest
-
+    if: github.ref == 'refs/heads/main'
     steps:
-      - name: ⏳ Checkout du code
-        uses: actions/checkout@v2
-
-      - name: ⏳ Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
+      - uses: actions/checkout@v2
+      - name: Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
         run: echo "VITE_API_BASE_URL_BACK=${{ secrets.VITE_API_BASE_URL_BACK }}" >> .env
         env:
           VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
-
-      - name: 🚀 Déploiement sur le VPS
+      - name: Déploiement sur le VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}

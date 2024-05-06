@@ -11,6 +11,7 @@ import {useTranslation} from "react-i18next";
 import clsx from "clsx";
 import Button from "../ComposantsCommun/Button.tsx";
 import Notification from "../ComposantsCommun/Notification.tsx";
+import {useNavigate} from "react-router-dom";
 
 // Interface pour définir la structure des données du formulaire
 interface SignUpFormValues {
@@ -21,6 +22,7 @@ interface SignUpFormValues {
 
 function SignUpForm () {
     const {t} = useTranslation();
+    const navigate = useNavigate();
     const allowedDomains = ['gmail.com', 'gmail.fr', 'yahoo.com', 'yahoo.fr', 'hotmail.com', 'hotmail.fr', 'outlook.fr', 'outlook.com'];
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
@@ -37,7 +39,7 @@ function SignUpForm () {
             setNotificationType('success');
             setShowNotification(true);
             setTimeout(() => {
-                window.location.reload();
+                navigate("/");
             }, 3000);
         } else if (response.status === 400) {
             setNotificationMessage(t('mailOrUserNameExist'));
