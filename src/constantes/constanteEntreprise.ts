@@ -64,7 +64,7 @@ export const PRICING = [
         idealFor: "entrepriseIdeaFor",
         price: "199,99€",
         url: URL_STRIPE,
-        idApi: "price_1PE186FoLa8m0nzy6tvDpDX4"
+        idApi: "price_1PE1LmFoLa8m0nzymnwISkaF"
     }
 ];
 
