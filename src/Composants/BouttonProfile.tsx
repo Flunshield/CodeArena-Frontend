@@ -83,7 +83,7 @@ const BouttonProfile = () => {
                                 }
                                 {role === GROUPS.ENTREPRISE &&
                                     <Button id='button-compte-entreprise' type={'button'} className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5 hover:underline")}>
-                                        <Link to={DASHBOARD_ENTREPRISE}>{t('dashboardEntreprise')}</Link>
+                                        <Link to={DASHBOARD_ENTREPRISE} >{t('dashboardEntreprise')}</Link>
                                     </Button>
                                 }
                             </div>
