@@ -58,18 +58,24 @@ const SendPuzzle = ({className, closePopup, puzzleToPopup}: SendPuzzleProps) => 
                                 "commentaire": values.commentaire,
                                 "idPuzzle": idPuzzle,
                             };
-                            await postElementByEndpoint("entreprise/sendPuzzle", {
+                            const sendPuzzle = await postElementByEndpoint("entreprise/sendPuzzle", {
                                 token: authContext.accessToken ?? "",
                                 data: dataSend
                             });
                             setSubmitting(false);
                             resetForm();
-                            setNotificationMessage(t("mailToSend"));
-                            setNotificationType('success');
-                            setShowNotification(true);
-                            setTimeout(() => {
-                                closePopup && closePopup();
-                            }, 3000);
+                            if(sendPuzzle.status === 201) {
+                                setNotificationMessage(t("mailToSend"));
+                                setNotificationType('success');
+                                setShowNotification(true);
+                            } else {
+                                setNotificationMessage(t("errormailToSend"));
+                                setNotificationType('error');
+                                setShowNotification(true);
+                            }
+                                setTimeout(() => {
+                                    closePopup && closePopup();
+                                }, 3000);
                         }}
                     >
                         {({isSubmitting}) => (
