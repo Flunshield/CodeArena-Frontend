@@ -5,6 +5,7 @@ import {useTranslation} from "react-i18next";
 import {deleteTitle} from "../../Helpers/apiHelper.ts";
 import FormTitre from "./FormTitre.tsx";
 import {useAuthContext} from "../../AuthContext.tsx";
+import Notification from "../../ComposantsCommun/Notification.tsx";
 
 interface ListTitleProps {
     titles: Titles[];
@@ -18,6 +19,9 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isType, setIsType] = useState(0);
     const [titleToUpdate, setTitleToUpdate] = useState<Titles>({id: 0, label: "", value: ""});
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const openPopup = (type: number, title?: Titles) => {
         setPopupOpen(true);
@@ -35,12 +39,22 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
     const deleteTitleFunction = async (title: Titles) => {
         const result = await deleteTitle("admin/deleteTitle", {token, title});
         if (result.status === 200) {
+            setNotificationMessage(t('updateSuccess'));
+            setNotificationType('success');
+            setShowNotification(true);
             setIsSubmitted();
         }
     };
 
     return (
         <div className="px-4 py-2">
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des titres')}</h2>
             <div className="flex flex-col justify-center">
                 {titles.length > 0 ? (
