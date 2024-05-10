@@ -3,9 +3,9 @@ import * as Yup from "yup";
 import {Titles} from "../../Interface/Interface.ts";
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../AuthContext.tsx";
-import React from "react";
+import React, {useState} from "react";
 import {postElementByEndpoint} from "../../Helpers/apiHelper.ts";
-import {useNavigate} from "react-router-dom";
+import Notification from "../../ComposantsCommun/Notification.tsx";
 
 interface formTitreProps {
     onClose: () => void;
@@ -15,23 +15,50 @@ interface formTitreProps {
 
 const FormTitre: React.FC<formTitreProps> = ({onClose, title, type}) => {
     const {t} = useTranslation();
-    const navigate = useNavigate();
     const authContext = useAuthContext();
     const initialValues: Titles = {
         label: title.label,
         value: title.value,
     }
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const onSubmit = async (values: Titles) => {
-        if(type === 1) {
+        if (type === 1) {
             values.id = title.id;
-            await postElementByEndpoint("admin/updateTitles", {token: authContext.accessToken ?? "", data: values});
+            const result = await postElementByEndpoint("admin/updateTitles", {
+                token: authContext.accessToken ?? "",
+                data: values
+            });
+            if (result.status === 201) {
+                setNotificationMessage(t('updateSuccess'));
+                setNotificationType('success');
+                setShowNotification(true);
+            } else {
+                setNotificationMessage(t('errorUpdate'));
+                setNotificationType('error');
+                setShowNotification(true);
+            }
         }
-        if(type === 2) {
-            await postElementByEndpoint("admin/createTitles", {token: authContext.accessToken ?? "", data: values});
+        if (type === 2) {
+            const result = await postElementByEndpoint("admin/createTitles", {
+                token: authContext.accessToken ?? "",
+                data: values
+            });
+            if (result.status === 200) {
+                setNotificationMessage(t('createSuccess'));
+                setNotificationType('success');
+                setShowNotification(true);
+            } else {
+                setNotificationMessage(t('errorCreate'));
+                setNotificationType('error');
+                setShowNotification(true);
+            }
         }
-        navigate(0);
-        onClose();
+        setTimeout(() => {
+            onClose();
+        }, 1000);
     }
 
     const formik = useFormik({
@@ -44,6 +71,13 @@ const FormTitre: React.FC<formTitreProps> = ({onClose, title, type}) => {
     });
     return (
         <form onSubmit={formik.handleSubmit}>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <div className="flex flex-col w-full mb-10">
                 <p className="text-tertiari font-bold text-2xl text-center mb-6">{t("TitlesUpdate")}</p>
                 <ul className="flex flex-col mt-5">
