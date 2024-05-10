@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 interface SearchBarProps {
   placeholder?: string;
-  onSearch?: (value: string) => void; // Callback function when search is performed
+  onSearch: (value: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ placeholder = "Search...", onSearch }) => {
   const [searchValue, setSearchValue] = useState("");
 
-  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && onSearch) {
-      onSearch(searchValue);
-    }
-  };
-
+    useEffect(() => {
+        if (searchValue.length > 3) {
+            onSearch(searchValue);
+        }
+        if(searchValue.length === 0){
+            onSearch("");
+        }
+    }, [searchValue]);
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '1rem' }}>
       <input
@@ -21,12 +23,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder = "Search...", onSear
         placeholder={placeholder}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
-        onKeyPress={handleSearch}
         style={{ padding: '0.5rem', width: '200px', marginRight: '0.5rem' }}
+        className=" text-secondary rounded-lg border border-gray-300 focus:outline-none focus:border-petroleum-blue"
       />
-      <button onClick={() => onSearch && onSearch(searchValue)} style={{ padding: '0.5rem' }}>
-        Search
-      </button>
     </div>
   );
 };

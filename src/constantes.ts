@@ -59,3 +59,5 @@ export const ALL_THEME = [
 
 
 export const DIX_MIN = 600;
+
+export const INFINITE_PUZZLE = 999999;

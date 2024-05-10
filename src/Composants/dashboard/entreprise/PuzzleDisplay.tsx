@@ -2,7 +2,7 @@ import {DataToken, Pricing, PuzzlesEntreprise} from "../../../Interface/Interfac
 import Card from "../../../ComposantsCommun/Card.tsx";
 import Button from "../../../ComposantsCommun/Button.tsx";
 import {deletePuzzle, getElementByEndpoint} from "../../../Helpers/apiHelper.ts";
-import PuzzleForm from "./PuzzleForm.tsx";
+import PuzzleForm from "../../../ComposantsCommun/PuzzleForm.tsx";
 import {useEffect, useState} from "react";
 import SendPuzzle from "./SendPuzzle.tsx";
 import clsx from "clsx";

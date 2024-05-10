@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import Layout from "../../ComposantsCommun/Layout.tsx";
-import PuzzleForm from "../../Composants/dashboard/entreprise/PuzzleForm.tsx";
+import PuzzleForm from "../../ComposantsCommun/PuzzleForm.tsx";
 import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";

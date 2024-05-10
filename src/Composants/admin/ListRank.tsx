@@ -1,41 +1,54 @@
 import React from "react";
-import {Ranking} from "../../Interface/Interface.ts";
-import {useTranslation} from "react-i18next";
+import { Ranking } from "../../Interface/Interface.ts";
+import { useTranslation } from "react-i18next";
 
-interface ListTitleProps {
+interface ListRankProps {
     ranks: Ranking[];
-
 }
 
-const ListRank: React.FC<ListTitleProps> = (data) => {
-    const {t} = useTranslation();
-    const {ranks} = data;
+const ListRank: React.FC<ListRankProps> = ({ ranks }) => {
+    const { t } = useTranslation();
+
     return (
-        <div>
-            <h2>{t('listRank')}</h2>
-            <ul className="flex flex-wrap">
-                {ranks.map((ranks: Ranking) => (
-                    <li key={ranks.id} className="m-5 p-5 border-2 rounded-lg">
-                        <p>
-                            {t('labelRank')} : <span className="font-bold">{ranks.title}</span>
-                        </p>
-                        <p>
-                            {t('minPoint')} : <span
-                            className="font-bold">{ranks.minPoints}</span>
-                        </p>
-                        <p>
-                            {t('maxPoint')} : <span
-                            className="font-bold">{ranks.maxPoints}</span>
-                        </p>
-                        <p>
-                            {t('descriptionRank')} : <span
-                            className="font-bold">{ranks.description}</span>
-                        </p>
-                    </li>
-                ))}
-            </ul>
+        <div className="p-4">
+            <h2 className="text-lg font-semibold text-tertiari mb-4">{t('listRank')}</h2>
+            <div className="relative overflow-x-auto rounded-lg">
+                <table className="w-full text-sm text-left text-secondary">
+                    <thead className="text-xs uppercase bg-tertiari">
+                    <tr>
+                        <th scope="col" className="px-6 py-3">
+                            {t('labelRank')}
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            {t('minPoint')}
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            {t('maxPoint')}
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            {t('descriptionRank')}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {ranks.map((rank: Ranking) => (
+                        <tr key={rank.id} className="bg-white border-b">
+                            <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-light-blue whitespace-nowrap"
+                            >
+                                {rank.title}
+                            </th>
+                            <td className="px-6 py-4">{rank.minPoints}</td>
+                            <td className="px-6 py-4">{rank.maxPoints}</td>
+                            <td className="px-6 py-4">{rank.description}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    )
+    );
 }
 
 export default ListRank;
