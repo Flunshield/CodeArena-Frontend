@@ -1,13 +1,13 @@
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from 'yup';
-import {DataToken, Pricing} from "../../../Interface/Interface.ts";
-import {postElementByEndpoint} from "../../../Helpers/apiHelper.ts";
+import {DataToken, Pricing} from "../Interface/Interface.ts";
+import {postElementByEndpoint} from "../Helpers/apiHelper.ts";
 import clsx from "clsx";
-import {useAuthContext} from "../../../AuthContext.tsx";
-import {checkNbTestCreated} from "../../../Helpers/methodeHelper.ts";
+import {useAuthContext} from "../AuthContext.tsx";
+import {checkNbTestCreated} from "../Helpers/methodeHelper.ts";
 import {useEffect, useState} from "react";
-import {GROUPS} from "../../../constantes/constantes.ts";
-import {DONNEES_TESTS} from "../../../constantes/constanteEntreprise.ts";
+import {GROUPS} from "../constantes/constantes.ts";
+import {DONNEES_TESTS} from "../constantes/constanteEntreprise.ts";
 import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";
 
@@ -25,7 +25,7 @@ interface PuzzleFormProps {
     tests?: JSON | JSON[];
     closePopup?: () => void;
     setIsSubmitted?: () => void;
-    nbPuzzleCreated: number;
+    nbPuzzleCreated?: number;
     lastCommande?: Pricing;
     sendPuzzle?: boolean;
 }
@@ -73,7 +73,9 @@ const PuzzleForm = ({
 
     useEffect(() => {
         if (infos?.data.groups.roles === GROUPS.ENTREPRISE) {
-            setCanCreateTest(checkNbTestCreated(nbPuzzleCreated, lastCommande));
+            if(nbPuzzleCreated && lastCommande) {
+                setCanCreateTest(checkNbTestCreated(nbPuzzleCreated, lastCommande));
+            }
         }
     }, [nbPuzzleCreated, lastCommande]);
 
