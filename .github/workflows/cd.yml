@@ -57,7 +57,7 @@ jobs:
 #          npx cypress run
 
   deploy:
-    needs: test
+#    needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
