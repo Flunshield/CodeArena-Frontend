@@ -56,7 +56,7 @@ function DashboardEntreprise () {
         <Layout>
             <div className="py-10">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <Stats lastCommande={lastCommande} submitCount={submitCount} nbPuzzlesPlayed={nbPuzzlesPlayed}
+                    <Stats lastCommande={lastCommande ?? PRICING[0]} submitCount={submitCount} nbPuzzlesPlayed={nbPuzzlesPlayed}
                            nbPuzzleCreated={nbPuzzleCreated}/>
                     <PuzzleForm setIsSubmitted={() => setSubmitCount(count => count + 1)}
                                 nbPuzzleCreated={nbPuzzleCreated} lastCommande={lastCommande}/>

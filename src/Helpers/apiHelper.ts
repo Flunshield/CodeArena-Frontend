@@ -342,6 +342,7 @@ export const handleCheckout = async (endpoint: string, data?: {
     token: string;
     idApi: string;
 }): Promise<Response> => {
+    console.log(`${VITE_API_BASE_URL_BACK}/${endpoint}`)
     return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {

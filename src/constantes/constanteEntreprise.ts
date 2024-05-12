@@ -48,7 +48,7 @@ export const PRICING = [
         idealFor: "premiumIdeaFor",
         price: "49,99€",
         url: URL_STRIPE,
-        idApi: "price_1P2aZvFoLa8m0nzy2y836Oek"
+        idApi: "price_1PE16WFoLa8m0nzy08YNvhvc"
     },
     {
         title: "Entreprise",
@@ -64,7 +64,7 @@ export const PRICING = [
         idealFor: "entrepriseIdeaFor",
         price: "199,99€",
         url: URL_STRIPE,
-        idApi: "price_1P2rhEFoLa8m0nzygBawhBWC"
+        idApi: "price_1PE1LmFoLa8m0nzymnwISkaF"
     }
 ];
 
