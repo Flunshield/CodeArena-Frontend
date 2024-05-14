@@ -1,24 +1,30 @@
 name: CI - Tests de l'application
 
 on:
-  pull_request:
-    branches:
-      - main
-      - dev
   push:
     branches:
       - dev
-      - main
+  pull_request:
+    branches:
+      - dev
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⏳ Checkout
+      - name: ⏳ Checkout du code
         uses: actions/checkout@v2
 
-      - name: 🗂️ Cache node modules
+      - name: ⏳ Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
+        env:
+          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
+        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
+
+      - name: ⏳ Afficher le contenu du fichier .env
+        run: cat .env
+
+      - name: 🚧 Cache node modules
         id: cache-npm
         uses: actions/cache@v3
         env:
@@ -32,12 +38,21 @@ jobs:
             ${{ runner.os }}-
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: 📋 List the state of node modules
+        name: ⏳ List the state of node modules
         continue-on-error: true
         run: npm list
 
-      - name: 🔄 Install dependencies
+      - name: ⏳ Install dependencies
         run: npm install
-      - name: 🚀 Run tests
+
+      - name: ⏳ Lintage du code
+        run: npm run lint
+
+      - name: 🚀 Lancement du projet en arrière-plan
+        run: |
+          npm run dev &
+          sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
+
+      - name: 🚧 Exécuter les tests
         run: |
           npx cypress run

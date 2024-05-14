@@ -9,19 +9,24 @@ import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import {formatDate} from "../../Helpers/formatHelper.ts";
 import Button from "../../ComposantsCommun/Button.tsx";
+import Notification from "../../ComposantsCommun/Notification.tsx";
+import {GROUPS} from "../../constantes.ts";
 
 function tournamentInfos() {
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
+    const isUser = infos.data.groups.roles === GROUPS.USER
     const {t} = useTranslation();
     const data = {token: authContext.accessToken ?? ""}
     const {id} = useParams<{ id: string }>();
     const [infosTournament, setInfosTournament] = useState<Tournament>()
-    const getTournament = getElementByEndpoint('tournament/findTournament?id=' + id, data);
+    const getTournament = getElementByEndpoint('tournament/findTournament?id=' + id, {token: data.token, data: ""});
     const [isRegistered, setIsRegistered] = useState<boolean>();
     const [canSubscribe, setCanSubscribe] = useState<boolean>(true);
-
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const handleClickRegistered = () => {
         postElementByEndpoint('tournament/inscription', {
@@ -34,8 +39,13 @@ function tournamentInfos() {
         }).then(response => {
             if (response.status === 201) {
                 setIsRegistered(true)
+                setNotificationMessage(t('inscriptionSuccess'));
+                setNotificationType('success');
+                setShowNotification(true);
             } else {
-                window.alert(t('inscriptionFail'));
+                setNotificationMessage(t('inscriptionFail'));
+                setNotificationType('error');
+                setShowNotification(true);
             }
         });
     }
@@ -48,8 +58,13 @@ function tournamentInfos() {
         }).then(response => {
             if (response.status === 200) {
                 setIsRegistered(false)
+                setNotificationMessage(t('unsubscribeSucces'));
+                setNotificationType('success');
+                setShowNotification(true);
             } else {
-                window.alert(t('unsubscribeFail'));
+                setNotificationMessage(t('unsubscribeFail'));
+                setNotificationType('error');
+                setShowNotification(true);
             }
         });
     }
@@ -76,9 +91,16 @@ function tournamentInfos() {
     return (
 
         <div className="m-16 lg:m-56">
-            <Card className="border-white bg-secondary">
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
+            <Card className="border-tertiari bg-secondary">
                 <CardContent>
-                    <ul className="text-white flex flex-col">
+                    <ul className="text-tertiari flex flex-col">
                         <li className="text-3xl text-center font-bold">{infosTournament?.title}</li>
                         <div className="mt-10 flex flex-col md:flex-row justify-around text-2xl">
                             <div className="flex flex-col text-center">
@@ -99,15 +121,16 @@ function tournamentInfos() {
                             <li>{infosTournament?.description}</li>
                         </div>
                         <div className="flex justify-center">
-                            {canSubscribe &&
-                                (isRegistered ?
+                            {canSubscribe
+                                && isUser
+                                && (isRegistered ?
                                         <Button type="button" id="inscription" onClick={handleClickUnsubscribe}
-                                                className="border-2 border-white rounded-xl p-3 font-bold text-2xl">
+                                                className="border-2 border-tertiari rounded-xl p-3 font-bold text-2xl">
                                             {t("unsubscribe")}
                                         </Button>
                                         :
                                         <Button type="button" id="inscription" onClick={handleClickRegistered}
-                                                className="border-2 border-white rounded-xl p-3 font-bold text-2xl">
+                                                className="border-2 border-tertiari rounded-xl p-3 font-bold text-2xl">
                                             {t("inscription")}
                                         </Button>
                                 )

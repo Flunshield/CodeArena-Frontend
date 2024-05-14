@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {jwtDecode, JwtPayload} from 'jwt-decode';
+import {VITE_API_BASE_URL_BACK} from "../Helpers/apiHelper.ts";
 
 export interface AuthHookProps {
     accessToken?: string | undefined;
@@ -15,45 +16,23 @@ const useAuth = ({accessToken}: AuthHookProps) => {
         return storedAuthState ? JSON.parse(storedAuthState) : null;
     });
 
-    const fetchData = async (): Promise<void> => {
+    async function fetchData() {
         try {
             // Vérifier si le jeton d'accès est expiré ou valide
             let isAccessTokenValid: string | JwtPayload = '';
             if (accessToken) {
                 isAccessTokenValid = jwtDecode(accessToken);
             }
-
-            if (isAccessTokenValid) {
-                setAuthState((prevState) => ({
-                    ...prevState,
-                    accessToken: accessToken,
-                    infosUser: isAccessTokenValid,
-                    connected: true,
-                }));
-            } else {
-                // Si le jeton d'accès est expiré ou non fourni, demander un nouveau jeton avec le rafraîchissement
-                const newAccessToken = await refreshAccessToken();
-                let isAccessTokenValid: JwtPayload | undefined = undefined;
-                if (newAccessToken) {
-                    isAccessTokenValid = jwtDecode(newAccessToken);
-                    setAuthState((prevState) => ({
-                        ...prevState,
-                        infosUser: isAccessTokenValid,
-                        accessToken: newAccessToken,
-                        connected: true,
-                    }));
-                }
-            }
+            return isAccessTokenValid;
         } catch (error) {
             console.error('Erreur lors du chargement des données d\'authentification', error);
         }
-    };
-
+    }
 
     const refreshAccessToken = async (): Promise<string> => {
         try {
             // Effectuer la requête pour rafraîchir le jeton d'accès avec fetch
-            const response = await fetch('http://localhost:3000/auth/refresh-access-token', {
+            const response = await fetch(`${VITE_API_BASE_URL_BACK}/auth/refresh-access-token`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +53,29 @@ const useAuth = ({accessToken}: AuthHookProps) => {
     };
 
     useEffect(() => {
-            fetchData().then(r => r);
+        fetchData().then(async (data) => {
+            if (data) {
+                setAuthState((prevState) => ({
+                    ...prevState,
+                    accessToken: accessToken,
+                    infosUser: data,
+                    connected: true,
+                }));
+            } else {
+                // Si le jeton d'accès est expiré ou non fourni, demander un nouveau jeton avec le rafraîchissement
+                const newAccessToken = await refreshAccessToken();
+                let isAccessTokenValid: JwtPayload | undefined = undefined;
+                if (newAccessToken) {
+                    isAccessTokenValid = jwtDecode(newAccessToken);
+                    setAuthState((prevState) => ({
+                        ...prevState,
+                        infosUser: isAccessTokenValid,
+                        accessToken: newAccessToken,
+                        connected: true,
+                    }));
+                }
+            }
+        });
     }, [accessToken]); // Déclencher le chargement lorsque le jeton d'accès change
 
     // Effet pour sauvegarder les données dans localStorage lorsqu'elles changent

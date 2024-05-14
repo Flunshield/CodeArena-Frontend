@@ -1,4 +1,4 @@
-import {imagePaths} from "../../constantes.ts";
+import {imagePaths} from "../../constantes/constantes.ts";
 import {useState} from "react";
 import {updateUser} from "../../Helpers/apiHelper.ts";
 import {useTranslation} from "react-i18next";
@@ -25,22 +25,25 @@ function ProfilePicture(value: ProfilePictureProps) {
     };
 
     const closePopup = async () => {
-        const response = await updateUser("user/updateUser", {
-            id: infos.data.id,
-            userName: infos.data.userName,
-            token: authContext.accessToken,
-            avatar: `src/assets/photosProfiles/${isPictureClicked}`
-        });
-        if (response.ok) {
-            setPopupOpen(false);
-        } else {
-            alert("Erreur lors de la mise à jour de l'avatar");
+        if(isPictureClicked !== "") {
+            const response = await updateUser("user/updateUser", {
+                id: infos.data.id,
+                userName: infos.data.userName,
+                token: authContext.accessToken,
+                avatar: `/assets/photosProfiles/${isPictureClicked}`
+            });
+            if (response.ok) {
+                setPopupOpen(false);
+                window.location.reload();
+            } else {
+                alert("Erreur lors de la mise à jour de l'avatar");
+            }
         }
     };
 
-    const addPicture = (id: string) => {
-        const picture = document.getElementById(id);
-        setIsPictureClicked(id ?? "");
+    const addPicture = (id: string|undefined) => {
+        const picture = document.getElementById(id ?? "noImage.png");
+        setIsPictureClicked(id ?? "noImage.png");
 
         // Filtrer les éléments qui ne répondent pas à la condition (différents de l'id)
         const picturesNotSelected = imagePaths.filter((path) => path !== id);
@@ -50,18 +53,18 @@ function ProfilePicture(value: ProfilePictureProps) {
 
             // Supprimer les classes des images non sélectionnées
             pictureToDelete?.classList.remove("border-4");
-            pictureToDelete?.classList.remove("border-white");
+            pictureToDelete?.classList.remove("border-tertiari");
         });
 
         // Ajouter les classes à l'image sélectionnée
         picture?.classList.add("border-4");
-        picture?.classList.add("border-white");
+        picture?.classList.add("border-tertiari");
     };
 
     return (
         <div className={clsx(value.classname)}>
-            <img className="rounded-full w-48 h-48 border-2 border-white ml-32 mr-16 mb-10 md:ml-80 lg:ml-28"
-                 src={isPictureClicked !== "" ? `src/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "noImage.png"}` : infos.data.avatar}
+            <img className="rounded-full w-48 h-48 border-2 border-tertiari"
+                 src={isPictureClicked !== "" ? `/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "iconsLogin.svg"}` : infos.data.avatar}
                  alt="Avatar"
                  onClick={openPopup}/>
             {isPopupOpen && (
@@ -72,10 +75,10 @@ function ProfilePicture(value: ProfilePictureProps) {
                             {imagePaths.map((path) => (
                                 <img className="rounded-full w-20 h-20 m-5" key={path} id={path}
                                      onClick={() => addPicture(path)}
-                                     src={`src/assets/photosProfiles/${path}`} alt={`Image ${path}`}/>
+                                     src={`/assets/photosProfiles/${path}`} alt={`Image ${path}`}/>
                             ))}
                         </div>
-                        <button onClick={closePopup} className="text-white mr-6">{t("update")}</button>
+                        <button onClick={closePopup} className="text-tertiari mr-6">{t("update")}</button>
                     </div>
                 </div>
             )}

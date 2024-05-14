@@ -1,17 +1,17 @@
 import Card from "./Card.tsx";
 import Button from "./Button.tsx";
-import iconeMenu from "../assets/menu.png";
-import btnClose from "../assets/btnClose.png";
+import iconeMenu from "/assets/menu.png";
+import btnClose from "/assets/btnClose.png";
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import logo from "../assets/logo.svg";
-import event from "../assets/event.png";
-import tournois from "../assets/tournois.png";
-import classement from "../assets/classement.png";
-import ranked from "../assets/ranked.png";
-import dashboard from "../assets/dashboard.png";
+import logo from "/assets/logo.svg";
+import event from "/assets/event.png";
+import tournois from "/assets/tournois.png";
+import classement from "/assets/classement.png";
+import ranked from "/assets/ranked.png";
+import dashboard from "/assets/dashboard.png";
 import clsx from "clsx";
-import {DASHBOARD, EVENT, RANKED, RANKING, TOURNAMENT} from "../constantes.ts";
+import {DASHBOARD, EVENT, RANKED, RANKING, TOURNAMENT} from "../constantes/constantes.ts";
 import {checkUrl} from "../Helpers/methodeHelper.ts";
 
 const NavBar = () => {
@@ -47,14 +47,14 @@ const NavBar = () => {
                 type="button"
                 id="navBarButton"
                 onClick={toggleNavbar}
-                className="border-0 ml-5 mt-0.5"
+                className="border-0 ml-5 mt-0.5 w-12"
             >
-                <img src={iconeMenu} alt="icone menu" className="w-10 mt-2"/>
+                <img src={iconeMenu} alt="icone menu" className="w-12 mt-2"/>
             </Button>
             {isOpen && (
                 <Card
-                    className="w-full md:w-1/3 border-0 border-r border-b h-screen absolute rounded-tr-2xl rounded-br-2xl rounded-tl-none rounded-bl-none top-0 bg-primary border-white">
-                    <nav className="block flex-col text-white text-2xl font-bold">
+                    className="w-full z-10 md:w-1/3 border-0 border-r border-b h-screen absolute rounded-tr-2xl rounded-br-2xl rounded-tl-none rounded-bl-none top-0 bg-primary border-tertiari">
+                    <nav className="block flex-col text-tertiari text-2xl font-bold">
                         <div className="flex flex-row justify-between">
                             <img
                                 className="w-12 mt-3 ml-3"

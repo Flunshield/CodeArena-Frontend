@@ -9,7 +9,7 @@ function EventDashboard() {
     const authContext = useAuthContext();
     const data = {token: authContext.accessToken ?? ""}
     const [infosEvent, setInfosEvent] = useState<Event[]>([])
-    const getAllEvents = getElementByEndpoint('evenement/findEvents', data);
+    const getAllEvents = getElementByEndpoint('evenement/findEvents', {token: data.token, data: ""});
 
     useEffect(() => {
         if (infosEvent.length === 0) {
@@ -22,8 +22,8 @@ function EventDashboard() {
 
     return (
         <Layout>
-            <div className="m-32 mb-64">
-                <TableauEvent infosEvents={infosEvent} isImg={false}/>
+            <div className="mb-64">
+                <TableauEvent infosEvents={infosEvent} isImg={false} className="m-5 rounded-xl border-tertiari bg-secondary p-5 h-full"/>
             </div>
         </Layout>
     );

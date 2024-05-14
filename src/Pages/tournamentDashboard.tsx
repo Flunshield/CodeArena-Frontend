@@ -9,7 +9,7 @@ function TournamentDashboard() {
     const authContext = useAuthContext();
     const data = {token: authContext.accessToken ?? ""}
     const [infosTournament, setInfosTournament] = useState<Tournament[]>([])
-    const getAllTournaments = getElementByEndpoint('tournament/findNextTenTournament', data);
+    const getAllTournaments = getElementByEndpoint('tournament/findNextTenTournament', {token: data.token, data: ""});
 
     useEffect(() => {
         if (infosTournament.length === 0) {
@@ -22,8 +22,9 @@ function TournamentDashboard() {
 
     return (
         <Layout>
-            <div className="m-32 mb-64">
-                <TableauTournament infosTournament={infosTournament} isImg={true}></TableauTournament>
+            <div className="h-screen">
+            <TableauTournament infosTournament={infosTournament} isImg={true}
+                               className="border-0"></TableauTournament>
             </div>
         </Layout>
     );

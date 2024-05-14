@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuthContext } from "../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
 import {DataToken} from "../Interface/Interface.ts";
-import {GROUPS} from "../constantes.ts";
+import {GROUPS} from "../constantes/constantes.ts";
 
 interface PrivateRouteProps {
     children: ReactNode;

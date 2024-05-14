@@ -1,11 +1,11 @@
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import company from "../../assets/iconeProfile/company.png";
-import github from "../../assets/iconeProfile/github.png";
-import link from "../../assets/iconeProfile/link.png";
-import map from "../../assets/iconeProfile/map-marker.png";
-import school from "../../assets/iconeProfile/school.png";
-import iconeTitle from "../../assets/iconeProfile/flag.png";
+import company from "/assets/iconeProfile/company.png";
+import github from "/assets/iconeProfile/github.png";
+import link from "/assets/iconeProfile/link.png";
+import map from "/assets/iconeProfile/map-marker.png";
+import school from "/assets/iconeProfile/school.png";
+import iconeTitle from "/assets/iconeProfile/flag.png";
 import {useTranslation} from "react-i18next";
 import {DataToken, Titles, User} from "../../Interface/Interface.ts";
 import React, {useEffect} from "react";
@@ -20,12 +20,25 @@ interface MyFormProps {
 const MyForm: React.FC<MyFormProps> = ({onClose}) => {
     const {t} = useTranslation();
     const authContext = useAuthContext();
+    
+    useEffect(() => {
+        // Désactive le défilement lorsque le formulaire est ouvert
+        document.body.style.overflow = 'hidden';
+
+        // Réactive le défilement lorsque le formulaire est fermé
+        return () => {
+            document.body.style.overflow = 'visible';
+        };
+    }, []);
 
     // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
     const infosUser: JwtPayload = authContext?.infosUser as JwtPayload
     const infos: DataToken = infosUser.aud as unknown as DataToken
     const [titles, setTitles] = React.useState<Titles[]>();
-    const getTitles = getElementByEndpoint("user/getTitles", {token: authContext.accessToken ?? ""});
+    const getTitles = getElementByEndpoint("user/getTitles", {
+        token: authContext.accessToken ?? "",
+        data: ''
+    });
 
     const initialValues: User = {
         localisation: infos.data.localisation ?? '',
@@ -95,23 +108,23 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className="flex flex-col w-full mb-10">
-                <p className="text-white font-bold text-2xl text-center mb-6">{t("ProfileUpdate")}</p>
+                <p className="text-tertiari font-bold text-2xl text-center mb-6">{t("ProfileUpdate")}</p>
                 <ul className="flex flex-col mt-5">
                     <li className="flex flex-row mb-2">
-                        <p className="font-bold text-white mr-10">{t("firstName")} : </p>
+                        <p className="font-bold text-tertiari mr-10">{t("firstName")} : </p>
                         <input
                             type="text"
                             id="firstName"
-                            className="bg-primary text-white"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('firstName')}
                         />
                     </li>
                     <li className="flex flex-row mb-2">
-                        <p className="font-bold text-white mr-5">{t("lastName")} : </p>
+                        <p className="font-bold text-tertiari mr-5">{t("lastName")} : </p>
                         <input
                             type="text"
                             id="lastName"
-                            className="bg-primary text-white"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('lastName')}
                         />
                     </li>
@@ -120,7 +133,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="localisation"
-                            className="bg-primary text-white"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('localisation')}
                         />
                     </li>
@@ -129,7 +142,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="company"
-                            className="bg-primary text-white"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('company')}
                         />
                     </li>
@@ -138,7 +151,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="school"
-                            className="bg-primary text-white"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('school')}
                         />
                     </li>
@@ -147,7 +160,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="github"
-                            className="bg-primary text-white"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('github')}
                         />
                     </li>
@@ -156,7 +169,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <input
                             type="text"
                             id="url"
-                            className="bg-primary text-white"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('url')}
                         />
                     </li>
@@ -164,7 +177,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                         <img src={iconeTitle} alt="titles" className="mr-10 ml-6"/>
                         <select
                             id="titlesId"
-                            className="bg-primary text-white"
+                            className="bg-tertiary text-primary"
                             {...formik.getFieldProps('titlesId')}
                         >
                             <option value="" label={t('SelectTitle')}/>
@@ -176,10 +189,10 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
                 </ul>
             </div>
             <div className="flex flex-row justify-center">
-                <button type="submit" className="text-white mr-6 border-2 border-white rounded-lg p-2">
+                <button type="submit" className="text-tertiari mr-6 border-2 border-tertiari rounded-lg p-2">
                     {t("update")}
                 </button>
-                <button type="button" onClick={onClose} className="text-white mr-6 bg-secondary rounded-lg p-2">
+                <button type="button" onClick={onClose} className="text-tertiari mr-6 bg-secondary rounded-lg p-2">
                     {t("close")}
                 </button>
             </div>

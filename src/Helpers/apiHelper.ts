@@ -1,9 +1,7 @@
-// api.ts
+import {LoginForm, PuzzlesEntreprise, shortUser, Titles, User} from "../Interface/Interface.ts";
 
-import {LoginForm, shortUser, Titles, User} from "../Interface/Interface.ts";
-
-export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL_BACK;
-
+export const VITE_API_BASE_URL_BACK: string = import.meta.env.VITE_API_BASE_URL_BACK;
+const VITE_API_BASE_URL_TEST: string = import.meta.env.VITE_API_BASE_URL_TEST;
 /**
  * Effectue une requête de connexion à l'API.
  *
@@ -13,7 +11,7 @@ export const API_BASE_URL: string = import.meta.env.VITE_API_BASE_URL_BACK;
  */
 export const login = async (endpoint: string, data: LoginForm): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -34,7 +32,7 @@ export const login = async (endpoint: string, data: LoginForm): Promise<Response
  */
 export const logout = async (endpoint: string): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -51,7 +49,7 @@ export const logout = async (endpoint: string): Promise<Response> => {
  * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
  */
 export const createUser = async (endpoint: string, data: shortUser): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -73,7 +71,7 @@ export const createUser = async (endpoint: string, data: shortUser): Promise<Res
  * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
  */
 export const forgotPassword = async (endpoint: string, email: string): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -93,7 +91,7 @@ export const forgotPassword = async (endpoint: string, email: string): Promise<R
  * @returns {Promise<Response>} Une promesse qui résout avec l'objet Response de la requête.
  */
 export const changePassword = async (endpoint: string, data: LoginForm): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -116,7 +114,7 @@ export const changePassword = async (endpoint: string, data: LoginForm): Promise
  */
 export const updateUser = async (endpoint?: string, data?: User): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -151,11 +149,7 @@ export const updateUser = async (endpoint?: string, data?: User): Promise<Respon
  */
 export const getElementByEndpoint = async (endpoint: string, data: { token: string, data: string }): Promise<Response> => {
     try {
-        const queryString = new URLSearchParams({
-            session_id: data.data
-        }).toString();
-
-        const response = await fetch(`${API_BASE_URL}/${endpoint}?${queryString}`, {
+        return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -163,12 +157,6 @@ export const getElementByEndpoint = async (endpoint: string, data: { token: stri
             },
             credentials: 'include'
         });
-
-        if (!response.ok) {
-            throw new Error('La requête a échoué');
-        }
-
-        return response;
     } catch (error) {
         console.error('Erreur lors de la requête', error);
         throw error;
@@ -187,7 +175,7 @@ export const unsubscribeTournament = async (endpoint?: string, data?: {
     tournamentID?: number
 }): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -213,8 +201,10 @@ export const postElementByEndpoint = async (endpoint: string, data: {
     token: string,
     data: object
 }): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
-        method: 'POST',
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        method: data.data.patch ? 'PATCH' : 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${data?.token}`,
@@ -226,12 +216,29 @@ export const postElementByEndpoint = async (endpoint: string, data: {
     });
 };
 
+/**
+ * Envoie une requête DELETE à une API pour supprimer un titre spécifié.
+ * Cette fonction fait une requête DELETE à l'endpoint spécifié, en utilisant un token JWT pour l'authentification
+ * et inclut les détails du titre à supprimer dans le corps de la requête.
+ *
+ * @param endpoint - L'endpoint à appeler pour la suppression, qui sera concaténé avec la base URL de l'API.
+ * @param data - Un objet contenant le token d'authentification et le titre à supprimer.
+ *               Le token est utilisé pour authentifier la requête.
+ *               Le titre est l'objet à envoyer dans le corps de la requête pour spécifier quel titre doit être supprimé.
+ * @returns Une promesse qui se résout avec la réponse HTTP obtenue suite à la requête DELETE.
+ *
+ * @example
+ * deleteTitle('titles/delete', {
+ *   token: 'jwt-token-here',
+ *   title: { id: 'title-id', label: 'Example Title', value: 'example-value' }
+ * });
+ */
 export const deleteTitle = async (endpoint?: string, data?: {
     token: string;
     title?: Titles;
 }): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -244,12 +251,29 @@ export const deleteTitle = async (endpoint?: string, data?: {
     });
 };
 
+/**
+ * Envoie une requête DELETE à une API pour supprimer un utilisateur spécifié.
+ * Cette fonction effectue une requête DELETE à l'endpoint spécifié, utilisant un token JWT pour l'authentification
+ * et inclut les détails de l'utilisateur à supprimer dans le corps de la requête.
+ *
+ * @param endpoint - L'endpoint à appeler pour la suppression, qui sera concaténé avec la base URL de l'API.
+ * @param data - Un objet contenant le token d'authentification et l'utilisateur à supprimer.
+ *               Le token est utilisé pour authentifier la requête.
+ *               L'utilisateur est l'objet à envoyer dans le corps de la requête pour spécifier quel utilisateur doit être supprimé.
+ * @returns Une promesse qui se résout avec la réponse HTTP obtenue suite à la requête DELETE.
+ *
+ * @example
+ * deleteUser('users/delete', {
+ *   token: 'jwt-token-here',
+ *   user: { id: 'user-id', name: 'John Doe', email: 'john.doe@example.com' }
+ * });
+ */
 export const deleteUser = async (endpoint?: string, data?: {
     token: string;
     user: User;
 }): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -262,12 +286,29 @@ export const deleteUser = async (endpoint?: string, data?: {
     });
 }
 
+/**
+ * Envoie une requête PATCH à une API pour réinitialiser les points d'un utilisateur spécifié.
+ * Cette fonction effectue une requête PATCH à l'endpoint spécifié, utilisant un token JWT pour l'authentification
+ * et inclut les détails de l'utilisateur pour lequel les points doivent être réinitialisés dans le corps de la requête.
+ *
+ * @param endpoint - L'endpoint à appeler pour la réinitialisation des points, qui sera concaténé avec la base URL de l'API.
+ * @param data - Un objet contenant le token d'authentification et l'utilisateur dont les points doivent être réinitialisés.
+ *               Le token est utilisé pour authentifier la requête.
+ *               L'utilisateur est l'objet à envoyer dans le corps de la requête pour spécifier pour quel utilisateur les points doivent être réinitialisés.
+ * @returns Une promesse qui se résout avec la réponse HTTP obtenue suite à la requête PATCH.
+ *
+ * @example
+ * resetPointsUser('users/reset-points', {
+ *   token: 'jwt-token-here',
+ *   user: { id: 'user-id', name: 'John Doe', email: 'john.doe@example.com' }
+ * });
+ */
 export const resetPointsUser = async (endpoint?: string, data?: {
     token: string;
     user: User;
 }): Promise<Response> => {
 
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -280,11 +321,29 @@ export const resetPointsUser = async (endpoint?: string, data?: {
     });
 }
 
+/**
+ * Envoie une requête POST à une API pour gérer une opération de paiement ou de commande spécifiée.
+ * Cette fonction réalise une requête POST vers l'endpoint spécifié, utilisant un token JWT pour l'authentification.
+ * Elle inclut les détails nécessaires (comme l'ID de l'API de paiement) dans le corps de la requête pour traiter l'opération.
+ *
+ * @param endpoint - L'endpoint de l'API auquel faire la requête POST, qui sera concaténé avec la base URL de l'API.
+ * @param data - Un objet optionnel contenant le token d'authentification et l'identifiant de l'API nécessaire à l'opération.
+ *               Le `token` est utilisé pour authentifier la requête auprès de l'API.
+ *               `idApi` est l'identifiant nécessaire pour la requête spécifique à l'opération de paiement ou commande.
+ * @returns Une promesse qui se résout avec la réponse HTTP obtenue suite à la requête POST.
+ *
+ * @example
+ * handleCheckout('checkout/initiate', {
+ *   token: 'jwt-token-here',
+ *   idApi: 'api-id-for-operation'
+ * });
+ */
 export const handleCheckout = async (endpoint: string, data?: {
     token: string;
     idApi: string;
 }): Promise<Response> => {
-    return await fetch(`${API_BASE_URL}/${endpoint}`, {
+    console.log(`${VITE_API_BASE_URL_BACK}/${endpoint}`)
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -296,3 +355,72 @@ export const handleCheckout = async (endpoint: string, data?: {
         }),
     });
 }
+
+/**
+ * Effectue une requête HTTP PATCH pour mettre à jour les détails d'un puzzle spécifique.
+ * La fonction envoie une requête à un endpoint API prédéfini avec des en-têtes d'authentification
+ * et les données du puzzle à mettre à jour.
+ *
+ * @param token - Le token d'authentification JWT utilisé pour valider la requête auprès de l'API.
+ * @param data - Un objet de type `PuzzlesEntreprise` contenant les nouvelles valeurs pour les détails du puzzle,
+ *               les tests associés, et l'identifiant du puzzle. Ce paramètre est optionnel.
+ * @returns Une promesse qui résout en un objet `Response` de l'API Fetch, représentant la réponse du serveur.
+ */
+
+export const updatePuzzle = async (token: string, data?: PuzzlesEntreprise): Promise<Response> => {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/puzzle/updatePuzzle`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            details: data?.details,
+            tests: data?.tests,
+            id: data?.id
+        }),
+        credentials: 'include' // Assure l'envoi des cookies si nécessaire
+    });
+};
+
+/**
+ * Effectue une requête HTTP DELETE pour supprimer un puzzle spécifié par son identifiant.
+ * Cette fonction envoie la requête à l'endpoint API fourni, en utilisant un token d'authentification.
+ *
+ * @param endpoint - L'endpoint API où envoyer la requête de suppression. Ce paramètre est optionnel.
+ * @param data - Un objet contenant le token d'authentification et l'identifiant optionnel du puzzle à supprimer.
+ * @returns Une promesse qui résout en un objet `Response` de l'API Fetch, représentant la réponse du serveur.
+ */
+
+export const deletePuzzle = async (endpoint?: string, data?: {
+    token: string;
+    puzzleId?: number | string;
+}): Promise<Response> => {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data?.token}`,
+        },
+        body: JSON.stringify({
+            id: data?.puzzleId
+        }),
+        credentials: 'include'
+    });
+};
+
+export const postTest = async (endpoint: string, data: {
+    code: string,
+    tests: object
+}): Promise<Response> => {
+    return await fetch(`${VITE_API_BASE_URL_TEST}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            code: data.code,
+            tests: data.tests
+        })
+    });
+};

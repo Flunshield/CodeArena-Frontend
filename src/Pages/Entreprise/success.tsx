@@ -6,9 +6,11 @@ import {JwtPayload} from "jwt-decode";
 import {DataToken} from "../../Interface/Interface.ts";
 import {useEffect, useState} from "react";
 import Card from "../../ComposantsCommun/Card.tsx";
+import {useTranslation} from "react-i18next";
 
-const Success = () => {
+function Success (){
     const {search} = useLocation();
+    const {t} = useTranslation();
     const params = new URLSearchParams(search);
     const sessionId = params.get('session_id');
     const authContext = useAuthContext();
@@ -20,25 +22,24 @@ const Success = () => {
     const [isCodeError, setIsCodeError] = useState(0);
 
     useEffect(() => {
-            postElementByEndpoint('stripe/success', {
-                token: authContext.accessToken ?? "",
-                data: {sessionId: sessionId ?? "", user: infos}
+        postElementByEndpoint('stripe/success', {
+            token: authContext.accessToken ?? "",
+            data: {sessionId: sessionId ?? "", user: infos}
+        })
+            .then(response => {
+                return response.status;
             })
-                .then(response => {
-                    return response.status;
-                })
-                .then(data => {
-                    if (data === 201) {
-                        window.location.href = "/";
-                    } else {
-                        setIsError(true);
-                        setIsCodeError(data);
-                    }
-                })
-                .catch(error => {
-                    console.error("Erreur lors de la récupération du message :", error);
-                    // Traitez les erreurs ici
-                });
+            .then(data => {
+                if (data === 201) {
+                    window.location.href = "/";
+                } else {
+                    setIsError(true);
+                    setIsCodeError(data);
+                }
+            })
+            .catch(error => {
+                console.error("Erreur lors de la récupération du message :", error);
+            });
     }, []);
 
 
@@ -46,16 +47,14 @@ const Success = () => {
         <Layout>
             <div className="m-64 text-center">
                 {isError ?
-                    <Card className="bg-secondary text-white p-32">
-                        <h1 className="text-2xl mb-10">Erreur lors de la transaction</h1>
-                        <p> Veuillez contacter le support. (Code erreur {isCodeError})</p>
+                    <Card className="bg-secondary text-tertiari p-32">
+                        <h1 className="text-2xl mb-10">{t("erreurTransac")}</h1>
+                        <p> {t("contactSupport")} {isCodeError})</p>
                     </Card>
                     :
-                    <Card className="bg-secondary text-white p-32">
-                        <h1 className="text-white">Vous allez être redirigé</h1>
-                        {/* eslint-disable-next-line react/no-unescaped-entities */}
-                        <p> Si vous n'êtes pas redirigé, vous pouvez cliquez sur ce <a href={"/"}
-                                                                                       className="text-blue-700">lien.</a>
+                    <Card className="bg-secondary text-tertiari p-32">
+                        <h1 className="text-tertiari">{t("redirection")}</h1>
+                        <p> {t("msgRedirectionLink")} <a href={"/"} className="text-blue-700">{t("link")}.</a>
                         </p>
                     </Card>
                 }

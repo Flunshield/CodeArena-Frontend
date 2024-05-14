@@ -1,9 +1,11 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {ENTREPRISE_TRUST} from "../../../constantes.ts";
+import {ENTREPRISE_TRUST} from "../../../constantes/constanteEntreprise.ts";
+import {useTranslation} from "react-i18next";
 
 const TrustSection = () => {
+    const {t} = useTranslation();
     const settings = {
         dots: true,
         infinite: true,
@@ -35,9 +37,9 @@ const TrustSection = () => {
     };
 
     return (
-        <div className="bg-gray-100 py-8 rounded-lg">
+        <div id="TrustSection" className="bg-gray-100 py-8 rounded-lg m-auto w-2/3">
             <div className="container mx-auto">
-                <h2 className="text-3xl font-bold text-center mb-6">Ils nous ont fait confiance !</h2>
+                <h2 className="text-3xl font-bold text-center mb-6">{t("trustSection")}</h2>
                 <Slider {...settings}>
                     {ENTREPRISE_TRUST.map((client, index) => (
                         <div key={index} className="flex flex-col">

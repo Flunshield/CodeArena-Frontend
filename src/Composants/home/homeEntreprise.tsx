@@ -1,26 +1,22 @@
-import Layout from "../../ComposantsCommun/Layout.tsx";
-import tree from "../../assets/tree.svg";
 import PricingSection from "./homeEntreprise/PricingSection.tsx";
 import CardExplainSection from "./homeEntreprise/cardExplainSection.tsx";
 import TrustSection from "./homeEntreprise/trustSection.tsx";
 
 const HomeEntreprise = () => {
     return (
-        <Layout>
-            <div className="flex flex-row justify-between top-0 mr-60">
-                <div className="mx-auto py-8 pt-32 z-20  ml-32 mr-32">
-                    <CardExplainSection/>
-                    <PricingSection/>
-                    <TrustSection/>
-                </div>
-                <img
-                    className="bg-primary hidden xl:block absolute right-0 -z-10"
-                    src={tree}
-                    alt="arbre design"
-                    id="arbre"
-                />
+        <div className="md:flex md:flex-row md:justify-between mt-16 mb-24 w-full">
+            <div className="pt-32 z-20 flex flex-col justify-center">
+                <CardExplainSection/>
+                <PricingSection/>
+                <TrustSection/>
             </div>
-        </Layout>
+            <img
+                className="bg-primary hidden xl:block absolute right-0 -z-10"
+                src="/assets/tree.svg"
+                alt="arbre design"
+                id="arbre"
+            />
+        </div>
     )
 }
 

@@ -17,7 +17,7 @@ function Dashboard() {
     const userId = infosUser?.sub as unknown as number
 
     const data = {id: userId, token: authContext.accessToken ?? ""}
-    const responsePromise = getElementByEndpoint('dashboard/checkDashboard?id=' + data.id, data);
+    const responsePromise = getElementByEndpoint('dashboard/checkDashboard?id=' + data.id, {token: data.token, data: ""});
 
     useEffect(() => {
         // On réalise la requete pour récupérer la liste des utilisateurs a afficher dans la section rang
@@ -25,7 +25,7 @@ function Dashboard() {
             responsePromise.then(async (response) => {
                 const result = await response.json();
                 setInfosUserRank(result.userRanking);
-                setInfosTournament([result.tournament])
+                setInfosTournament(result.tournament)
                 setInfosEvents(result.events)
             });
         }
@@ -33,11 +33,11 @@ function Dashboard() {
 
     return (
         <Layout>
-            <div className="flex flex-col xl:flex-row">
-                <TableauEvent infosEvents={infosEvents} isImg={false} className="mt-32 ml-32 w-2/4 h-3/4"/>
-                <div className="m-32">
-                    <UserRank infosUserRank={infosUserRank}/>
-                    <TableauTournament infosTournament={infosTournament} isImg={false}/>
+            <div className="flex flex-col xl:flex-row xl:justify-around">
+                <TableauEvent infosEvents={infosEvents} isImg={false} className="m-5 rounded-xl border-tertiari bg-secondary p-5 h-full xl:w-full xl:mr-20"/>
+                <div className="flex flex-col">
+                    <UserRank infosUserRank={infosUserRank} className="rounded-xl border-tertiari h-auto mb-16 m-5"/>
+                    <TableauTournament infosTournament={infosTournament} isImg={false} className="rounded-xl border-tertiari m-5 bg-secondary"/>
                 </div>
             </div>
         </Layout>
