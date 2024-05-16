@@ -19,7 +19,6 @@ export default {
                 tertiari: '#E3E8EF',
                 quaternary: '#0F1319',
                 error: '#de2916',
-                red: '#D63864',
                 'petroleum-blue': '#336699',
                 'gris-chaud': '#505A67',
                 'light-blue': '#7eb5ec',
