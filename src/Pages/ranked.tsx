@@ -95,7 +95,7 @@ function Ranked() {
 
     return (
         <Layout>
-            <div className="m-2 text-white flex flex-col items-center">
+            <div className="m-2 text-white flex flex-col items-center py-[120px]">
                 <div className='mb-4'>
                     {(loading || loadingCheckQueue) && useLoader()} {/* Utilisez loadingCheckQueue pour garder le loader affiché pendant la vérification de la file d'attente */}
                 </div>
