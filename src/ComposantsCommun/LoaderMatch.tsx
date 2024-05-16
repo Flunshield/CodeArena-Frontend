@@ -10,7 +10,7 @@ const useLoader = () => {
                 <div id="square4"></div>
                 <div id="square5"></div>
             </div>
-            <span className='text-white flex justify-center font-bold text-xl'>Recherche d'un Match</span>
+            <span className='text-white flex justify-center font-bold text-xl'>Recherche d&apos;un match en cours </span>
         </div>
     );
 }
