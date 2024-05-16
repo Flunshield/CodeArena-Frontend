@@ -39,8 +39,8 @@ function SignUpForm () {
             setNotificationType('success');
             setShowNotification(true);
             setTimeout(() => {
-                navigate("/");
-            }, 3000);
+                navigate("/login");
+            }, 1000);
         } else if (response.status === 400) {
             setNotificationMessage(t('mailOrUserNameExist'));
             setNotificationType('success');
