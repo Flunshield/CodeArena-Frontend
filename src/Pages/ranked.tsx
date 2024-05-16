@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Button from '../ComposantsCommun/Button';
 import useLoader from '../ComposantsCommun/LoaderMatch.tsx';
 import Layout from "../ComposantsCommun/Layout.tsx";
@@ -6,45 +7,87 @@ import { JwtPayload } from "jwt-decode";
 import { DataToken } from "../Interface/Interface.ts";
 import { postElementByEndpoint, getElementByEndpoint } from "../Helpers/apiHelper.ts";
 
-
-
 function Ranked() {
-    
     const authContext = useAuthContext();
-    
-    const infosUser = authContext?.infosUser as JwtPayload
-    const infos = infosUser.aud as unknown as DataToken
-    
-    const FindMatch = async () => {
-        const id = infos.data.id ?? '';
-        console.log('id: ', id);
-        
-        const response = await postElementByEndpoint(`matchmaking/joinQueue`, {
-            token: authContext.accessToken ?? '',
-            data: {id}
-        })
-    
-        if (response.status === 201) {
-            console.log("ajouter à la file d'attente et recherhce de match en cours");
+
+    const infosUser = authContext?.infosUser as JwtPayload;
+    const infos = infosUser.aud as unknown as DataToken;
+    const id = infos.data.id ?? null;
+
+    const [loading, setLoading] = useState(true);
+    const [inQueue, setInQueue] = useState(false);
+
+    useEffect(() => {
+        async function fetchData() {
+            const isInQueue = await checkIsInQueue();
+            setLoading(false);
+            setInQueue(isInQueue);
+        }
+        fetchData();
+    }, []);
+
+    async function checkIsInQueue() {
+        try {
             const response = await getElementByEndpoint('matchmaking/queue', {
                 token: authContext.accessToken ?? "",
                 data: ''
-            })
-            if (response.status === 201) {
-                console.log("Match trouvé");
-                alert("Match trouvé");
+            });
+
+            if (response.status === 200) {
+                const responseData = await response.json();
+                const queue = responseData.queue as number[];
+                if (typeof id === 'number' && !isNaN(id)) {
+                    return queue.includes(id);
+                } else {
+                    console.error("L'ID utilisateur n'est pas valide");
+                    return false;
+                }
+            } else {
+                console.log("Erreur lors de la file d'attente du match");
+                return false;
             }
+        } catch (error) {
+            console.error("Erreur lors de la vérification de la file d'attente :", error);
+            return false;
+        }
+    }
+
+    async function handleFindMatch() {
+        const response = await postElementByEndpoint(`matchmaking/joinQueue`, {
+            token: authContext.accessToken ?? '',
+            data: { id }
+        });
+
+        if (response.status === 201) {
+            console.log("Ajouté à la file d'attente et recherche de match en cours");
+            setLoading(true);
+            setInQueue(true);
         } else {
             alert("Erreur lors de la recherche de match");
         }
     }
 
+    async function handleLeaveQueue() {
+        // Code pour quitter la file d'attente
+    }
+
     return (
         <Layout>
-            <div className="m-2 text-white flex justify-center">
-                <Button id="ranked-button" type={'button'} className="bg-green-500 m-2 p-2 rounded-md" onClick={FindMatch}>Trouver un match</Button>
+            <div className="m-2 text-white flex flex-col items-center ">
+                {loading && useLoader()}
+                {inQueue ? (
+                    <Button id="ranked-button" type={'button'} className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1" onClick={handleLeaveQueue}>
+                        <svg className="w-4 h-4" viewBox="0 0 512 512" fill="white">
+                            <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                        </svg> Quitter la file d&apos;attente
+                    </Button>
+                ) : (
+                    <Button id="ranked-button" type={'button'} className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1" onClick={handleFindMatch}>
+                        Rechercher un match
+                        <img src="/assets/ArrowRightWhite.svg" className="w-5 text-white flex justify-end" alt="flèche" />
+                    </Button>
+                )}
             </div>
-            {useLoader()}
         </Layout>
     );
 }
