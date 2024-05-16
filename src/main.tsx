@@ -13,7 +13,7 @@ import ForgotPassword from "./Pages/forgotPassword.tsx";
 import ChangePassword from "./Pages/changePassword.tsx";
 import Dashboard from "./Pages/dashboard.tsx";
 import MyAccount from "./Pages/myAccount.tsx";
-import Ranked from "./Pages/ranked.tsx";
+import Ranked from './Pages/ranked.tsx';
 import Classement from "./Pages/classement.tsx";
 import TournamentDashboard from "./Pages/tournamentDashboard.tsx";
 import EventDashboard from "./Pages/eventDashboard.tsx";
@@ -39,6 +39,7 @@ import {
     LOGIN,
     LOGOUT,
     PRIVACY_POLICY,
+    RANKED,
     RANKING,
     REGISTER,
     RESET_PASSWORD,
@@ -128,16 +129,12 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage/>
     },
     {
-<<<<<<< HEAD
-        path: "/ranked",
+        path: RANKED,
         element: <PrivateRoute><Ranked/></PrivateRoute>,
-        errorElement: "<ErrorPage/>"
+        errorElement: <ErrorPage/>
     },
     {
-        path: "/ranking",
-=======
         path: RANKING,
->>>>>>> 74faada8eadac341d48134bebf2c6f9aa4f0c6c2
         element: <PrivateRoute><Classement/></PrivateRoute>,
         errorElement: <ErrorPage/>
     },
