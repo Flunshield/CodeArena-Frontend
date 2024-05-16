@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { ENTREPRISE, LEGAL, MAIL, PRIVACY_POLICY, TERMS } from "../constantes/constantes.ts";
 import { NavFlags } from "../Interface/Interface.ts";
 import { useAuthContext } from "../AuthContext.tsx";
-import drapFr from "/assets/drapeaux/fr.png";
-import drapEn from "/assets/drapeaux/gb.png";
+import drapFr from "/assets/drapeaux/fr.svg";
+import drapEn from "/assets/drapeaux/gb.svg";
 import { changeLanguage } from "../i18n.ts";
 import clsx from "clsx";
 
