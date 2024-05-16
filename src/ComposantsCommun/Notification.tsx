@@ -29,7 +29,7 @@ const Notification: React.FC<NotificationProps> = ({ message, type, onClose }) =
 
     const backgroundColor = {
         success: 'bg-olive-green',
-        error: 'bg-red',
+        error: 'bg-[#D63864]',
         info: 'bg-light-blue'
     }[type] || 'bg-gray-500';
 

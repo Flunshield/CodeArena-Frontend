@@ -154,7 +154,7 @@ const PuzzleDisplay = (
                                                 id="deleteTitle"
                                                 onClick={() => openPopup(puzzle, "2")}>{t("sendPuzzle")}</Button>
                                         <Button type="button"
-                                                className="bg-red hover:shadow-lg hover:shadow-rose-300 text-white font-bold py-2 px-4 rounded"
+                                                className="bg-[#D63864] hover:shadow-lg hover:shadow-rose-300 text-white font-bold py-2 px-4 rounded"
                                                 id="deleteTitle"
                                                 onClick={() => handleClickDelete(puzzle.id)}>{t("delete")}</Button>
                                     </div>

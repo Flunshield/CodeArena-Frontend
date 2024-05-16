@@ -122,14 +122,14 @@ const PuzzleList = ({
                         onClick={() => handleSort('sendDate')}>{t("triDate")}
                 </button>
                 <Button type={"submit"} id={"delete"}
-                        className={"px-4 py-2 rounded bg-red text-white font-bold"}
+                        className={"px-4 py-2 rounded bg-[#D63864] text-white font-bold"}
                         onClick={() => deleteOldPuzzlePuzzle()}>X ({'>'} 1 {t("month")})</Button>
             </div>
             {sortedData.map(result => (
                 <div key={result.id} className="rounded-lg p-4 mb-4 border border-gray-300 bg-white">
                     <div className="flex flex-row-reverse justify-between w-full">
                         <Button type={"submit"} id={"delete-" + result.id.toString()}
-                                className={"px-4 py-2 rounded bg-red text-white font-bold"}
+                                className={"px-4 py-2 rounded bg-[#D63864] text-white font-bold"}
                                 onClick={() => deleteOnePuzzle(result.id)}>X</Button>
                         <h1 className="flex-1 text-center text-xl font-bold">{result.puzzlesEntreprise.title}</h1>
                     </div>
