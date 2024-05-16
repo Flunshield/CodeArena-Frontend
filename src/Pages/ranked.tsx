@@ -28,7 +28,7 @@ function Ranked() {
 
     async function checkIsInQueue() {
         try {
-            const response = await getElementByEndpoint('matchmaking/queue', {
+            const response = await getElementByEndpoint('matchmaking/getQueue', {
                 token: authContext.accessToken ?? "",
                 data: ''
             });
@@ -52,7 +52,16 @@ function Ranked() {
         }
     }
 
-    async function handleFindMatch() {
+    async function handleJoinQueue() {
+        const isInQueue = await checkIsInQueue();
+        setLoading(true);
+
+        if (isInQueue) {
+            setInQueue(true);
+            return;
+        }
+
+
         const response = await postElementByEndpoint(`matchmaking/joinQueue`, {
             token: authContext.accessToken ?? '',
             data: { id }
@@ -60,7 +69,6 @@ function Ranked() {
 
         if (response.status === 201) {
             console.log("Ajouté à la file d'attente et recherche de match en cours");
-            setLoading(true);
             setInQueue(true);
         } else {
             alert("Erreur lors de la recherche de match");
@@ -68,13 +76,28 @@ function Ranked() {
     }
 
     async function handleLeaveQueue() {
-        // Code pour quitter la file d'attente
+
+        const response = await postElementByEndpoint(`matchmaking/leaveQueue`, {
+            token: authContext.accessToken ?? '',
+            data: { id }
+        });
+
+        if (response.status === 201) {
+            console.log("Retiré de la file d'attente");
+            setInQueue(false);
+        } else {
+            alert("Erreur lors de la sortie de la file d'attente");
+        }
+        setLoading(false);
     }
+
 
     return (
         <Layout>
             <div className="m-2 text-white flex flex-col items-center ">
-                {loading && useLoader()}
+                <div className='mb-4'>
+                    {loading && useLoader()}
+                </div>
                 {inQueue ? (
                     <Button id="ranked-button" type={'button'} className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1" onClick={handleLeaveQueue}>
                         <svg className="w-4 h-4" viewBox="0 0 512 512" fill="white">
@@ -82,7 +105,7 @@ function Ranked() {
                         </svg> Quitter la file d&apos;attente
                     </Button>
                 ) : (
-                    <Button id="ranked-button" type={'button'} className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1" onClick={handleFindMatch}>
+                    <Button id="ranked-button" type={'button'} className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1" onClick={handleJoinQueue}>
                         Rechercher un match
                         <img src="/assets/ArrowRightWhite.svg" className="w-5 text-white flex justify-end" alt="flèche" />
                     </Button>
