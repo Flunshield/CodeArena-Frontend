@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../ComposantsCommun/Button';
 import useLoader from '../ComposantsCommun/LoaderMatch.tsx';
 import Layout from "../ComposantsCommun/Layout.tsx";
@@ -15,16 +15,19 @@ function Ranked() {
     const id = infos.data.id ?? null;
 
     const [loading, setLoading] = useState(true);
+    const [loadingCheckQueue, setLoadingCheckQueue] = useState(true); // Nouvel état pour le chargement de la vérification de la file d'attente
     const [inQueue, setInQueue] = useState(false);
 
     useEffect(() => {
-        async function fetchData() {
-            const isInQueue = await checkIsInQueue();
-            setLoading(false);
-            setInQueue(isInQueue);
-        }
-        fetchData();
+        refreshQueueStatus();
     }, []);
+
+    async function refreshQueueStatus() {
+        setLoadingCheckQueue(true); // Définir l'état de chargement pour la vérification de la file d'attente
+        const isInQueue = await checkIsInQueue();
+        setLoadingCheckQueue(false); // Définir l'état de chargement à false une fois que la vérification est terminée
+        setInQueue(isInQueue);
+    }
 
     async function checkIsInQueue() {
         try {
@@ -54,13 +57,11 @@ function Ranked() {
 
     async function handleJoinQueue() {
         const isInQueue = await checkIsInQueue();
-        setLoading(true);
 
         if (isInQueue) {
             setInQueue(true);
             return;
         }
-
 
         const response = await postElementByEndpoint(`matchmaking/joinQueue`, {
             token: authContext.accessToken ?? '',
@@ -73,10 +74,11 @@ function Ranked() {
         } else {
             alert("Erreur lors de la recherche de match");
         }
+        setLoading(true);
     }
 
     async function handleLeaveQueue() {
-
+        setLoading(true);
         const response = await postElementByEndpoint(`matchmaking/leaveQueue`, {
             token: authContext.accessToken ?? '',
             data: { id }
@@ -91,12 +93,11 @@ function Ranked() {
         setLoading(false);
     }
 
-
     return (
         <Layout>
-            <div className="m-2 text-white flex flex-col items-center ">
+            <div className="m-2 text-white flex flex-col items-center">
                 <div className='mb-4'>
-                    {loading && useLoader()}
+                    {(loading || loadingCheckQueue) && useLoader()} {/* Utilisez loadingCheckQueue pour garder le loader affiché pendant la vérification de la file d'attente */}
                 </div>
                 {inQueue ? (
                     <Button id="ranked-button" type={'button'} className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1" onClick={handleLeaveQueue}>
