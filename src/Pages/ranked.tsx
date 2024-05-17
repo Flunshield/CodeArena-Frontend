@@ -6,6 +6,7 @@ import { JwtPayload } from "jwt-decode";
 import { DataToken } from "../Interface/Interface.ts";
 import { postElementByEndpoint, getElementByEndpoint } from "../Helpers/apiHelper.ts";
 import { useState, useEffect } from 'react';
+import Chat from "../Composants/Chat/Chat";
 
 function Ranked() {
     const authContext = useAuthContext();
@@ -93,6 +94,7 @@ function Ranked() {
 
     return (
         <Layout>
+            <Chat></Chat>
             <div className="m-2 text-white flex flex-col items-center py-[120px]">
                 <div className='mb-4'>
                     {(loading || inQueue) && useLoader()}
