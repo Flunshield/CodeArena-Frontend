@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import Button from '../ComposantsCommun/Button';
 import useLoader from '../ComposantsCommun/LoaderMatch.tsx';
 import Layout from "../ComposantsCommun/Layout.tsx";
