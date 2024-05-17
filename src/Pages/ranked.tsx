@@ -5,6 +5,7 @@ import { useAuthContext } from "../AuthContext.tsx";
 import { JwtPayload } from "jwt-decode";
 import { DataToken } from "../Interface/Interface.ts";
 import { postElementByEndpoint, getElementByEndpoint } from "../Helpers/apiHelper.ts";
+import { useState, useEffect } from 'react';
 
 function Ranked() {
     const authContext = useAuthContext();
