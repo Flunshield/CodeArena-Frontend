@@ -12,7 +12,16 @@ const HomeDev = () => {
                         <h1 id="slogan"
                             className="text-tertiari m-2 text-center text-xl sm:text-6xl font-bold"> {t('slogan')}</h1>
                     </FadeIn>
-                   
+                    <FadeIn duration={1.0}>
+                    <iframe width="90%" height="500px"
+                        src="https://www.youtube.com/embed/6MOrkDPTnLk?si=ABq0UmWjCbjcfkNu"
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        className="m-auto mt-10 mb-10 border-2 border-tertiari">
+                    </iframe>
+                    </FadeIn>
                 </div>
                 <img
                     className="bg-primary hidden xl:block absolute right-0 -z-10"
