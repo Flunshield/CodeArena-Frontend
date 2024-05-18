@@ -421,6 +421,7 @@ export const postTest = async (endpoint: string, data: {
         body: JSON.stringify({
             code: data.code,
             tests: data.tests
-        })
+        }),
+        credentials: 'include'
     });
 };
