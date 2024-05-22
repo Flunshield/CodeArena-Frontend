@@ -49,8 +49,8 @@ export default function Chat() {
 
     return (
         <>
-            <MessageInput send={send} />
             <Messages messages={messages} />
+            <MessageInput send={send} />
         </>
     )
 }
