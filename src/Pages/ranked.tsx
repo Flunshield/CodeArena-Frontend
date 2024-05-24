@@ -1,11 +1,11 @@
-import Button from '../ComposantsCommun/Button';
-import useLoader from '../ComposantsCommun/LoaderMatch.tsx';
-import Layout from "../ComposantsCommun/Layout.tsx";
-import { useAuthContext } from "../AuthContext.tsx";
-import { JwtPayload } from "jwt-decode";
-import { DataToken } from "../Interface/Interface.ts";
-import { postElementByEndpoint, getElementByEndpoint } from "../Helpers/apiHelper.ts";
 import { useState, useEffect } from 'react';
+import Button from '../ComposantsCommun/Button';
+import useLoader from '../ComposantsCommun/LoaderMatch';
+import Layout from "../ComposantsCommun/Layout";
+import { useAuthContext } from "../AuthContext";
+import { JwtPayload } from "jwt-decode";
+import { DataToken } from "../Interface/Interface";
+import { postElementByEndpoint, getElementByEndpoint } from "../Helpers/apiHelper";
 import Chat from "../Composants/Chat/Chat";
 
 function Ranked() {
@@ -63,12 +63,12 @@ function Ranked() {
             return;
         }
 
-        const response = await postElementByEndpoint(`matchmaking/joinQueue`, {
+        const response = await postElementByEndpoint('matchmaking/joinQueue', {
             token: authContext.accessToken ?? '',
             data: { id }
         });
 
-        if (response.status === 201) {
+        if (response.status === 200) {
             console.log("Ajouté à la file d'attente et recherche de match en cours");
             setInQueue(true);
         } else {
@@ -78,12 +78,12 @@ function Ranked() {
 
     async function handleLeaveQueue() {
         setLoading(true);
-        const response = await postElementByEndpoint(`matchmaking/leaveQueue`, {
+        const response = await postElementByEndpoint('matchmaking/leaveQueue', {
             token: authContext.accessToken ?? '',
             data: { id }
         });
 
-        if (response.status === 201) {
+        if (response.status === 200) {
             console.log("Retiré de la file d'attente");
             setInQueue(false);
         } else {
@@ -94,7 +94,7 @@ function Ranked() {
 
     return (
         <Layout>
-            <Chat></Chat>
+            <Chat />
             <div className="m-2 text-white flex flex-col items-center py-[120px]">
                 <div className='mb-4'>
                     {(loading || inQueue) && useLoader()}

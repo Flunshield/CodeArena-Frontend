@@ -1,8 +1,8 @@
+import { useState, useEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { useAuthContext } from "../../AuthContext";
 import { JwtPayload } from "jwt-decode";
 import { DataToken } from "../../Interface/Interface";
-import { useState, useEffect } from 'react';
 import MessageInput from './MessageInput';
 import Messages from './Messages';
 
@@ -14,7 +14,6 @@ export interface chatInterface {
 }
 
 export default function Chat() {
-
     const authContext = useAuthContext();
 
     const infosUser = authContext?.infosUser as JwtPayload;
@@ -34,18 +33,17 @@ export default function Chat() {
     }
 
     useEffect(() => {
-        const newSocket = io(import.meta.env.VITE_API_BASE_URL_BACK as string)
-        setSocket(newSocket)
+        const newSocket = io(import.meta.env.VITE_API_BASE_URL_BACK as string);
+        setSocket(newSocket);
+
+        newSocket.on('message', (message) => {
+            setMessages(prevMessages => [...prevMessages, message]);
+        });
+
+        return () => {
+            newSocket.disconnect();
+        };
     }, [setSocket]);
-
-    const messageListener = (message: { userId: number; username: string; body: string, timestamp: number }) => {
-        setMessages(prevMessages => [...prevMessages, message]);
-    }
-    useEffect(() => {
-        socket?.on('message', messageListener);
-        return () => { socket?.off('message', messageListener) };
-    }, [messageListener]);
-
 
     return (
         <>
