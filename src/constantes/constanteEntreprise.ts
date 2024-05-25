@@ -22,20 +22,6 @@ export const CARD_EXPLANATION = [
 
 export const PRICING = [
     {
-        title: "Essentiel",
-        nbCreateTest: "10",
-        description: "essentielDesciption",
-        features: [
-            "essentielFeature1",
-            "essentielFeature2",
-            "essentielFeature3"
-        ],
-        idealFor: "essentielIdeaFor",
-        price: "Gratuit",
-        url: "",
-        idApi: ""
-    },
-    {
         title: "Premium",
         nbCreateTest: "100",
         description: "premiumDescription",
@@ -46,9 +32,10 @@ export const PRICING = [
             "premiumFeature4"
         ],
         idealFor: "premiumIdeaFor",
-        price: "49,99€",
+        price: "10€/mois",
         url: URL_STRIPE,
-        idApi: "price_1PE16WFoLa8m0nzy08YNvhvc"
+        idApi: "price_1PKGuGFoLa8m0nzy88vB7lvd",
+        typePayment: "subscription"
     },
     {
         title: "Entreprise",
@@ -62,9 +49,10 @@ export const PRICING = [
             "entrepriseFeature5"
         ],
         idealFor: "entrepriseIdeaFor",
-        price: "199,99€",
+        price: "100€/mois",
         url: URL_STRIPE,
-        idApi: "price_1PE1LmFoLa8m0nzymnwISkaF"
+        idApi: "price_1PKHKWFoLa8m0nzyAWLDMBlQ",
+        typePayment: "subscription"
     }
 ];
 
