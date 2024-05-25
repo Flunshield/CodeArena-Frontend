@@ -9,6 +9,7 @@ import PuzzleDisplay from "../../Composants/dashboard/entreprise/PuzzleDisplay.t
 import Stats from "../../Composants/dashboard/entreprise/Stats.tsx";
 import {PRICING} from "../../constantes/constanteEntreprise.ts";
 import PuzzleList from "../../Composants/dashboard/entreprise/PuzzleList.tsx";
+import Notification from "../../ComposantsCommun/Notification.tsx";
 
 interface result {
     puzzlesPlayed: number;
@@ -28,6 +29,9 @@ function DashboardEntreprise () {
     })
     const [nbPuzzlesPlayed, setNbPuzzlesPlayed] = useState(0);
     const [nbPuzzleCreated, setNbPuzzleCreated] = useState(0);
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
     const countPuzzles = async () => {
         return await getElementByEndpoint(`puzzle/countPuzzles?id=${infos.data.id}`, {
             token: authContext.accessToken ?? "",
@@ -54,10 +58,17 @@ function DashboardEntreprise () {
     }, [submitCount]);
     return (
         <Layout>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <div className="py-10">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <Stats lastCommande={lastCommande ?? PRICING[0]} submitCount={submitCount} nbPuzzlesPlayed={nbPuzzlesPlayed}
-                           nbPuzzleCreated={nbPuzzleCreated}/>
+                           nbPuzzleCreated={nbPuzzleCreated} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType} setShowNotification={setShowNotification}/>
                     <PuzzleForm setIsSubmitted={() => setSubmitCount(count => count + 1)}
                                 nbPuzzleCreated={nbPuzzleCreated} lastCommande={lastCommande}/>
                     <PuzzleDisplay puzzleToPopup={puzzleToPopup}
