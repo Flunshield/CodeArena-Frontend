@@ -5,6 +5,7 @@ export default function MessageInput({ send }: { send: (value: string) => void }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && value.trim() !== '') {
+            console.log('Sending message on Enter:', value);
             send(value);
             setValue('');
         }
@@ -12,6 +13,7 @@ export default function MessageInput({ send }: { send: (value: string) => void }
 
     const handleSend = () => {
         if (value.trim() !== '') {
+            console.log('Sending message on button click:', value);
             send(value);
             setValue('');
         }
