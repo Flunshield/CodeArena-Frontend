@@ -1,25 +1,42 @@
-import Button from '../ComposantsCommun/Button';
-import useLoader from '../ComposantsCommun/LoaderMatch.tsx';
-import Layout from "../ComposantsCommun/Layout.tsx";
-import { useAuthContext } from "../AuthContext.tsx";
-import { JwtPayload } from "jwt-decode";
-import { DataToken } from "../Interface/Interface.ts";
-import { postElementByEndpoint, getElementByEndpoint } from "../Helpers/apiHelper.ts";
 import { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
+import Button from '../ComposantsCommun/Button';
+import useLoader from '../ComposantsCommun/LoaderMatch';
+import Layout from "../ComposantsCommun/Layout";
+import { useAuthContext } from "../AuthContext";
+import { JwtPayload } from "jwt-decode";
+import { DataToken } from "../Interface/Interface";
+import { postElementByEndpoint, getElementByEndpoint } from "../Helpers/apiHelper";
+import Chat from "../Composants/Chat/Chat";
+
+const socket = io(import.meta.env.VITE_API_BASE_URL_BACK);
 
 function Ranked() {
     const authContext = useAuthContext();
-
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
-    const id = infos.data.id ?? null;
+    const id = infos.data.id;
+    const username = infos.data.userName;
 
     const [loading, setLoading] = useState(true);
     const [inQueue, setInQueue] = useState(false);
+    const [matchFound, setMatchFound] = useState(false);
+    const [roomId, setRoomId] = useState<string | null>(null);
 
     useEffect(() => {
         refreshQueueStatus();
-    }, []);
+
+        socket.on('matchFound', ({ userId1, userId2, roomId }) => {
+            if (userId1 === id || userId2 === id) {
+                setMatchFound(true);
+                setRoomId(roomId);
+            }
+        });
+
+        return () => {
+            socket.off('matchFound');
+        };
+    }, [id]);
 
     async function refreshQueueStatus() {
         setLoading(true);
@@ -62,7 +79,7 @@ function Ranked() {
             return;
         }
 
-        const response = await postElementByEndpoint(`matchmaking/joinQueue`, {
+        const response = await postElementByEndpoint('matchmaking/joinQueue', {
             token: authContext.accessToken ?? '',
             data: { id }
         });
@@ -77,7 +94,7 @@ function Ranked() {
 
     async function handleLeaveQueue() {
         setLoading(true);
-        const response = await postElementByEndpoint(`matchmaking/leaveQueue`, {
+        const response = await postElementByEndpoint('matchmaking/leaveQueue', {
             token: authContext.accessToken ?? '',
             data: { id }
         });
@@ -85,6 +102,8 @@ function Ranked() {
         if (response.status === 201) {
             console.log("Retiré de la file d'attente");
             setInQueue(false);
+            setMatchFound(false);
+            setRoomId(null);
         } else {
             alert("Erreur lors de la sortie de la file d'attente");
         }
@@ -93,21 +112,35 @@ function Ranked() {
 
     return (
         <Layout>
+            {matchFound && roomId && id !== undefined && username !== undefined && (
+                <Chat roomId={roomId} userId={id} username={username} />
+            )}
             <div className="m-2 text-white flex flex-col items-center py-[120px]">
                 <div className='mb-4'>
-                    {(loading || inQueue) && useLoader()}
+                    {(loading || (inQueue && !matchFound)) && useLoader()}
                 </div>
-                {inQueue ? (
-                    <Button id="ranked-button" type={'button'} className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1" onClick={handleLeaveQueue}>
-                        <svg className="w-4 h-4" viewBox="0 0 512 512" fill="white">
-                            <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
-                        </svg> Quitter la file d&apos;attente
+                {inQueue && !matchFound ? (
+                    <Button
+                        id="ranked-button"
+                        type="button"
+                        className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                        onClick={handleLeaveQueue}
+                    >
+                        Quitter la file d&apos;attente
+                        <img src="/assets/exitIcon.svg" className="w-5 text-white" alt="quitter" />
                     </Button>
                 ) : (
-                    <Button id="ranked-button" type={'button'} className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1" onClick={handleJoinQueue}>
-                        Rechercher un match
-                        <img src="/assets/ArrowRightWhite.svg" className="w-5 text-white flex justify-end" alt="flèche" />
-                    </Button>
+                    !matchFound && (
+                        <Button
+                            id="ranked-button"
+                            type="button"
+                            className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                            onClick={handleJoinQueue}
+                        >
+                            Rechercher un match
+                            <img src="/assets/arrowRightWhite.svg" className="w-5 text-white" alt="rejoindre" />
+                        </Button>
+                    )
                 )}
             </div>
         </Layout>
