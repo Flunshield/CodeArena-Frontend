@@ -341,6 +341,7 @@ export const resetPointsUser = async (endpoint?: string, data?: {
 export const handleCheckout = async (endpoint: string, data?: {
     token: string;
     idApi: string;
+    typePayment: string;
 }): Promise<Response> => {
     console.log(`${VITE_API_BASE_URL_BACK}/${endpoint}`)
     return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
@@ -351,7 +352,8 @@ export const handleCheckout = async (endpoint: string, data?: {
         },
         credentials: 'include',
         body: JSON.stringify({
-            idApi: data?.idApi
+            idApi: data?.idApi,
+            typePayment: data?.typePayment
         }),
     });
 }
@@ -421,6 +423,7 @@ export const postTest = async (endpoint: string, data: {
         body: JSON.stringify({
             code: data.code,
             tests: data.tests
-        })
+        }),
+        credentials: 'include'
     });
 };
