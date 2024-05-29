@@ -1,17 +1,19 @@
-import { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
+import {useEffect, useState} from 'react';
+import {io} from 'socket.io-client';
 import Button from '../ComposantsCommun/Button';
-import useLoader from '../ComposantsCommun/LoaderMatch';
+import LoaderMatch from '../ComposantsCommun/LoaderMatch';
 import Layout from "../ComposantsCommun/Layout";
-import { useAuthContext } from "../AuthContext";
-import { JwtPayload } from "jwt-decode";
-import { DataToken } from "../Interface/Interface";
-import { postElementByEndpoint, getElementByEndpoint } from "../Helpers/apiHelper";
+import {useAuthContext} from "../AuthContext";
+import {JwtPayload} from "jwt-decode";
+import {DataToken} from "../Interface/Interface";
+import {getElementByEndpoint, postElementByEndpoint} from "../Helpers/apiHelper";
 import Chat from "../Composants/Chat/Chat";
+import {useTranslation} from "react-i18next";
 
 const socket = io(import.meta.env.VITE_API_BASE_URL_BACK);
 
 function Ranked() {
+    const {t} = useTranslation();
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
@@ -26,7 +28,7 @@ function Ranked() {
     useEffect(() => {
         refreshQueueStatus();
 
-        socket.on('matchFound', ({ userId1, userId2, roomId }) => {
+        socket.on('matchFound', ({userId1, userId2, roomId}) => {
             if (userId1 === id || userId2 === id) {
                 setMatchFound(true);
                 setRoomId(roomId);
@@ -81,7 +83,7 @@ function Ranked() {
 
         const response = await postElementByEndpoint('matchmaking/joinQueue', {
             token: authContext.accessToken ?? '',
-            data: { id }
+            data: {id}
         });
 
         if (response.status === 201) {
@@ -96,7 +98,7 @@ function Ranked() {
         setLoading(true);
         const response = await postElementByEndpoint('matchmaking/leaveQueue', {
             token: authContext.accessToken ?? '',
-            data: { id }
+            data: {id}
         });
 
         if (response.status === 201) {
@@ -113,11 +115,11 @@ function Ranked() {
     return (
         <Layout>
             {matchFound && roomId && id !== undefined && username !== undefined && (
-                <Chat roomId={roomId} userId={id} username={username} />
+                <Chat roomId={roomId} userId={id} username={username}/>
             )}
             <div className="m-2 text-white flex flex-col items-center py-[120px]">
                 <div className='mb-4'>
-                    {(loading || (inQueue && !matchFound)) && useLoader()}
+                    {(loading || (inQueue && !matchFound)) && <LoaderMatch msg={t('searchMatch')}/>}
                 </div>
                 {inQueue && !matchFound ? (
                     <Button
@@ -127,7 +129,7 @@ function Ranked() {
                         onClick={handleLeaveQueue}
                     >
                         Quitter la file d&apos;attente
-                        <img src="/assets/exitIcon.svg" className="w-5 text-white" alt="quitter" />
+                        <img src="/assets/exitIcon.svg" className="w-5 text-white" alt="quitter"/>
                     </Button>
                 ) : (
                     !matchFound && (
@@ -138,7 +140,7 @@ function Ranked() {
                             onClick={handleJoinQueue}
                         >
                             Rechercher un match
-                            <img src="/assets/arrowRightWhite.svg" className="w-5 text-white" alt="rejoindre" />
+                            <img src="/assets/arrowRightWhite.svg" className="w-5 text-white" alt="rejoindre"/>
                         </Button>
                     )
                 )}

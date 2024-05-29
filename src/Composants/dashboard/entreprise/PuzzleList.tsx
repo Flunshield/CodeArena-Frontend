@@ -151,7 +151,7 @@ const PuzzleList = ({
                     <p className="text-gray-600">
                         <strong>{t("realizedIn")} : </strong>
                         <span
-                            className="text-blue-500">{result.time && formatSeconds(600 - parseInt(result.time))}</span>
+                            className="text-blue-500">{result.time && formatSeconds(parseInt(result.time))}</span>
                     </p>
                     <div>
                         <h3 className="font-semibold text-gray-800">{t("codeSend")} :</h3>

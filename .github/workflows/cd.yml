@@ -26,15 +26,11 @@ jobs:
       - name: 🚧 Cache node modules
         id: cache-npm
         uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
-            ${{ runner.os }}-
 
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
         name: ⏳ List the state of node modules
@@ -43,6 +39,12 @@ jobs:
 
       - name: ⏳ Install dependencies
         run: npm install
+
+      - name: 🚧 Save node_modules
+        uses: actions/upload-artifact@v3
+        with:
+          name: node_modules
+          path: ~/.npm
 
       - name: ⏳ Lintage du code
         run: npm run lint
@@ -57,19 +59,23 @@ jobs:
           npx cypress run
 
   release:
+    needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Download node_modules cache
+        uses: actions/download-artifact@v3
+        with:
+          name: node_modules
+          path: ~/.npm
+
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '20.8.1'
-
-      - name: Install dependencies
-        run: npm install
 
       - name: Configure Git
         run: |
@@ -84,16 +90,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git push --follow-tags origin main
+          git switch dev && git pull && git merge main && git push origin dev
+
   deploy:
     needs: release
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
+
       - name: Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
         run: echo "VITE_API_BASE_URL_BACK=${{ secrets.VITE_API_BASE_URL_BACK }}" >> .env
         env:
           VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
+
       - name: Déploiement sur le VPS
         uses: appleboy/ssh-action@master
         with:
