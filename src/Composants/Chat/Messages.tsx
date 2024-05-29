@@ -1,8 +1,6 @@
-import { chatInterface } from "./Chat";
+import { ChatInterface } from '../../Interface/chatInterface';
 
-export default function Messages({ messages }: { messages: chatInterface[] }) {
-    console.log('Rendering messages:', messages); // Log the messages to be rendered
-
+const Messages = ({ messages }: { messages: ChatInterface[] }) => {
     return (
         <div className="messages-container flex flex-col gap-4 p-4 max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
             {messages.length === 0 ? (
@@ -26,3 +24,5 @@ export default function Messages({ messages }: { messages: chatInterface[] }) {
         </div>
     );
 }
+
+export default Messages;
