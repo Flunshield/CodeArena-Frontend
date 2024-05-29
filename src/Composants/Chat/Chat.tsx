@@ -1,21 +1,9 @@
 import { useState, useEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
+import { ChatInterface, ChatProps  } from '../../Interface/chatInterface';
 import Messages from './Messages';
 import MessageInput from './MessageInput';
 
-interface ChatInterface {
-    userId: number;
-    username: string;
-    body: string;
-    timestamp: string;
-    roomId: string;
-}
-
-interface ChatProps {
-    roomId: string;
-    userId: number;
-    username: string;
-}
 
 const Chat = ({ roomId, userId, username }: ChatProps) => {
     const [socket, setSocket] = useState<Socket | null>(null);

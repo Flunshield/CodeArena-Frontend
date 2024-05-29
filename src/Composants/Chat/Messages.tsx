@@ -1,11 +1,4 @@
-
-interface ChatInterface {
-    userId: number;
-    username: string;
-    body: string;
-    timestamp: string;
-    roomId: string;
-}
+import { ChatInterface } from '../../Interface/chatInterface';
 
 const Messages = ({ messages }: { messages: ChatInterface[] }) => {
     return (
