@@ -11,3 +11,9 @@ export interface ChatProps {
     userId: number;
     username: string;
 }
+
+export interface MatchFoundEvent {
+    userId1: number;
+    userId2: number;
+    roomId: string;
+}
