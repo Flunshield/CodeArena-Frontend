@@ -46,3 +46,35 @@ export function getCookie(name: string): string | null {
     }
     return null;
 }
+
+/**
+ * Vérifie si un nombre est un nombre de Luhn. (Algorithme de Luhn)
+ * @param number
+ */
+export function algoLuhn(number: string | number): boolean {
+    let totalAmountnumber = 0;
+    if (typeof number === 'number') {
+        number = number.toString();
+    }
+
+    const numberReverse = number.split('').reverse().join('');
+    for (let i = 0; i < numberReverse.length; i++) {
+        let charAsNumber = parseInt(numberReverse[i]);
+        if ((i + 1) % 2 === 0) {
+            charAsNumber *= 2;
+            if (charAsNumber >= 10) {
+                const unit = parseInt(charAsNumber.toString().slice(-1));
+                const tens = parseInt(charAsNumber.toString().charAt(charAsNumber.toString().length - 2));
+                charAsNumber = unit + tens;
+            }
+        }
+        totalAmountnumber += charAsNumber;
+    }
+    return totalAmountnumber % 10 === 0;
+}
+
+
+export function isValidAddress(address: string) {
+    const addressRegex = /^(\d+\s)?[\w\sàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ-]+,\s\d{5}\s[\w\sàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ-]+$/;
+    return addressRegex.test(address);
+}

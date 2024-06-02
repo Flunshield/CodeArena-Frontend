@@ -1,9 +1,7 @@
-import React, {createContext, ReactNode, useContext, useEffect} from 'react';
-import useAuth, {AuthHookProps} from "./hook/useTokenRefresher.tsx";
+import React, { createContext, ReactNode, useContext } from 'react';
+import useAuth, { AuthHookProps } from './hook/useTokenRefresher.tsx';
 
-export interface AuthContextProps extends AuthHookProps {
-    fetchData?: () => Promise<void>;
-}
+export interface AuthContextProps extends AuthHookProps {}
 
 interface AuthContextProviderProps {
     children: ReactNode;
@@ -21,15 +19,11 @@ export const useAuthContext = () => {
     return context;
 };
 
-export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({children}) => {
-    const authState: AuthHookProps | null | undefined = useAuth({});
-
-    useEffect(() => {
-        authState?.fetchData?.(); // Appel de la fonction fetchData si elle existe
-    }, [authState]);
+export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
+    const authState = useAuth();
 
     return (
-        <AuthContext.Provider value={{...authState}}>
+        <AuthContext.Provider value={{ ...authState }}>
             {children}
         </AuthContext.Provider>
     );

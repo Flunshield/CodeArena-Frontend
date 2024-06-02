@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import Button from "../../../ComposantsCommun/Button.tsx";
 import {useAuthContext} from "../../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
-import {getElementByEndpoint, postElementByEndpoint} from "../../../Helpers/apiHelper.ts";
+import {postElementByEndpoint} from "../../../Helpers/apiHelper.ts";
 import {useState} from "react";
 import Notification from "../../../ComposantsCommun/Notification.tsx";
 
@@ -32,7 +32,6 @@ const stats = ({
             data: {userId: infos?.data?.id},
             token: authContext.accessToken ?? ""
         }).then(async (repsonse) => {
-            console.log(repsonse);
             if (repsonse.status === 201) {
                 setNotificationMessage(t('abonementSuccess'));
                 setNotificationType('success');
@@ -49,43 +48,7 @@ const stats = ({
         })
     }
 
-
-    const getLatestInvoice = async () => {
-
-        try {
-            const response = await getElementByEndpoint('stripe/lastCommande?id=' + infos.data.id, {
-                data: "",
-                token: authContext.accessToken ?? ""
-            })
-
-            if (!response.ok) {
-                console.error('Failed to fetch the latest invoice');
-                return;
-            }
-
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const currentDate = new Date();
-            const formattedDate = currentDate.toLocaleString('fr-FR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            }).replace(/\//g, '-').replace(',', '').replace(/:/g, '');
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${formattedDate}.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Error fetching invoice:', error);
-        }
-    }
-
     const btnGroup = <div className=" w-full flex justify-around">
-        <Button id="button-recup-invoice" type="button" onClick={getLatestInvoice}
-                className="bg-gris-chaud text-tertiari p-1 rounded-lg">{t("recupInvoice")}</Button>
         <Button type={"button"} className="bg-gris-chaud text-tertiari p-1 rounded-lg"
                 id={"unscribed"}
                 onClick={handleClick}> {t("unscribed")} </Button>

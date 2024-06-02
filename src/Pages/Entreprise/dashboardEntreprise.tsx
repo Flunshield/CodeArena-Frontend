@@ -19,17 +19,18 @@ function DashboardEntreprise() {
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
+    const userId = infos.data.id;
     const [submitCount, setSubmitCount] = useState(0);
     const [puzzleToPopup, setPuzzleToPopup] = useState<PuzzlesEntreprise>();
     const [lastCommande, setLastCommande] = useState<Pricing>();
-    const findLastCommande = getElementByEndpoint('user/lastCommande?id=' + infos.data.id, {
+    const findLastCommande = getElementByEndpoint('user/lastCommande?id=' + userId, {
         data: "",
         token: authContext.accessToken ?? ""
     })
     const [nbPuzzlesPlayed, setNbPuzzlesPlayed] = useState(0);
     const [nbPuzzleCreated, setNbPuzzleCreated] = useState(0);
     const countPuzzles = async () => {
-        return await getElementByEndpoint(`puzzle/countPuzzles?id=${infos.data.id}`, {
+        return await getElementByEndpoint(`puzzle/countPuzzles?id=${userId}`, {
             token: authContext.accessToken ?? "",
             data: ''
         });
@@ -63,8 +64,9 @@ function DashboardEntreprise() {
                                 nbPuzzleCreated={nbPuzzleCreated} lastCommande={lastCommande}/>
                     <PuzzleDisplay puzzleToPopup={puzzleToPopup}
                                    setIsSubmitted={() => setSubmitCount(count => count + 1)}
+                                   submitCount={submitCount}
                                    setPuzzleToPopup={setPuzzleToPopup} lastCommande={lastCommande}
-                                   nbPuzzleCreated={nbPuzzleCreated} submitCount={submitCount}/>
+                                   nbPuzzleCreated={nbPuzzleCreated} />
                     <PuzzleList setIsSubmitted={() => setSubmitCount(count => count + 1)} submitCount={submitCount}/>
                 </div>
             </div>

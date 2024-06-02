@@ -22,7 +22,6 @@ function Success (){
     const [isCodeError, setIsCodeError] = useState(0);
 
     useEffect(() => {
-        console.log(infos)
         postElementByEndpoint('stripe/success', {
             token: authContext.accessToken ?? "",
             data: {sessionId: sessionId ?? "", user: infos}

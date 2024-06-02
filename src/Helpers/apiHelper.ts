@@ -134,6 +134,7 @@ export const updateUser = async (endpoint?: string, data?: User): Promise<Respon
             lastName: data?.lastName,
             firstName: data?.firstName,
             titlesId: data?.titlesId as number,
+            siren: data?.siren,
         }),
         credentials: 'include'
     });
@@ -343,7 +344,6 @@ export const handleCheckout = async (endpoint: string, data?: {
     idApi: string;
     typePayment: string;
 }): Promise<Response> => {
-    console.log(`${VITE_API_BASE_URL_BACK}/${endpoint}`)
     return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
         method: 'POST',
         headers: {

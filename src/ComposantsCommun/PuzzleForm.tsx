@@ -6,7 +6,7 @@ import clsx from "clsx";
 import {useAuthContext} from "../AuthContext.tsx";
 import {checkNbTestCreated} from "../Helpers/methodeHelper.ts";
 import {useEffect, useState} from "react";
-import {GROUPS} from "../constantes/constantes.ts";
+import {GROUPS} from "../constantes/constantesRoutes.ts";
 import {DONNEES_TESTS} from "../constantes/constanteEntreprise.ts";
 import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";

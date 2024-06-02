@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {User} from "../../Interface/Interface.ts";
 import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
+import DataTable from "../../ComposantsCommun/DataTable.tsx";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();
@@ -40,7 +41,26 @@ function Tableau(): JSX.Element {
             setUsers(result);
         });
     }, [submitCount]);
-console.log(users)
+
+    const headers = [
+        { key: 'firstName', label: 'First Name' },
+        { key: 'lastName', label: 'Last Name' },
+        { key: 'userName', label: 'User Name' },
+        { key: 'userRankingTitle', label: 'Actual Rank' },
+        { key: 'userRankingPoints', label: 'Point Number' },
+        { key: 'nbGames', label: 'Number of Games' },
+    ];
+
+// Transform user data to fit the table headers
+    const transformedData = users.map(user => ({
+        firstName: user.firstName ?? "",
+        lastName: user.lastName ?? "",
+        userName: user.userName ?? "",
+        userRankingTitle: user?.userRanking?.map(elem => elem?.rankings?.title).join(', ') ?? "",
+        userRankingPoints: user?.userRanking?.map(elem => elem.points).join(', ') ?? "",
+        nbGames: user.nbGames as string ?? "0",
+    }));
+
     return (
         <div className="m-5">
             <div className="flex flex-row justify-between">
@@ -49,47 +69,7 @@ console.log(users)
             </div>
             <div className="flex flex-col justify-center w-full">
                 <div className="overflow-x-auto rounded-lg">
-                    <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
-                        <thead
-                            className="text-xs text-secondary uppercase bg-tertiari dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="py-3 px-6">
-                                {t('firstName')}
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                {t('lastName')}
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                {t('userName')}
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                {t('actualRank')}
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                {t('pointNumber')}
-                            </th>
-                            <th scope="col" className="py-3 px-6">
-                                {t('nbPlayingGame')}
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {users.map((user: User) => (
-                            <tr key={user.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td className="py-4 px-6">{user.firstName}</td>
-                                <td className="py-4 px-6">{user.lastName}</td>
-                                <td className="py-4 px-6">{user.userName}</td>
-                                <td className="py-4 px-6">
-                                    {user?.userRanking?.map((elem) => elem?.rankings?.title).join(', ')}
-                                </td>
-                                <td className="py-4 px-6">
-                                    {user?.userRanking?.map((elem) => elem.points).join(', ')}
-                                </td>
-                                <td className="py-4 px-6">{user.nbGames}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <DataTable headers={headers} data={transformedData} />
                 </div>
                 <div className="flex justify-between items-center w-full mt-4">
                     {currentPage > 1 ? (
