@@ -13,6 +13,7 @@ import Layout from "../ComposantsCommun/Layout.tsx";
 import clsx from "clsx";
 import Notification from "../ComposantsCommun/Notification.tsx";
 import LoaderMatch from "../ComposantsCommun/LoaderMatch.tsx";
+import {jwtDecode} from "jwt-decode";
 
 function LoginPage() {
     const [userName, setUserName] = useState("");
@@ -62,7 +63,15 @@ function LoginPage() {
                 setNotificationMessage(t('connectSuccess'));
                 setNotificationType('success');
                 setShowNotification(true);
-                setTimeout(() => {
+                setTimeout(async () => {
+                    const result = await response.json();
+                    const jwtDecoded = jwtDecode(result.message);
+                    localStorage.setItem('authState', JSON.stringify({
+                        accessToken: result.message,
+                        connected: true,
+                        infosUser: jwtDecoded,
+                        }));
+
                     window.location.reload();
                 }, 1000);
             } else {

@@ -3,7 +3,7 @@ import ProgressBar from "../../ComposantsCommun/ProgressBar.tsx";
 import {useEffect, useState} from "react";
 import {getQueryParamValue} from "../../Helpers/methodeHelper.ts";
 import {useNavigate} from "react-router-dom";
-import {ERROR_PAGE, GAME_ENTREPRISE} from "../../constantes/constantes.ts";
+import {ERROR_PAGE, GAME_ENTREPRISE} from "../../constantes/constantesRoutes.ts";
 import {VITE_API_BASE_URL_BACK} from "../../Helpers/apiHelper.ts";
 import {useTranslation} from "react-i18next";
 

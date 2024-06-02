@@ -36,7 +36,7 @@ import "ace-builds/src-noconflict/theme-tomorrow_night_eighties";
 import "ace-builds/src-noconflict/theme-twilight";
 import "ace-builds/src-noconflict/theme-vibrant_ink";
 import "ace-builds/src-noconflict/theme-xcode";
-import {ALL_THEME} from "../../constantes.ts";
+import {ALL_THEME} from "../../constantes/constantes.ts";
 
 interface ThemeSelectorProps {
     setSelectedTheme: (theme: string) => void;

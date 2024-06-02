@@ -24,9 +24,8 @@ function ForgotPassword() {
     const [notificationMessage, setNotificationMessage] = useState('');
 
     const handleSubmit = async (value: SignUpFormValues) => {
-        const test = await forgotPassword('auth/forgotPassWord', value.email)
-        console.log(test)
-        if (test.status === 201) {
+        const response = await forgotPassword('auth/forgotPassWord', value.email)
+        if (response.status === 201) {
             setNotificationMessage("Un mail pour modifier votre mot de passe a été envoyé");
             setNotificationType('success');
             setShowNotification(true);

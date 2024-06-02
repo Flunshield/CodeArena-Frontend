@@ -10,8 +10,8 @@ import {postElementByEndpoint, postTest} from "../../Helpers/apiHelper.ts";
 import {responseTest} from "../../Interface/Interface.ts";
 import Button from "../../ComposantsCommun/Button.tsx";
 import {useLocation, useNavigate} from "react-router-dom";
-import {DIX_MIN} from "../../constantes.ts";
-import {RESULT_PAGE, TEST_JS} from "../../constantes/constantes.ts";
+import {DIX_MIN} from "../../constantes/constantes.ts";
+import {RESULT_PAGE, TEST_JS} from "../../constantes/constantesRoutes.ts";
 import {useTranslation} from "react-i18next";
 
 function GameEntreprise () {

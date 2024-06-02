@@ -5,7 +5,7 @@ import Button from "./Button.tsx";
 import { useTranslation } from "react-i18next";
 import NavBar from "./NavBar.tsx";
 import BouttonProfile from "../Composants/BouttonProfile.tsx";
-import { DASHBOARD, HOME } from "../constantes/constantes.ts";
+import { DASHBOARD, HOME } from "../constantes/constantesRoutes.ts";
 import loginIcons from "/assets/icons/iconsLogin.svg";
 
 const Header = () => {

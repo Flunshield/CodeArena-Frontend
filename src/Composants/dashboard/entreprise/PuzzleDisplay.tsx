@@ -13,8 +13,8 @@ import Notification from "../../../ComposantsCommun/Notification.tsx";
 
 interface PuzzleDisplayProps {
     setIsSubmitted: () => void;
-    setPuzzleToPopup?: (value: PuzzlesEntreprise | undefined) => void;
     submitCount: number;
+    setPuzzleToPopup?: (value: PuzzlesEntreprise | undefined) => void;
     puzzleToPopup?: PuzzlesEntreprise;
     lastCommande?: Pricing;
     nbPuzzleCreated: number;
@@ -23,11 +23,11 @@ interface PuzzleDisplayProps {
 const PuzzleDisplay = (
     {
         setIsSubmitted,
+        submitCount,
         setPuzzleToPopup,
         puzzleToPopup,
         lastCommande,
         nbPuzzleCreated,
-        submitCount
     }: PuzzleDisplayProps) => {
     const [isPopupOpenModify, setPopupOpenModify] = useState(false);
     const [isPopupOpenSend, setPopupOpenSend] = useState(false);

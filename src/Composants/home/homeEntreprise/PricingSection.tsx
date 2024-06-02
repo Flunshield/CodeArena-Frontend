@@ -8,7 +8,7 @@ import {useTranslation} from "react-i18next";
 import {DataToken} from "../../../Interface/Interface.ts";
 import {JwtPayload} from "jwt-decode";
 import Button from "../../../ComposantsCommun/Button.tsx";
-import {GROUPS} from "../../../constantes.ts";
+import {GROUPS} from "../../../constantes/constantes.ts";
 
 const PricingSection = () => {
     const {t} = useTranslation();
@@ -32,7 +32,7 @@ const PricingSection = () => {
             navigate("/success")
         }
     }
-console.log(infos)
+
     return (
         <div id="PricingSection" className="container mx-auto py-8">
             <h2 className="text-tertiari m-2 text-center text-xl sm:text-6xl font-bold">{t("choosePlan")}</h2>
