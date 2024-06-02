@@ -1,4 +1,5 @@
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 interface AdministrationProps {
     setIsInformationGeneraleCliked: (value: boolean) => void;
@@ -11,6 +12,7 @@ const Administration: React.FC<AdministrationProps> = ({
                                                            setIsHistoriqueOrderClicked,
                                                            setIsSubmitted,
                                                        }) => {
+    const {t} = useTranslation();
     function handleChangeAbonnement() {
         setIsInformationGeneraleCliked(true);
         setIsHistoriqueOrderClicked(false);
@@ -26,12 +28,12 @@ const Administration: React.FC<AdministrationProps> = ({
     const stats = [
         {
             id: 1,
-            value: "Informations générales",
+            value: t('generalinformation'),
             onclick: () => handleChangeAbonnement()
         },
         {
             id: 2,
-            value: "Historique d'achat",
+            value: t('historyOrder'),
             onclick: () => handleChangeHistoriqueOrder()
         }
     ];

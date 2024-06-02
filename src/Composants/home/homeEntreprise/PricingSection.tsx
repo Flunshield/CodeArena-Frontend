@@ -36,7 +36,7 @@ const PricingSection = () => {
     return (
         <div id="PricingSection" className="container mx-auto py-8">
             <h2 className="text-tertiari m-2 text-center text-xl sm:text-6xl font-bold">{t("choosePlan")}</h2>
-            {infos.data.groups.roles === GROUPS.ENTREPRISE &&
+            {infos && infos.data.groups.roles === GROUPS.ENTREPRISE &&
                 <div className="bg-[#D63864] rounded-lg border-l-4 border-red-500 text-tertiari p-4 m-10 mb-0"
                      role="alert">
                     <p className="font-bold">Attention !</p>

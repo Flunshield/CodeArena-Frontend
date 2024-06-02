@@ -12,12 +12,14 @@ import {getElementByEndpoint} from "../Helpers/apiHelper.ts";
 import Notification from "../ComposantsCommun/Notification.tsx";
 import InformationGenerale from "../Composants/account/entreprise/InformationGenerale.tsx";
 import {PRICING} from "../constantes/constanteEntreprise.ts";
+import {useTranslation} from "react-i18next";
 
 function MyAccount() {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isInformationGeneraleCliked, setIsInformationGeneraleCliked] = useState(false);
     const [isHistoriqueOrderClicked, setIsHistoriqueOrderClicked] = useState(false);
     const [submitCount, setSubmitCount] = useState(0);
+    const { t } = useTranslation();
     const authContext = useAuthContext();
     // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
     const infosUser = authContext?.infosUser as JwtPayload
@@ -58,7 +60,7 @@ function MyAccount() {
                     pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0].item)};
                 setInfosUserById(result);
             } else {
-                setNotificationMessage("Erreur lors de la récupération des informations de l'utilisateur");
+                setNotificationMessage(t('errorUserInfos'));
                 setNotificationType('error');
                 setShowNotification(true);
             }

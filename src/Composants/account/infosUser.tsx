@@ -112,8 +112,8 @@ const InfosUser: React.FC<InfosUserProps> = ({
                     }
                     {isEntreprise ?
                         <Administration setIsInformationGeneraleCliked={setIsInformationGeneraleCliked}
-                                          setIsHistoriqueOrderClicked={setIsHistoriqueOrderClicked}
-                                          setIsSubmitted={() => setIsSubmitted()} infosUserById={infosUserById}/>
+                                        setIsHistoriqueOrderClicked={setIsHistoriqueOrderClicked}
+                                        setIsSubmitted={() => setIsSubmitted()}/>
                         :
                         <Badges/>
                     }
