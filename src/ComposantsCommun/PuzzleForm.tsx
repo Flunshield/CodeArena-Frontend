@@ -73,7 +73,7 @@ const PuzzleForm = ({
 
     useEffect(() => {
         if (infos?.data.groups.roles === GROUPS.ENTREPRISE) {
-            if(nbPuzzleCreated && lastCommande) {
+            if (nbPuzzleCreated && lastCommande) {
                 setCanCreateTest(checkNbTestCreated(nbPuzzleCreated, lastCommande));
             }
         }

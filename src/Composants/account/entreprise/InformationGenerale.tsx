@@ -45,12 +45,14 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
             token: authContext.accessToken ?? ""
         }).then(async (repsonse) => {
             if (repsonse.status === 201) {
+                setPopupOpen(false);
                 setNotificationMessage(t('unsubscribeSuccess'));
                 setNotificationType('info');
                 setShowNotification(true);
+                localStorage.removeItem('authState');
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000);
+                }, 3000);
             }
             if (repsonse.status === 404) {
                 setNotificationMessage(t('unsubscribeFail'));
@@ -106,12 +108,11 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
             }
         }
     };
-
-
+    
     const getLatestInvoice = async () => {
 
         try {
-            const response = await getElementByEndpoint('stripe/lastCommande?customerId=' + infosUserById.id, {
+            const response = await getElementByEndpoint('stripe/lastCommande?id=' + infosUserById.id, {
                 data: "",
                 token: authContext.accessToken ?? ""
             })

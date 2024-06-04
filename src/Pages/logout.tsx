@@ -5,6 +5,7 @@ import {logout} from "../Helpers/apiHelper.ts";
 import LoaderMatch from "../ComposantsCommun/LoaderMatch.tsx";
 import {useTranslation} from "react-i18next";
 import Notification from "../ComposantsCommun/Notification.tsx";
+import Layout from "../ComposantsCommun/Layout.tsx";
 
 export function LogoutPage() {
     const authContext = useAuthContext();
@@ -51,20 +52,22 @@ export function LogoutPage() {
     }, [isConnected, navigate]);
 
     return (
-        <div>
-            {showNotification && (
-                <Notification
-                    message={notificationMessage}
-                    type={notificationType}
-                    onClose={() => setShowNotification(false)}
-                />
-            )}
-            <div className="flex justify-center items-center h-screen">
-                {loading && (
-                    <LoaderMatch msg="Déconnexion en cours..." className="z-50 bg-gris-chaud rounded-lg"/>
+        <Layout>
+            <div>
+                {showNotification && (
+                    <Notification
+                        message={notificationMessage}
+                        type={notificationType}
+                        onClose={() => setShowNotification(false)}
+                    />
                 )}
-                {error && <p style={{color: 'red'}}>{error}</p>}
+                <div className="flex justify-center items-center h-screen">
+                    {loading && (
+                        <LoaderMatch msg="Déconnexion en cours..." className="z-50 bg-gris-chaud rounded-lg"/>
+                    )}
+                    {error && <p style={{color: 'red'}}>{error}</p>}
+                </div>
             </div>
-        </div>
+        </Layout>
     );
 }

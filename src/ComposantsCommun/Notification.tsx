@@ -19,7 +19,7 @@ const Notification: React.FC<NotificationProps> = ({ message, type, onClose }) =
             setNotificationClass('translate-x-full'); // Déclenchez l'animation de sortie
             // Attendre que l'animation de sortie se termine avant d'appeler onClose
             setTimeout(onClose, 500); // L'animation dure 500ms
-        }, 3000); // La notification reste visible pendant 3 secondes
+        }, 1000); // La notification reste visible pendant 3 secondes
 
         // Nettoyez le timeout si le composant est démonté prématurément
         return () => {
@@ -34,7 +34,7 @@ const Notification: React.FC<NotificationProps> = ({ message, type, onClose }) =
     }[type] || 'bg-gray-500';
 
     return (
-        <div className={`fixed top-5 right-0 m-5 p-4 rounded shadow-lg text-white transform transition-all duration-500 ease-out ${notificationClass} ${backgroundColor}`}>
+        <div className={`fixed z-50 top-5 right-0 m-5 p-4 rounded shadow-lg text-white transform transition-all duration-500 ease-out ${notificationClass} ${backgroundColor}`}>
             <span>{message}</span>
         </div>
     );

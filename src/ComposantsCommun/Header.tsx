@@ -44,7 +44,7 @@ const Header = () => {
 
 
     return (
-        <header className="z-50">
+        <header className="z-10">
             <div className="flex start-0 top-0 absolute w-full">
                 {isConnected && <NavBar />}
                 <div className="flex justify-between w-full">
@@ -83,7 +83,7 @@ const Header = () => {
                         </div>
                     )}
                     {isConnected && (
-                        <div className="flex items-baseline sticky">
+                        <div className="flex items-baseline sticky mt-1">
                             <BouttonProfile />
                         </div>
                     )}

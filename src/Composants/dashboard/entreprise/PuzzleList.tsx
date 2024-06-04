@@ -1,20 +1,22 @@
 import {SetStateAction, useEffect, useState} from 'react';
 import {formatSeconds} from '../../../Helpers/formatHelper.ts';
-import {DataToken, PuzzleSend} from '../../../Interface/Interface.ts';
+import {PuzzleSend, User} from '../../../Interface/Interface.ts';
 import CodeBlock from "../../../ComposantsCommun/CodeBlock.tsx";
 import Button from "../../../ComposantsCommun/Button.tsx";
 import {deletePuzzle, getElementByEndpoint} from "../../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
 import {useTranslation} from "react-i18next";
+import clsx from "clsx";
+import Notification from "../../../ComposantsCommun/Notification.tsx";
 
 interface PuzzleListProps {
     setIsSubmitted: () => void;
     submitCount: number;
+    infosUserById?: User;
 }
 
 const PuzzleList = ({
-                        setIsSubmitted, submitCount,
+                        setIsSubmitted, submitCount, infosUserById
                     }: PuzzleListProps) => {
     const {t} = useTranslation();
     const [sortKey, setSortKey] = useState<string>('sendDate');
@@ -22,8 +24,9 @@ const PuzzleList = ({
     const [selectedTitle, setSelectedTitle] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const authContext = useAuthContext();
-    const infosUser = authContext?.infosUser as JwtPayload;
-    const infos = infosUser.aud as unknown as DataToken;
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const [puzzleFinish, setPuzzleFinish] = useState<PuzzleSend[]>([]);
 
@@ -71,13 +74,22 @@ const PuzzleList = ({
         setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
     };
 
-    const deleteOnePuzzle = async (id: number) => {
+    const deleteOnePuzzle = async (puzzleId: number) => {
         const result = await deletePuzzle("puzzle/deletePuzzleSend", {
             token: authContext?.accessToken ?? "",
-            puzzleId: id
+            puzzleId: puzzleId
         });
         if (result.status === 200) {
-            setIsSubmitted();
+            setNotificationMessage(t('puzzleDeleted'));
+            setNotificationType('success');
+            setShowNotification(true);
+            setTimeout(() => {
+                setIsSubmitted();
+            }, 2000);
+        } else {
+            setNotificationMessage(t('failedDeletePuzzle'));
+            setNotificationType('error');
+            setShowNotification(true);
         }
     }
     const deleteOldPuzzlePuzzle = async () => {
@@ -86,13 +98,22 @@ const PuzzleList = ({
             puzzleId: "old"
         });
         if (result.status === 200) {
-            setIsSubmitted();
+            setNotificationMessage(t('puzzleDeleted'));
+            setNotificationType('success');
+            setShowNotification(true);
+            setTimeout(() => {
+                setIsSubmitted();
+            }, 2000);
+        } else {
+            setNotificationMessage(t('failedDeletePuzzle'));
+            setNotificationType('error');
+            setShowNotification(true);
         }
     }
 
     useEffect(() => {
         if (authContext?.connected) {
-            getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infos?.data.id}&page=${currentPage}`, {
+            getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infosUserById?.id}&page=${currentPage}`, {
                 token: authContext.accessToken ?? "",
                 data: ''
             }).then(async (response) => {
@@ -103,11 +124,19 @@ const PuzzleList = ({
     }, [currentPage, submitCount, authContext?.connected]);
 
     return (
-        <div id="PuzzleList" className="m-5 rounded-lg bg-tertiari shadow-xl p-6">
+        <div id="PuzzleList"
+             className={clsx(puzzleFinish.length == 0 ? "hidden" : "", "m-5 rounded-lg bg-tertiari shadow-xl p-6")}>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <h1 className="text-center font-bold text-3xl">{t("puzzleRealized")}</h1>
-            <div className="flex justify-end space-x-2 mb-4">
+            <div className="flex justify-end max-sm:flex-col space-x-2 max-sm:space-y-1 mb-4 mt-5">
                 <select
-                    className="px-4 py-2 rounded bg-petroleum-blue text-white cursor-pointer"
+                    className="px-4 py-2 w-40 h-10 rounded bg-petroleum-blue text-white cursor-pointer"
                     value={selectedTitle}
                     onChange={e => setSelectedTitle(e.target.value)}
                 >
@@ -118,11 +147,11 @@ const PuzzleList = ({
                         </option>
                     ))}
                 </select>
-                <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
+                <button className="px-4 py-2 w-32 h-10 overflow-hidden rounded bg-petroleum-blue text-white"
                         onClick={() => handleSort('sendDate')}>{t("triDate")}
                 </button>
                 <Button type={"submit"} id={"delete"}
-                        className={"px-4 py-2 rounded bg-[#D63864] text-white font-bold"}
+                        className={"px-4 py-2 w-32 h-10 rounded bg-[#D63864] text-white font-bold"}
                         onClick={() => deleteOldPuzzlePuzzle()}>X ({'>'} 1 {t("month")})</Button>
             </div>
             {sortedData.map(result => (

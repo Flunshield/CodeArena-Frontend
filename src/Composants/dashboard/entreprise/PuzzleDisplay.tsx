@@ -8,8 +8,8 @@ import SendPuzzle from "./SendPuzzle.tsx";
 import clsx from "clsx";
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
 import Notification from "../../../ComposantsCommun/Notification.tsx";
+import {JwtPayload} from "jwt-decode";
 
 interface PuzzleDisplayProps {
     setIsSubmitted: () => void;
@@ -57,20 +57,22 @@ const PuzzleDisplay = (
      * Gère de manière asynchrone la suppression d'un puzzle en effectuant un appel API.
      * Met à jour le compteur de soumissions si la suppression réussit.
      *
-     * @param id - L'identifiant optionnel du puzzle à supprimer.
      * Si aucun identifiant n'est fourni, la fonction tentera tout de même de supprimer un puzzle,
      * mais peut échouer si l'API requiert un identifiant.
+     * @param puzzleId
      */
-    const handleClickDelete = async (id?: number) => {
+    const handleClickDelete = async (puzzleId?: number) => {
         await deletePuzzle('puzzle/deletePuzzle', {
             token: authContext?.accessToken ?? "",
-            puzzleId: id
+            puzzleId: puzzleId
         }).then(response => {
             if (response.ok) {
-                setIsSubmitted();
                 setNotificationMessage(t('puzzleDeleted'));
                 setNotificationType('success');
                 setShowNotification(true);
+                setTimeout(() => {
+                    setIsSubmitted();
+                }, 2000);
             } else {
                 setNotificationMessage(t('failedDeletePuzzle'));
                 setNotificationType('error');
@@ -128,7 +130,7 @@ const PuzzleDisplay = (
     }, [currentPage, submitCount]);
 
     return (
-        <div id="PuzzleDisplay" className="m-5">
+        <div id="PuzzleDisplay" className={clsx(tabPuzzlesEntreprise.length == 0 ? "hidden" : "m-5")}>
             {showNotification && (
                 <Notification
                     message={notificationMessage}
@@ -141,9 +143,10 @@ const PuzzleDisplay = (
                     <h3 className="text-lg leading-6 font-medium text-quaternary">{t("puzzleCreated")}</h3>
                     <ul className="mt-3 w-full text-sm text-quaternary flex flex-wrap justify-center">
                         {tabPuzzlesEntreprise.map((puzzle: PuzzlesEntreprise) => (
-                            <li key={puzzle.id} className="bg-gris-chaud p-5 m-2 rounded-lg shadow">
+                            <li key={puzzle.id}
+                                className="bg-gris-chaud p-5 m-2 w-auto overflow-hidden rounded-lg shadow">
                                 <Card className="border-0">
-                                    <h1 className="text-xl text-center font-bold uppercase m-3 sm:m-5 text-tertiari">{puzzle.title}</h1>
+                                    <h1 className="text-xl text-center font-bold uppercase m-3 sm:m-5 text-tertiari break-words">{puzzle.title}</h1>
                                     <div
                                         className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center items-center m-5">
                                         <Button type="button" onClick={() => openPopup(puzzle, "1")}

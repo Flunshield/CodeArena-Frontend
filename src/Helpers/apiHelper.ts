@@ -405,7 +405,7 @@ export const deletePuzzle = async (endpoint?: string, data?: {
             'Authorization': `Bearer ${data?.token}`,
         },
         body: JSON.stringify({
-            id: data?.puzzleId
+            puzzleId: data?.puzzleId
         }),
         credentials: 'include'
     });
