@@ -250,3 +250,13 @@ export interface ArrayItem {
     item: CommandeEntreprise[];
     total: number;
 }
+
+export interface listPuzzleEntreprise {
+    item: PuzzlesEntreprise[];
+    total: number;
+}
+
+export interface listUser {
+    item: User[];
+    total: number;
+}

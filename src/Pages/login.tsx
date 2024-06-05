@@ -106,12 +106,13 @@ function LoginPage() {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            {loading && (
+            {loading ? (
                 <div className="flex justify-center items-center h-screen">
                     <LoaderMatch msg={t('attemptConnexion')} className="z-50 bg-gris-chaud rounded-lg" />
                 </div>
-            )}
-            {!isConnected ? (
+            )
+                :
+            !isConnected ? (
                 <div className="flex flex-row justify-around mb-64">
                     <Card className="rounded-xl w-96 mt-32 m-5">
                         <CardContent className="bg-tertiari text-tertiari w-full pb-6 pt-6">

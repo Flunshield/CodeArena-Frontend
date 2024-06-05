@@ -7,6 +7,7 @@ import {useAuthContext} from "../../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
 import {HEADER_FACTURE} from "../../../constantes/constanteEntreprise.ts";
 import clsx from "clsx";
+import Pagination from "../../../ComposantsCommun/Pagination.tsx";
 
 interface historiqueAchatProps {
     className?: string;
@@ -75,37 +76,8 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
                         </tr>
                     ))}
                     </tbody>
-                    <tfoot>
-                    <tr className="bg-tertiari border-b dark:bg-gray-800 dark:border-gray-700">
-                        {currentPage > 1 ? (
-                            <td className="py-4 px-6">
-                                <button
-                                    className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                                    onClick={prevPage}
-                                >
-                                    {t('previous')}
-                                </button>
-                            </td>
-                        ) : (
-                            <td className="py-4 px-6">
-                                <div className="px-4 py-2 invisible">{t('previous')}</div>
-                            </td>
-                        )}
-                        <td className="py-4 px-6" colSpan={2}><p
-                            className="text-center flex-grow text-secondary">{currentPage}</p></td>
-                        <td className="py-4 px-6">
-                            {maxPage < currentPage &&
-                                <button
-                                    className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                                    onClick={nextPage}
-                                >
-                                    {t('next')}
-                                </button>
-                            }
-                        </td>
-                    </tr>
-                    </tfoot>
                 </table>
+                <Pagination item={lastCommandFormatted} maxPage={maxPage} currentPage={currentPage} nextPage={nextPage} prevPage={prevPage} classNameCurrentPage="text-tertiari"/>
             </div>
             <div className="flex justify-between items-center w-full">
             </div>

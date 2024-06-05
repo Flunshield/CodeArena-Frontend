@@ -157,6 +157,7 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
                     message={notificationMessage}
                     type={notificationType}
                     onClose={() => setShowNotification(false)}
+                    delay={2000}
                 />
             )}
             <h2 className="text-2xl text-center text-tertiari font-bold">{t('generalinformation')}</h2>

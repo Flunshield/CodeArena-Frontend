@@ -60,6 +60,7 @@ function Success (){
                     message={notificationMessage}
                     type={notificationType}
                     onClose={() => setShowNotification(false)}
+                    delay={2000}
                 />
             )}
             <div className="flex justify-center text-center">
