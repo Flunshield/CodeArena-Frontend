@@ -55,8 +55,8 @@ function LoginPage() {
         setErrorPassword(false);
 
         try {
-            setLoading(true)
-            const data: LoginForm = {userName, password};
+            setLoading(true);
+            const data: LoginForm = { userName, password };
             const response = await login('auth/login', data);
 
             if (response.ok) {
@@ -64,15 +64,22 @@ function LoginPage() {
                 setNotificationType('success');
                 setShowNotification(true);
                 setTimeout(async () => {
-                    const result = await response.json();
-                    const jwtDecoded = jwtDecode(result.message);
-                    localStorage.setItem('authState', JSON.stringify({
-                        accessToken: result.message,
-                        connected: true,
-                        infosUser: jwtDecoded,
+                    try {
+                        const result = await response.json();
+                        const jwtDecoded = jwtDecode(result.message);
+                        localStorage.setItem('authState', JSON.stringify({
+                            accessToken: result.message,
+                            connected: true,
+                            infosUser: jwtDecoded,
                         }));
-
-                    window.location.reload();
+                        window.location.reload();
+                    } catch (jsonError) {
+                        console.error("Invalid JSON response:", jsonError);
+                        setNotificationMessage(t('errorParsingResponse'));
+                        setNotificationType('error');
+                        setShowNotification(true);
+                        setLoading(false);
+                    }
                 }, 1000);
             } else {
                 setNotificationMessage(t('errorNdcMdp'));
