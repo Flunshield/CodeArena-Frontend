@@ -11,7 +11,7 @@ import classement from "/assets/classement.png";
 import ranked from "/assets/ranked.png";
 import dashboard from "/assets/dashboard.png";
 import clsx from "clsx";
-import {DASHBOARD, EVENT, RANKED, RANKING, TOURNAMENT} from "../constantes/constantes.ts";
+import {DASHBOARD, EVENT, RANKED, RANKING, TOURNAMENT} from "../constantes/constantesRoutes.ts";
 import {checkUrl} from "../Helpers/methodeHelper.ts";
 
 const NavBar = () => {

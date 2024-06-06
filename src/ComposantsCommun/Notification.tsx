@@ -4,9 +4,10 @@ interface NotificationProps {
     message: string;
     type: 'success' | 'error' | 'info' | string;
     onClose: () => void;
+    delay?: number;
 }
 
-const Notification: React.FC<NotificationProps> = ({ message, type, onClose }) => {
+const Notification: React.FC<NotificationProps> = ({ message, type, onClose, delay = 1000 }) => {
     // Utilisez le state pour contrôler les classes CSS qui gèrent l'animation
     const [notificationClass, setNotificationClass] = useState('translate-x-full');
 
@@ -19,7 +20,7 @@ const Notification: React.FC<NotificationProps> = ({ message, type, onClose }) =
             setNotificationClass('translate-x-full'); // Déclenchez l'animation de sortie
             // Attendre que l'animation de sortie se termine avant d'appeler onClose
             setTimeout(onClose, 500); // L'animation dure 500ms
-        }, 3000); // La notification reste visible pendant 3 secondes
+        }, delay); // La notification reste visible pendant 3 secondes
 
         // Nettoyez le timeout si le composant est démonté prématurément
         return () => {
@@ -34,7 +35,7 @@ const Notification: React.FC<NotificationProps> = ({ message, type, onClose }) =
     }[type] || 'bg-gray-500';
 
     return (
-        <div className={`fixed top-5 right-0 m-5 p-4 rounded shadow-lg text-white transform transition-all duration-500 ease-out ${notificationClass} ${backgroundColor}`}>
+        <div className={`fixed z-50 top-5 right-0 m-5 p-4 rounded shadow-lg text-white transform transition-all duration-500 ease-out ${notificationClass} ${backgroundColor}`}>
             <span>{message}</span>
         </div>
     );

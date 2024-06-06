@@ -13,6 +13,7 @@ import Layout from "../ComposantsCommun/Layout.tsx";
 import clsx from "clsx";
 import Notification from "../ComposantsCommun/Notification.tsx";
 import LoaderMatch from "../ComposantsCommun/LoaderMatch.tsx";
+import {jwtDecode} from "jwt-decode";
 
 function LoginPage() {
     const [userName, setUserName] = useState("");
@@ -54,16 +55,31 @@ function LoginPage() {
         setErrorPassword(false);
 
         try {
-            setLoading(true)
-            const data: LoginForm = {userName, password};
+            setLoading(true);
+            const data: LoginForm = { userName, password };
             const response = await login('auth/login', data);
 
             if (response.ok) {
                 setNotificationMessage(t('connectSuccess'));
                 setNotificationType('success');
                 setShowNotification(true);
-                setTimeout(() => {
-                    window.location.reload();
+                setTimeout(async () => {
+                    try {
+                        const result = await response.json();
+                        const jwtDecoded = jwtDecode(result.message);
+                        localStorage.setItem('authState', JSON.stringify({
+                            accessToken: result.message,
+                            connected: true,
+                            infosUser: jwtDecoded,
+                        }));
+                        window.location.reload();
+                    } catch (jsonError) {
+                        console.error("Invalid JSON response:", jsonError);
+                        setNotificationMessage(t('errorParsingResponse'));
+                        setNotificationType('error');
+                        setShowNotification(true);
+                        setLoading(false);
+                    }
                 }, 1000);
             } else {
                 setNotificationMessage(t('errorNdcMdp'));
@@ -97,12 +113,13 @@ function LoginPage() {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            {loading && (
+            {loading ? (
                 <div className="flex justify-center items-center h-screen">
                     <LoaderMatch msg={t('attemptConnexion')} className="z-50 bg-gris-chaud rounded-lg" />
                 </div>
-            )}
-            {!isConnected ? (
+            )
+                :
+            !isConnected ? (
                 <div className="flex flex-row justify-around mb-64">
                     <Card className="rounded-xl w-96 mt-32 m-5">
                         <CardContent className="bg-tertiari text-tertiari w-full pb-6 pt-6">

@@ -1,4 +1,4 @@
-import {DataToken, Pricing, PuzzlesEntreprise} from "../../../Interface/Interface.ts";
+import {DataToken, listPuzzleEntreprise, Pricing, PuzzlesEntreprise} from "../../../Interface/Interface.ts";
 import Card from "../../../ComposantsCommun/Card.tsx";
 import Button from "../../../ComposantsCommun/Button.tsx";
 import {deletePuzzle, getElementByEndpoint} from "../../../Helpers/apiHelper.ts";
@@ -8,13 +8,14 @@ import SendPuzzle from "./SendPuzzle.tsx";
 import clsx from "clsx";
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
 import Notification from "../../../ComposantsCommun/Notification.tsx";
+import {JwtPayload} from "jwt-decode";
+import Pagination from "../../../ComposantsCommun/Pagination.tsx";
 
 interface PuzzleDisplayProps {
     setIsSubmitted: () => void;
-    setPuzzleToPopup?: (value: PuzzlesEntreprise | undefined) => void;
     submitCount: number;
+    setPuzzleToPopup?: (value: PuzzlesEntreprise | undefined) => void;
     puzzleToPopup?: PuzzlesEntreprise;
     lastCommande?: Pricing;
     nbPuzzleCreated: number;
@@ -23,11 +24,11 @@ interface PuzzleDisplayProps {
 const PuzzleDisplay = (
     {
         setIsSubmitted,
+        submitCount,
         setPuzzleToPopup,
         puzzleToPopup,
         lastCommande,
         nbPuzzleCreated,
-        submitCount
     }: PuzzleDisplayProps) => {
     const [isPopupOpenModify, setPopupOpenModify] = useState(false);
     const [isPopupOpenSend, setPopupOpenSend] = useState(false);
@@ -40,7 +41,9 @@ const PuzzleDisplay = (
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
 
-    const [tabPuzzlesEntreprise, setTabPuzzlesEntreprise] = useState<PuzzlesEntreprise[]>([]);
+    const [tabPuzzlesEntreprise, setTabPuzzlesEntreprise] = useState<listPuzzleEntreprise>({item: [], total: 0});
+    const maxPage = tabPuzzlesEntreprise.item.length > 0 ? Math.ceil(tabPuzzlesEntreprise.total / tabPuzzlesEntreprise.item.length) : 1;
+
     /**
      * Effectue une requête asynchrone pour récupérer les données d'un puzzle spécifique via un endpoint API.
      * Utilise un identifiant de puzzle extrait d'un objet `infos` pour construire l'URL de la requête.
@@ -57,20 +60,22 @@ const PuzzleDisplay = (
      * Gère de manière asynchrone la suppression d'un puzzle en effectuant un appel API.
      * Met à jour le compteur de soumissions si la suppression réussit.
      *
-     * @param id - L'identifiant optionnel du puzzle à supprimer.
      * Si aucun identifiant n'est fourni, la fonction tentera tout de même de supprimer un puzzle,
      * mais peut échouer si l'API requiert un identifiant.
+     * @param puzzleId
      */
-    const handleClickDelete = async (id?: number) => {
+    const handleClickDelete = async (puzzleId?: number) => {
         await deletePuzzle('puzzle/deletePuzzle', {
             token: authContext?.accessToken ?? "",
-            puzzleId: id
+            puzzleId: puzzleId
         }).then(response => {
             if (response.ok) {
-                setIsSubmitted();
                 setNotificationMessage(t('puzzleDeleted'));
                 setNotificationType('success');
                 setShowNotification(true);
+                setTimeout(() => {
+                    setIsSubmitted();
+                }, 2000);
             } else {
                 setNotificationMessage(t('failedDeletePuzzle'));
                 setNotificationType('error');
@@ -120,15 +125,13 @@ const PuzzleDisplay = (
             fetchData().then(async (response) => {
                 if (response.status === 200) {
                     setTabPuzzlesEntreprise(await response.json());
-                } else {
-                    setTabPuzzlesEntreprise([])
                 }
             });
         }
     }, [currentPage, submitCount]);
 
     return (
-        <div id="PuzzleDisplay" className="m-5">
+        <div id="PuzzleDisplay" className={clsx(tabPuzzlesEntreprise?.item.length == 0 ? "hidden" : "m-5")}>
             {showNotification && (
                 <Notification
                     message={notificationMessage}
@@ -140,10 +143,11 @@ const PuzzleDisplay = (
                 <div className="px-4 py-5 sm:p-6">
                     <h3 className="text-lg leading-6 font-medium text-quaternary">{t("puzzleCreated")}</h3>
                     <ul className="mt-3 w-full text-sm text-quaternary flex flex-wrap justify-center">
-                        {tabPuzzlesEntreprise.map((puzzle: PuzzlesEntreprise) => (
-                            <li key={puzzle.id} className="bg-gris-chaud p-5 m-2 rounded-lg shadow">
+                        {tabPuzzlesEntreprise?.item.map((puzzle: PuzzlesEntreprise) => (
+                            <li key={puzzle.id}
+                                className="bg-gris-chaud p-5 m-2 w-auto overflow-hidden rounded-lg shadow">
                                 <Card className="border-0">
-                                    <h1 className="text-xl text-center font-bold uppercase m-3 sm:m-5 text-tertiari">{puzzle.title}</h1>
+                                    <h1 className="text-xl text-center font-bold uppercase m-3 sm:m-5 text-tertiari break-words">{puzzle.title}</h1>
                                     <div
                                         className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center items-center m-5">
                                         <Button type="button" onClick={() => openPopup(puzzle, "1")}
@@ -162,21 +166,7 @@ const PuzzleDisplay = (
                             </li>
                         ))}
                     </ul>
-                    <div className="flex justify-between items-center w-full">
-                        {currentPage > 1 ? (
-                            <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                                    onClick={prevPage}>Précédent</button>
-                        ) : (
-                            <div className="px-4 py-2 invisible">Précédent</div>  // Invisible spacer
-                        )}
-                        <p className="text-center flex-grow">{currentPage}</p>
-                        {tabPuzzlesEntreprise.length > 3 ? (
-                            <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                                    onClick={nextPage}>Suivant</button>
-                        ) : (
-                            <div className="px-4 py-2 invisible">Suivant</div>  // Invisible spacer
-                        )}
-                    </div>
+                    <Pagination item={tabPuzzlesEntreprise?.item} maxPage={maxPage} currentPage={currentPage} nextPage={nextPage} prevPage={prevPage}/>
                 </div>
             </div>
             {isPopupOpenModify && (

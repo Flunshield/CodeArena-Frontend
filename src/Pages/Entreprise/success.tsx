@@ -7,6 +7,7 @@ import {DataToken} from "../../Interface/Interface.ts";
 import {useEffect, useState} from "react";
 import Card from "../../ComposantsCommun/Card.tsx";
 import {useTranslation} from "react-i18next";
+import Notification from "../../ComposantsCommun/Notification.tsx";
 
 function Success (){
     const {search} = useLocation();
@@ -20,9 +21,11 @@ function Success (){
 
     const [isError, setIsError] = useState(false);
     const [isCodeError, setIsCodeError] = useState(0);
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     useEffect(() => {
-        console.log(infos)
         postElementByEndpoint('stripe/success', {
             token: authContext.accessToken ?? "",
             data: {sessionId: sessionId ?? "", user: infos}
@@ -32,7 +35,13 @@ function Success (){
             })
             .then(data => {
                 if (data === 201) {
-                    window.location.href = "/";
+                    setNotificationMessage(t("successSubscription"));
+                    setNotificationType('success');
+                    setShowNotification(true);
+                    localStorage.removeItem('authState');
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 3000);
                 } else {
                     setIsError(true);
                     setIsCodeError(data);
@@ -46,14 +55,22 @@ function Success (){
 
     return (
         <Layout>
-            <div className="m-64 text-center">
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                    delay={2000}
+                />
+            )}
+            <div className="flex justify-center text-center">
                 {isError ?
-                    <Card className="bg-secondary text-tertiari p-32">
+                    <Card className="bg-secondary text-tertiari max-md:p-5 max-md:mt-32 p-20 mt-64">
                         <h1 className="text-2xl mb-10">{t("erreurTransac")}</h1>
                         <p> {t("contactSupport")} {isCodeError})</p>
                     </Card>
                     :
-                    <Card className="bg-secondary text-tertiari p-32">
+                    <Card className="bg-secondary text-tertiari max-md:p-5 max-md:mt-32 p-20 mt-64">
                         <h1 className="text-tertiari">{t("redirection")}</h1>
                         <p> {t("msgRedirectionLink")} <a href={"/"} className="text-blue-700">{t("link")}.</a>
                         </p>
