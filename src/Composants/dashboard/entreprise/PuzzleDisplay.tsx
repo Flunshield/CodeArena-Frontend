@@ -42,7 +42,7 @@ const PuzzleDisplay = (
     const [notificationMessage, setNotificationMessage] = useState('');
 
     const [tabPuzzlesEntreprise, setTabPuzzlesEntreprise] = useState<listPuzzleEntreprise>({item: [], total: 0});
-    const maxPage = tabPuzzlesEntreprise.item.length > 0 ? Math.ceil(tabPuzzlesEntreprise.total / 4) : 1;
+    const maxPage = tabPuzzlesEntreprise.item.length > 0 ? Math.ceil(tabPuzzlesEntreprise.total / tabPuzzlesEntreprise.item.length) : 1;
 
     /**
      * Effectue une requête asynchrone pour récupérer les données d'un puzzle spécifique via un endpoint API.
@@ -87,6 +87,14 @@ const PuzzleDisplay = (
             setShowNotification(true);
         });
     }
+
+    const nextPage = () => {
+        setCurrentPage(currentPage + 1);
+    };
+
+    const prevPage = () => {
+        setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
+    };
 
     const openPopup = (puzzle?: PuzzlesEntreprise, type?: string) => {
         document.body.style.overflow = "hidden";
@@ -158,7 +166,7 @@ const PuzzleDisplay = (
                             </li>
                         ))}
                     </ul>
-                    <Pagination item={tabPuzzlesEntreprise?.item} maxPage={maxPage} currentPage={currentPage}  setCurrentPage={setCurrentPage} setSubmitCount={setIsSubmitted} itemPerPage={3}/>
+                    <Pagination item={tabPuzzlesEntreprise?.item} maxPage={maxPage} currentPage={currentPage} nextPage={nextPage} prevPage={prevPage}/>
                 </div>
             </div>
             {isPopupOpenModify && (
