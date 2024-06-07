@@ -30,12 +30,14 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
     });
     const maxPage = Math.ceil(commandes.total / 10);
     const lastCommandFormatted = formatItemCommande(commandes.item, t);
+
     useEffect(() => {
         getAllCommande.then(async (response) => {
             const result = await response.json();
             setCommandes(result);
         });
     }, [submitCount, currentPage]);
+
     return (
         <div id="historiqueAchat" className={className}>
             <h2 className="text-2xl text-center text-tertiari font-bold">{t('historiqueAchat')}</h2>

@@ -1,18 +1,25 @@
-import {PuzzlesEntreprise} from "../Interface/Interface.ts";
 import {useTranslation} from "react-i18next";
 import clsx from "clsx";
 
 interface PaginationProps {
     currentPage: number;
     maxPage: number;
-    item: PuzzlesEntreprise[];
+    item: unknown[];
     classNameCurrentPage?: string;
     setCurrentPage: (value: number) => void;
     setSubmitCount: (value: (count: number) => number) => void;
     itemPerPage?: number;
 }
 
-const Pagination = ({ currentPage, setSubmitCount, maxPage, item, classNameCurrentPage, setCurrentPage, itemPerPage = 10 }: PaginationProps) => {
+const Pagination = ({
+                        currentPage,
+                        setSubmitCount,
+                        maxPage,
+                        item,
+                        classNameCurrentPage,
+                        setCurrentPage,
+                        itemPerPage = 10
+                    }: PaginationProps) => {
     const {t} = useTranslation();
 
 
@@ -85,7 +92,7 @@ const Pagination = ({ currentPage, setSubmitCount, maxPage, item, classNameCurre
                     <p className={clsx(classNameCurrentPage, "hidden max-lg:block")}>{currentPage}</p>
                 </td>
                 <td className="py-4 text-center align-middle w-1/3">
-                    {maxPage > currentPage && item.length > (itemPerPage -1) && (
+                    {maxPage > currentPage && item.length > (itemPerPage - 1) && (
                         <button
                             className="px-4 py-2 rounded bg-petroleum-blue text-white"
                             onClick={nextPage}
