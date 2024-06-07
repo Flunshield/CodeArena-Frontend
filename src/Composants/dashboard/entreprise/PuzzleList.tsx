@@ -1,6 +1,6 @@
 import {SetStateAction, useEffect, useState} from 'react';
 import {formatSeconds} from '../../../Helpers/formatHelper.ts';
-import {PuzzleSend, User} from '../../../Interface/Interface.ts';
+import {listPuzzleSend, PuzzleSend, User} from '../../../Interface/Interface.ts';
 import CodeBlock from "../../../ComposantsCommun/CodeBlock.tsx";
 import Button from "../../../ComposantsCommun/Button.tsx";
 import {deletePuzzle, getElementByEndpoint} from "../../../Helpers/apiHelper.ts";
@@ -8,6 +8,7 @@ import {useAuthContext} from "../../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import clsx from "clsx";
 import Notification from "../../../ComposantsCommun/Notification.tsx";
+import Pagination from "../../../ComposantsCommun/Pagination.tsx";
 
 interface PuzzleListProps {
     setIsSubmitted: () => void;
@@ -28,7 +29,13 @@ const PuzzleList = ({
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
 
-    const [puzzleFinish, setPuzzleFinish] = useState<PuzzleSend[]>([]);
+    const [puzzleFinish, setPuzzleFinish] = useState<listPuzzleSend>({item: [], total: 0});
+    const maxPage = puzzleFinish.item.length > 0 ? Math.ceil(puzzleFinish.total / 4) : 1;
+
+    const getPuzzle = getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infosUserById?.id}&page=${currentPage}`, {
+            token: authContext.accessToken ?? "",
+            data: ''
+        });
 
     const handleSort = (key: SetStateAction<string>) => {
         if (sortKey === key) {
@@ -40,12 +47,12 @@ const PuzzleList = ({
     };
 
     // Créer une liste unique de titres pour le sélecteur
-    const titles = Array.from(new Set(puzzleFinish.map(item => item.puzzlesEntreprise.title)));
+    const titles = Array.from(new Set(puzzleFinish?.item?.map(item => item.puzzlesEntreprise.title)));
 
     // Filtrer et trier les données
     const filteredData = selectedTitle
-        ? puzzleFinish.filter(item => item.puzzlesEntreprise.title === selectedTitle)
-        : puzzleFinish;
+        ? puzzleFinish.item.filter(item => item.puzzlesEntreprise.title === selectedTitle)
+        : puzzleFinish.item;
 
     const sortedData = filteredData.sort((a, b) => {
         if (sortKey === 'sendDate') {
@@ -65,14 +72,6 @@ const PuzzleList = ({
         }
         return 0;
     });
-
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-    };
-
-    const prevPage = () => {
-        setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
-    };
 
     const deleteOnePuzzle = async (puzzleId: number) => {
         const result = await deletePuzzle("puzzle/deletePuzzleSend", {
@@ -113,19 +112,16 @@ const PuzzleList = ({
 
     useEffect(() => {
         if (authContext?.connected) {
-            getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infosUserById?.id}&page=${currentPage}`, {
-                token: authContext.accessToken ?? "",
-                data: ''
-            }).then(async (response) => {
+            getPuzzle.then(async (response) => {
                 const result = await response.json();
                 setPuzzleFinish(result);
             });
-        }
+            }
     }, [currentPage, submitCount, authContext?.connected]);
 
     return (
         <div id="PuzzleList"
-             className={clsx(puzzleFinish.length == 0 ? "hidden" : "", "m-5 rounded-lg bg-tertiari shadow-xl p-6")}>
+             className={clsx(puzzleFinish.total == 0 ? "hidden" : "", "m-5 rounded-lg bg-tertiari shadow-xl p-6")}>
             {showNotification && (
                 <Notification
                     message={notificationMessage}
@@ -188,21 +184,8 @@ const PuzzleList = ({
                     </div>
                 </div>
             ))}
-            <div className="flex justify-between items-center w-full">
-                {currentPage > 1 ? (
-                    <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                            onClick={prevPage}>{t("previous")}</button>
-                ) : (
-                    <div className="px-4 py-2 invisible">{t("previous")}</div>  // Invisible spacer
-                )}
-                <p className="text-center flex-grow">{currentPage}</p>
-                {puzzleFinish.length > 0 ? (
-                    <button className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                            onClick={nextPage}>{t("next")}</button>
-                ) : (
-                    <div className="px-4 py-2 invisible">{t("next")}</div>  // Invisible spacer
-                )}
-            </div>
+            <Pagination item={puzzleFinish?.item} maxPage={maxPage} currentPage={currentPage}
+                        setCurrentPage={setCurrentPage} setSubmitCount={setIsSubmitted} itemPerPage={3}/>
         </div>
 
     );

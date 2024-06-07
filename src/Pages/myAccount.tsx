@@ -19,7 +19,7 @@ function MyAccount() {
     const [isInformationGeneraleCliked, setIsInformationGeneraleCliked] = useState(false);
     const [isHistoriqueOrderClicked, setIsHistoriqueOrderClicked] = useState(false);
     const [submitCount, setSubmitCount] = useState(0);
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const authContext = useAuthContext();
     // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
     const infosUser = authContext?.infosUser as JwtPayload
@@ -57,7 +57,8 @@ function MyAccount() {
                 const result = await response.json();
                 result.commandeEntrepriseFormatted = {
                     commande: result?.commandeEntreprise[0],
-                    pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0].item)};
+                    pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0].item)
+                };
                 setInfosUserById(result);
             } else {
                 setNotificationMessage(t('errorUserInfos'));
@@ -105,4 +106,5 @@ function MyAccount() {
         </Layout>
     );
 }
+
 export default MyAccount;

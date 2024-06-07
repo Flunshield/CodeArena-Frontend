@@ -58,7 +58,7 @@ function LoginPage() {
             setLoading(true);
             const data: LoginForm = { userName, password };
             const response = await login('auth/login', data);
-
+            console.log(response)
             if (response.ok) {
                 setNotificationMessage(t('connectSuccess'));
                 setNotificationType('success');

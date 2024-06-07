@@ -257,6 +257,33 @@ export interface listPuzzleEntreprise {
 }
 
 export interface listUser {
-    item: User[];
+    item: UserClassement[];
+    total: number;
+}
+
+export interface listUserEntreprise {
+    item: UserClassementEntreprise[];
+    total: number;
+}
+
+export interface UserClassement {
+    userName: string;
+    userRanking: UserRanking[];
+    points: string;
+    nbGames: string;
+}
+
+export interface UserClassementEntreprise {
+    firstName: string;
+    lastName: string;
+    userName: string;
+    email: string;
+    userRanking: UserRanking[];
+    points: string;
+    nbGames: string;
+}
+
+export interface listPuzzleSend {
+    item: PuzzleSend[];
     total: number;
 }

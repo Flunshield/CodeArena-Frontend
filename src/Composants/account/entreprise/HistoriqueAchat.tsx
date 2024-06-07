@@ -27,27 +27,17 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
     const getAllCommande = getElementByEndpoint('entreprise/getAllCommandeForUser?id=' + infos.data.id + "&page=" + currentPage, {
         data: "",
         token: authContext.accessToken ?? ""
-    })
-
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-        setSubmitCount(count => count + 1);
-    };
-
-    const prevPage = () => {
-        setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
-        setSubmitCount(count => count + 1);
-    };
-
-    const maxPage = Math.ceil(commandes.total / commandes.item.length);
-
+    });
+    const maxPage = Math.ceil(commandes.total / 10);
     const lastCommandFormatted = formatItemCommande(commandes.item, t);
+
     useEffect(() => {
         getAllCommande.then(async (response) => {
             const result = await response.json();
             setCommandes(result);
         });
-    }, [submitCount]);
+    }, [submitCount, currentPage]);
+
     return (
         <div id="historiqueAchat" className={className}>
             <h2 className="text-2xl text-center text-tertiari font-bold">{t('historiqueAchat')}</h2>
@@ -77,7 +67,9 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
                     ))}
                     </tbody>
                 </table>
-                <Pagination item={lastCommandFormatted} maxPage={maxPage} currentPage={currentPage} nextPage={nextPage} prevPage={prevPage} classNameCurrentPage="text-tertiari"/>
+                <Pagination item={lastCommandFormatted} maxPage={maxPage} currentPage={currentPage}
+                            setCurrentPage={setCurrentPage} setSubmitCount={setSubmitCount}
+                            classNameCurrentPage="text-tertiari"/>
             </div>
             <div className="flex justify-between items-center w-full">
             </div>

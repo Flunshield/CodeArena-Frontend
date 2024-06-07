@@ -9,6 +9,7 @@ import PuzzleDisplay from "../../Composants/dashboard/entreprise/PuzzleDisplay.t
 import Stats from "../../Composants/dashboard/entreprise/Stats.tsx";
 import {PRICING} from "../../constantes/constanteEntreprise.ts";
 import PuzzleList from "../../Composants/dashboard/entreprise/PuzzleList.tsx";
+import Tableau from "../../Composants/classement/tableau.tsx";
 
 interface result {
     puzzlesPlayed: number;
@@ -82,6 +83,7 @@ function DashboardEntreprise() {
                                    setPuzzleToPopup={setPuzzleToPopup} lastCommande={lastCommande}
                                    nbPuzzleCreated={nbPuzzleCreated}/>
                     <PuzzleList setIsSubmitted={() => setSubmitCount(count => count + 1)} submitCount={submitCount} infosUserById={infosUserById}/>
+                    <Tableau/>
                 </div>
             </div>
         </Layout>
