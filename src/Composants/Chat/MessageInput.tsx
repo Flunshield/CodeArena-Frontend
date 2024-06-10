@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 
-const MessageInput = ({ send }: { send: (value: string) => void }) => {
+interface MessageInputProps {
+    send: (value: string) => void;
+    setTyping: (isTyping: boolean) => void;
+}
+
+const MessageInput = ({ send, setTyping }: MessageInputProps) => {
     const [value, setValue] = useState<string>('');
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && value.trim() !== '') {
             send(value);
             setValue('');
+            setTyping(false);
         }
     };
 
@@ -14,13 +20,19 @@ const MessageInput = ({ send }: { send: (value: string) => void }) => {
         if (value.trim() !== '') {
             send(value);
             setValue('');
+            setTyping(false);
         }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value);
+        setTyping(e.target.value.trim() !== '');
     };
 
     return (
         <div className="flex gap-1">
             <input
-                onChange={(e) => setValue(e.target.value)}
+                onChange={handleChange}
                 onKeyDown={handleKeyDown}
                 placeholder="Tape ton msg"
                 value={value}

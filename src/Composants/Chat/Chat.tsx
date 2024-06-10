@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import io, { Socket } from 'socket.io-client';
-import { ChatInterface, ChatProps  } from '../../Interface/chatInterface';
+import { ChatInterface, ChatProps } from '../../Interface/chatInterface';
 import Messages from './Messages';
 import MessageInput from './MessageInput';
-
 
 const Chat = ({ roomId, userId, username }: ChatProps) => {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [messages, setMessages] = useState<ChatInterface[]>([]);
+    const [typingUsers, setTypingUsers] = useState<{ userId: number; username: string }[]>([]);
 
     const send = (value: string) => {
         if (userId && username) {
@@ -33,17 +33,37 @@ const Chat = ({ roomId, userId, username }: ChatProps) => {
             setMessages(prevMessages => [...prevMessages, message]);
         });
 
+        newSocket.on('typing', (payload: { isTyping: boolean; userId: number; username: string }) => {
+            if (payload.isTyping) {
+                setTypingUsers(prevUsers => {
+                    const existingUser = prevUsers.find(user => user.userId === payload.userId);
+                    if (!existingUser) {
+                        return [...prevUsers, { userId: payload.userId, username: payload.username }];
+                    }
+                    return prevUsers;
+                });
+            } else {
+                setTypingUsers(prevUsers => prevUsers.filter(user => user.userId !== payload.userId));
+            }
+        });
+
         return () => {
             newSocket.disconnect();
         };
     }, [roomId]);
 
+    const handleTyping = (isUserTyping: boolean) => {
+        if (socket) {
+            socket.emit('typing', { roomId, isTyping: isUserTyping, userId, username });
+        }
+    };
+
     return (
         <>
-            <Messages messages={messages} />
-            <MessageInput send={send} />
+            <Messages messages={messages} typingUsers={typingUsers} />
+            <MessageInput send={send} setTyping={handleTyping} />
         </>
     );
-}
+};
 
 export default Chat;

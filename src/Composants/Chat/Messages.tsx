@@ -1,26 +1,101 @@
+import { useEffect, useRef } from 'react';
 import { ChatInterface } from '../../Interface/chatInterface';
+import { useAuthContext } from "../../AuthContext";
+import { JwtPayload } from "jwt-decode";
+import { DataToken } from "../../Interface/Interface";
 
-const Messages = ({ messages }: { messages: ChatInterface[] }) => {
+interface MessagesProps {
+    messages: ChatInterface[];
+    typingUsers: { userId: number; username: string }[];
+}
+
+const Messages = ({ messages, typingUsers }: MessagesProps) => {
+    const authContext = useAuthContext();
+    const infosUser = authContext?.infosUser as JwtPayload;
+    const infos = infosUser.aud as unknown as DataToken;
+    const id = infos.data.id;
+
+    const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages, typingUsers]);
+
+    const getInitials = (username: string) => {
+        return username
+            .split(' ')
+            .map((name) => name.charAt(0))
+            .join('');
+    };
+
     return (
-        <div className="messages-container flex flex-col gap-4 p-4 max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+        <div className="flex w-full flex-col gap-4 p-4 max-w-2xl mx-auto bg-white rounded-lg shadow-lg h-[500px] overflow-y-auto" ref={messagesContainerRef}>
             {messages.length === 0 ? (
-                <p className="text-center text-gray-500 dark:text-gray-400">No messages yet</p>
+                <p className="text-center text-gray-500 dark:text-gray-400">Pas de message ici</p>
             ) : (
-                messages.map((message, index) => (
-                    <div className="message-item flex items-start gap-4 p-2 bg-white dark:bg-gray-700 rounded-lg shadow-md animate-fadeIn" key={index}>
-                        <div className="avatar bg-blue-500 text-white rounded-full flex items-center justify-center w-10 h-10">
-                            {message.username.charAt(0).toUpperCase()}
-                        </div>
-                        <div className="message-content flex flex-col w-full">
-                            <div className="message-header flex items-center justify-between mb-1">
-                                <span className="username text-sm font-semibold text-gray-900 dark:text-white">{message.username}</span>
-                                <span className="timestamp text-xs font-normal text-gray-500 dark:text-gray-400">{new Date(message.timestamp).toLocaleTimeString()}</span>
+                messages.map((message) => {
+                    const isCurrentUser = message.userId === id;
+                    const initials = getInitials(message.username);
+
+                    return (
+                        <div key={message.timestamp} className="flex items-end gap-2">
+                            {!isCurrentUser && (
+                                <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                    {initials}
+                                </span>
+                            )}
+                            <div
+                                className={`flex flex-col p-4 text-sm min-w-[200px] ${
+                                    isCurrentUser 
+                                        ? 'ml-auto max-w-[80%] md:max-w-[60%] rounded-l-xl rounded-tr-xl bg-blue-700 text-slate-100 dark:bg-blue-600 dark:text-slate-100' 
+                                        : 'mr-auto max-w-[80%] md:max-w-[60%] rounded-r-xl rounded-tl-xl bg-slate-100 text-black dark:bg-slate-800 dark:text-white'
+                                }`}
+                            >
+                                {!isCurrentUser && (
+                                    <span className="font-semibold">{message.username}</span>
+                                )}
+                                <div className={`text-sm ${isCurrentUser ? '' : 'text-slate-700 dark:text-slate-300'}`}>
+                                    {message.body}
+                                </div>
+                                <span className="ml-auto text-xs">{new Date(message.timestamp).toLocaleTimeString()}</span>
                             </div>
-                            <p className="body text-sm font-normal text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-600 p-2 rounded-md">{message.body}</p>
+                            {isCurrentUser && (
+                                <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                    {initials}
+                                </span>
+                            )}
                         </div>
-                    </div>
-                ))
+                    );
+                })
             )}
+            {typingUsers.map(user => {
+                const isCurrentUser = user.userId === id;
+                return (
+                    <div key={user.userId} className="flex items-end gap-2">
+                        {!isCurrentUser && (
+                            <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                {getInitials(user.username)}
+                            </span>
+                        )}
+                        <div className={`flex gap-1 ${isCurrentUser ? 'ml-auto' : 'mr-auto'}`}>
+                            <span className="size-1.5 rounded-full bg-slate-700 motion-safe:animate-[bounce_1s_ease-in-out_infinite] dark:bg-slate-300"></span>
+                            <span className="size-1.5 rounded-full bg-slate-700 motion-safe:animate-[bounce_0.5s_ease-in-out_infinite] dark:bg-slate-300"></span>
+                            <span className="size-1.5 rounded-full bg-slate-700 motion-safe:animate-[bounce_1s_ease-in-out_infinite] dark:bg-slate-300"></span>
+                        </div>
+                        {isCurrentUser && (
+                            <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                {getInitials(user.username)}
+                            </span>
+                        )}
+                    </div>
+                );
+            })}
         </div>
     );
 }
