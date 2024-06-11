@@ -144,11 +144,11 @@ async function checkIsInQueue(token: string, id: number) {
             if (responseData.success) {
                 return responseData.isInQueue;
             } else {
-                console.error("Erreur lors de la vérification de la file d'attente : succès est faux");
+                console.error('Erreur lors de la vérification de la file d\'attente : succès est faux');
                 return false;
             }
         } else {
-            console.log("Erreur lors de la vérification de la file d'attente du match");
+            console.log('Erreur lors de la vérification de la file d\'attente du match');
             return false;
         }
     } catch (error) {
@@ -172,15 +172,15 @@ async function checkIsInRoom(token: string, id: number) {
                     roomId: responseData.roomId
                 };
             } else {
-                console.error("Erreur lors de la vérification de la salle de match : succès est faux");
+                console.error('Erreur lors de la vérification de la salle de match : succès est faux');
                 return { isInRoom: responseData.isInRoom, roomId: null };
             }
         } else {
-            console.log("Erreur lors de la vérification de la salle de match");
+            console.log('Erreur lors de la vérification de la salle de match');
             return { isInRoom: false, roomId: null };
         }
     } catch (error) {
-        console.error("Erreur lors de la vérification de la salle de match :", error);
+        console.error('Erreur lors de la vérification de la salle de match :', error);
         return { isInRoom: false, roomId: null };
     }
 }

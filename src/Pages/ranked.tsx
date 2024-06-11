@@ -22,7 +22,6 @@ const Ranked = () => {
         setRoomId
     } = useMatchmaking();
 
-    // Ne pas appeler useSocket si id est undefined
     if (id !== undefined) {
         useSocket(id, setMatchFound, setRoomId);
     }
@@ -51,7 +50,7 @@ const Ranked = () => {
                         className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
                         onClick={handleLeaveQueue}
                     >
-                        Quitter la file d&apos;attente
+                        {'Quitter la file d\'attente'}
                         <img src="/assets/exitIcon.svg" className="w-5 text-white" alt="quitter" />
                     </Button>
                 ) : (
