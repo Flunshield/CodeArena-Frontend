@@ -50,11 +50,12 @@ const useMatchmaking = () => {
             data: { id }
         });
 
-        if (response.status === 201) {
+        const responseData = await response.json();
+        if (responseData.success) {
             console.log("Ajouté à la file d'attente et recherche de match en cours");
             setInQueue(true);
         } else {
-            alert("Erreur lors de la recherche de match");
+            alert(responseData.message || "Erreur lors de la recherche de match");
         }
     }, [authContext.accessToken, id]);
 
@@ -70,13 +71,14 @@ const useMatchmaking = () => {
             data: { id }
         });
 
-        if (response.status === 201) {
+        const responseData = await response.json();
+        if (responseData.success) {
             console.log("Retiré de la file d'attente");
             setInQueue(false);
             setMatchFound(false);
             setRoomId(null);
         } else {
-            alert("Erreur lors de la sortie de la file d'attente");
+            alert(responseData.message || "Erreur lors de la sortie de la file d'attente");
         }
         setLoading(false);
     }, [authContext.accessToken, id]);
@@ -91,7 +93,7 @@ const useMatchmaking = () => {
         handleJoinQueue,
         handleLeaveQueue,
         setMatchFound,
-        setRoomId,
+        setRoomId
     };
 }
 

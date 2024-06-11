@@ -17,13 +17,23 @@ const Ranked = () => {
         username,
         handleJoinQueue,
         handleLeaveQueue,
-        setMatchFound,  
-        setRoomId     
+        setMatchFound,
+        setRoomId
     } = useMatchmaking();
-    
+
+    // Ne pas appeler useSocket si id est undefined
     if (id !== undefined) {
         useSocket(id, setMatchFound, setRoomId);
     }
+
+    const handleJoinQueueClick = () => {
+        if (matchFound && roomId) {
+            alert("Vous êtes déjà dans une salle de match !");
+        } else {
+            handleJoinQueue();
+        }
+    };
+
     return (
         <Layout>
             {matchFound && roomId && id && username && (
@@ -31,7 +41,7 @@ const Ranked = () => {
             )}
             <div className="m-2 text-white flex flex-col items-center py-[120px]">
                 <div className='mb-4'>
-                    {(loading || (inQueue && !matchFound)) && <LoaderMatch msg={t('searchMatch')} />}
+                    {(loading || (inQueue && !matchFound)) && <LoaderMatch msg={t(`Recherche d'un match en cours...`)} />}
                 </div>
                 {inQueue && !matchFound ? (
                     <Button
@@ -49,7 +59,7 @@ const Ranked = () => {
                             id="ranked-button"
                             type="button"
                             className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
-                            onClick={handleJoinQueue}
+                            onClick={handleJoinQueueClick}
                         >
                             Rechercher un match
                             <img src="/assets/arrowRightWhite.svg" className="w-5 text-white" alt="rejoindre" />
