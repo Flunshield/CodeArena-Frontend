@@ -17,6 +17,7 @@ const Ranked = () => {
         username,
         handleJoinQueue,
         handleLeaveQueue,
+        handleLeaveRoom,
         setMatchFound,
         setRoomId
     } = useMatchmaking();
@@ -66,9 +67,20 @@ const Ranked = () => {
                         </Button>
                     )
                 )}
+                {matchFound && (
+                    <Button
+                        id="leave-room-button"
+                        type="button"
+                        className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                        onClick={handleLeaveRoom}
+                    >
+                        Quitter le match
+                        <img src="/assets/exitIcon.svg" className="w-5 text-white" alt="quitter" />
+                    </Button>
+                )}
             </div>
         </Layout>
     );
-}
+};
 
 export default Ranked;

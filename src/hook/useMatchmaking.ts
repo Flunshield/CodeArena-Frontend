@@ -24,9 +24,6 @@ const useMatchmaking = () => {
 
         const refreshStatus = async () => {
             setLoading(true);
-            const isInQueue = await checkIsInQueue(authContext.accessToken ?? "", id);
-            setInQueue(isInQueue);
-            console.log("isInQueue", isInQueue);
             
             const checkRoom = await checkIsInRoom(authContext.accessToken ?? "", id);
             if (checkRoom.isInRoom) {
@@ -34,8 +31,10 @@ const useMatchmaking = () => {
                 setRoomId(checkRoom.roomId);
                 console.log("isInRoom", checkRoom.isInRoom);
                 console.log("roomId", checkRoom.roomId);
+            } else {
+                const isInQueue = await checkIsInQueue(authContext.accessToken ?? "", id);
+                setInQueue(isInQueue);
             }
-            
             setLoading(false);
         };
 
@@ -93,6 +92,29 @@ const useMatchmaking = () => {
         setLoading(false);
     }, [authContext.accessToken, id]);
 
+    const handleLeaveRoom = useCallback(async () => {
+        if (id === undefined) {
+            console.error("ID utilisateur est indéfini");
+            return;
+        }
+
+        setLoading(true);
+        const response = await postElementByEndpoint('matchmaking/leaveRoom', {
+            token: authContext.accessToken ?? '',
+            data: { id }
+        });
+
+        const responseData = await response.json();
+        if (responseData.success) {
+            console.log("Quitter la salle de match");
+            setMatchFound(false);
+            setRoomId(null);
+        } else {
+            alert(responseData.message || "Erreur lors de la sortie de la salle de match");
+        }
+        setLoading(false);
+    }, [authContext.accessToken, id]);
+
     return {
         loading,
         inQueue,
@@ -102,6 +124,7 @@ const useMatchmaking = () => {
         username,
         handleJoinQueue,
         handleLeaveQueue,
+        handleLeaveRoom,
         setMatchFound,
         setRoomId
     };
