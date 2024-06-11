@@ -59,11 +59,14 @@ const Chat = ({ roomId, userId, username }: ChatProps) => {
     };
 
     return (
-        <>
-            <Messages messages={messages} typingUsers={typingUsers} />
-            <MessageInput send={send} setTyping={handleTyping} />
-        </>
+        <div className="flex flex-col h-full w-[500px]">
+            <div className="flex-1 overflow-y-auto">
+                <Messages messages={messages} typingUsers={typingUsers} />
+            </div>
+            <div className="py-2">
+                <MessageInput send={send} setTyping={handleTyping} />
+            </div>
+        </div>
     );
 };
-
 export default Chat;

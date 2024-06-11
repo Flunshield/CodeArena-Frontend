@@ -41,7 +41,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
             ) : (
                 messages.map((message) => {
                     const isCurrentUser = message.userId === id;
-                    const initials = getInitials(message.username);
+                    const initials = getInitials(message.username).toUpperCase();
 
                     return (
                         <div key={message.timestamp} className="flex items-end gap-2">
