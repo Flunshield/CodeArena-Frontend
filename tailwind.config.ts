@@ -4,6 +4,7 @@ export default {
         "./src/**/*.{js,jsx,ts,tsx}",
     ],
     theme: {
+
         screens: {
             xs: '384px',
             sm: '640px',
@@ -13,8 +14,11 @@ export default {
             '2xl': '1536px',
         },
         extend: {
+            boxShadow: {
+                'angelic-white': '0 8px 12px -4px rgba(255, 255, 255, 0.2), 0 4px 8px -2px rgba(255, 255, 255, 0.1)'
+            },
             colors: {
-                primary: '#0D1117',
+                primary: '#5bbce4',
                 secondary: '#161B22',
                 tertiari: '#E3E8EF',
                 quaternary: '#0F1319',

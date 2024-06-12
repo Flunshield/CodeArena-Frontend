@@ -1,7 +1,7 @@
 import React from 'react';
 import iconeMail from '/assets/iconeMail.png';
 import { useTranslation } from "react-i18next";
-import { ENTREPRISE, LEGAL, MAIL, PRIVACY_POLICY, TERMS } from "../constantes/constantesRoutes.ts";
+import { ENTREPRISE, EVENT, LEGAL, MAIL, PRIVACY_POLICY, RANKING, TERMS, TOURNAMENT } from "../constantes/constantesRoutes.ts";
 import { NavFlags } from "../Interface/Interface.ts";
 import { useAuthContext } from "../AuthContext.tsx";
 import drapFr from "/assets/drapeaux/fr.svg";
@@ -50,27 +50,39 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
         </div>)
 
     return (
-        <FadeIn duration={1.0}> {/* Ajout du composant FadeIn avec une durée personnalisée */}
+        <FadeIn duration={1.0}>
             <footer className={clsx(className, "w-full h-auto text-tertiari bottom-0 relative p-4 z-0 bg-secondary")}>
-                <div className="flex mb-3 flex-col md:flex-row md:justify-between">
-                    {isConnected &&
-                        <div className="mt-5 md:flex-col ">
-                            <p className="font-bold text-2xl">{t('CodeArena')}</p>
-                            <p className="mt-5 hover:underline"><a href={ENTREPRISE} id="entrepriseAchat">{t('entreprise')}</a></p>
-                        </div>
-                    }
-                    <div className="md:flex-col mt-5">
-                        <ul>
-                            <li className="font-bold text-2xl">{t('contact')}</li>
-                            <li className="mt-5 flex md:justify-between"><img src={iconeMail} alt="icone de mail" className="mr-5" />{MAIL}</li>
-                            <li className="mt-10 hover:underline"><a href={PRIVACY_POLICY}>{t('politiqueConfidentialite')}</a></li>
-                            <li className="mt-2 hover:underline"><a href={LEGAL}>{t('mentionLegal')}</a></li>
-                            <li className="mt-2 hover:underline"><a href={TERMS}>{t('cgv')}</a></li>
+                <div className="flex flex-wrap justify-center items-center">
+                    {isConnected && (
+                        <>
+                            <div className="flex flex-col mt-24 w-1/3">
+                                <ul className="text-center md:text-left">
+                                    <li className="font-bold text-2xl">{t('Développeur')}</li>
+                                    <li className="mt-5 hover:underline"><a href={EVENT} id="entrepriseAchat">{t('Evenement')}</a></li>
+                                    <li className="mt-5 hover:underline"><a href={TOURNAMENT} id="entrepriseAchat">{t('Tournois')}</a></li>
+                                    <li className="mt-5 hover:underline"><a href={RANKING} id="entrepriseAchat">{t('Classement')}</a></li>
+                                </ul>
+                            </div>
+                            <div className="flex flex-col mt-5 w-1/3">
+                                <ul className="text-center md:text-left">
+                                    <li className="font-bold text-2xl">{t('Entreprise')}</li>
+                                    <li className="mt-5 hover:underline"><a href={ENTREPRISE} id="entrepriseAchat">{t('entreprise')}</a></li>
+                                </ul>
+                            </div>
+                        </>
+                    )}
+                    <div className="flex flex-col mt-24 w-1/3">
+                        <ul className="text-center md:text-left">
+                            <li className="font-bold text-2xl">{t('Société')}</li>
+                            <li className="mt-5 hover:underline"><a href="#">{t('À propos')}</a></li>
+                            <li className="mt-5 hover:underline"><a href={PRIVACY_POLICY}>{t('politiqueConfidentialite')}</a></li>
+                            <li className="mt-5 hover:underline"><a href={LEGAL}>{t('mentionLegal')}</a></li>
+                            <li className="mt-5 hover:underline"><a href={TERMS}>{t('cgv')}</a></li>
                         </ul>
                     </div>
-                    <div className="flex-col mt-5">
-                        <p className="font-bold text-2xl">{t('retrouverNous')}</p>
-                        <div className="flex mt-10 justify-around">
+                    <div className="flex flex-col mt-5 items-center md:items-start">
+                        <p className="font-bold text-2xl text-center md:text-left">{t('retrouverNous')}</p>
+                        <div className="flex mt-5 justify-around w-full">
                             <button
                                 onClick={() => { window.location.href = 'https://facebook.com'; }}
                                 className="group flex justify-center p-2 rounded-md drop-shadow-xl from-gray-800 bg-[#316FF6] text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:from-[#331029] hover:to-[#310413]"
@@ -105,16 +117,19 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                                 </span>
                             </button>
                         </div>
+                        <li className="mt-5 flex justify-center md:justify-start"><img src={iconeMail} alt="icone de mail" className="mr-5" />{MAIL}</li>
                     </div>
-                    <div className="flex-col mt-24 md:mt-10 text-center">
+
+                    <div className="flex flex-col mt-10 items-center md:items-start text-center md:text-left">
                         <NavFlagsComponent />
                     </div>
                 </div>
-                <div className="mx-auto border-t-2 border-white w-2/3"></div>
-                <div className="mt-16 text-center">
+                <div className="mx-auto border-t-2 border-white w-2/3 mt-8"></div>
+                <div className="mt-8 text-center">
                     <p>Copyright © {new Date().getFullYear()} CodeArena</p>
                 </div>
             </footer>
+
         </FadeIn>
     );
 };

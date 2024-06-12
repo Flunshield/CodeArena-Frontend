@@ -44,52 +44,82 @@ const Header = () => {
 
 
     return (
-        <header className="z-10">
-            <div className="flex start-0 top-0 absolute w-full">
-                {isConnected && <NavBar />}
-                <div className="flex justify-between w-full">
-                    <a className="text-tertiari text-2xl m-3 font-bold" href={isConnected ? DASHBOARD : HOME}>
-                        {t('CodeArena')}
-                    </a>
-                    {!isConnected && (
-                        <div className="flex items-baseline">
-                            <div className="block sm:hidden relative">
-                                <img 
-                                    id="login icons"
-                                    src={loginIcons}
-                                    alt="logo du site web"
-                                    onMouseEnter={() => setShowIconsPopUp(true)}
-                                    onMouseLeave={() => setShowIconsPopUp(false)} />
-                                {showIconsPopUp && (
-                                    <div ref={popupRef}
-                                        className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow">
-                                        <Button type="button" id="signIn" className="border-1 text-tertiari text-1xl m-4 " onClick={handleClickSingIn}>
-                                            {t('connection')}
-                                        </Button>
-                                        <Button type="button" id="signUp" className="border-1 text-tertiari text-1xl m-3 border-2 border-tertiari rounded-md p-1" onClick={handleClickSingUp}>
-                                            {t('inscription')}
-                                        </Button>
-                                    </div>
-                                )}
-                            </div>
-                            <div className="hidden sm:flex">
-                                <Button type="button" id="signIn" className="border-1 text-tertiari text-1xl m-4" onClick={handleClickSingIn}>
-                                    {t('connection')}
-                                </Button>
-                                <Button type="button" id="signUp" className="border-1 text-tertiari text-1xl m-3 border-2 border-tertiari rounded-md p-1" onClick={handleClickSingUp}>
-                                    {t('inscription')}
-                                </Button>
-                            </div>
-                        </div>
-                    )}
-                    {isConnected && (
-                        <div className="flex items-baseline sticky mt-1">
-                            <BouttonProfile />
-                        </div>
-                    )}
-                </div>
+        <header className="z-50 text-secondary p-8 bg-secondary relative">
+    <div className="flex start-0 top-0 absolute w-full">
+        {isConnected && <NavBar />}
+        <div className="flex justify-between w-full items-center">
+            <div className="flex items-center">
+                <img src="/logo.svg" alt="Logo codeArena" className="w-16 h-16 mr-3" />
+                <a className="text-tertiari text-2xl m-3 font-bold" href={isConnected ? DASHBOARD : HOME}>
+                    {t('CodeArena')}
+                </a>
             </div>
-        </header>
+            {!isConnected && (
+                <div className="flex items-center">
+                    <div className="block sm:hidden relative">
+                        <img
+                            id="login icons"
+                            src={loginIcons}
+                            alt="logo du site web"
+                            onMouseEnter={() => setShowIconsPopUp(true)}
+                            onMouseLeave={() => setShowIconsPopUp(false)}
+                        />
+                        {showIconsPopUp && (
+                            <div ref={popupRef} className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 rounded shadow">
+                                <div className="flex justify-center"> {/* Wrap the buttons with this div */}
+                                    <Button
+                                        type="button"
+                                        id="signIn"
+                                        className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                        onClick={handleClickSingIn}
+                                    >
+                                        {t('connection')}
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        id="signUp"
+                                        className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary ml-2 transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                        onClick={handleClickSingUp}
+                                    >
+                                        {t('inscription')}
+                                    </Button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    <div className="hidden sm:flex ml-2">
+                        <Button
+                            type="button"
+                            id="signIn"
+                            className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                            onClick={handleClickSingIn}
+                        >
+                            {t('connection')}
+                        </Button>
+                        <Button
+                            type="button"
+                            id="signUp"
+                            className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary ml-2 transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                            onClick={handleClickSingUp}
+                        >
+                            {t('inscription')}
+                        </Button>
+                    </div>
+                </div>
+            )}
+            {isConnected && (
+                <div className="flex items-baseline sticky">
+                    <BouttonProfile />
+                </div>
+            )}
+        </div>
+    </div>
+</header>
+
+    
+
+
+
     );
 };
 
