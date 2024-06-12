@@ -178,6 +178,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                     </div>
                 </div>
             </footer>
+
         </FadeIn>
     );
 };

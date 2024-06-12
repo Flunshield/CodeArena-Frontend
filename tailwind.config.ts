@@ -4,6 +4,7 @@ export default {
         "./src/**/*.{js,jsx,ts,tsx}",
     ],
     theme: {
+
         screens: {
             xs: '384px',
             sm: '640px',
