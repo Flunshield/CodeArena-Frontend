@@ -97,18 +97,17 @@ const useMatchmaking = () => {
             console.error("ID utilisateur est indéfini");
             return;
         }
-
         setLoading(true);
         const response = await postElementByEndpoint('matchmaking/leaveRoom', {
             token: authContext.accessToken ?? '',
             data: { id }
         });
-
         const responseData = await response.json();
         if (responseData.success) {
             console.log("Quitter la salle de match");
             setMatchFound(false);
             setRoomId(null);
+            setInQueue(false);
         } else {
             alert(responseData.message || "Erreur lors de la sortie de la salle de match");
         }
