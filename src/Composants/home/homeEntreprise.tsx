@@ -1,3 +1,4 @@
+
 import PricingSection from "./homeEntreprise/PricingSection.tsx";
 import CardExplainSection from "./homeEntreprise/cardExplainSection.tsx";
 import TrustSection from "./homeEntreprise/trustSection.tsx";
