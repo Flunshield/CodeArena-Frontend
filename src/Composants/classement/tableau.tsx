@@ -5,12 +5,19 @@ import { User } from "../../Interface/Interface.ts";
 import { getElementByEndpoint } from "../../Helpers/apiHelper.ts";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
 import DataTable from "../../ComposantsCommun/DataTable.tsx";
+import Pagination from "../../ComposantsCommun/Pagination.tsx";
+import { JwtPayload } from "jwt-decode";
+import { GROUPS } from "../../constantes/constantes.ts";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();
     const token = authContext?.accessToken ?? '';
+    const infosUser = authContext?.infosUser as JwtPayload;
+    const infos = infosUser.aud as unknown as DataToken;
     const { t } = useTranslation();
-    const [users, setUsers] = useState<User[]>([]);
+    const isEntreprise = infos.data.groups.roles === GROUPS.ENTREPRISE;
+    type UsersType = typeof infos.data.groups.roles extends typeof GROUPS.ENTREPRISE ? listUserEntreprise : listUser;
+    const [users, setUsers] = useState<UsersType>({ item: [], total: 0 });
     const [submitCount, setSubmitCount] = useState(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const getUsers = getElementByEndpoint(`user/getUsers?page=${currentPage}`, {
@@ -25,30 +32,19 @@ function Tableau(): JSX.Element {
         setUsers(await result.json());
     }
 
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-        setSubmitCount(count => count + 1);
-    };
-
-    const prevPage = () => {
-        setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
-        setSubmitCount(count => count + 1);
-    };
-
-    useEffect(() => {
-        getUsers.then(async (response) => {
-            const result = await response.json();
-            setUsers(result);
-        });
-    }, [submitCount]);
-
-    const headers = [
-        { key: 'firstName', label: 'First Name' },
-        { key: 'lastName', label: 'Last Name' },
-        { key: 'userName', label: 'User Name' },
-        { key: 'userRankingTitle', label: 'Actual Rank' },
-        { key: 'userRankingPoints', label: 'Point Number' },
-        { key: 'nbGames', label: 'Number of Games' },
+    const headers = infos.data.groups.roles === GROUPS.ENTREPRISE ? [
+        { key: 'firstName', label: 'firstName' },
+        { key: 'lastName', label: 'lastName' },
+        { key: 'email', label: 'email' },
+        { key: 'userName', label: 'userName' },
+        { key: 'userRankingTitle', label: 'userRanking' },
+        { key: 'userRankingPoints', label: 'points' },
+        { key: 'nbGames', label: 'nbGames' },
+    ] : [
+        { key: 'userName', label: 'userName' },
+        { key: 'userRankingTitle', label: 'userRanking' },
+        { key: 'userRankingPoints', label: 'points' },
+        { key: 'nbGames', label: 'nbGames' },
     ];
 
     // Transform user data to fit the table headers
@@ -61,6 +57,14 @@ function Tableau(): JSX.Element {
         userRankingPoints: user?.userRanking?.map(elem => elem.points).join(', ') ?? "",
         nbGames: user.nbGames as string ?? "0",
     }));
+    const maxPage = Math.ceil(users.total / itemPerPage);
+
+    useEffect(() => {
+        getUsers().then(async (response) => {
+            const result = await response.json();
+            setUsers(result);
+        });
+    }, [submitCount, itemPerPage, currentPage]);
 
     return (
         <div className="m-5">
@@ -95,6 +99,15 @@ function Tableau(): JSX.Element {
                 )}
 
             </div>
+            <Pagination
+                item={users.item}
+                maxPage={maxPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                setSubmitCount={setSubmitCount}
+                classNameCurrentPage="text-primary"
+                itemPerPage={itemPerPage}
+            />
         </div>
     );
 }

@@ -13,7 +13,7 @@ import TableauEvent from "../Composants/dashboard/TableauEvent.tsx";
 import UserRank from "../Composants/dashboard/UserRank.tsx";
 import TableauTournament from "../Composants/tournament/TableauTournament.tsx";
 import { FadeIn } from "../ComposantsCommun/FadeIn.tsx";
-import { useTranslation } from "react-i18next";
+
 
 
 function Dashboard() {
@@ -23,7 +23,6 @@ function Dashboard() {
     const [infosEvents, setInfosEvents] = useState<Event[]>([]);
     const infosUser = authContext?.infosUser as JwtPayload;
     const userId = infosUser?.sub as unknown as number;
-    const { t } = useTranslation();
     const data = { id: userId, token: authContext.accessToken ?? "" };
     const responsePromise = getElementByEndpoint('dashboard/checkDashboard?id=' + data.id, { token: data.token, data: "" });
 

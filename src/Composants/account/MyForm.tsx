@@ -1,4 +1,4 @@
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import company from "/assets/iconeProfile/company.png";
 import github from "/assets/iconeProfile/github.png";
@@ -22,10 +22,7 @@ const MyForm: React.FC<MyFormProps> = ({onClose, infosUserById}) => {
     const authContext = useAuthContext();
 
     useEffect(() => {
-        // Désactive le défilement lorsque le formulaire est ouvert
         document.body.style.overflow = 'hidden';
-
-        // Réactive le défilement lorsque le formulaire est fermé
         return () => {
             document.body.style.overflow = 'visible';
         };
@@ -64,10 +61,10 @@ const MyForm: React.FC<MyFormProps> = ({onClose, infosUserById}) => {
         });
 
         if (response.ok) {
-            onClose(); // Fermer le popup après la soumission réussie
+            onClose();
             window.location.reload();
         } else {
-            alert("Erreur lors de la mise à jour du profil");
+            alert('Erreur lors de la mise à jour du profil');
         }
     };
 
