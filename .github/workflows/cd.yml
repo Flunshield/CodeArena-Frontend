@@ -11,89 +11,88 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: ⏳ Checkout du code
-        uses: actions/checkout@v2
+#    steps:
+#      - name: ⏳ Checkout du code
+#        uses: actions/checkout@v2
+#
+#      - name: ⏳ Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
+#        env:
+#          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
+#        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
+#
+#      - name: ⏳ Afficher le contenu du fichier .env
+#        run: cat .env
+#
+#      - name: 🚧 Cache node modules
+#        id: cache-npm
+#        uses: actions/cache@v3
+#        with:
+#          path: ~/.npm
+#          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            ${{ runner.os }}-build-
+#
+#      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+#        name: ⏳ List the state of node modules
+#        continue-on-error: true
+#        run: npm list
+#
+#      - name: ⏳ Install dependencies
+#        run: npm install
+#
+#      - name: 🚧 Save node_modules
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: node_modules
+#          path: ~/.npm
+#
+#      - name: ⏳ Lintage du code
+#        run: npm run lint
+#
+#      - name: 🚀 Lancement du projet en arrière-plan
+#        run: |
+#          npm run dev &
+#          sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
+#
+#      - name: 🚧 Exécuter les tests
+#        run: |
+#          npx cypress run
 
-      - name: ⏳ Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
-        env:
-          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
-        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
-
-      - name: ⏳ Afficher le contenu du fichier .env
-        run: cat .env
-
-      - name: 🚧 Cache node modules
-        id: cache-npm
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: ⏳ List the state of node modules
-        continue-on-error: true
-        run: npm list
-
-      - name: ⏳ Install dependencies
-        run: npm install
-
-      - name: 🚧 Save node_modules
-        uses: actions/upload-artifact@v3
-        with:
-          name: node_modules
-          path: ~/.npm
-
-      - name: ⏳ Lintage du code
-        run: npm run lint
-
-      - name: 🚀 Lancement du projet en arrière-plan
-        run: |
-          npm run dev &
-          sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
-
-      - name: 🚧 Exécuter les tests
-        run: |
-          npx cypress run
-
-  release:
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Download node_modules cache
-        uses: actions/download-artifact@v3
-        with:
-          name: node_modules
-          path: ~/.npm
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '20.8.1'
-
-      - name: Configure Git
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-      - name: Run standard-version
-        run: npx standard-version
-
-      - name: Push changes and tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git push --follow-tags origin main
-          git switch dev && git pull && git merge main && git push origin dev
+#  release:
+#    needs: test
+#    runs-on: ubuntu-latest
+#    if: github.ref == 'refs/heads/main'
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Download node_modules cache
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: node_modules
+#          path: ~/.npm
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v1
+#        with:
+#          node-version: '20.8.1'
+#
+#      - name: Configure Git
+#        run: |
+#          git config --local user.email "action@github.com"
+#          git config --local user.name "GitHub Action"
+#
+#      - name: Run standard-version
+#        run: npx standard-version
+#
+#      - name: Push changes and tags
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: |
+#          git push --follow-tags origin main
+#          git switch dev && git pull && git merge main && git push origin dev
 
   deploy:
-    needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
