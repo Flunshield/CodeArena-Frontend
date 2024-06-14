@@ -8,8 +8,8 @@ on:
       - '*'
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+#  test:
+#    runs-on: ubuntu-latest
 
 #    steps:
 #      - name: ⏳ Checkout du code
