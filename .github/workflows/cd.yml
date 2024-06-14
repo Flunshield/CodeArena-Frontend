@@ -93,7 +93,7 @@ jobs:
           git switch dev && git pull && git merge main && git push origin dev
 
   deploy:
-    needs: release
+    needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
