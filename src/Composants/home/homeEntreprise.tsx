@@ -11,12 +11,6 @@ const HomeEntreprise = () => {
                 <PricingSection/>
                 <TrustSection/>
             </div>
-            <img
-                className="bg-primary hidden xl:block absolute right-0 -z-10"
-                src="/assets/tree.svg"
-                alt="arbre design"
-                id="arbre"
-            />
         </div>
     )
 }
