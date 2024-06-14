@@ -6,26 +6,31 @@ import { getElementByEndpoint } from "../../Helpers/apiHelper.ts";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
 import DataTable from "../../ComposantsCommun/DataTable.tsx";
 import Pagination from "../../ComposantsCommun/Pagination.tsx";
-import { JwtPayload } from "jwt-decode";
-import { GROUPS } from "../../constantes/constantes.ts";
+import {JwtPayload} from "jwt-decode";
+import {GROUPS} from "../../constantes/constantes.ts";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();
     const token = authContext?.accessToken ?? '';
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const isEntreprise = infos.data.groups.roles === GROUPS.ENTREPRISE;
     type UsersType = typeof infos.data.groups.roles extends typeof GROUPS.ENTREPRISE ? listUserEntreprise : listUser;
-    const [users, setUsers] = useState<UsersType>({ item: [], total: 0 });
+    const [users, setUsers] = useState<UsersType>({item: [], total: 0});
     const [submitCount, setSubmitCount] = useState(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const getUsers = getElementByEndpoint(`user/getUsers?page=${currentPage}`, {
-        token,
-        data: '',
-    });
+    const [itemPerPage, setItemPerPage] = useState(10);
+
+    async function getUsers() {
+        return await getElementByEndpoint(`user/getUsers?page=${currentPage}&itemPerPage=${itemPerPage}&isEntreprise=${isEntreprise}`, {
+            token,
+            data: '',
+        });
+    }
+
     async function onSearch(username: string) {
-        const result = await getElementByEndpoint(`user/getUsersByUsername?page=${currentPage}&username=${username}`, {
+        const result = await getElementByEndpoint(`user/getUsersByUsername?username=${username}&itemPerPage=${itemPerPage}&isEntreprise=${isEntreprise}`, {
             token,
             data: '',
         });
@@ -33,19 +38,19 @@ function Tableau(): JSX.Element {
     }
 
     const headers = infos.data.groups.roles === GROUPS.ENTREPRISE ? [
-        { key: 'firstName', label: 'firstName' },
-        { key: 'lastName', label: 'lastName' },
-        { key: 'email', label: 'email' },
-        { key: 'userName', label: 'userName' },
-        { key: 'userRankingTitle', label: 'userRanking' },
-        { key: 'userRankingPoints', label: 'points' },
-        { key: 'nbGames', label: 'nbGames' },
+        {key: 'firstName', label: 'firstName'},
+        {key: 'lastName', label: 'lastName'},
+        {key: 'email', label: 'email'},
+        {key: 'userName', label: 'userName'},
+        {key: 'userRankingTitle', label: 'userRanking'},
+        {key: 'userRankingPoints', label: 'points'},
+        {key: 'nbGames', label: 'nbGames'},
     ] : [
-        { key: 'userName', label: 'userName' },
-        { key: 'userRankingTitle', label: 'userRanking' },
-        { key: 'userRankingPoints', label: 'points' },
-        { key: 'nbGames', label: 'nbGames' },
-    ];
+        {key: 'userName', label: 'userName'},
+        {key: 'userRankingTitle', label: 'userRanking'},
+        {key: 'userRankingPoints', label: 'points'},
+        {key: 'nbGames', label: 'nbGames'},
+    ]
 
     // Transform user data to fit the table headers
     const transformedData = users.map(user => ({
@@ -61,11 +66,11 @@ function Tableau(): JSX.Element {
 
     useEffect(() => {
         getUsers().then(async (response) => {
-            const result = await response.json();
-            setUsers(result);
-        });
+                const result = await response.json();
+                setUsers(result);
+            }
+        );
     }, [submitCount, itemPerPage, currentPage]);
-
     return (
         <div className="m-5">
             <div className="flex flex-col md:flex-row items-center justify-between mb-6">
@@ -99,17 +104,8 @@ function Tableau(): JSX.Element {
                 )}
 
             </div>
-            <Pagination
-                item={users.item}
-                maxPage={maxPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                setSubmitCount={setSubmitCount}
-                classNameCurrentPage="text-primary"
-                itemPerPage={itemPerPage}
-            />
         </div>
-    );
+    )
 }
 
 export default Tableau;

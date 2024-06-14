@@ -45,9 +45,9 @@ const Header = () => {
 
     return (
         <header className="z-50 text-secondary px-4 md:px-8 bg-secondary relative">
-            <div className="flex justify-between  items-start w-full">
-                {isConnected && <div className="flex start-0 top-0 absolute py-2 w-full "><NavBar /></div>}
-                <div className="flex justify-between px-10 py-3 w-full items-center md:space-x-1">
+            <div className="flex justify-between items-start w-full">
+                {isConnected && <div className="flex start-0 top-0 absolute py-2 w-full"><NavBar /></div>}
+                <div className="flex justify-between px-0 py-0 w-full items-center md:space-x-1">
                     <div className="flex items-center">
                         <img src="/logo.svg" alt="Logo codeArena" className="w-16 h-16 mr-3" />
                         <a className="text-tertiari text-3xl m-3 font-bold" href={isConnected ? DASHBOARD : HOME}>

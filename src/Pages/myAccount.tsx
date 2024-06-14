@@ -56,7 +56,8 @@ function MyAccount() {
                 const result = await response.json();
                 result.commandeEntrepriseFormatted = {
                     commande: result?.commandeEntreprise[0],
-                    pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0].item)};
+                    pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0].item)
+                };
                 setInfosUserById(result);
             } else {
                 setNotificationMessage(t('errorUserInfos'));
@@ -105,7 +106,6 @@ function MyAccount() {
                         <MyForm onClose={closePopup} infosUserById={infosUserById} />
                     </div>
                 </div>
-
             )}
         </Layout>
     );

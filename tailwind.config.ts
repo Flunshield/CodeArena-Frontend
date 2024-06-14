@@ -18,7 +18,7 @@ export default {
                 'glow': '0 0 10px rgba(255, 255, 255, 0.6)'
             },
             colors: {
-                primary: '#5bbce4',
+                primary: '',
                 secondary: '#161B22',
                 tertiari: '#E3E8EF',
                 quaternary: '#0F1319',
