@@ -142,7 +142,7 @@ function SignUpForm() {
                                         <ErrorMessage name="lastName" component="div" className="text-error" />
                                     </div>
                                     <div>
-                                        <Label id="username" htmlFor="userName" className="font-bold">{t('userName')}</Label>
+                                        <Label id="userName" htmlFor="userName" className="font-bold">{t('userName')}</Label>
                                         <Field type="text" id="userName" name="userName" placeholder={t('userName')} className={clsx("h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-secondary")} />
                                         <ErrorMessage name="userName" component="div" className="text-error" />
                                     </div>
