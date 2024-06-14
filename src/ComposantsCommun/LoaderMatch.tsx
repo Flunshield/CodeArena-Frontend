@@ -1,8 +1,12 @@
 import '../css/Loader.css'; // Assurez-vous que le fichier CSS est correctement importé
 
-const useLoader = () => {
+interface LoaderProps {
+    msg: string;
+    className?: string;
+}
+const LoaderMatch = ({ msg, className }: LoaderProps) => {
     return (
-        <div>
+        <div className={className}>
             <div className="loadingspinner">
                 <div id="square1"></div>
                 <div id="square2"></div>
@@ -10,9 +14,9 @@ const useLoader = () => {
                 <div id="square4"></div>
                 <div id="square5"></div>
             </div>
-            <span className='text-white flex justify-center font-bold text-xl'>Recherche d&apos;un match en cours </span>
+            <span className='text-white flex justify-center font-bold text-xl'>{msg}</span>
         </div>
     );
 }
 
-export default useLoader;
+export default LoaderMatch;

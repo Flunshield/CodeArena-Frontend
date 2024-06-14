@@ -24,6 +24,8 @@ export interface User {
     presentation?: string;
     nbGames?: string;
     userRanking?: UserRanking[];
+    siren?: string;
+    commandeEntrepriseFormatted?: CommandeEntrepriseFormatted;
 }
 
 export interface DataToken {
@@ -56,6 +58,7 @@ export interface DataToken {
         groups: Groups;
         commandeEntreprise?: CommandeEntreprise[];
         puzzlesEntreprise: PuzzlesEntreprise[];
+        siren?: string;
     }
 }
 
@@ -214,10 +217,17 @@ export interface CommandeEntreprise {
     item: string;
     userID: number;
     user: User;
-    dateCommande: Date;
+    dateCommande: Date | string;
     etatCommande: string;
     nbCreateTest: number;
+    colorEtatCommande?: string;
 }
+
+export interface CommandeEntrepriseFormatted {
+    commande: CommandeEntreprise;
+    pricing: Pricing;
+}
+
 
 export interface PuzzleSend {
     id: number;
@@ -234,4 +244,46 @@ export interface PuzzleSend {
     result?: JSON;  // Devrait être adapté au format JSON attendu
     testValidated?: number;
     time?: string;
+}
+
+export interface ArrayItem {
+    item: CommandeEntreprise[];
+    total: number;
+}
+
+export interface listPuzzleEntreprise {
+    item: PuzzlesEntreprise[];
+    total: number;
+}
+
+export interface listUser {
+    item: UserClassement[];
+    total: number;
+}
+
+export interface listUserEntreprise {
+    item: UserClassementEntreprise[];
+    total: number;
+}
+
+export interface UserClassement {
+    userName: string;
+    userRanking: UserRanking[];
+    points: string;
+    nbGames: string;
+}
+
+export interface UserClassementEntreprise {
+    firstName: string;
+    lastName: string;
+    userName: string;
+    email: string;
+    userRanking: UserRanking[];
+    points: string;
+    nbGames: string;
+}
+
+export interface listPuzzleSend {
+    item: PuzzleSend[];
+    total: number;
 }

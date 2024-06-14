@@ -10,7 +10,7 @@ import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import {formatDate} from "../../Helpers/formatHelper.ts";
 import Button from "../../ComposantsCommun/Button.tsx";
 import Notification from "../../ComposantsCommun/Notification.tsx";
-import {GROUPS} from "../../constantes.ts";
+import {GROUPS} from "../../constantes/constantes.ts";
 
 function tournamentInfos() {
     const authContext = useAuthContext();

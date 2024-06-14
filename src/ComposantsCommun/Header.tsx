@@ -5,7 +5,7 @@ import Button from "./Button.tsx";
 import { useTranslation } from "react-i18next";
 import NavBar from "./NavBar.tsx";
 import BouttonProfile from "../Composants/BouttonProfile.tsx";
-import { DASHBOARD, HOME } from "../constantes/constantes.ts";
+import { DASHBOARD, HOME } from "../constantes/constantesRoutes.ts";
 import loginIcons from "/assets/icons/iconsLogin.svg";
 
 const Header = () => {
@@ -44,7 +44,7 @@ const Header = () => {
 
 
     return (
-        <header className="z-50">
+        <header className="z-10">
             <div className="flex start-0 top-0 absolute w-full">
                 {isConnected && <NavBar />}
                 <div className="flex justify-between w-full">
@@ -83,7 +83,7 @@ const Header = () => {
                         </div>
                     )}
                     {isConnected && (
-                        <div className="flex items-baseline sticky">
+                        <div className="flex items-baseline sticky mt-1">
                             <BouttonProfile />
                         </div>
                     )}

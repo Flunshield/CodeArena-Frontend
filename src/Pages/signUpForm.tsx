@@ -130,7 +130,7 @@ function SignUpForm () {
                                     <div className="mt-5">
                                         <Button type="submit" id={"createAccount"}
                                                 className="bg-secondary w-full h-12 rounded-md uppercase">
-                                            {t('createAccount')}
+                                            {t('register')}
                                         </Button>
                                     </div>
                                 </Form>

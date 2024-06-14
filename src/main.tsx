@@ -47,7 +47,7 @@ import {
     SUCCESS,
     TERMS,
     TOURNAMENT
-} from "./constantes/constantes.ts";
+} from "./constantes/constantesRoutes.ts";
 import Entreprise from "./Pages/Entreprise/entreprise.tsx";
 import Success from "./Pages/Entreprise/success.tsx";
 import Cancel from "./Pages/Entreprise/cancel.tsx";

@@ -15,8 +15,8 @@ const Layout = ({children, classnameMain, classnameFooter}: LayoutProps) => {
     return (
         <div className="flex flex-col min-h-screen w-auto">
             <Header/>
-            <div id="mainFooter" className="z-10">
-                <main className={clsx(classnameMain, "flex-grow pt-32 mb-20")} id="main">
+            <div id="mainFooter" className="">
+                <main className={clsx(classnameMain, "flex-grow min-h-screen mt-32 mb-32")} id="main">
                     {children}
                 </main>
                 <CookieConsentBanner />

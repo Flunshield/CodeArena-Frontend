@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '/assets/logo.svg';
 import iconeMail from '/assets/iconeMail.png';
 import { useTranslation } from "react-i18next";
-import { ENTREPRISE, LEGAL, MAIL, PRIVACY_POLICY, TERMS } from "../constantes/constantes.ts";
+import { ENTREPRISE, LEGAL, MAIL, PRIVACY_POLICY, TERMS } from "../constantes/constantesRoutes.ts";
 import { NavFlags } from "../Interface/Interface.ts";
 import { useAuthContext } from "../AuthContext.tsx";
 import drapFr from "/assets/drapeaux/fr.svg";

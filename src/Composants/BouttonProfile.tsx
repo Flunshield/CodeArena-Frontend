@@ -5,7 +5,7 @@ import { useAuthContext } from "../AuthContext.tsx";
 import { useTranslation } from "react-i18next";
 import { JwtPayload } from "jwt-decode";
 import { DataToken } from "../Interface/Interface.ts";
-import { ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT } from "../constantes/constantes.ts";
+import { ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT } from "../constantes/constantesRoutes.ts";
 import loginIcons from "/assets/icons/iconsLogin.svg";
 import { checkUrl } from "../Helpers/methodeHelper.ts";
 import clsx from "clsx";

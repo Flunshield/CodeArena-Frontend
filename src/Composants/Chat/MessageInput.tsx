@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 
-const MessageInput = ({ send }: { send: (value: string) => void }) => {
+interface MessageInputProps {
+    send: (value: string) => void;
+    setTyping: (isTyping: boolean) => void;
+}
+
+const MessageInput = ({ send, setTyping }: MessageInputProps) => {
     const [value, setValue] = useState<string>('');
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && value.trim() !== '') {
             send(value);
             setValue('');
+            setTyping(false);
         }
     };
 
@@ -14,23 +20,28 @@ const MessageInput = ({ send }: { send: (value: string) => void }) => {
         if (value.trim() !== '') {
             send(value);
             setValue('');
+            setTyping(false);
         }
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value);
+        setTyping(e.target.value.trim() !== '');
+    };
+
     return (
-        <div className="flex gap-1">
+        <div className="flex items-center gap-2">
             <input
-                onChange={(e) => setValue(e.target.value)}
+                onChange={handleChange}
                 onKeyDown={handleKeyDown}
-                placeholder="Tape ton msg"
+                placeholder="Tape ton message"
                 value={value}
-                className="border border-gray-300 rounded-lg py-2 px-4 w-full max-w-lg mr-4"
+                className="border border-gray-300 rounded-lg py-2 px-4 w-full"
             />
             <button
-                className="flex items-center bg-blue-500 text-white gap-1 px-4 py-2 cursor-pointer font-semibold tracking-widest rounded-md hover:bg-blue-400 duration-300 hover:gap-2 hover:translate-x-3"
+                className="inline-flex justify-center text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600 items-center"
                 onClick={handleSend}
             >
-                envoie
                 <svg
                     className="w-5 h-5"
                     stroke="currentColor"

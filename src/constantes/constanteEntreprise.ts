@@ -22,7 +22,7 @@ export const CARD_EXPLANATION = [
 
 export const PRICING = [
     {
-        title: "Premium",
+        title: "Pack premium",
         nbCreateTest: "100",
         description: "premiumDescription",
         features: [
@@ -38,7 +38,7 @@ export const PRICING = [
         typePayment: "subscription"
     },
     {
-        title: "Entreprise",
+        title: "Pack entreprise",
         nbCreateTest: "99999",
         description: "entrepriseDescription",
         features: [
@@ -109,3 +109,11 @@ export const DONNEES_TESTS = [
         "failureMessage": "Test 3 échoué"
     }
 ]
+
+export const HEADER_FACTURE = [
+    { key: 'item', label: 'item' },
+    { key: 'dateCommande', label: 'dateCommande' },
+    { key: 'idPayment', label: 'idPayment' },
+    { key: 'etatCommande', label: 'etatCommande' },
+];
+

@@ -1,17 +1,3 @@
-export const MAIL = "contact@codearena.fr"
-export const NO_PHOTO = "/assets/icons/iconsLogin.svg"
-
-export const imagePaths: string[] = [
-    'badge2.png',
-    'badge3.png',
-    'badge4.png',
-    'badge5.png',
-    'badge6.png',
-    'badge7.png',
-    'badge8.png',
-    'badge9.png',
-    "noImage.png"
-];
 
 export const badgesPath: string[] = [
     'badge1.png',
@@ -31,32 +17,51 @@ export const GROUPS = {
     ENTREPRISE: "Entreprise",
 }
 
-// Routage interne
+export const ALL_THEME = [
+    "ambiance",
+    "chaos",
+    "chrome",
+    "clouds",
+    "clouds_midnight",
+    "cobalt",
+    "crimson_editor",
+    "dawn",
+    "dracula",
+    "dreamweaver",
+    "eclipse",
+    "github",
+    "gob",
+    "gruvbox",
+    "idle_fingers",
+    "iplastic",
+    "katzenmilch",
+    "kr_theme",
+    "kuroir",
+    "merbivore",
+    "merbivore_soft",
+    "mono_industrial",
+    "monokai",
+    "nord_dark",
+    "pastel_on_dark",
+    "solarized_dark",
+    "solarized_light",
+    "sqlserver",
+    "terminal",
+    "textmate",
+    "tomorrow",
+    "tomorrow_night",
+    "tomorrow_night_blue",
+    "tomorrow_night_bright",
+    "tomorrow_night_eighties",
+    "twilight",
+    "vibrant_ink",
+    "xcode"];
 
-export const COMPTE = "/myAccount"
-export const RANKED = "/ranked"
-export const RANKING = "/ranking"
-export const TOURNAMENT = "/tournament"
-export const EVENT = "/event"
-export const ADMIN = "/admin"
-export const DASHBOARD_ENTREPRISE = "/dashboardEntreprise"
-export const LOGOUT = "/logout"
-export const DASHBOARD = "/dashboard"
-export const LOGIN = "/login"
-export const REGISTER = "/signUp"
-export const HOME = "/"
-export const FORGOT_PASSWORD = "/forgotPassword"
-export const RESET_PASSWORD = "/changePassword"
-export const ENTREPRISE = "/entreprise"
-export const SUCCESS = "/success"
-export const CANCEL = "/cancel"
-export const COOKIE_POLICY = "/politique-de-cookies"
-export const PRIVACY_POLICY = "/politique-de-confidentialite"
-export const TERMS = "/cgv"
-export const LEGAL = "/mention-legale"
-export const LOAD_GAME = "/loadGame"
-export const GAME = "/game"
-export const GAME_ENTREPRISE = "/gameEntreprise"
-export const ERROR_PAGE = "/errorPage"
-export const RESULT_PAGE = "/resultPage"
-export const TEST_JS = "tests/js"
+
+export const DIX_MIN = 600;
+
+export const INFINITE_PUZZLE = 999999;
+
+export const DIX = 10;
+export const VINGT_CINQ = 25;
+export const CINQUANTE = 50;

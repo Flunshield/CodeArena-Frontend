@@ -6,7 +6,7 @@ import clsx from "clsx";
 import {useAuthContext} from "../AuthContext.tsx";
 import {checkNbTestCreated} from "../Helpers/methodeHelper.ts";
 import {useEffect, useState} from "react";
-import {GROUPS} from "../constantes/constantes.ts";
+import {GROUPS} from "../constantes/constantesRoutes.ts";
 import {DONNEES_TESTS} from "../constantes/constanteEntreprise.ts";
 import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";
@@ -73,7 +73,7 @@ const PuzzleForm = ({
 
     useEffect(() => {
         if (infos?.data.groups.roles === GROUPS.ENTREPRISE) {
-            if(nbPuzzleCreated && lastCommande) {
+            if (nbPuzzleCreated && lastCommande) {
                 setCanCreateTest(checkNbTestCreated(nbPuzzleCreated, lastCommande));
             }
         }
@@ -144,7 +144,7 @@ const PuzzleForm = ({
                         <div className="flex justify-center">
                             <button type="submit" disabled={isSubmitting || !canCreateTest || sendPuzzle}
                                     className={clsx(canCreateTest ? "bg-petroleum-blue hover:shadow-md hover:shadow-light-blue" : "bg-soft-gray ", "py-2 px-4 mr-5 border border-transparent rounded-md shadow-sm text-sm font-medium text-tertiari")}>
-                                {t("send")}
+                                {t("create")}
                             </button>
                             {closePopup && (
                                 <button type="button" onClick={closePopup}

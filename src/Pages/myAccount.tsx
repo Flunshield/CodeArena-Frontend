@@ -1,13 +1,38 @@
 import Layout from "../ComposantsCommun/Layout.tsx";
-import ProfilePicture from "../Composants/account/profilePicture.tsx";
 import Presentation from "../Composants/account/presentation.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import MyForm from "../Composants/account/MyForm.tsx";
 import InfosUser from "../Composants/account/infosUser.tsx";
-import Badges from "../Composants/account/bagdes.tsx";
+import {useAuthContext} from "../AuthContext.tsx";
+import {JwtPayload} from "jwt-decode";
+import {DataToken, User} from "../Interface/Interface.ts";
+import {GROUPS} from "../constantes/constantes.ts";
+import HistoriqueAchat from "../Composants/account/entreprise/HistoriqueAchat.tsx";
+import {getElementByEndpoint} from "../Helpers/apiHelper.ts";
+import Notification from "../ComposantsCommun/Notification.tsx";
+import InformationGenerale from "../Composants/account/entreprise/InformationGenerale.tsx";
+import {PRICING} from "../constantes/constanteEntreprise.ts";
+import {useTranslation} from "react-i18next";
 
 function MyAccount() {
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [isInformationGeneraleCliked, setIsInformationGeneraleCliked] = useState(false);
+    const [isHistoriqueOrderClicked, setIsHistoriqueOrderClicked] = useState(false);
+    const [submitCount, setSubmitCount] = useState(0);
+    const {t} = useTranslation();
+    const authContext = useAuthContext();
+    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    const infosUser = authContext?.infosUser as JwtPayload
+    const infos = infosUser.aud as unknown as DataToken
+    const isEntreprise = infos.data.groups.roles === GROUPS.ENTREPRISE
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
+    const [infosUserById, setInfosUserById] = useState<User>({} as User);
+    const getUserById = getElementByEndpoint("user/getUser?id=" + infos.data.id, {
+        token: authContext.accessToken ?? "",
+        data: "",
+    })
 
     const openPopup = () => {
         setPopupOpen(true);
@@ -17,18 +42,58 @@ function MyAccount() {
         setPopupOpen(false);
     };
 
+    useEffect(() => {
+        if (isInformationGeneraleCliked) {
+            document.getElementById('informationGenerale')?.scrollIntoView({behavior: "smooth"});
+            setIsInformationGeneraleCliked(false);
+        }
+        if (isHistoriqueOrderClicked) {
+            document.getElementById('historiqueAchat')?.scrollIntoView({behavior: "smooth"});
+            setIsHistoriqueOrderClicked(false);
+        }
+
+        getUserById.then(async (response) => {
+            if (response.status === 200) {
+                const result = await response.json();
+                result.commandeEntrepriseFormatted = {
+                    commande: result?.commandeEntreprise[0],
+                    pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0].item)
+                };
+                setInfosUserById(result);
+            } else {
+                setNotificationMessage(t('errorUserInfos'));
+                setNotificationType('error');
+                setShowNotification(true);
+            }
+        });
+    }, [submitCount]);
 
     return (
         <Layout>
-            <div className="flex flex-col text-center">
-                <div className="flex flex-col ">
-                    <ProfilePicture classname="mr-auto ml-auto"/>
-                    <InfosUser openPopup={openPopup}/>
-                </div>
-                <div className="flex flex-col text-left">
-                    <Presentation/>
-                    <Badges/>
-                </div>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
+            <div className="flex flex-col">
+                <InfosUser openPopup={openPopup} setIsInformationGeneraleCliked={setIsInformationGeneraleCliked}
+                           setIsHistoriqueOrderClicked={setIsHistoriqueOrderClicked}
+                           setIsSubmitted={() => setSubmitCount(count => count + 1)}
+                           infosUserById={infosUserById}/>
+                {isEntreprise ?
+                    <div>
+                        <InformationGenerale infosUserById={infosUserById}
+                                             setIsSubmitted={() => setSubmitCount(count => count + 1)}
+                                             className="mb-24"/>
+                        <HistoriqueAchat/>
+                    </div>
+                    :
+                    <div className=" text-left">
+                        <Presentation/>
+                    </div>
+                }
             </div>
             {isPopupOpen && (
                 <div
