@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { User } from '../../Interface/Interface.ts';
-import { useTranslation } from 'react-i18next';
-import { deleteUser, getElementByEndpoint, resetPointsUser } from '../../Helpers/apiHelper.ts';
+import React, {useEffect, useState} from 'react';
+import {User} from '../../Interface/Interface.ts';
+import {useTranslation} from 'react-i18next';
+import {deleteUser, getElementByEndpoint, resetPointsUser} from '../../Helpers/apiHelper.ts';
 import Button from '../../ComposantsCommun/Button.tsx';
-import { useAuthContext } from '../../AuthContext.tsx';
-import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
+import {useAuthContext} from '../../AuthContext.tsx';
 
 interface ListUsersProps {
     setIsSubmitted: () => void;
     submitCount: number;
 }
 
-const ListUsers: React.FC<ListUsersProps> = ({ setIsSubmitted, submitCount }) => {
+const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
     const authContext = useAuthContext();
     const token = authContext?.accessToken ?? '';
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [users, setUsers] = useState<User[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const getUsers = getElementByEndpoint(`user/getUsers?page=${currentPage}`, {
@@ -23,14 +22,14 @@ const ListUsers: React.FC<ListUsersProps> = ({ setIsSubmitted, submitCount }) =>
     });
 
     const deleteUserFunction = async (user: User) => {
-        const result = await deleteUser('admin/deleteUser', { token, user });
+        const result = await deleteUser('admin/deleteUser', {token, user});
         if (result.status === 200) {
             setIsSubmitted();
         }
     };
 
     const resetPointsFunction = async (user: User) => {
-        const result = await resetPointsUser('admin/resetPoints', { token, user });
+        const result = await resetPointsUser('admin/resetPoints', {token, user});
         if (result.status === 200) {
             setIsSubmitted();
         }
@@ -46,14 +45,6 @@ const ListUsers: React.FC<ListUsersProps> = ({ setIsSubmitted, submitCount }) =>
         setIsSubmitted();
     };
 
-    async function onSearch(username: string) {
-        const result = await getElementByEndpoint(`user/getUsersByUsername?page=${currentPage}&username=${username}`, {
-            token,
-            data: '',
-        });
-        setUsers(await result.json());
-    }
-
     useEffect(() => {
         getUsers.then(async (response) => {
             const result = await response.json();
@@ -64,13 +55,13 @@ const ListUsers: React.FC<ListUsersProps> = ({ setIsSubmitted, submitCount }) =>
     return (
         <div className="">
             <div className="flex flex-row justify-between">
-            <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des utilisateurs')}</h2>
-            <SearchBar onSearch={onSearch}/>
+                <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des utilisateurs')}</h2>
             </div>
             <div className="flex flex-col justify-center w-full">
                 <div className="overflow-x-auto rounded-lg">
                     <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-secondary uppercase bg-tertiari dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            className="text-xs text-secondary uppercase bg-tertiari dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="py-3 px-6">
                                 {t('firstName')}
