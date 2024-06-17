@@ -7,6 +7,8 @@ import {User} from "../../../Interface/Interface.ts";
 import {useAuthContext} from "../../../AuthContext.tsx";
 import Notification from "../../../ComposantsCommun/Notification.tsx";
 import Button from "../../../ComposantsCommun/Button.tsx";
+import {useNavigate} from "react-router-dom";
+import {LOGOUT} from "../../../constantes/constantesRoutes.ts";
 
 interface informationGeneraleProps {
     infosUserById: User
@@ -22,6 +24,7 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const navigate = useNavigate();
 
     const [errorSiren, setErrorSiren] = useState(false);
     const [errorLocalisation, setErrorLocalisation] = useState(false);
@@ -49,9 +52,8 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
                 setNotificationMessage(t('unsubscribeSuccess'));
                 setNotificationType('info');
                 setShowNotification(true);
-                localStorage.removeItem('authState');
                 setTimeout(() => {
-                    window.location.reload();
+                    navigate(LOGOUT)
                 }, 3000);
             }
             if (repsonse.status === 404) {
