@@ -7,20 +7,20 @@ import map from "/assets/iconeProfile/map-marker.png";
 import school from "/assets/iconeProfile/school.png";
 import iconeTitle from "/assets/iconeProfile/flag.png";
 import {useTranslation} from "react-i18next";
-import {DataToken, Titles, User} from "../../Interface/Interface.ts";
+import {Titles, User} from "../../Interface/Interface.ts";
 import React, {useEffect} from "react";
 import {getElementByEndpoint, updateUser} from "../../Helpers/apiHelper.ts";
-import {JwtPayload} from "jwt-decode";
 import {useAuthContext} from "../../AuthContext.tsx";
 
 interface MyFormProps {
     onClose: () => void;
+    infosUserById: User;
 }
 
-const MyForm: React.FC<MyFormProps> = ({onClose}) => {
+const MyForm: React.FC<MyFormProps> = ({onClose, infosUserById}) => {
     const {t} = useTranslation();
     const authContext = useAuthContext();
-    
+
     useEffect(() => {
         // Désactive le défilement lorsque le formulaire est ouvert
         document.body.style.overflow = 'hidden';
@@ -31,9 +31,6 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
         };
     }, []);
 
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
-    const infosUser: JwtPayload = authContext?.infosUser as JwtPayload
-    const infos: DataToken = infosUser.aud as unknown as DataToken
     const [titles, setTitles] = React.useState<Titles[]>();
     const getTitles = getElementByEndpoint("user/getTitles", {
         token: authContext.accessToken ?? "",
@@ -41,21 +38,21 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
     });
 
     const initialValues: User = {
-        localisation: infos.data.localisation ?? '',
-        company: infos.data.company ?? '',
-        school: infos.data.school ?? '',
-        github: infos.data.github ?? '',
-        url: infos.data.url ?? '',
-        titlesId: infos.data.titlesId as unknown as number ?? '',
-        lastName: infos.data.lastName ?? '',
-        firstName: infos.data.firstName ?? '',
+        localisation: infosUserById.localisation ?? '',
+        company: infosUserById.company ?? '',
+        school: infosUserById.school ?? '',
+        github: infosUserById.github ?? '',
+        url: infosUserById.url ?? '',
+        titlesId: infosUserById.titlesId as unknown as number ?? '',
+        lastName: infosUserById.lastName ?? '',
+        firstName: infosUserById.firstName ?? '',
     };
 
     const onSubmit = async (values: User) => {
         const response = await updateUser("user/updateUser", {
-            id: infos.data.id,
+            id: infosUserById.id,
             token: authContext.accessToken,
-            userName: infos.data.userName,
+            userName: infosUserById.userName,
             localisation: values.localisation,
             company: values.company,
             school: values.school,
@@ -88,13 +85,13 @@ const MyForm: React.FC<MyFormProps> = ({onClose}) => {
         }),
         onSubmit,
     });
-
+    console.log(infosUserById)
     useEffect(() => {
         if (!titles) {
             getTitles.then(async (response) => {
                 const result = await response.json();
                 const titlesUser = result
-                    .filter((title: { id: number; }) => infos?.data?.titlesWin?.includes(String(title.id)))
+                    .filter((title: { id: number; }) => infosUserById?.titlesWin?.includes(String(title.id)))
                     .map((title: { label: string; id: number; }) => ({
                         label: title.label,
                         id: title.id,

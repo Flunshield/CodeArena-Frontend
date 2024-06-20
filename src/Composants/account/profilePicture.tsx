@@ -3,20 +3,19 @@ import {useState} from "react";
 import {updateUser} from "../../Helpers/apiHelper.ts";
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
-import {DataToken} from "../../Interface/Interface.ts";
+import {User} from "../../Interface/Interface.ts";
 import clsx from "clsx";
+import Button from "../../ComposantsCommun/Button.tsx";
+import btnClose from "/assets/btnClose.png";
 
 interface ProfilePictureProps {
     classname?: string;
+    infosUserById?: User;
 }
 
-function ProfilePicture(value: ProfilePictureProps) {
+function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
     const {t} = useTranslation();
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
-    const infosUser = authContext?.infosUser as JwtPayload
-    const infos = infosUser.aud as unknown as DataToken
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isPictureClicked, setIsPictureClicked] = useState("");
 
@@ -25,10 +24,10 @@ function ProfilePicture(value: ProfilePictureProps) {
     };
 
     const closePopup = async () => {
-        if(isPictureClicked !== "") {
+        if (isPictureClicked !== "") {
             const response = await updateUser("user/updateUser", {
-                id: infos.data.id,
-                userName: infos.data.userName,
+                id: infosUserById?.id,
+                userName: infosUserById?.userName,
                 token: authContext.accessToken,
                 avatar: `/assets/photosProfiles/${isPictureClicked}`
             });
@@ -38,10 +37,12 @@ function ProfilePicture(value: ProfilePictureProps) {
             } else {
                 alert("Erreur lors de la mise à jour de l'avatar");
             }
+        } else {
+            setPopupOpen(false);
         }
     };
 
-    const addPicture = (id: string|undefined) => {
+    const addPicture = (id: string | undefined) => {
         const picture = document.getElementById(id ?? "noImage.png");
         setIsPictureClicked(id ?? "noImage.png");
 
@@ -62,23 +63,33 @@ function ProfilePicture(value: ProfilePictureProps) {
     };
 
     return (
-        <div className={clsx(value.classname)}>
+        <div className={clsx(classname)}>
             <img className="rounded-full w-48 h-48 border-2 border-tertiari"
-                 src={isPictureClicked !== "" ? `/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "iconsLogin.svg"}` : infos.data.avatar}
+                 src={isPictureClicked !== "" ? `/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "iconsLogin.svg"}` : infosUserById?.avatar}
                  alt="Avatar"
                  onClick={openPopup}/>
             {isPopupOpen && (
                 <div
-                    className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-90">
-                    <div className="bg-secondary p-8 rounded-md flex flex-col">
-                        <div className="flex flex-wrap w-96">
-                            {imagePaths.map((path) => (
-                                <img className="rounded-full w-20 h-20 m-5" key={path} id={path}
-                                     onClick={() => addPicture(path)}
-                                     src={`/assets/photosProfiles/${path}`} alt={`Image ${path}`}/>
-                            ))}
+                    className="fixed z-50 top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-90">
+                    <div className="flex flex-row-reverse bg-secondary rounded-md pb-4">
+                        <Button
+                            type="button"
+                            id="navBarButtonClose"
+                            onClick={closePopup}
+                            className="absolute ml-5"
+                        >
+                            <img src={btnClose} alt="icone bouton clsoe" className="w-8 h-8 mr-3"/>
+                        </Button>
+                        <div className="flex flex-col">
+                            <div className="flex flex-wrap w-96">
+                                {imagePaths.map((path) => (
+                                    <img className="rounded-full w-20 h-20 m-5" key={path} id={path}
+                                         onClick={() => addPicture(path)}
+                                         src={`/assets/photosProfiles/${path}`} alt={`Image ${path}`}/>
+                                ))}
+                            </div>
+                            <button onClick={closePopup} className="text-tertiari mr-6">{t("update")}</button>
                         </div>
-                        <button onClick={closePopup} className="text-tertiari mr-6">{t("update")}</button>
                     </div>
                 </div>
             )}

@@ -1,25 +1,23 @@
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
-import {DataToken} from "../../Interface/Interface.ts";
+import {User} from "../../Interface/Interface.ts";
 import {updateUser} from "../../Helpers/apiHelper.ts";
 import Label from "../../ComposantsCommun/Label.tsx";
 
-function Presentation() {
+interface PresentationProps {
+    infosUserById: User;
+}
+
+function Presentation({infosUserById}: PresentationProps) {
     const {t} = useTranslation();
     const authContext = useAuthContext();
-
-
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
-    const infosUser = authContext?.infosUser as JwtPayload
-    const infos = infosUser.aud as unknown as DataToken
 
     const updatePresentation = async () => {
         const presentationTextarea = document.getElementById("presentation") as HTMLTextAreaElement | null;
         const presentationValue = presentationTextarea?.value;
         const response = await updateUser("user/updateUser", {
-            id: infos.data.id,
-            userName: infos.data.userName,
+            id: infosUserById.id,
+            userName: infosUserById.userName,
             token: authContext.accessToken,
             presentation: presentationValue
         });
@@ -36,7 +34,7 @@ function Presentation() {
             <textarea id="presentation" name="presentation" rows={8} cols={75}
                       className="rounded-xl bg-secondary text-tertiari border-tertiari border-2 p-5 mt-5"
                       placeholder="Aucune description ..."
-                      defaultValue={infos.data.presentation}/>
+                      defaultValue={infosUserById.presentation}/>
             <button onClick={updatePresentation} className="text-tertiari text-right mt-2">{t("update")}</button>
         </div>
     )

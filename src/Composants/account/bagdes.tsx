@@ -1,23 +1,22 @@
-import {useAuthContext} from "../../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
-import {DataToken} from "../../Interface/Interface.ts";
+import {User} from "../../Interface/Interface.ts";
 import {useTranslation} from "react-i18next";
 import clsx from "clsx";
 
-function Badges(): JSX.Element {
-    const authContext = useAuthContext();
+interface badgesProps {
+    infosUserById: User;
+}
+
+function Badges({infosUserById}: badgesProps): JSX.Element {
     const {t} = useTranslation();
 
-    // Obligé de faire ces étapes pour récupérer les infos de l'utilisateur
-    const infosUser = authContext?.infosUser as JwtPayload;
-    const infos = infosUser.aud as unknown as DataToken;
-    const badges: string[] = infos.data.badgesWin ?? [];
+    const badges = infosUserById.badgesWin ?? [];
 
     return (
-            <div className="flex flex-col w-full">
-                <p className="text-2xl font-bold text-tertiary">{t("yourBadges")}</p>
-                <div className={clsx(badges.length > 0 ? " border-2 border-tertiary rounded-lg overflow-auto " : "", "flex flex-wrap m-5")}>
-                    {badges.length > 0 ? (
+        <div className="flex flex-col w-full">
+            <p className="text-2xl font-bold text-tertiary">{t("yourBadges")}</p>
+            <div
+                className={clsx(badges.length > 0 ? " border-2 border-tertiary rounded-lg overflow-auto " : "", "flex flex-wrap m-5")}>
+                {badges.length > 0 ? (
                     badges.map((badge, index) => (
                         <div key={index}>
                             <img
@@ -28,11 +27,11 @@ function Badges(): JSX.Element {
                             />
                         </div>
                     ))
-                    ) : (
-                        <p className="text-tertiary text-center">{t("noBadges")}</p>
-                    )}
-                </div>
+                ) : (
+                    <p className="text-tertiary text-center">{t("noBadges")}</p>
+                )}
             </div>
+        </div>
     ) as JSX.Element;
 }
 

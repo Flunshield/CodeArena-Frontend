@@ -21,7 +21,7 @@ function MyAccount() {
     const [submitCount, setSubmitCount] = useState(0);
     const {t} = useTranslation();
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
     const isEntreprise = infos.data.groups.roles === GROUPS.ENTREPRISE
@@ -91,7 +91,7 @@ function MyAccount() {
                     </div>
                     :
                     <div className=" text-left">
-                        <Presentation/>
+                        <Presentation infosUserById={infosUserById}/>
                     </div>
                 }
             </div>
@@ -99,7 +99,7 @@ function MyAccount() {
                 <div
                     className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-90">
                     <div className="bg-secondary p-8 rounded-md flex flex-col">
-                        <MyForm onClose={closePopup}/>
+                        <MyForm onClose={closePopup} infosUserById={infosUserById}/>
                     </div>
                 </div>
             )}

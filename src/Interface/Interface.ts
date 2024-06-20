@@ -11,12 +11,14 @@ export interface User {
     firstName?: string;
     lastName?: string;
     groupsId?: number;
+    groups: Groups;
     languagePreference?: string;
     localisation?: string;
     titlesId?: number;
     titles?: Titles;
     data?: string[];
-    badges?: string;
+    badgesWin?: string[];
+    titlesWin?: string[];
     company?: string;
     url?: string;
     school?: string;
@@ -31,34 +33,7 @@ export interface User {
 export interface DataToken {
     data: {
         id?: number;
-        token?: string;
-        userName?: string;
-        email?: string;
-        emailVerified?: boolean;
-        createdAt?: Date;
-        lastLogin?: Date;
-        status?: string;
-        avatar?: string;
-        firstName?: string;
-        lastName?: string;
-        groupsId?: number;
-        languagePreference?: string;
-        localisation?: string;
-        titlesId?: number;
-        titles?: Titles;
-        titlesWin?: string[];
-        badgesWin?: string[];
-        company?: string;
-        url?: string;
-        school?: string;
-        github?: string;
-        presentation?: string;
-        userRanking?: UserRanking[];
-        userTournament?: UserTournament[];
         groups: Groups;
-        commandeEntreprise?: CommandeEntreprise[];
-        puzzlesEntreprise: PuzzlesEntreprise[];
-        siren?: string;
     }
 }
 

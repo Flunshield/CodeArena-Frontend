@@ -25,7 +25,7 @@ const SendPuzzleSchema = Yup.object().shape({
 
 const SendPuzzle = ({className, closePopup, puzzleToPopup}: SendPuzzleProps) => {
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    // Obliger de faire ces étapes pour récupérer les infos
     const infosUser: JwtPayload = authContext?.infosUser as JwtPayload
     const infos: DataToken = infosUser.aud as unknown as DataToken
     const {t} = useTranslation();

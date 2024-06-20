@@ -16,7 +16,7 @@ interface historiqueAchatProps {
 const historiqueAchat = ({className}: historiqueAchatProps) => {
     const {t} = useTranslation();
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
     const [submitCount, setSubmitCount] = useState(0);

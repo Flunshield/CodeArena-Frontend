@@ -17,7 +17,7 @@ function Success (){
     const navigate = useNavigate();
     const sessionId = params.get('session_id');
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
 
@@ -30,7 +30,7 @@ function Success (){
     useEffect(() => {
         postElementByEndpoint('stripe/success', {
             token: authContext.accessToken ?? "",
-            data: {sessionId: sessionId ?? "", user: infos}
+            data: {sessionId: sessionId ?? "", userId: infos.data.id}
         })
             .then(response => {
                 return response.status;

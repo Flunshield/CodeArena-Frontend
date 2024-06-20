@@ -9,7 +9,7 @@ import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
 import {DataToken, User} from "../../Interface/Interface.ts";
-import React from "react";
+import React, {useState} from "react";
 import {postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import ListItem from "../../ComposantsCommun/ListItem.tsx";
 import ProfilePicture from "./profilePicture.tsx";
@@ -17,6 +17,7 @@ import Badges from "./bagdes.tsx";
 import {GROUPS} from "../../constantes/constantes.ts";
 import Administration from "./entreprise/Administration.tsx";
 import clsx from "clsx";
+import Notification from "../../ComposantsCommun/Notification.tsx";
 
 interface InfosUserProps {
     openPopup: () => void;
@@ -35,13 +36,16 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                              }) => {
     const {t} = useTranslation();
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
     const isEntreprise = infos.data.groups.roles === GROUPS.ENTREPRISE
     const emailVerified = infosUserById?.emailVerified
     const title = infosUserById?.titles?.label as unknown as string
     const [isSendMail, setIsSendMail] = React.useState<boolean>(false);
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const valdMail = async () => {
         const response = await postElementByEndpoint('user/validMail', {
@@ -51,17 +55,28 @@ const InfosUser: React.FC<InfosUserProps> = ({
 
         if (response.status === 201) {
             setIsSendMail(true);
-            alert("Mail envoyé");
+            setNotificationMessage(t('mailToSend'));
+            setNotificationType('success');
+            setShowNotification(true);
         } else {
-            alert("Erreur lors de l'envoie du mail de validation de l'adresse mail");
+            setNotificationMessage(t('errormailToSend'));
+            setNotificationType('error');
+            setShowNotification(true);
         }
     }
 
     return (
         <div className="flex flex-col items-start w-full">
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <div className="flex flex-col items-center text-tertiari w-full">
                 <div className="mb-10">
-                    <ProfilePicture classname="max-sm:hidden ml-16"/>
+                    <ProfilePicture classname="max-sm:hidden ml-16" infosUserById={infosUserById}/>
                     <div className="mt-10 text-center">
                         <p className="text-tertiari mb-1 uppercase font-bold max-sm:text-xl text-2xl">
                             {infosUserById?.firstName && infosUserById?.lastName ? `${infosUserById?.firstName} ${infosUserById?.lastName}` : infosUserById?.userName}
@@ -77,7 +92,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                         <p className="bg-error text-white rounded-lg p-2 text-center">{t("emailNotVerified")}</p>
                                         {!isSendMail && (
                                             <Button id="button-valid-mail" type="button" onClick={valdMail}
-                                                    className="bg-green-800 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                                                    className="bg-green-800 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform">
                                                 {t("validMail")}
                                             </Button>
                                         )}
@@ -115,7 +130,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                         setIsHistoriqueOrderClicked={setIsHistoriqueOrderClicked}
                                         setIsSubmitted={() => setIsSubmitted()}/>
                         :
-                        <Badges/>
+                        <Badges infosUserById={infosUserById}/>
                     }
                 </div>
             </div>
