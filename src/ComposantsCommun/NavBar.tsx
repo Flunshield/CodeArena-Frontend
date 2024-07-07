@@ -73,7 +73,7 @@ const NavBar: React.FC = () => {
                             animate={{ x: "0%", opacity: 1 }}
                             exit={{ x: "-100%", opacity: 0 }}
                             transition={{ duration: 0.5 }}
-                            className="w-full z-30 md:w-1/3 border-0 border-r border-b h-screen absolute rounded-tr-2xl rounded-br-2xl rounded-tl-none rounded-bl-none top-0 bg-primary border-secondary"
+                            className="w-full z-30 md:w-1/3 border-0 border-r border-b h-screen absolute rounded-tr-2xl rounded-br-2xl rounded-tl-none rounded-bl-none top-0 bg-secondary border-primary"
                         >
                             <Card className="w-full h-full">
                                 <FadeInStagger>
@@ -95,31 +95,31 @@ const NavBar: React.FC = () => {
                                         </div>
                                         <ul>
                                             <FadeIn duration={0.6}>
-                                                <li className={clsx(currentPage === "dashboard" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-dashboard">
+                                                <li className={clsx(currentPage === "dashboard" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-primary")} id="link-dashboard">
                                                     <img src={dashboard} alt="icone bouton dashboard" className="w-6 h-6 mt-5" />
                                                     <a href={DASHBOARD} className="p-4 hover:underline" id="click-dashboard">{t("home")}</a>
                                                 </li>
                                             </FadeIn>
                                             <FadeIn duration={0.6}>
-                                                <li className={clsx(currentPage === "ranked" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-ranked">
+                                                <li className={clsx(currentPage === "ranked" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-primary")} id="link-ranked">
                                                     <img src={ranked} alt="icone bouton ranked" className="w-6 h-6 mt-5" />
                                                     <a href={RANKED} className="p-4 hover:underline" id="click-ranked">{t("ranked")}</a>
                                                 </li>
                                             </FadeIn>
                                             <FadeIn duration={0.6}>
-                                                <li className={clsx(currentPage === "ranking" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-ranking">
+                                                <li className={clsx(currentPage === "ranking" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-primary")} id="link-ranking">
                                                     <img src={classement} alt="icone bouton classement" className="w-6 h-6 mt-5" />
                                                     <a href={RANKING} className="p-4 hover:underline" id="click-ranking">{t("ranking")}</a>
                                                 </li>
                                             </FadeIn>
                                             <FadeIn duration={0.6}>
-                                                <li className={clsx(currentPage === "tournaments" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-tournaments">
+                                                <li className={clsx(currentPage === "tournaments" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-primary")} id="link-tournaments">
                                                     <img src={tournois} alt="icone bouton tournois" className="w-6 h-6 mt-5" />
                                                     <a href={TOURNAMENT} className="p-4 hover:underline" id="click-tournaments">{t("tournaments")}</a>
                                                 </li>
                                             </FadeIn>
                                             <FadeIn duration={0.6}>
-                                                <li className={clsx(currentPage === "event" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-secondary")} id="link-event">
+                                                <li className={clsx(currentPage === "event" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-primary")} id="link-event">
                                                     <img src={event} alt="icone bouton event" className="w-6 h-6 mt-5" />
                                                     <a href={EVENT} className="p-4 hover:underline" id="click-event">{t("event")}</a>
                                                 </li>

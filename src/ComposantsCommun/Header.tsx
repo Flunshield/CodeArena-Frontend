@@ -54,7 +54,6 @@ const Header = () => {
                             {t('CodeArena')}
                         </a>
                     </div>
-                    {isConnected && <Search />}
 
                 </div>
 

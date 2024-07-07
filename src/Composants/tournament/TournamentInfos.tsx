@@ -11,6 +11,9 @@ import { formatDate } from "../../Helpers/formatHelper.ts";
 import Button from "../../ComposantsCommun/Button.tsx";
 import Notification from "../../ComposantsCommun/Notification.tsx";
 import { GROUPS } from "../../constantes/constantes.ts";
+import { Container } from "../../ComposantsCommun/Container.tsx";
+import { FadeIn } from "../../ComposantsCommun/FadeIn.tsx";
+
 
 function TournamentInfos(): JSX.Element {
     const authContext = useAuthContext();
@@ -89,55 +92,59 @@ function TournamentInfos(): JSX.Element {
     }, [isRegistered]);
 
     return (
-        <div className="m-16 lg:m-56">
-            {showNotification && (
-                <Notification
-                    message={notificationMessage}
-                    type={notificationType}
-                    onClose={() => setShowNotification(false)}
-                />
-            )}
-            <Card className="border-2 border-tertiary shadow-lg bg-secondary rounded-lg">
-                <CardContent>
-                    <ul className="text-tertiary flex flex-col">
-                        <li className="text-3xl text-center font-bold mb-6">{infosTournament?.title}</li>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 shadow-md rounded-lg">
-                                <p className="mb-2">{t("dateDebut")}</p>
-                                <p className="text-green-600 font-bold">{formatDate(infosTournament?.startDate, t)}</p>
-                            </div>
-                            <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 shadow-md rounded-lg">
-                                <p className="mb-2">{t("dateFin")}</p>
-                                <p className="text-red-600 font-bold">{formatDate(infosTournament?.endDate, t)}</p>
-                            </div>
-                        </div>
-                        <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 shadow-md rounded-lg mt-4 mb-6">
-                            <p className="mb-2 text-3xl">{t("maxPlayer")}</p>
-                            <p className="text-5xl font-bold">{infosTournament?.numberRegistered}/{infosTournament?.playerMax}</p>
-                        </div>
-                        <div className="mb-6">
-                            <p className="mb-2 text-3xl">{t("rules")}</p>
-                            <p>{infosTournament?.description}</p>
-                        </div>
-                        <div className="flex justify-center">
-                            {canSubscribe && isUser && (
-                                isRegistered ? (
-                                    <Button type="button" id="inscription" onClick={handleClickUnsubscribe}
-                                            className="border-2 border-tertiary bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-xl p-3 font-bold text-2xl shadow-md">
-                                        {t("unsubscribe")}
-                                    </Button>
-                                ) : (
-                                    <Button type="button" id="inscription" onClick={handleClickRegistered}
-                                            className="border-2 border-tertiary bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-xl p-3 font-bold text-2xl shadow-md">
-                                        {t("inscription")}
-                                    </Button>
-                                )
-                            )}
-                        </div>
-                    </ul>
-                </CardContent>
-            </Card>
-        </div>
+      
+            <Container className="mt-12">
+                {showNotification && (
+                    <Notification
+                        message={notificationMessage}
+                        type={notificationType}
+                        onClose={() => setShowNotification(false)}
+                    />
+                )}
+                <FadeIn className="flex flex-col items-center">
+                    <Card className="border-2 border-tertiary shadow-lg bg-secondary rounded-lg w-full lg:w-2/3">
+                        <CardContent className="text-tertiari p-8">
+                            <ul className="flex flex-col items-center">
+                                <li className="text-3xl text-center font-bold mb-6">{infosTournament?.title}</li>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                                    <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 shadow-md rounded-lg">
+                                        <p className="mb-2">{t("dateDebut")}</p>
+                                        <p className="text-green-600 font-bold">{formatDate(infosTournament?.startDate, t)}</p>
+                                    </div>
+                                    <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 shadow-md rounded-lg">
+                                        <p className="mb-2">{t("dateFin")}</p>
+                                        <p className="text-red-600 font-bold">{formatDate(infosTournament?.endDate, t)}</p>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col items-center p-4 bg-gray-100 dark:bg-gray-800 shadow-md rounded-lg mt-4 mb-6 w-full">
+                                    <p className="mb-2 text-3xl">{t("maxPlayer")}</p>
+                                    <p className="text-5xl font-bold">{infosTournament?.numberRegistered}/{infosTournament?.playerMax}</p>
+                                </div>
+                                <div className="mb-6 text-center">
+                                    <p className="mb-2 text-3xl">{t("rules")}</p>
+                                    <p>{infosTournament?.description}</p>
+                                </div>
+                                <div className="flex justify-center">
+                                    {canSubscribe && isUser && (
+                                        isRegistered ? (
+                                            <Button type="button" id="inscription" onClick={handleClickUnsubscribe}
+                                                    className="border-2 border-tertiary bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-xl p-3 font-bold text-2xl shadow-md">
+                                                {t("unsubscribe")}
+                                            </Button>
+                                        ) : (
+                                            <Button type="button" id="inscription" onClick={handleClickRegistered}
+                                                    className="border-2 border-tertiary bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-xl p-3 font-bold text-2xl shadow-md">
+                                                {t("inscription")}
+                                            </Button>
+                                        )
+                                    )}
+                                </div>
+                            </ul>
+                        </CardContent>
+                    </Card>
+                </FadeIn>
+            </Container>
+       
     );
 }
 

@@ -12,9 +12,11 @@ import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
 import TableauEvent from "../Composants/dashboard/TableauEvent.tsx";
 import UserRank from "../Composants/dashboard/UserRank.tsx";
 import TableauTournament from "../Composants/tournament/TableauTournament.tsx";
-import { FadeIn } from "../ComposantsCommun/FadeIn.tsx";
-
-
+import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn.tsx";
+import { Container } from "../ComposantsCommun/Container.tsx";
+import { SectionIntro } from "../ComposantsCommun/SectionIntro.tsx";
+import Button from "../ComposantsCommun/Button.tsx";
+import { GridPattern } from "../ComposantsCommun/GridPattern.tsx";
 
 function Dashboard() {
     const authContext = useAuthContext();
@@ -27,8 +29,6 @@ function Dashboard() {
     const responsePromise = getElementByEndpoint('dashboard/checkDashboard?id=' + data.id, { token: data.token, data: "" });
 
     useEffect(() => {
-        // On réalise la requête pour récupérer la liste des utilisateurs à afficher dans la section rang
-        // On réalise la requête pour récupérer la liste des utilisateurs à afficher dans la section rang
         if (!infosUserRank) {
             responsePromise.then(async (response) => {
                 const result = await response.json();
@@ -43,37 +43,38 @@ function Dashboard() {
     }, [infosUserRank]);
 
     return (
-        <Layout>
-            <FadeIn duration={1.0}>
-                <div className="flex flex-col xl:flex-row xl:justify-around">
-                    <div className="m-5 rounded-xl border-tertiari bg-secondary p-5 h-full xl:w-full xl:mr-8">
-                        <TableauEvent infosEvents={infosEvents} isImg={false} />
-                    </div>
-                    <div className="flex flex-col xl:w-1/3">
-                        <div className="rounded-xl border-tertiari bg-secondary m-5 p-5">
+        <>
+           
+            <Layout>
+            <GridPattern
+                className="absolute inset-0 -z-10 h-full w-full fill-neutral-100 stroke-neutral-950/5 [mask-image:linear-gradient(to_bottom_left,white_50%,transparent_60%)]"
+                yOffset={-256}
+            />
+                <Container className="mt-12">
+                    <SectionIntro title="Dashboard">
+                        <div className="flex justify-between items-center mb-8">
+                            <p>Bienvenue sur votre tableau de bord, où vous pouvez voir vos événements, classements et tournois.</p>
+                            <Button className="bg-primary text-secondary rounded-lg py-3 px-6 shadow-lg hover:bg-yellow-500" type="button" id="game">
+                                <a href="/ranked" className="text-center hover:text-cyan-800 text-secondary">
+                                    Jouez Maintenant
+                                </a>
+                            </Button>
+                        </div>
+                    </SectionIntro>
+                    <FadeInStagger className="mt-10 grid grid-cols-1 xl:grid-cols-3 gap-8">
+                        <FadeIn className="col-span-2">
+                            <TableauEvent infosEvents={infosEvents} isImg={false} />
+                        </FadeIn>
+                        <FadeIn>
                             <UserRank infosUserRank={infosUserRank} />
-                        </div>
-                        <div className="rounded-xl border-tertiari bg-secondary m-5 p-5">
+                        </FadeIn>
+                        <FadeIn className="col-span-3">
                             <TableauTournament infosTournament={infosTournament} isImg={false} />
-                        </div>
-                    </div>
-            <FadeIn duration={1.0}>
-                <div className="flex flex-col xl:flex-row xl:justify-around">
-                    <div className="m-5 rounded-xl border-tertiari bg-secondary p-5 h-full xl:w-full xl:mr-8">
-                        <TableauEvent infosEvents={infosEvents} isImg={false} />
-                    </div>
-                    <div className="flex flex-col xl:w-1/3">
-                        <div className="rounded-xl border-tertiari bg-secondary m-5 p-5">
-                            <UserRank infosUserRank={infosUserRank} />
-                        </div>
-                        <div className="rounded-xl border-tertiari bg-secondary m-5 p-5">
-                            <TableauTournament infosTournament={infosTournament} isImg={false} />
-                        </div>
-                    </div>
-                </div>
-            </FadeIn>
-            </FadeIn>
-        </Layout>
+                        </FadeIn>
+                    </FadeInStagger>
+                </Container>
+            </Layout>
+        </>
     );
 }
 

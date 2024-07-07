@@ -10,7 +10,7 @@ const TrustSection = () => {
         <div id="TrustSection" className="w-full h-full rounded-2xl bg-neutral-950 py-20 sm:mt-32 sm:py-32 lg:mt-56 ">
             <Container>
                 <FadeIn className="flex items-center gap-x-40">
-                    <h2 className="text-center font-display text-sm font-semibold tracking-wider text-white sm:text-left">
+                    <h2 className="text-center font-display text-3xl font-semibold tracking-wider text-white sm:text-left">
                         {t("trustSection")}
                     </h2>
                     <div className="h-px flex-auto bg-neutral-800 w-full" />

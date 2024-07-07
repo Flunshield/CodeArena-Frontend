@@ -6,8 +6,13 @@ import { getElementByEndpoint } from "../../Helpers/apiHelper.ts";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
 import DataTable from "../../ComposantsCommun/DataTable.tsx";
 import Pagination from "../../ComposantsCommun/Pagination.tsx";
-import {JwtPayload} from "jwt-decode";
-import {GROUPS} from "../../constantes/constantes.ts";
+import { JwtPayload } from "jwt-decode";
+import { GROUPS } from "../../constantes/constantes.ts";
+import { Container } from "../../ComposantsCommun/Container.tsx";
+import { SectionIntro } from "../../ComposantsCommun/SectionIntro.tsx";
+import Card from "../../ComposantsCommun/Card.tsx";
+import CardContent from "../../ComposantsCommun/CardContent.tsx";
+import { FadeIn } from "../../ComposantsCommun/FadeIn.tsx";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();
@@ -72,40 +77,43 @@ function Tableau(): JSX.Element {
         );
     }, [submitCount, itemPerPage, currentPage]);
     return (
-        <div className="m-5">
-            <div className="flex flex-col md:flex-row items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-secondary mb-4 md:mb-0 shadow-lg bg-gray-200 dark:bg-gray-800 dark:text-gray-300 rounded-lg p-4">{t('Liste des utilisateurs')}</h2>
-                <SearchBar onSearch={onSearch} setItemPerPage={setItemPerPage} placeholder={t('serachByUsername')} setCurrentPage={setCurrentPage} />
-            </div>
-            <div className="overflow-hidden rounded-lg shadow-md">
-                <DataTable headers={headers} data={transformedData} className="w-full" />
-            </div>
-            <div className="flex justify-between items-center w-full mt-4">
-                {currentPage > 1 ? (
-                    <button
-                        className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                        onClick={prevPage}
-                    >
-                        {t('previous')}
-                    </button>
-                ) : (
-                    <div className="px-4 py-2 invisible">{t('previous')}</div>
-                )}
-                <p className="text-center flex-grow">{currentPage}</p>
-                {users.length > 0 ? (
-                    <button
-                        className="px-4 py-2 rounded bg-petroleum-blue text-white"
-                        onClick={nextPage}
-                    >
-                        {t('next')}
-                    </button>
-                ) : (
-                    <div className="px-4 py-2 invisible">{t('next')}</div>
-                )}
-
-            </div>
-        </div>
-    )
+        <Container className="py-12">
+            <SectionIntro 
+                title={t('Liste des utilisateurs')} 
+                subtitle={t('serachByUsername')}
+                className="mb-8"
+            />
+            <FadeIn>
+                <Card className="bg-white shadow-elevated p-6">
+                    <CardContent>
+                        <div className="flex flex-col md:flex-row items-center justify-between mb-6">
+                            <h2 className="text-lg font-semibold text-secondary mb-4 md:mb-0 shadow-lg bg-gray-200 dark:bg-gray-800 dark:text-gray-300 rounded-lg p-4">
+                                {t('Liste des utilisateurs')}
+                            </h2>
+                            <SearchBar 
+                                onSearch={onSearch} 
+                                setItemPerPage={setItemPerPage} 
+                                placeholder={t('serachByUsername')} 
+                                setCurrentPage={setCurrentPage} 
+                            />
+                        </div>
+                        <div className="overflow-hidden rounded-lg shadow-md">
+                            <DataTable headers={headers} data={transformedData} className="w-full" />
+                        </div>
+                        <Pagination
+                            item={users.item}
+                            maxPage={maxPage}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            setSubmitCount={setSubmitCount}
+                            classNameCurrentPage="text-primary"
+                            itemPerPage={itemPerPage}
+                        />
+                    </CardContent>
+                </Card>
+            </FadeIn>
+        </Container>
+    );
 }
 
 export default Tableau;
