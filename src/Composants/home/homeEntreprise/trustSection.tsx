@@ -1,54 +1,36 @@
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import {ENTREPRISE_TRUST} from "../../../constantes/constanteEntreprise.ts";
-import {useTranslation} from "react-i18next";
+import { ENTREPRISE_TRUST } from "../../../constantes/constanteEntreprise.ts";
+import { useTranslation } from "react-i18next";
+import { Container } from "../../../ComposantsCommun/Container";
+import { FadeIn, FadeInStagger } from "../../../ComposantsCommun/FadeIn";
 
 const TrustSection = () => {
-    const {t} = useTranslation();
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        initialSlide: 0,
-        adaptiveHeight: true,
-        responsive: [
-            {
-                breakpoint: 1470, // Pour les écrans de taille moyenne
-                settings: {
-                    slidesToShow: 3 // Affiche 2 logos par diapositive
-                }
-            },
-            {
-                breakpoint: 1200, // Pour les petits écrans
-                settings: {
-                    slidesToShow: 2 // Affiche 1 logo par diapositive
-                }
-            },
-            {
-                breakpoint: 950, // Pour les petits écrans
-                settings: {
-                    slidesToShow: 1 // Affiche 1 logo par diapositive
-                }
-            }
-        ]
-    };
+    const { t } = useTranslation();
 
     return (
-        <div id="TrustSection" className="bg-gray-100 py-8 rounded-lg m-auto w-2/3">
-            <div className="container mx-auto">
-                <h2 className="text-3xl font-bold text-center mb-6">{t("trustSection")}</h2>
-                <Slider {...settings}>
-                    {ENTREPRISE_TRUST.map((client, index) => (
-                        <div key={index} className="flex flex-col">
-                            <h2 className="text-center text-xl">{client.name}</h2>
-                            <img key={index} src={client.src} alt={client.alt} className="mx-auto"/>
-                        </div>
-                    ))}
-                </Slider>
-            </div>
+        <div id="TrustSection" className="w-full h-full rounded-2xl bg-neutral-950 py-20 sm:mt-32 sm:py-32 lg:mt-56 ">
+            <Container>
+                <FadeIn className="flex items-center gap-x-40">
+                    <h2 className="text-center font-display text-sm font-semibold tracking-wider text-white sm:text-left">
+                        {t("trustSection")}
+                    </h2>
+                    <div className="h-px flex-auto bg-neutral-800 w-full" />
+                </FadeIn>
+                <FadeInStagger faster>
+                    <ul role="list" className="mt-10 grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
+                        {ENTREPRISE_TRUST.map((client, index) => (
+                            <li key={index}>
+                                <FadeIn>
+                                    <div className="flex flex-col items-center">
+                                       
+                                        <img src={client.src} alt={client.alt} className="mx-16 w-16" />
+                                        <h2 className="text-center text-xl text-white mb-2">{client.name}</h2>
+                                    </div>
+                                </FadeIn>
+                            </li>
+                        ))}
+                    </ul>
+                </FadeInStagger>
+            </Container>
         </div>
     );
 };

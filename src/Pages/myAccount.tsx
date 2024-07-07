@@ -18,7 +18,7 @@ function MyAccount() {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isInformationGeneraleCliked, setIsInformationGeneraleCliked] = useState(false);
     const [isHistoriqueOrderClicked, setIsHistoriqueOrderClicked] = useState(false);
-    const [submitCount, setSubmitCount] = useState(0);
+    const [, setSubmitCount] = useState(0);
     const { t } = useTranslation();
     const authContext = useAuthContext();
     // Obliger de faire ces étapes pour récupérer les infos
@@ -64,8 +64,20 @@ function MyAccount() {
                 setNotificationType('error');
                 setShowNotification(true);
             }
-        });
-    }, [submitCount]);
+        })
+    })
+
+
+
+
+    // const handleInformationGeneraleClick = () => {
+    //     document.getElementById('informationGenerale')?.scrollIntoView({ behavior: 'smooth' });
+    // };
+
+    // const handleHistoriqueOrderClick = () => {
+    //     document.getElementById('historiqueAchat')?.scrollIntoView({ behavior: 'smooth' });
+    // };
+
     return (
         <Layout>
             {showNotification && (
