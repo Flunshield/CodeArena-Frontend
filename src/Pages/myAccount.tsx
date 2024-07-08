@@ -1,18 +1,21 @@
-import Layout from "../ComposantsCommun/Layout.tsx";
-import Presentation from "../Composants/account/presentation.tsx";
-import { useEffect, useState } from "react";
-import MyForm from "../Composants/account/MyForm.tsx";
-import InfosUser from "../Composants/account/infosUser.tsx";
-import { useAuthContext } from "../AuthContext.tsx";
+import React, { useEffect, useState } from "react";
+import Layout from "../ComposantsCommun/Layout";
+import Presentation from "../Composants/account/presentation";
+import MyForm from "../Composants/account/MyForm";
+import InfosUser from "../Composants/account/infosUser";
+import { useAuthContext } from "../AuthContext";
 import { JwtPayload } from "jwt-decode";
-import { DataToken, User } from "../Interface/Interface.ts";
-import { GROUPS } from "../constantes/constantes.ts";
-import HistoriqueAchat from "../Composants/account/entreprise/HistoriqueAchat.tsx";
-import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
-import Notification from "../ComposantsCommun/Notification.tsx";
-import InformationGenerale from "../Composants/account/entreprise/InformationGenerale.tsx";
-import { PRICING } from "../constantes/constanteEntreprise.ts";
+import { DataToken, User } from "../Interface/Interface";
+import { GROUPS } from "../constantes/constantes";
+import HistoriqueAchat from "../Composants/account/entreprise/HistoriqueAchat";
+import { getElementByEndpoint } from "../Helpers/apiHelper";
+import Notification from "../ComposantsCommun/Notification";
+import InformationGenerale from "../Composants/account/entreprise/InformationGenerale";
+import { PRICING } from "../constantes/constanteEntreprise";
 import { useTranslation } from "react-i18next";
+import { Container } from "../ComposantsCommun/Container";
+import { SectionIntro } from "../ComposantsCommun/SectionIntro";
+import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn";
 
 function MyAccount() {
     const [isPopupOpen, setPopupOpen] = useState(false);
@@ -29,6 +32,7 @@ function MyAccount() {
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
     const [infosUserById, setInfosUserById] = useState<User>({} as User);
+
     const getUserById = getElementByEndpoint("user/getUser?id=" + infos.data.id, {
         token: authContext.accessToken ?? "",
         data: "",
@@ -64,19 +68,8 @@ function MyAccount() {
                 setNotificationType('error');
                 setShowNotification(true);
             }
-        })
-    })
-
-
-
-
-    // const handleInformationGeneraleClick = () => {
-    //     document.getElementById('informationGenerale')?.scrollIntoView({ behavior: 'smooth' });
-    // };
-
-    // const handleHistoriqueOrderClick = () => {
-    //     document.getElementById('historiqueAchat')?.scrollIntoView({ behavior: 'smooth' });
-    // };
+        });
+    }, [isInformationGeneraleCliked, isHistoriqueOrderClicked, getUserById, t]);
 
     return (
         <Layout>
@@ -87,34 +80,43 @@ function MyAccount() {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            <div className="flex flex-col md:flex-row bg">
-                <aside className="w-full md:w-1/4  p-4">
-                    <InfosUser
-                        openPopup={openPopup}
-                        setIsInformationGeneraleCliked={setIsInformationGeneraleCliked}
-                        setIsHistoriqueOrderClicked={setIsHistoriqueOrderClicked}
-                        setIsSubmitted={() => setSubmitCount((count) => count + 1)}
-                        infosUserById={infosUserById}
-                    />
-                </aside>
-                <main className="w-full md:w-3/4 p-4">
-                    {isEntreprise ?
-                        <div>
-                            <InformationGenerale infosUserById={infosUserById}
+            <Container className="mt-16 bg-white">
+                <SectionIntro title={t("myAccount")} className="mb-12 text-center">
+                </SectionIntro>
+                <div className="flex flex-col items-center">
+                    <FadeInStagger className="w-full max-w-4xl">
+                        <FadeIn>
+                            <InfosUser
+                                openPopup={openPopup}
+                                setIsInformationGeneraleCliked={setIsInformationGeneraleCliked}
+                                setIsHistoriqueOrderClicked={setIsHistoriqueOrderClicked}
                                 setIsSubmitted={() => setSubmitCount(count => count + 1)}
-                                className="mb-24" />
-                            <HistoriqueAchat />
-                        </div>
-                        :
-                        <div className=" text-left">
-                            <Presentation infosUserById={infosUserById} />
-                        </div>
-                    }
-                </main>
-            </div>
+                                infosUserById={infosUserById}
+                            />
+                        </FadeIn>
+                        {isEntreprise ? (
+                            <div className="w-full">
+                                <FadeIn className="mb-24">
+                                    <InformationGenerale
+                                        infosUserById={infosUserById}
+                                        setIsSubmitted={() => setSubmitCount(count => count + 1)}
+                                    />
+                                </FadeIn>
+                                <FadeIn>
+                                    <HistoriqueAchat />
+                                </FadeIn>
+                            </div>
+                        ) : (
+                            <FadeIn className="w-full">
+                                <Presentation infosUserById={infosUserById}/>
+                            </FadeIn>
+                        )}
+                    </FadeInStagger>
+                </div>
+            </Container>
             {isPopupOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
-                    <div className="bg-gray-900 p-8 rounded-lg shadow-xl w-full max-w-lg animate-fade-in">
+                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-8 rounded-md shadow-lg">
                         <MyForm onClose={closePopup} infosUserById={infosUserById} />
                     </div>
                 </div>

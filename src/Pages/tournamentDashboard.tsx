@@ -38,7 +38,7 @@ function TournamentDashboard() {
                     subtitle="Stay updated with the latest tournaments happening soon."
                     className="mb-8"
                 />
-                <Card className="bg-white shadow-elevated p-6">
+                <Card className="bg-primary shadow-elevated p-6">
                     <CardContent>
                         <TableauTournament 
                             infosTournament={infosTournament} 

@@ -7,7 +7,7 @@ import NavBar from "./NavBar.tsx";
 import BouttonProfile from "../Composants/BouttonProfile.tsx";
 import { DASHBOARD, HOME } from "../constantes/constantesRoutes.ts";
 import loginIcons from "/assets/icons/iconsLogin.svg";
-import Search from "./Search.tsx";
+
 
 
 const Header = () => {

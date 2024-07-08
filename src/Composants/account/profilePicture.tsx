@@ -7,6 +7,7 @@ import {User} from "../../Interface/Interface.ts";
 import clsx from "clsx";
 import Button from "../../ComposantsCommun/Button.tsx";
 import btnClose from "/assets/btnClose.png";
+import { Container } from "../../ComposantsCommun/Container";
 
 interface ProfilePictureProps {
     classname?: string;
@@ -19,6 +20,14 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isPictureClicked, setIsPictureClicked] = useState("");
 
+    useEffect(() => {
+        if (isPopupOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [isPopupOpen]);
+
     const openPopup = () => {
         setPopupOpen(true);
     };
@@ -29,7 +38,7 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
                 id: infosUserById?.id,
                 userName: infosUserById?.userName,
                 token: authContext.accessToken,
-                avatar: `/assets/photosProfiles/${isPictureClicked}`
+                avatar: `/assets/photosProfiles/${isPictureClicked}`,
             });
             if (response.ok) {
                 setPopupOpen(false);
@@ -43,35 +52,33 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
     };
 
     const addPicture = (id: string | undefined) => {
-        const picture = document.getElementById(id ?? "noImage.png");
-        setIsPictureClicked(id ?? "noImage.png");
+        const picture = document.getElementById(id ?? "iconsLogin.svg");
+        setIsPictureClicked(id ?? "iconsLogin.svg");
 
-        // Filtrer les éléments qui ne répondent pas à la condition (différents de l'id)
         const picturesNotSelected = imagePaths.filter((path) => path !== id);
-
         picturesNotSelected.forEach((notSelectedId) => {
             const pictureToDelete = document.getElementById(notSelectedId);
-
-            // Supprimer les classes des images non sélectionnées
-            pictureToDelete?.classList.remove("border-4");
-            pictureToDelete?.classList.remove("border-tertiari");
+            pictureToDelete?.classList.remove("border-4", "border-tertiari");
         });
 
-        // Ajouter les classes à l'image sélectionnée
-        picture?.classList.add("border-4");
-        picture?.classList.add("border-tertiari");
+        picture?.classList.add("border-4", "border-tertiari");
     };
 
     return (
-        <div className={clsx(classname)}>
-            <img className="rounded-full w-48 h-48 border-2 border-tertiari"
-                 src={isPictureClicked !== "" ? `/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "iconsLogin.svg"}` : infosUserById?.avatar}
-                 alt="Avatar"
-                 onClick={openPopup}/>
+        <div className={clsx(className, "relative")}>
+            <img
+                className="rounded-full w-48 h-48 border-2 border-tertiari cursor-pointer"
+                src={isPictureClicked !== "" ? `/assets/photosProfiles/${isPictureClicked}` : infos.data.avatar}
+                alt="Avatar"
+                onClick={openPopup}
+            />
             {isPopupOpen && (
-                <div
-                    className="fixed z-50 top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-90">
-                    <div className="flex flex-row-reverse bg-secondary rounded-md pb-4">
+                <>
+                    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm z-40"></div>
+                    <div
+                        className="fixed z-50 top-0 left-0 w-full h-full flex items-center justify-center z-50"
+                    >
+                        <Container className="flex flex-row-reverse bg-secondary rounded-md pb-4">
                         <Button
                             type="button"
                             id="navBarButtonClose"
@@ -80,21 +87,35 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
                         >
                             <img src={btnClose} alt="icone bouton clsoe" className="w-8 h-8 mr-3"/>
                         </Button>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col z-50">
+                               
                             <div className="flex flex-wrap w-96">
-                                {imagePaths.map((path) => (
-                                    <img className="rounded-full w-20 h-20 m-5" key={path} id={path}
-                                         onClick={() => addPicture(path)}
-                                         src={`/assets/photosProfiles/${path}`} alt={`Image ${path}`}/>
-                                ))}
-                            </div>
-                            <button onClick={closePopup} className="text-tertiari mr-6">{t("update")}</button>
+                                    {imagePaths.map((path) => (
+                                        <img
+                                        className="rounded-full w-20 h-20 m-5 cursor-pointer"
+                                        key={path}
+                                        id={path}
+                                            onClick={() => addPicture(path)}
+                                            src={`/assets/photosProfiles/${path}`}
+                                        alt={`Image ${path}`}
+                                    />
+                                    ))}
+                                </div>
+                                <div className="mt-6 flex justify-center">
+                                <button
+                                    onClick={closePopup}
+                                    className="bg-tertiary hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                                >
+                                    {t("update")}
+                                </button>
                         </div>
+                            </div>
+                        </Container>
                     </div>
-                </div>
+                </>
             )}
         </div>
-    )
-}
+    );
+};
 
 export default ProfilePicture;
