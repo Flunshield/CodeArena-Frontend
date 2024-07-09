@@ -68,6 +68,13 @@ const InfosUser: React.FC<InfosUserProps> = ({
     return (
         <div className="flex flex-col items-start w-full fadeIn">
             <div className="flex flex-col items-center text-tertiari w-full">
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
                 <div className="mb-10">
                     <ProfilePicture classname="max-sm:hidden ml-16" />
                     <div className="mt-10 text-center">
@@ -126,7 +133,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                             setIsSubmitted={() => setIsSubmitted()}
                         />
                     ) : (
-                        <Badges />
+                        <Badges infosUserById={infosUserById} />
                     )}
                 </div>
             </div>

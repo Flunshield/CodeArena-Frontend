@@ -1,55 +1,41 @@
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import company from '/assets/iconeProfile/company.png';
-import github from '/assets/iconeProfile/github.png';
-import link from '/assets/iconeProfile/link.png';
-import map from '/assets/iconeProfile/map-marker.png';
-import school from '/assets/iconeProfile/school.png';
-import iconeTitle from '/assets/iconeProfile/flag.png';
-import { useTranslation } from 'react-i18next';
-import { DataToken, Titles, User } from '../../Interface/Interface.ts';
-import React, { useEffect, useState } from 'react';
-import { getElementByEndpoint, updateUser } from '../../Helpers/apiHelper.ts';
-import { JwtPayload } from 'jwt-decode';
-import { useAuthContext } from '../../AuthContext.tsx';
+import company from "/assets/iconeProfile/company.png";
+import github from "/assets/iconeProfile/github.png";
+import link from "/assets/iconeProfile/link.png";
+import map from "/assets/iconeProfile/map-marker.png";
+import school from "/assets/iconeProfile/school.png";
+import iconeTitle from "/assets/iconeProfile/flag.png";
+import {useTranslation} from "react-i18next";
+import {Titles, User} from "../../Interface/Interface.ts";
+import React, {useEffect} from "react";
+import {getElementByEndpoint, updateUser} from "../../Helpers/apiHelper.ts";
+import {useAuthContext} from "../../AuthContext.tsx";
 
 interface MyFormProps {
     onClose: () => void;
     infosUserById: User;
 }
 
-const MyForm: React.FC<MyFormProps> = ({ onClose }) => {
-    const { t } = useTranslation();
+const MyForm: React.FC<MyFormProps> = ({onClose, infosUserById}) => {
+    const {t} = useTranslation();
     const authContext = useAuthContext();
 
     useEffect(() => {
+        // Désactive le défilement lorsque le formulaire est ouvert
         document.body.style.overflow = 'hidden';
+
+        // Réactive le défilement lorsque le formulaire est fermé
         return () => {
             document.body.style.overflow = 'visible';
         };
     }, []);
 
-    const infosUser: JwtPayload = authContext?.infosUser as JwtPayload;
-    const infos: DataToken = infosUser.aud as unknown as DataToken;
-    const [titles, setTitles] = useState<Titles[]>();
-    
-    useEffect(() => {
-        if (!titles) {
-            getElementByEndpoint('user/getTitles', {
-                token: authContext.accessToken ?? '',
-                data: '',
-            }).then(async (response) => {
-                const result = await response.json();
-                const titlesUser = result
-                    .filter((title: { id: number }) => infos?.data?.titlesWin?.includes(String(title.id)))
-                    .map((title: { label: string; id: number }) => ({
-                        label: title.label,
-                        id: title.id,
-                    }));
-                setTitles(titlesUser);
-            });
-        }
-    }, [titles]);
+    const [titles, setTitles] = React.useState<Titles[]>();
+    const getTitles = getElementByEndpoint("user/getTitles", {
+        token: authContext.accessToken ?? "",
+        data: ''
+    });
 
     const initialValues: User = {
         localisation: infosUserById.localisation ?? '',
@@ -63,8 +49,8 @@ const MyForm: React.FC<MyFormProps> = ({ onClose }) => {
     };
 
     const onSubmit = async (values: User) => {
-        const response = await updateUser('user/updateUser', {
-            id: infos.data.id,
+        const response = await updateUser("user/updateUser", {
+            id: infosUserById.id,
             token: authContext.accessToken,
             userName: infosUserById.userName,
             localisation: values.localisation,
@@ -78,10 +64,10 @@ const MyForm: React.FC<MyFormProps> = ({ onClose }) => {
         });
 
         if (response.ok) {
-            onClose();
+            onClose(); // Fermer le popup après la soumission réussie
             window.location.reload();
         } else {
-            alert('Erreur lors de la mise à jour du profil');
+            alert("Erreur lors de la mise à jour du profil");
         }
     };
 
@@ -99,6 +85,22 @@ const MyForm: React.FC<MyFormProps> = ({ onClose }) => {
         }),
         onSubmit,
     });
+    console.log(infosUserById)
+    useEffect(() => {
+        if (!titles) {
+            getTitles.then(async (response) => {
+                const result = await response.json();
+                const titlesUser = result
+                    .filter((title: { id: number; }) => infosUserById?.titlesWin?.includes(String(title.id)))
+                    .map((title: { label: string; id: number; }) => ({
+                        label: title.label,
+                        id: title.id,
+                    }));
+
+                setTitles(titlesUser);
+            });
+        }
+    }, []);
 
     return (
         <form 
