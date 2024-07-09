@@ -8,7 +8,7 @@ import drapFr from "/assets/drapeaux/fr.svg";
 import drapEn from "/assets/drapeaux/gb.svg";
 import { changeLanguage } from "../i18n.ts";
 import clsx from "clsx";
-import { FadeIn, FadeInStagger } from './FadeIn.tsx';
+import { FadeIn } from './FadeIn.tsx';
 
 interface FooterProps {
     className?: string;
@@ -62,9 +62,9 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     );
 
     return (
-        <FadeIn duration={1.0}>
+        <FadeIn duration={0.5}>
             <footer className={clsx(className, "w-full h-auto text-tertiari bottom-0 relative p-8 bg-secondary shadow-angelic-white")}>
-                <FadeInStagger>
+                <FadeIn duration={1.0}>
                     {isConnected ? (
                         <div>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
@@ -93,6 +93,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                                 </div>
 
                             </div>
+                            
                             <div className="flex flex-col items-center justify-center text-center">
                                 <h2 className="font-bold text-2xl mb-4">{t('retrouverNous')}</h2>
                                 <div className="flex space-x-4 mb-4 relative justify-center">
@@ -168,7 +169,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                             </div>
                         </div>
                     )}
-                </FadeInStagger>
+               </FadeIn>
                 <div className="mx-auto border-t-2 border-tertiari w-2/3 mt-8"></div>
                 <div className="mt-8 text-center flex flex-col md:flex-row justify-between items-center">
                     <p className="mb-4 md:mb-0 flex-1 text-center">Copyright © {new Date().getFullYear()} CodeArena</p>

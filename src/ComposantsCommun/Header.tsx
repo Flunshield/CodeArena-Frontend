@@ -47,19 +47,20 @@ const Header = () => {
         <header className="z-50 text-secondary px-4 md:px-8 bg-secondary relative">
             <div className="flex justify-between  items-start w-full">
                 {isConnected && <div className="flex start-0 top-0 absolute py-2 w-full "><NavBar /></div>}
-                <div className="flex justify-between px-10 py-2 w-full items-center md:space-x-1">
+                <div className="flex justify-between px-10 py-3 w-full items-center md:space-x-1">
                     <div className="flex items-center">
                         <img src="/logo.svg" alt="Logo codeArena" className="w-16 h-16 mr-3" />
                         <a className="text-tertiari text-3xl m-3 font-bold" href={isConnected ? DASHBOARD : HOME}>
                             {t('CodeArena')}
                         </a>
                     </div>
-                    <Search />
+                    {isConnected && <Search />}
+
                 </div>
-                
-                <div className="flex items-center space-x-2">
+
+                <div className="flex py-2 items-center space-x-2">
                     {isConnected ? (
-                        <div className="flex items-center">
+                        <div className="flex  items-center">
                             <BouttonProfile />
                         </div>
                     ) : (
@@ -95,11 +96,11 @@ const Header = () => {
                                     </div>
                                 )}
                             </div>
-                            <div className="hidden sm:flex space-x-1"> {/* Réduction de l'espace entre les éléments */}
+                            <div className="flex flex-row space-x-4 mt-4">
                                 <Button
                                     type="button"
                                     id="signIn"
-                                    className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                    className="bg-gray-700 text-tertiari p-2 md:px-4 py-3 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
                                     onClick={handleClickSingIn}
                                 >
                                     {t('connection')}
@@ -107,12 +108,13 @@ const Header = () => {
                                 <Button
                                     type="button"
                                     id="signUp"
-                                    className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                    className="bg-gray-700 text-tertiari p-2 md:px-4 py-3 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
                                     onClick={handleClickSingUp}
                                 >
                                     {t('inscription')}
                                 </Button>
                             </div>
+
                         </>
                     )}
                 </div>

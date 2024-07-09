@@ -73,7 +73,7 @@ const NavBar: React.FC = () => {
                             animate={{ x: "0%", opacity: 1 }}
                             exit={{ x: "-100%", opacity: 0 }}
                             transition={{ duration: 0.5 }}
-                            className="w-full z-30 md:w-1/3 border-0 border-r border-b h-screen absolute rounded-tr-2xl rounded-br-2xl rounded-tl-none rounded-bl-none top-0 bg-primary border-tertiari"
+                            className="w-full z-30 md:w-1/3 border-0 border-r border-b h-screen absolute rounded-tr-2xl rounded-br-2xl rounded-tl-none rounded-bl-none top-0 bg-primary border-secondary"
                         >
                             <Card className="w-full h-full">
                                 <FadeInStagger>

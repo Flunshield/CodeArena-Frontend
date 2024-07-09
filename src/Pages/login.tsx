@@ -106,8 +106,9 @@ function LoginPage() {
     }, [isConnected, navigate]);
 
     return (
-        <FadeIn duration={1.0}>
-            <Layout classnameMain="-mt-16">
+
+        <Layout classnameMain="-mt-16">
+            <FadeIn duration={1.0}>
                 {showNotification && (
                     <Notification
                         message={notificationMessage}
@@ -188,8 +189,9 @@ function LoginPage() {
                     ) : (
                         <p>You are already connected!</p>
                     )}
-            </Layout>
-        </FadeIn>
+            </FadeIn>
+        </Layout>
+
     );
 }
 

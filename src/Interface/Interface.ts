@@ -56,6 +56,8 @@ export interface shortUser {
     id?: number;
     firstName?: string;
     lastName?: string;
+    github: string;
+    portfolio: string;
 }
 
 export interface LoginForm {

@@ -22,7 +22,7 @@ function EventDashboard() {
 
     return (
         <Layout>
-            <div className="mb-64">
+            <div className="m-5 rounded-xl border-tertiari bg-secondary p-5 h-full xl:w-full xl:mr-8">
                 <TableauEvent infosEvents={infosEvent} isImg={false} className="m-5 rounded-xl border-tertiari bg-secondary p-5 h-full"/>
             </div>
         </Layout>

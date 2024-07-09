@@ -62,6 +62,6 @@ export const DIX_MIN = 600;
 
 export const INFINITE_PUZZLE = 999999;
 
-export const DIX = 10;
-export const VINGT_CINQ = 25;
-export const CINQUANTE = 50;
+export const DIX = "10";
+export const VINGT_CINQ = "25";
+export const CINQUANTE = "50";

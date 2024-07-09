@@ -37,12 +37,12 @@ function MyAccount() {
     if (typeof infosUser === 'object' && 'aud' in infosUser) {
         infos = infosUser.aud as unknown as DataToken;
     }
-    
+
     const isEntreprise = infos?.data.groups.roles === GROUPS.ENTREPRISE;
 
     const getUserById = async () => {
         try {
-            const response = await getElementByEndpoint(`user/getUser?id=${infosUser.data.id}`, {
+            const response = await getElementByEndpoint(`user/getUser?id=${infos?.data.id}`, {
                 token: authContext.accessToken ?? '',
                 data: '',
             });
@@ -95,32 +95,38 @@ function MyAccount() {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-
-            <div className="flex flex-col">
-                <InfosUser openPopup={openPopup} setIsInformationGeneraleCliked={setIsInformationGeneraleCliked}
-                           setIsHistoriqueOrderClicked={setIsHistoriqueOrderClicked}
-                           setIsSubmitted={() => setSubmitCount(count => count + 1)}
-                           infosUserById={infosUser}/>
-                {isEntreprise ?
-                    <div>
-                        <InformationGenerale infosUserById={infosUser}
-                                             setIsSubmitted={() => setSubmitCount(count => count + 1)}
-                                             className="mb-24"/>
-                        <HistoriqueAchat/>
-                    </div>
-                    :
-                    <div className=" text-left">
-                        <Presentation/>
-                    </div>
-                }
+            <div className="flex flex-col md:flex-row bg">
+                <aside className="w-full md:w-1/4  p-4">
+                    <InfosUser
+                        openPopup={openPopup}
+                        setIsInformationGeneraleCliked={handleInformationGeneraleClick}
+                        setIsHistoriqueOrderClicked={handleHistoriqueOrderClick}
+                        setIsSubmitted={() => setSubmitCount((count) => count + 1)}
+                        infosUserById={infosUser}
+                    />
+                </aside>
+                <main className="w-full md:w-3/4 p-4">
+                    {isEntreprise ? (
+                        <>
+                            <InformationGenerale
+                                infosUserById={infosUser}
+                                setIsSubmitted={() => setSubmitCount((count) => count + 1)}
+                                className="mb-24"
+                            />
+                            <HistoriqueAchat />
+                        </>
+                    ) : (
+                        <Presentation />
+                    )}
+                </main>
             </div>
-
             {isPopupOpen && (
-                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-90">
-                    <div className="bg-secondary p-8 rounded-md flex flex-col">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
+                    <div className="bg-gray-900 p-8 rounded-lg shadow-xl w-full max-w-lg animate-fade-in">
                         <MyForm onClose={closePopup} />
                     </div>
                 </div>
+
             )}
         </Layout>
     );
