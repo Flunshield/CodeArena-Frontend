@@ -1,20 +1,15 @@
 import Layout from "../ComposantsCommun/Layout.tsx";
-import { Event, Tournament, userRangList } from "../Interface/Interface.ts";
-import { useAuthContext } from "../AuthContext.tsx";
-import { JwtPayload } from "jwt-decode";
-import { useEffect, useState } from "react";
-import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
-import { Event, Tournament, userRangList } from "../Interface/Interface.ts";
-import { useAuthContext } from "../AuthContext.tsx";
-import { JwtPayload } from "jwt-decode";
-import { useEffect, useState } from "react";
-import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
+import {Event, Tournament, userRangList} from "../Interface/Interface.ts";
+import {useAuthContext} from "../AuthContext.tsx";
+import {JwtPayload} from "jwt-decode";
+import {useEffect, useState} from "react";
+import {getElementByEndpoint} from "../Helpers/apiHelper.ts";
 import TableauEvent from "../Composants/dashboard/TableauEvent.tsx";
 import UserRank from "../Composants/dashboard/UserRank.tsx";
 import TableauTournament from "../Composants/tournament/TableauTournament.tsx";
 import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn.tsx";
 import { Container } from "../ComposantsCommun/Container.tsx";
-import { SectionIntro } from "../ComposantsCommun/SectionIntro.tsx";
+import { SectionIntro } from "../ComposantsCommun/SectionIntro";
 import Button from "../ComposantsCommun/Button.tsx";
 import { GridPattern } from "../ComposantsCommun/GridPattern.tsx";
 
@@ -40,7 +35,6 @@ function Dashboard() {
             });
         }
     }, [infosUserRank]);
-    }, [infosUserRank]);
 
     return (
         <>
@@ -61,7 +55,7 @@ function Dashboard() {
                             </Button>
                         </div>
                     </SectionIntro>
-                    <FadeInStagger className="mt-10 grid grid-cols-1 xl:grid-cols-3 gap-8">
+                    <FadeInStagger className="mt-10 grid grid-cols-1 xl:grid-cols-3 gap-10 w-full">
                         <FadeIn className="col-span-2">
                             <TableauEvent infosEvents={infosEvents} isImg={false} />
                         </FadeIn>

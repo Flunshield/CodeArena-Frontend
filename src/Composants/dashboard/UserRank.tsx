@@ -17,7 +17,7 @@ function UserRank(value: UserRankProps): JSX.Element {
     return (
         <Container>
             <Card className={clsx(className, "rounded-xl shadow-lg")}>
-                <div className="bg-secondary text-tertiari pt-3 pb-3">
+                <div className="bg-secondary text-tertiari pt-3 pb-3 w-full">
                     <p className="font-bold text-2xl lg:text-5xl text-center" id="title-yourRank">{t("yourRank")}</p>
                     <div className="pr-10 pl-10 mt-10">
                         <div>

@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useAuthContext } from "../../AuthContext.tsx";
-import { JwtPayload } from "jwt-decode";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
-import { getElementByEndpoint, postElementByEndpoint, unsubscribeTournament } from "../../Helpers/apiHelper.ts";
+import {DataToken, Tournament} from "../../Interface/Interface.ts";
+import {useAuthContext} from "../../AuthContext.tsx";
+import {JwtPayload} from "jwt-decode";
+import {useTranslation} from "react-i18next";
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {getElementByEndpoint, postElementByEndpoint, unsubscribeTournament} from "../../Helpers/apiHelper.ts";
 import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
-import { formatDate } from "../../Helpers/formatHelper.ts";
+import {formatDate} from "../../Helpers/formatHelper.ts";
 import Button from "../../ComposantsCommun/Button.tsx";
 import Notification from "../../ComposantsCommun/Notification.tsx";
-import { GROUPS } from "../../constantes/constantes.ts";
+import {GROUPS} from "../../constantes/constantes.ts";
 import { Container } from "../../ComposantsCommun/Container.tsx";
 import { FadeIn } from "../../ComposantsCommun/FadeIn.tsx";
-import { DataToken, Tournament } from "../../Interface/Interface.ts";
 
 function TournamentInfos(): JSX.Element {
     const authContext = useAuthContext();
-    const infosUser = authContext?.infosUser as JwtPayload;
-    const infos = infosUser.aud as unknown as DataToken;
-    const isUser = infos.data.groups.roles === GROUPS.USER;
-    const { t } = useTranslation();
-    const data = { token: authContext.accessToken ?? "" };
-    const { id } = useParams<{ id: string }>();
-    const [infosTournament, setInfosTournament] = useState<Tournament>();
-    const getTournament = getElementByEndpoint('tournament/findTournament?id=' + id, { token: data.token, data: "" });
+    const infosUser = authContext?.infosUser as JwtPayload
+    const infos = infosUser.aud as unknown as DataToken
+    const isUser = infos.data.groups.roles === GROUPS.USER
+    const {t} = useTranslation();
+    const data = {token: authContext.accessToken ?? ""}
+    const {id} = useParams<{ id: string }>();
+    const [infosTournament, setInfosTournament] = useState<Tournament>()
+    const getTournament = getElementByEndpoint('tournament/findTournament?id=' + id, {token: data.token, data: ""});
     const [isRegistered, setIsRegistered] = useState<boolean>();
     const [canSubscribe, setCanSubscribe] = useState<boolean>(true);
     const [showNotification, setShowNotification] = useState(false);
@@ -40,7 +40,7 @@ function TournamentInfos(): JSX.Element {
             }
         }).then(response => {
             if (response.status === 201) {
-                setIsRegistered(true);
+                setIsRegistered(true)
                 setNotificationMessage(t('inscriptionSuccess'));
                 setNotificationType('success');
                 setShowNotification(true);
@@ -50,7 +50,7 @@ function TournamentInfos(): JSX.Element {
                 setShowNotification(true);
             }
         });
-    };
+    }
 
     const handleClickUnsubscribe = () => {
         unsubscribeTournament('tournament/unsubscribe', {
@@ -59,7 +59,7 @@ function TournamentInfos(): JSX.Element {
             tournamentID: infosTournament?.id
         }).then(response => {
             if (response.status === 200) {
-                setIsRegistered(false);
+                setIsRegistered(false)
                 setNotificationMessage(t('unsubscribeSucces'));
                 setNotificationType('success');
                 setShowNotification(true);
@@ -69,7 +69,7 @@ function TournamentInfos(): JSX.Element {
                 setShowNotification(true);
             }
         });
-    };
+    }
 
     useEffect(() => {
         getTournament.then(async (response) => {
@@ -78,15 +78,15 @@ function TournamentInfos(): JSX.Element {
             if (result) {
                 infos?.data.userTournament?.find((tournament) => {
                     if (tournament?.tournamentID === parseInt(id ?? "")) {
-                        setIsRegistered(true);
+                        setIsRegistered(true)
                     } else {
-                        setIsRegistered(false);
+                        setIsRegistered(false)
                     }
                 });
             }
         });
         if (infosTournament && (infosTournament?.numberRegistered >= infosTournament?.playerMax)) {
-            setCanSubscribe(false);
+            setCanSubscribe(false)
         }
     }, [isRegistered]);
 

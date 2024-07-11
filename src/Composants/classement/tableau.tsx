@@ -1,13 +1,13 @@
-import { useAuthContext } from "../../AuthContext.tsx";
-import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-import { User } from "../../Interface/Interface.ts";
-import { getElementByEndpoint } from "../../Helpers/apiHelper.ts";
+import {useAuthContext} from "../../AuthContext.tsx";
+import {useTranslation} from "react-i18next";
+import {useEffect, useState} from "react";
+import {DataToken, listUser, listUserEntreprise} from "../../Interface/Interface.ts";
+import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
 import DataTable from "../../ComposantsCommun/DataTable.tsx";
 import Pagination from "../../ComposantsCommun/Pagination.tsx";
-import { JwtPayload } from "jwt-decode";
-import { GROUPS } from "../../constantes/constantes.ts";
+import {JwtPayload} from "jwt-decode";
+import {GROUPS} from "../../constantes/constantes.ts";
 import { Container } from "../../ComposantsCommun/Container.tsx";
 import { SectionIntro } from "../../ComposantsCommun/SectionIntro.tsx";
 import Card from "../../ComposantsCommun/Card.tsx";
@@ -57,8 +57,8 @@ function Tableau(): JSX.Element {
         {key: 'nbGames', label: 'nbGames'},
     ]
 
-    // Transform user data to fit the table headers
-    const transformedData = users.map(user => ({
+// Transform user data to fit the table headers
+    const transformedData = users.item.map(user => ({
         firstName: user.firstName ?? "",
         lastName: user.lastName ?? "",
         email: user.email ?? "",

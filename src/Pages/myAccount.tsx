@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Layout from "../ComposantsCommun/Layout";
 import Presentation from "../Composants/account/presentation";
 import MyForm from "../Composants/account/MyForm";
@@ -14,15 +14,15 @@ import InformationGenerale from "../Composants/account/entreprise/InformationGen
 import { PRICING } from "../constantes/constanteEntreprise";
 import { useTranslation } from "react-i18next";
 import { Container } from "../ComposantsCommun/Container";
-import { SectionIntro } from "../ComposantsCommun/SectionIntro";
+import  {SectionIntro}  from "../ComposantsCommun/SectionIntro";
 import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn";
 
 function MyAccount() {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isInformationGeneraleCliked, setIsInformationGeneraleCliked] = useState(false);
     const [isHistoriqueOrderClicked, setIsHistoriqueOrderClicked] = useState(false);
-    const [, setSubmitCount] = useState(0);
-    const { t } = useTranslation();
+    const [submitCount, setSubmitCount] = useState(0);
+    const {t} = useTranslation();
     const authContext = useAuthContext();
     // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
@@ -32,11 +32,11 @@ function MyAccount() {
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
     const [infosUserById, setInfosUserById] = useState<User>({} as User);
-
     const getUserById = getElementByEndpoint("user/getUser?id=" + infos.data.id, {
         token: authContext.accessToken ?? "",
         data: "",
     })
+
     const openPopup = () => {
         setPopupOpen(true);
     };
@@ -47,11 +47,11 @@ function MyAccount() {
 
     useEffect(() => {
         if (isInformationGeneraleCliked) {
-            document.getElementById('informationGenerale')?.scrollIntoView({ behavior: "smooth" });
+            document.getElementById('informationGenerale')?.scrollIntoView({behavior: "smooth"});
             setIsInformationGeneraleCliked(false);
         }
         if (isHistoriqueOrderClicked) {
-            document.getElementById('historiqueAchat')?.scrollIntoView({ behavior: "smooth" });
+            document.getElementById('historiqueAchat')?.scrollIntoView({behavior: "smooth"});
             setIsHistoriqueOrderClicked(false);
         }
 
@@ -69,7 +69,7 @@ function MyAccount() {
                 setShowNotification(true);
             }
         });
-    }, [isInformationGeneraleCliked, isHistoriqueOrderClicked, getUserById, t]);
+    }, [submitCount]);
 
     return (
         <Layout>

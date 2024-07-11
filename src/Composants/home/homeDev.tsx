@@ -1,8 +1,12 @@
-import { FadeIn, FadeInStagger } from "../../ComposantsCommun/FadeIn";
-import { useTranslation } from "react-i18next";
+import { Container } from "../../ComposantsCommun/Container";
+import { FadeIn } from "../../ComposantsCommun/FadeIn";
+import Clients from "./homeDev/Client";
+import CaseStudiess from "./homeDev/CaseStudiess";
+import { Testimonial } from "./homeDev/Testimonial";
+import Services from "./homeDev/Services";
 
 const HomeDev = () => {
-    const { t } = useTranslation();
+    
     return (
         <>
             <Container className="mt-80 sm:mt-64 md:mt-72">

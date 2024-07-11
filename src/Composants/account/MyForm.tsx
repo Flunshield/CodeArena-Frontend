@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import company from "/assets/iconeProfile/company.png";
@@ -9,9 +9,11 @@ import school from "/assets/iconeProfile/school.png";
 import iconeTitle from "/assets/iconeProfile/flag.png";
 import {useTranslation} from "react-i18next";
 import {Titles, User} from "../../Interface/Interface.ts";
-import React, {useEffect} from "react";
+
 import {getElementByEndpoint, updateUser} from "../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../AuthContext.tsx";
+import { Container } from '../../ComposantsCommun/Container.tsx';
+import { FadeIn } from '../../ComposantsCommun/FadeIn.tsx';
 
 interface MyFormProps {
     onClose: () => void;

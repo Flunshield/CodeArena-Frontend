@@ -8,8 +8,6 @@ import BouttonProfile from "../Composants/BouttonProfile.tsx";
 import { DASHBOARD, HOME } from "../constantes/constantesRoutes.ts";
 import loginIcons from "/assets/icons/iconsLogin.svg";
 
-
-
 const Header = () => {
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
@@ -35,31 +33,29 @@ const Header = () => {
         };
     }, []);
 
-    const handleClickSingIn = () => {
+    const handleClickSignIn = () => {
         navigate("/login");
     };
 
-    const handleClickSingUp = () => {
+    const handleClickSignUp = () => {
         navigate("/signUp");
     };
 
     return (
-        <header className="z-50 text-secondary px-4 md:px-8 bg-secondary relative">
-            <div className="flex justify-between items-start w-full">
-                {isConnected && <div className="flex start-0 top-0 absolute py-2 w-full"><NavBar /></div>}
-                <div className="flex justify-between px-0 py-0 w-full items-center md:space-x-1">
+        <header className="z-50 text-tertiari px-4 md:px-8 bg-secondary relative">
+            <div className="flex justify-between items-center w-full">
+                {isConnected && <div className="flex start-0 top-0 absolute py-6 w-full"><NavBar /></div>}
+                <div className="flex justify-between px-10 py-3 w-full items-center md:space-x-1">
                     <div className="flex items-center">
                         <img src="/logo.svg" alt="Logo codeArena" className="w-16 h-16 mr-3" />
                         <a className="text-tertiari text-3xl m-3 font-bold" href={isConnected ? DASHBOARD : HOME}>
                             {t('CodeArena')}
                         </a>
                     </div>
-
                 </div>
-
                 <div className="flex py-2 items-center space-x-2">
                     {isConnected ? (
-                        <div className="flex  items-center">
+                        <div className="flex items-center">
                             <BouttonProfile />
                         </div>
                     ) : (
@@ -79,7 +75,7 @@ const Header = () => {
                                                 type="button"
                                                 id="signIn"
                                                 className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
-                                                onClick={handleClickSingIn}
+                                                onClick={handleClickSignIn}
                                             >
                                                 {t('connection')}
                                             </Button>
@@ -87,7 +83,7 @@ const Header = () => {
                                                 type="button"
                                                 id="signUp"
                                                 className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary ml-2 transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
-                                                onClick={handleClickSingUp}
+                                                onClick={handleClickSignUp}
                                             >
                                                 {t('inscription')}
                                             </Button>
@@ -100,7 +96,7 @@ const Header = () => {
                                     type="button"
                                     id="signIn"
                                     className="bg-gray-700 text-tertiari p-2 md:px-4 py-3 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
-                                    onClick={handleClickSingIn}
+                                    onClick={handleClickSignIn}
                                 >
                                     {t('connection')}
                                 </Button>
@@ -108,12 +104,11 @@ const Header = () => {
                                     type="button"
                                     id="signUp"
                                     className="bg-gray-700 text-tertiari p-2 md:px-4 py-3 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
-                                    onClick={handleClickSingUp}
+                                    onClick={handleClickSignUp}
                                 >
                                     {t('inscription')}
                                 </Button>
                             </div>
-
                         </>
                     )}
                 </div>

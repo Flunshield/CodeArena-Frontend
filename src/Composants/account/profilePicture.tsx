@@ -1,5 +1,5 @@
 import {imagePaths} from "../../constantes/constantesRoutes.ts";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {updateUser} from "../../Helpers/apiHelper.ts";
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../AuthContext.tsx";
@@ -65,18 +65,17 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
     };
 
     return (
-        <div className={clsx(className, "relative")}>
+        <div className={clsx(classname, "relative")}>
             <img
                 className="rounded-full w-48 h-48 border-2 border-tertiari cursor-pointer"
-                src={isPictureClicked !== "" ? `/assets/photosProfiles/${isPictureClicked}` : infos.data.avatar}
+                src={isPictureClicked !== "" ? `/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "iconsLogin.svg"}` : infosUserById?.avatar}
                 alt="Avatar"
                 onClick={openPopup}
             />
             {isPopupOpen && (
                 <>
-                    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 backdrop-filter backdrop-blur-sm z-40"></div>
                     <div
-                        className="fixed z-50 top-0 left-0 w-full h-full flex items-center justify-center z-50"
+                        className="fixed z-50 top-0 left-0 w-full h-full flex items-center justify-center"
                     >
                         <Container className="flex flex-row-reverse bg-secondary rounded-md pb-4">
                         <Button

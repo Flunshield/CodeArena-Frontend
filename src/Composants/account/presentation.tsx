@@ -1,9 +1,8 @@
-import { useTranslation } from "react-i18next";
-import { useAuthContext } from "../../AuthContext";
-import { JwtPayload } from "jwt-decode";
-import { DataToken } from "../../Interface/Interface";
-import { updateUser } from "../../Helpers/apiHelper";
-import Label from "../../ComposantsCommun/Label";
+import {useTranslation} from "react-i18next";
+import {useAuthContext} from "../../AuthContext.tsx";
+import {User} from "../../Interface/Interface.ts";
+import {updateUser} from "../../Helpers/apiHelper.ts";
+import Label from "../../ComposantsCommun/Label.tsx";
 import { Container } from "../../ComposantsCommun/Container";
 import { FadeIn } from "../../ComposantsCommun/FadeIn";
 
@@ -44,7 +43,7 @@ function Presentation({infosUserById}: PresentationProps) {
                         cols={75}
                         className="rounded-xl bg-neutral-100 text-neutral-900 border-neutral-300 border-2 p-5 mb-5 w-full max-w-2xl"
                         placeholder="Aucune description ..."
-                        defaultValue={infos.data.presentation}
+                        defaultValue={infosUserById.presentation}
                     />
                     <button
                         onClick={updatePresentation}

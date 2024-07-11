@@ -1,11 +1,11 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../ComposantsCommun/Layout.tsx";
 import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
 import { useAuthContext } from "../AuthContext.tsx";
 import { Event } from "../Interface/Interface.ts";
 import TableauEvent from "../Composants/dashboard/TableauEvent.tsx";
 import { Container } from "../ComposantsCommun/Container.tsx";
-import { SectionIntro } from "../ComposantsCommun/SectionIntro.tsx";
+import { SectionIntro } from "../ComposantsCommun/SectionIntro";
 import Card from "../ComposantsCommun/Card.tsx";
 import CardContent from "../ComposantsCommun/CardContent.tsx";
 import { FadeIn } from "../ComposantsCommun/FadeIn.tsx";
@@ -20,6 +20,7 @@ function EventDashboard() {
         if (infosEvent.length === 0) {
             getAllEvents.then(async (response) => {
                 const result = await response.json();
+                console.log("Received events:", result); // Vérifiez les données reçues ici
                 setInfosEvent(result);
             });
         }

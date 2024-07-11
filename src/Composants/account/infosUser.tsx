@@ -10,7 +10,6 @@ import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
 import {DataToken, User} from "../../Interface/Interface.ts";
-import React, {useState} from "react";
 import {postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import ListItem from "../../ComposantsCommun/ListItem.tsx";
 import ProfilePicture from "./profilePicture.tsx";
@@ -20,7 +19,7 @@ import Administration from "./entreprise/Administration";
 import { Container } from "../../ComposantsCommun/Container";
 import { FadeIn, FadeInStagger } from "../../ComposantsCommun/FadeIn";
 import clsx from "clsx";
-import Notification from "../../ComposantsCommun/Notification.tsx";
+
 
 interface InfosUserProps {
     openPopup: () => void;
@@ -74,7 +73,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                 <FadeIn>
                     <div className="flex flex-col items-center text-neutral-900 w-full">
                         <div className="mb-10 text-center">
-                            <ProfilePicture className="max-sm:hidden ml-16" />
+                            <ProfilePicture classname="max-sm:hidden ml-16" />
                             <div className="mt-10">
                                 <p className="text-neutral-900 mb-1 uppercase font-bold max-sm:text-xl text-2xl">
                                     {infosUserById?.firstName && infosUserById?.lastName ? `${infosUserById?.firstName} ${infosUserById?.lastName}` : infosUserById?.userName}
@@ -121,7 +120,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                     <Button
                                         type="button"
                                         onClick={openPopup}
-                                        className="bg-primary hover:bg-primary-light text-secondary font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mt-4 self-center"
+                                        className="bg-tertiari hover:bg-primary-light  text-secondary font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mt-4 self-center"
                                         id="save"
                                     >
                                         {t("update")}
@@ -138,7 +137,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                 </FadeIn>
                             ) : (
                                 <FadeIn>
-                                    <Badges />
+                                    <Badges infosUserById={infosUserById} />
                                 </FadeIn>
                             )}
                         </div>

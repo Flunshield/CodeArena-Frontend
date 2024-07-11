@@ -34,6 +34,7 @@ export interface DataToken {
     data: {
         id?: number;
         groups: Groups;
+        
     }
 }
 

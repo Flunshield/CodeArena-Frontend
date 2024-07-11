@@ -1,4 +1,6 @@
+import { Container } from "../../../ComposantsCommun/Container.tsx";
 import { FadeIn, FadeInStagger } from "../../../ComposantsCommun/FadeIn.tsx";
+import { SectionIntro } from "../../../ComposantsCommun/SectionIntro.tsx";
 import { CARD_EXPLANATION } from "../../../constantes/constanteEntreprise.ts";
 import { useTranslation } from "react-i18next";
 
