@@ -45,9 +45,9 @@ const InfosUser: React.FC<InfosUserProps> = ({
     const emailVerified = infosUserById?.emailVerified
     const title = infosUserById?.titles?.label as unknown as string
     const [isSendMail, setIsSendMail] = React.useState<boolean>(false);
-    const [showNotification, setShowNotification] = useState(false);
-    const [notificationType, setNotificationType] = useState('');
-    const [notificationMessage, setNotificationMessage] = useState('');
+    const [, setShowNotification] = useState(false);
+    const [, setNotificationType] = useState('');
+    const [, setNotificationMessage] = useState('');
 
     const valdMail = async () => {
         const response = await postElementByEndpoint('user/validMail', {

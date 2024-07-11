@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Changer l'importation
-import iconeMail from '/assets/iconeMail.png';
 import { useTranslation } from "react-i18next";
-import { ENTREPRISE, EVENT, LEGAL, MAIL, PRIVACY_POLICY, RANKING, TERMS, TOURNAMENT } from "../constantes/constantesRoutes.ts";
+import { ENTREPRISE, EVENT, LEGAL, PRIVACY_POLICY, RANKING, TERMS, TOURNAMENT } from "../constantes/constantesRoutes.ts";
 import { NavFlags } from "../Interface/Interface.ts";
-import { useAuthContext } from "../AuthContext.tsx";
 import drapFr from "/assets/drapeaux/fr.svg";
 import drapEn from "/assets/drapeaux/gb.svg";
 import { changeLanguage } from "../i18n.ts";
@@ -117,39 +115,6 @@ function Navigation() {
 }
 
 
-function NewsletterForm() {
-    const { t } = useTranslation();
-
-    return (
-        <form className="max-w-sm">
-            <h2 className="font-display text-sm font-semibold tracking-wider text-neutral-950">
-                {t('inscrivez_vous_à_notre_newsletter')}
-            </h2>
-            <p className="mt-4 text-sm text-neutral-700">
-                {t('abonnez_vous_pour_recevoir_les_dernières_nouvelles_articles_ressources_et_inspirations')}
-            </p>
-            <div className="relative mt-6">
-                <input
-                    type="email"
-                    placeholder={t('adresse_email')}
-                    autoComplete="email"
-                    aria-label={t('adresse_email')}
-                    className="block w-full rounded-2xl border border-neutral-300 bg-transparent py-4 pl-6 pr-20 text-base/6 text-neutral-950 ring-4 ring-transparent transition placeholder:text-neutral-500 focus:border-neutral-950 focus:outline-none focus:ring-neutral-950/5"
-                />
-                <div className="absolute inset-y-1 right-1 flex justify-end">
-                    <button
-                        type="submit"
-                        aria-label={t('submit')}
-                        className="flex aspect-square h-full items-center justify-center rounded-xl bg-neutral-950 text-white transition hover:bg-neutral-800"
-                    >
-
-
-                    </button>
-                </div>
-            </div>
-        </form>
-    );
-}
 
 const Footer: React.FC<FooterProps> = ({ className }) => {
     const { t } = useTranslation();

@@ -2,7 +2,6 @@ import { Container } from "../../../ComposantsCommun/Container";
 import { FadeIn } from "../../../ComposantsCommun/FadeIn";
 import { ItemList } from "../../../ComposantsCommun/ItemList";
 import { List } from "../../../ComposantsCommun/List";
-import ListItem from "../../../ComposantsCommun/ListItem";
 import { SectionIntro } from "../../../ComposantsCommun/SectionIntro";
 
 function Services() {

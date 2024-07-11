@@ -39,10 +39,10 @@ function CaseStudies(){
                     <span>Case study</span>
                   </p>
                   <p className="mt-6 font-display text-2xl font-semibold text-neutral-950">
-                    I'm a title
+                    Im a title
                   </p>
                   <p className="mt-4 text-base text-neutral-600">
-                    I'm a description
+                    Im a description
                   </p>
                 </article>
               </FadeIn>

@@ -8,12 +8,10 @@ import clsx from "clsx";
 import Button from "../../ComposantsCommun/Button.tsx";
 import btnClose from "/assets/btnClose.png";
 import { Container } from "../../ComposantsCommun/Container";
-
 interface ProfilePictureProps {
     classname?: string;
     infosUserById?: User;
 }
-
 function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
     const {t} = useTranslation();
     const authContext = useAuthContext();
@@ -115,6 +113,5 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
             )}
         </div>
     );
-};
-
+}
 export default ProfilePicture;
