@@ -73,7 +73,7 @@ const BouttonProfile = () => {
                         <div className='p-2'>
                             <div className='flex flex-col items-center'>
                                 <Button id='button-compte' type={'button'}
-                                        className={clsx(currentPage === "myAccount" ? "hidden" : "block", "mb-5 hover:underline")}>
+                                        className={clsx(currentPage === "myAccount" )}>
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
                                 {role === GROUPS.ADMIN &&
