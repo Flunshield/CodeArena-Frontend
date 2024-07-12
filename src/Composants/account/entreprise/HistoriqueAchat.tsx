@@ -27,8 +27,20 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
     const getAllCommande = getElementByEndpoint('entreprise/getAllCommandeForUser?id=' + infos.data.id + "&page=" + currentPage, {
         data: "",
         token: authContext.accessToken ?? ""
-    });
-    const maxPage = Math.ceil(commandes.total / 10);
+    })
+
+    const nextPage = () => {
+        setCurrentPage(currentPage + 1);
+        setSubmitCount(count => count + 1);
+    };
+
+    const prevPage = () => {
+        setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
+        setSubmitCount(count => count + 1);
+    };
+
+    const maxPage = Math.ceil(commandes.total / commandes.item.length);
+
     const lastCommandFormatted = formatItemCommande(commandes.item, t);
 
     useEffect(() => {
@@ -67,9 +79,7 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
                     ))}
                     </tbody>
                 </table>
-                <Pagination item={lastCommandFormatted} maxPage={maxPage} currentPage={currentPage}
-                            setCurrentPage={setCurrentPage} setSubmitCount={setSubmitCount}
-                            classNameCurrentPage="text-tertiari"/>
+                <Pagination item={lastCommandFormatted} maxPage={maxPage} currentPage={currentPage} nextPage={nextPage} prevPage={prevPage} classNameCurrentPage="text-tertiari"/>
             </div>
             <div className="flex justify-between items-center w-full">
             </div>

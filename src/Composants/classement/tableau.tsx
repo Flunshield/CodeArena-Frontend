@@ -8,6 +8,11 @@ import DataTable from "../../ComposantsCommun/DataTable.tsx";
 import Pagination from "../../ComposantsCommun/Pagination.tsx";
 import {JwtPayload} from "jwt-decode";
 import {GROUPS} from "../../constantes/constantes.ts";
+import { Container } from "../../ComposantsCommun/Container.tsx";
+import { SectionIntro } from "../../ComposantsCommun/SectionIntro.tsx";
+import Card from "../../ComposantsCommun/Card.tsx";
+import CardContent from "../../ComposantsCommun/CardContent.tsx";
+import { FadeIn } from "../../ComposantsCommun/FadeIn.tsx";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();
@@ -72,27 +77,43 @@ function Tableau(): JSX.Element {
         );
     }, [submitCount, itemPerPage, currentPage]);
     return (
-        <div className="m-5">
-            <div className="flex max-md:flex-col flex-row max-md:text-center justify-between">
-                <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des utilisateurs')}</h2>
-                <SearchBar onSearch={onSearch} setItemPerPage={setItemPerPage} placeholder={"serachByUsername"}
-                           setCurrentPage={setCurrentPage}/>
-            </div>
-            <div className="flex flex-col justify-center w-full">
-                <div className="overflow-x-auto rounded-lg">
-                    {transformedData && transformedData.length === 0 ?
-                        <p>{t('NoUserFound')}</p>
-                        :
-                        <DataTable headers={headers} data={transformedData}/>
-                    }
-                </div>
-                <Pagination item={users.item} maxPage={maxPage} currentPage={currentPage}
+        <Container className="py-12">
+            <SectionIntro 
+                title={t('Liste des utilisateurs')} 
+                subtitle={t('serachByUsername')}
+                className="mb-8"
+            />
+            <FadeIn>
+                <Card className="bg-white shadow-elevated p-6">
+                    <CardContent>
+                        <div className="flex flex-col md:flex-row items-center justify-between mb-6">
+                            <h2 className="text-lg font-semibold text-secondary mb-4 md:mb-0 shadow-lg bg-gray-200 dark:bg-gray-800 dark:text-gray-300 rounded-lg p-4">
+                                {t('Liste des utilisateurs')}
+                            </h2>
+                            <SearchBar 
+                                onSearch={onSearch} 
+                                setItemPerPage={setItemPerPage} 
+                                placeholder={t('serachByUsername')} 
+                                setCurrentPage={setCurrentPage} 
+                            />
+                        </div>
+                        <div className="overflow-hidden rounded-lg shadow-md">
+                            <DataTable headers={headers} data={transformedData} className="w-full" />
+                        </div>
+                        <Pagination
+                            item={users.item}
+                            maxPage={maxPage}
+                            currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
-                            setSubmitCount={setSubmitCount} classNameCurrentPage="text-tertiari"
-                            itemPerPage={itemPerPage}/>
-            </div>
-        </div>
-    )
+                            setSubmitCount={setSubmitCount}
+                            classNameCurrentPage="text-primary"
+                            itemPerPage={itemPerPage}
+                        />
+                    </CardContent>
+                </Card>
+            </FadeIn>
+        </Container>
+    );
 }
 
 export default Tableau;

@@ -4,7 +4,7 @@ import Label from "../ComposantsCommun/Label.tsx";
 import {changePassword} from "../Helpers/apiHelper.ts";
 import {useLocation, useNavigate} from "react-router-dom";
 import Layout from "../ComposantsCommun/Layout.tsx";
-import tree from "/assets/tree.svg";
+
 import CardContent from '../ComposantsCommun/CardContent.tsx';
 import Card from '../ComposantsCommun/Card.tsx';
 import {useTranslation} from "react-i18next";
@@ -97,15 +97,12 @@ const ChangePassword: React.FC = () => {
                                     >
                                         <Form className="pr-10 pl-10">
                                             <ErrorMessage name="errorPassword" component="div" className="text-error"/>
-                                            {/* Champ password */}
                                             <div>
                                                 <Label htmlFor="password" id={"password"}>{t('password')}</Label>
                                                 <Field type="password" id="password" name="password"
                                                        className={"h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-primary"}/>
                                                 <ErrorMessage name="password" component="div" className="text-error"/>
-                                            </div>
-                                            <br/>
-                                            {/* Champ confirmePassword */}
+                                            </div>   
                                             <div>
                                                 <Label htmlFor="confirmePassword"
                                                        id={"confirmePassword"}>{t('confirmePassword')}</Label>
@@ -114,8 +111,6 @@ const ChangePassword: React.FC = () => {
                                                 <ErrorMessage name="confirmePassword" component="div"
                                                               className="text-error"/>
                                             </div>
-                                            <br/>
-                                            {/* Bouton de soumission du formulaire */}
                                             <div className="mt-5">
                                                 <Button type="submit" id={"submitRequest"}
                                                         className="bg-secondary w-full h-12 rounded-md uppercase">
@@ -129,12 +124,6 @@ const ChangePassword: React.FC = () => {
                         </Card>
                     </div>
                 </div>
-                <img
-                    className="bg-primary ml-auto"
-                    src={tree}
-                    alt="arbre design"
-                    id="arbre"
-                />
             </div>
         </Layout>
     );

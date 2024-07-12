@@ -11,7 +11,7 @@ export interface User {
     firstName?: string;
     lastName?: string;
     groupsId?: number;
-    groups: Groups;
+    groups?: Groups;
     languagePreference?: string;
     localisation?: string;
     titlesId?: number;
@@ -34,6 +34,7 @@ export interface DataToken {
     data: {
         id?: number;
         groups: Groups;
+        
     }
 }
 
