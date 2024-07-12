@@ -4,11 +4,11 @@ import TrustSection from "./homeEntreprise/trustSection.tsx";
 
 const HomeEntreprise = () => {
     return (
-        <div className="flex flex-col items-center mt-32 mb-24">
-            <div className="pt-22 z-10 w-full max-w-6xl">
-                <CardExplainSection/>
-                <PricingSection/>
-                <TrustSection/>
+        <div className="flex flex-col md:flex-row md:justify-between mt-16 mb-24 w-full">
+            <div className="pt-32 z-20 flex flex-col items-center md:items-start">
+                <CardExplainSection />
+                <PricingSection />
+                <TrustSection />
             </div>
         </div>
     );

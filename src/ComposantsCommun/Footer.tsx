@@ -124,52 +124,49 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             <footer className={clsx(className, "w-full text-secondary bottom-0 relative p-8 shadow-angelic-white")}>
                 <FadeIn duration={1.0}>
                     <div className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
-                        <Navigation />
-                        <div className="flex lg:justify-end">
+                        <Navigation/>
+                        <div className="flex justify-center items-center">
                             <div className="flex flex-col items-center justify-center text-center">
                                 <h2 className="font-bold text-2xl mb-4">{t('retrouverNous')}</h2>
-                                <div className="flex space-x-4 mb-4 relative justify-center">
+                                <div className="flex flex-wrap justify-center gap-4 mb-4">
                                     {socialMediaProfiles.map((profile) => (
                                         <button
                                             key={profile.title}
-                                            onClick={() => { window.location.href = profile.href; }}
-                                            style={{ backgroundColor: profile.bgColor }}
+                                            onClick={() => {
+                                                window.location.href = profile.href;
+                                            }}
+                                            style={{backgroundColor: profile.bgColor}}
                                             className="group flex justify-center p-2 rounded-full drop-shadow-xl transition-all duration-300 relative"
                                         >
-                                            <img src={profile.icon} alt={profile.title} />
+                                            <img src={profile.icon} alt={profile.title}/>
                                             <span
-                                                style={{ backgroundColor: profile.bgColor }}
+                                                style={{backgroundColor: profile.bgColor}}
                                                 className="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:translate-y-[-24px] group-hover:scale-110 duration-500 text-secondary rounded px-1 py-0.5"
                                             >
-                                                {profile.title}
-                                            </span>
+                        {profile.title}
+                    </span>
                                         </button>
                                     ))}
                                 </div>
-
                             </div>
                         </div>
-                    </div>
-                    <div className="mb-20 mt-24 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 border-t border-neutral-950/10 pt-12">
-                        <Link to="/" aria-label="Home">
-                            <Logo className="h-8" fillOnHover />
-                        </Link>
-                        <p className="text-sm text-neutral-700">
-                            © CodeArena {new Date().getFullYear()}
-                        </p>
-                    </div>
-                </FadeIn>
 
-                <div className="mx-auto border-t-2 border-tertiari w-2/3 mt-8"></div>
-                <div className="mt-8 text-center flex flex-col md:flex-row justify-between items-center">
+                    </div>
+                <div
+                    className="mb-20 mt-24 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-neutral-950/10 pt-12">
+                    <Link to="/" aria-label="Home">
+                        <Logo className="h-8" fillOnHover/>
+                    </Link>
                     <p className="mb-4 md:mb-0 flex-1 text-center">© {new Date().getFullYear()} CodeArena</p>
                     <div className="flex justify-center md:justify-end">
-                        <NavFlagsComponent />
+                        <NavFlagsComponent/>
                     </div>
                 </div>
-            </footer>
         </FadeIn>
-    );
+</footer>
+</FadeIn>
+)
+    ;
 };
 
 export default Footer;

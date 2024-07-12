@@ -28,19 +28,19 @@ function EventDashboard() {
 
     return (
         <Layout>
-            <Container className="py-12">
-                <SectionIntro 
-                    title="Upcoming Events" 
+            <Container className="py-12 px-4 md:px-8 lg:px-12">
+                <SectionIntro
+                    title="Upcoming Events"
                     subtitle="Discover the latest events happening near you."
-                    className="mb-8"
+                    className="mb-8 text-center"
                 />
                 <FadeIn>
-                    <Card className="bg-secondary shadow-elevated p-6">
+                    <Card className="bg-secondary shadow-elevated p-6 rounded-xl">
                         <CardContent>
-                            <TableauEvent 
-                                infosEvents={infosEvent} 
-                                isImg={false} 
-                                className="m-5 rounded-xl border-tertiari p-5 h-full"
+                            <TableauEvent
+                                infosEvents={infosEvent}
+                                isImg={false}
+                                className="m-5 rounded-xl border-tertiari p-5 h-full w-full bg-tertiary-light"
                             />
                         </CardContent>
                     </Card>

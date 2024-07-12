@@ -16,7 +16,7 @@ function TableauEvent({ infosEvents, className }: TableauEventProps) {
     const { t } = useTranslation();
 
     return (
-        <Container>
+        <Container className="px-4 md:px-8 lg:px-12">
             <Card className={`rounded-xl shadow-lg ${className}`}>
                 <CardContent className="bg-secondary text-tertiari text-center pb-6">
                     <p className="font-bold text-2xl lg:text-5xl" id="title-event">{t("event")}</p>
@@ -25,12 +25,12 @@ function TableauEvent({ infosEvents, className }: TableauEventProps) {
                     <FadeInStagger className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-2">
                         {infosEvents.map((item: Event, index: number) => (
                             <FadeIn key={index} className="flex flex-col items-center">
-                                <Card className="bg-tertiari rounded-xl m-5 border-tertiary shadow-md">
+                                <Card className="bg-tertiari rounded-xl m-5 border-tertiary shadow-md w-full lg:w-auto">
                                     <CardContent className="text-secondary p-5">
                                         <div className="flex flex-col items-center">
                                             <p className="font-bold text-2xl mb-5">{item.title}</p>
                                             <p className="mb-3">{formatDate(item.startDate, t)}</p>
-                                            <p className="text-secondary  text-justify">{item.description}</p>
+                                            <p className="text-secondary text-justify">{item.description}</p>
                                         </div>
                                     </CardContent>
                                 </Card>

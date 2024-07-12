@@ -12,7 +12,7 @@ const Header = () => {
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [showIconsPopUp, setShowIconsPopUp] = useState(false);
     const popupRef = useRef<HTMLDivElement | null>(null);
 
@@ -44,19 +44,24 @@ const Header = () => {
     return (
         <header className="z-50 text-tertiari px-4 md:px-8 bg-secondary relative">
             <div className="flex justify-between items-center w-full">
-                {isConnected && <div className="flex start-0 top-0 absolute py-6 w-full"><NavBar /></div>}
+                {isConnected && <div className="flex start-0 top-0 absolute py-6 w-full"><NavBar/></div>}
+
                 <div className="flex justify-between px-10 py-3 w-full items-center md:space-x-1">
                     <div className="flex items-center">
-                        <img src="/logo.svg" alt="Logo codeArena" className="w-16 h-16 mr-3" />
-                        <a className="text-tertiari text-3xl m-3 font-bold" href={isConnected ? DASHBOARD : HOME}>
+
+                        {!isConnected ?
+                            <a href={isConnected ? DASHBOARD : HOME}> <img src="/logo.svg" alt="Logo codeArena"
+                                                                           className="sm:block w-12 h-12 sm:w-16 sm:h-16  mr-3"/></a> : ""}
+                        <a className="hidden sm:block text-tertiari text-3xl m-3 font-bold"
+                           href={isConnected ? DASHBOARD : HOME}>
                             {t('CodeArena')}
                         </a>
                     </div>
                 </div>
-                <div className="flex py-2 items-center space-x-2">
+                <div className="flex py-3 items-center space-x-2">
                     {isConnected ? (
                         <div className="flex items-center">
-                            <BouttonProfile />
+                            <BouttonProfile/>
                         </div>
                     ) : (
                         <>
@@ -69,8 +74,9 @@ const Header = () => {
                                     onMouseLeave={() => setShowIconsPopUp(false)}
                                 />
                                 {showIconsPopUp && (
-                                    <div ref={popupRef} className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 rounded shadow">
-                                        <div className="flex justify-center">
+                                    <div ref={popupRef}
+                                         className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 rounded shadow">
+                                        <div className="flex  flex-col items-center space-y-2">
                                             <Button
                                                 type="button"
                                                 id="signIn"
@@ -91,7 +97,7 @@ const Header = () => {
                                     </div>
                                 )}
                             </div>
-                            <div className="flex flex-row space-x-4 mt-4">
+                            <div className="hidden sm:flex flex-row space-x-4 mt-4">
                                 <Button
                                     type="button"
                                     id="signIn"
