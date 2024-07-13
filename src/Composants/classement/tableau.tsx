@@ -13,6 +13,7 @@ import { SectionIntro } from "../../ComposantsCommun/SectionIntro.tsx";
 import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import { FadeIn } from "../../ComposantsCommun/FadeIn.tsx";
+import Notification from "../../ComposantsCommun/Notification.tsx";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();
@@ -26,6 +27,9 @@ function Tableau(): JSX.Element {
     const [submitCount, setSubmitCount] = useState(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemPerPage, setItemPerPage] = useState(10);
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     async function getUsers() {
         return await getElementByEndpoint(`user/getUsers?page=${currentPage}&itemPerPage=${itemPerPage}&isEntreprise=${isEntreprise}`, {
@@ -42,6 +46,27 @@ function Tableau(): JSX.Element {
         setUsers(await result.json());
     }
 
+    async function getPdf(idCv: number) {
+        const response = await getElementByEndpoint(`entreprise/pdfCvUser?id=${infos.data.id}&idCv=${idCv}`, {
+            token,
+            data: '',
+        });
+
+        if (response.status === 200) {
+            const result = await response.blob();
+            const url = window.URL.createObjectURL(new Blob([result]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'cv.pdf');
+            document.body.appendChild(link);
+            link.click();
+        } else {
+            setNotificationMessage(t('errorUserInfos'));
+            setNotificationType('error');
+            setShowNotification(true);
+        }
+    }
+
     const headers = infos.data.groups.roles === GROUPS.ENTREPRISE ? [
         {key: 'firstName', label: 'firstName'},
         {key: 'lastName', label: 'lastName'},
@@ -50,6 +75,7 @@ function Tableau(): JSX.Element {
         {key: 'userRankingTitle', label: 'userRanking'},
         {key: 'userRankingPoints', label: 'points'},
         {key: 'nbGames', label: 'nbGames'},
+        {key: 'actions', label: 'Cv'},
     ] : [
         {key: 'userName', label: 'userName'},
         {key: 'userRankingTitle', label: 'userRanking'},
@@ -58,7 +84,8 @@ function Tableau(): JSX.Element {
     ]
 
 // Transform user data to fit the table headers
-    const transformedData = users.item.map(user => ({
+    const transformedData = users.item.map(user =>
+        ({
         firstName: user.firstName ?? "",
         lastName: user.lastName ?? "",
         email: user.email ?? "",
@@ -66,7 +93,9 @@ function Tableau(): JSX.Element {
         userRankingTitle: user?.userRanking?.map(elem => elem?.rankings?.title).join(', ') ?? "",
         userRankingPoints: user?.userRanking?.map(elem => elem.points).join(', ') ?? "",
         nbGames: user.nbGames as string ?? "0",
+        actions: user.cvUser && user.cvUser.length > 0 ? <button className="rounded-xl pr-5 pl-5 p-1 bg-olive-green text-tertiari" onClick={() => getPdf(user.cvUser[0].id)}>{t('getCv')}</button> : <button className="rounded-xl pr-5 pl-5 p-1 bg-soft-gray text-secondary cursor-default">{t('getCv')}</button>,
     }));
+
     const maxPage = Math.ceil(users.total / itemPerPage);
 
     useEffect(() => {
@@ -78,8 +107,15 @@ function Tableau(): JSX.Element {
     }, [submitCount, itemPerPage, currentPage]);
     return (
         <Container className="py-12">
-            <SectionIntro 
-                title={t('Liste des utilisateurs')} 
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
+            <SectionIntro
+                title={t('listUtilisateurs')}
                 subtitle={t('serachByUsername')}
                 className="mb-8"
             />
@@ -88,13 +124,13 @@ function Tableau(): JSX.Element {
                     <CardContent>
                         <div className="flex flex-col md:flex-row items-center justify-between mb-6">
                             <h2 className="text-lg font-semibold text-secondary mb-4 md:mb-0 shadow-lg bg-gray-200 dark:bg-gray-800 dark:text-gray-300 rounded-lg p-4">
-                                {t('Liste des utilisateurs')}
+                                {t('listUtilisateurs')}
                             </h2>
-                            <SearchBar 
-                                onSearch={onSearch} 
-                                setItemPerPage={setItemPerPage} 
-                                placeholder={t('serachByUsername')} 
-                                setCurrentPage={setCurrentPage} 
+                            <SearchBar
+                                onSearch={onSearch}
+                                setItemPerPage={setItemPerPage}
+                                placeholder={t('serachByUsername')}
+                                setCurrentPage={setCurrentPage}
                             />
                         </div>
                         <div className="overflow-hidden rounded-lg shadow-md">

@@ -257,6 +257,7 @@ export interface UserClassementEntreprise {
     userRanking: UserRanking[];
     points: string;
     nbGames: string;
+    cvUser: CVFormState[];
 }
 
 export interface listPuzzleSend {

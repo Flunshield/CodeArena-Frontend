@@ -55,7 +55,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
     return (
         <div className="">
             <div className="flex flex-row justify-between">
-                <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des utilisateurs')}</h2>
+                <h2 className="text-lg font-semibold text-tertiari mb-4">{t('listUtilisateurs')}</h2>
             </div>
             <div className="flex flex-col justify-center w-full">
                 <div className="overflow-x-auto rounded-lg">
