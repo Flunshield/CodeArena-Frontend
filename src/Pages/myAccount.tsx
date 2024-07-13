@@ -152,7 +152,8 @@ function MyAccount() {
                                     <PdfSection getCvs={getCvs} deleteCv={deleteCv} setPopupCvOpen={setPopupCvOpen}
                                                 setShowNotification={setShowNotification}
                                                 setNotificationType={setNotificationType}
-                                                setNotificationMessage={setNotificationMessage}/>
+                                                setNotificationMessage={setNotificationMessage}
+                                                setIsSubmitted={() => setSubmitCount(count => count + 1)}/>
                                 </FadeIn>
                             </div>
                         )}

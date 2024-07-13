@@ -2,9 +2,10 @@ import {FadeIn} from "../../ComposantsCommun/FadeIn.tsx";
 import {Container} from "../../ComposantsCommun/Container.tsx";
 import {useTranslation} from "react-i18next";
 import {CVFormState, DataToken} from "../../Interface/Interface.ts";
-import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
+import {getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
+import clsx from "clsx";
 
 interface pdfSectionProps {
     getCvs: CVFormState[];
@@ -13,10 +14,19 @@ interface pdfSectionProps {
     setShowNotification: (value: boolean) => void;
     setNotificationType: (value: string) => void;
     setNotificationMessage: (value: string) => void;
+    setIsSubmitted: () => void;
 }
 
-const PdfSection = ({getCvs, deleteCv, setPopupCvOpen, setShowNotification, setNotificationType, setNotificationMessage}: pdfSectionProps) => {
-    const { t } = useTranslation();
+const PdfSection = ({
+                        getCvs,
+                        deleteCv,
+                        setPopupCvOpen,
+                        setShowNotification,
+                        setNotificationType,
+                        setNotificationMessage,
+                        setIsSubmitted
+                    }: pdfSectionProps) => {
+    const {t} = useTranslation();
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
@@ -35,6 +45,32 @@ const PdfSection = ({getCvs, deleteCv, setPopupCvOpen, setShowNotification, setN
                 link.setAttribute('download', 'cv.pdf');
                 document.body.appendChild(link);
                 link.click();
+            } else {
+                setNotificationMessage(t('errorUserInfos'));
+                setNotificationType('error');
+                setShowNotification(true);
+            }
+        })
+    }
+
+    const activateCv = async (idCv: number) => {
+        postElementByEndpoint("user/activateCv", {
+            token: authContext.accessToken ?? "",
+            data: {
+                idElementToActivate: idCv,
+                userId: infos.data.id
+            }
+        }).then(async (response) => {
+            if (response.status === 200) {
+                setNotificationMessage(t('cvActivated'));
+                setNotificationType('success');
+                setShowNotification(true);
+                setIsSubmitted();
+            } else if (response.status === 202) {
+                setNotificationMessage(t('cvDesactived'));
+                setNotificationType('success');
+                setShowNotification(true);
+                setIsSubmitted();
             } else {
                 setNotificationMessage(t('errorUserInfos'));
                 setNotificationType('error');
@@ -76,6 +112,12 @@ const PdfSection = ({getCvs, deleteCv, setPopupCvOpen, setShowNotification, setN
                                             <button
                                                 className="bg-error text-tertiari font-bold rounded-xl p-2 border-2 border-tertiari shadow-2xl w-12"
                                                 onClick={() => deleteCv(cv.id)}
+                                            >
+                                                X
+                                            </button>
+                                            <button
+                                                className={clsx(cv.activate ? "bg-olive-green" : "bg-tertiari", "text-tertiari font-bold rounded-xl p-2 border-2 border-tertiari shadow-2xl w-12")}
+                                                onClick={() => activateCv(cv.id)}
                                             >
                                                 X
                                             </button>
