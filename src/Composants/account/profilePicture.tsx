@@ -10,7 +10,7 @@ import btnClose from "/assets/btnClose.png";
 import { Container } from "../../ComposantsCommun/Container";
 interface ProfilePictureProps {
     classname?: string;
-    infosUserById?: User;
+    infosUserById: User;
 }
 function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
     const {t} = useTranslation();

@@ -427,3 +427,22 @@ export const postTest = async (endpoint: string, data: {
         credentials: 'include'
     });
 };
+
+export const deleteElementByEndPoint = async (endpoint: string, data: {
+    token: string,
+    userId?: number,
+    idElementToDelete: number
+}): Promise<Response> => {
+    return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${data.token}`,
+        },
+        body: JSON.stringify({
+            idElementToDelete: data.idElementToDelete,
+            userId: data.userId
+        }),
+        credentials: 'include'
+    });
+}

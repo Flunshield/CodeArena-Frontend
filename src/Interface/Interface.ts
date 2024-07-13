@@ -263,3 +263,39 @@ export interface listPuzzleSend {
     item: PuzzleSend[];
     total: number;
 }
+
+
+export interface Experience {
+    company: string;
+    position: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
+
+export interface Education {
+    institution: string;
+    degree: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
+
+export interface Skill {
+    name: string;
+}
+
+export interface CVFormState {
+    id: number;
+    cvName: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+    summary: string;
+    experiences: Experience[];
+    educations: Education[];
+    technicalSkills: Skill[];
+    softSkills: Skill[];
+}

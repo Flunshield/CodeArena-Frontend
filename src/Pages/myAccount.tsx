@@ -1,49 +1,74 @@
-import  { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Layout from "../ComposantsCommun/Layout";
 import Presentation from "../Composants/account/presentation";
 import MyForm from "../Composants/account/MyForm";
 import InfosUser from "../Composants/account/infosUser";
-import { useAuthContext } from "../AuthContext";
-import { JwtPayload } from "jwt-decode";
-import { DataToken, User } from "../Interface/Interface";
-import { GROUPS } from "../constantes/constantes";
+import {useAuthContext} from "../AuthContext";
+import {JwtPayload} from "jwt-decode";
+import {CVFormState, DataToken, User} from "../Interface/Interface";
+import {GROUPS} from "../constantes/constantes";
 import HistoriqueAchat from "../Composants/account/entreprise/HistoriqueAchat";
-import { getElementByEndpoint } from "../Helpers/apiHelper";
+import {deleteElementByEndPoint, getElementByEndpoint} from "../Helpers/apiHelper";
 import Notification from "../ComposantsCommun/Notification";
 import InformationGenerale from "../Composants/account/entreprise/InformationGenerale";
-import { PRICING } from "../constantes/constanteEntreprise";
-import { useTranslation } from "react-i18next";
-import { Container } from "../ComposantsCommun/Container";
-import  {SectionIntro}  from "../ComposantsCommun/SectionIntro";
-import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn";
+import {PRICING} from "../constantes/constanteEntreprise";
+import {useTranslation} from "react-i18next";
+import {Container} from "../ComposantsCommun/Container";
+import {SectionIntro} from "../ComposantsCommun/SectionIntro";
+import {FadeIn, FadeInStagger} from "../ComposantsCommun/FadeIn";
+import CVForm from "../Composants/account/CVForm.tsx";
+import PdfSection from "../Composants/account/pdfSection.tsx";
 
 function MyAccount() {
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [isPopupCvOpen, setPopupCvOpen] = useState(false);
     const [isInformationGeneraleCliked, setIsInformationGeneraleCliked] = useState(false);
     const [isHistoriqueOrderClicked, setIsHistoriqueOrderClicked] = useState(false);
     const [submitCount, setSubmitCount] = useState(0);
     const {t} = useTranslation();
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos
-    const infosUser = authContext?.infosUser as JwtPayload
-    const infos = infosUser.aud as unknown as DataToken
-    const isEntreprise = infos.data.groups.roles === GROUPS.ENTREPRISE
+    const infosUser = authContext?.infosUser as JwtPayload;
+    const infos = infosUser.aud as unknown as DataToken;
+    const isEntreprise = infos.data.groups.roles === GROUPS.ENTREPRISE;
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
     const [infosUserById, setInfosUserById] = useState<User>({} as User);
+    const [getCvs, setCvs] = useState<CVFormState[]>([]);
     const getUserById = getElementByEndpoint("user/getUser?id=" + infos.data.id, {
         token: authContext.accessToken ?? "",
         data: "",
-    })
+    });
+    const getAllCv = getElementByEndpoint("user/getCv?id=" + infos.data.id, {
+        token: authContext.accessToken ?? "",
+        data: "",
+    });
 
     const openPopup = () => {
         setPopupOpen(true);
     };
 
     const closePopup = async () => {
-        setPopupOpen(false);
+        if (isPopupOpen) {
+            setPopupOpen(false);
+        }
+        if (isPopupCvOpen) {
+            setPopupCvOpen(false);
+        }
     };
+
+    const deleteCv = async (idCv: number) => {
+        const deleteCv = await deleteElementByEndPoint("user/deleteCv", {
+            token: authContext.accessToken ?? "",
+            idElementToDelete: idCv,
+            userId: infos.data.id,
+        });
+
+        if (deleteCv.status === 200) {
+            setSubmitCount(count => count + 1);
+        }
+    };
+
 
     useEffect(() => {
         if (isInformationGeneraleCliked) {
@@ -58,11 +83,24 @@ function MyAccount() {
         getUserById.then(async (response) => {
             if (response.status === 200) {
                 const result = await response.json();
+                console.log("result : ", result)
                 result.commandeEntrepriseFormatted = {
                     commande: result?.commandeEntreprise[0],
-                    pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0].item)
+                    pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0]?.item),
                 };
                 setInfosUserById(result);
+            } else {
+                setNotificationMessage(t('errorUserInfos'));
+                setNotificationType('error');
+                setShowNotification(true);
+            }
+        });
+
+        getAllCv.then(async (response) => {
+            if (response.status === 200) {
+                const result = await response.json();
+                console.log(result);
+                setCvs(result);
             } else {
                 setNotificationMessage(t('errorUserInfos'));
                 setNotificationType('error');
@@ -81,8 +119,7 @@ function MyAccount() {
                 />
             )}
             <Container className="mt-16 bg-white">
-                <SectionIntro title={t("myAccount")} className="mb-12 text-center">
-                </SectionIntro>
+                <SectionIntro title={t("myAccount")} className="mb-12 text-center"/>
                 <div className="flex flex-col items-center">
                     <FadeInStagger className="w-full max-w-4xl">
                         <FadeIn>
@@ -103,26 +140,61 @@ function MyAccount() {
                                     />
                                 </FadeIn>
                                 <FadeIn>
-                                    <HistoriqueAchat />
+                                    <HistoriqueAchat/>
                                 </FadeIn>
                             </div>
                         ) : (
-                            <FadeIn className="w-full">
-                                <Presentation infosUserById={infosUserById}/>
-                            </FadeIn>
+                            <div>
+                                <FadeIn className="flex flex-col justify-items-center mb-10 space-y-8">
+                                    <Presentation infosUserById={infosUserById}/>
+                                </FadeIn>
+                                <FadeIn className="flex flex-col justify-items-center mb-10 space-y-8">
+                                    <PdfSection getCvs={getCvs} deleteCv={deleteCv} setPopupCvOpen={setPopupCvOpen}
+                                                setShowNotification={setShowNotification}
+                                                setNotificationType={setNotificationType}
+                                                setNotificationMessage={setNotificationMessage}/>
+                                </FadeIn>
+                            </div>
                         )}
                     </FadeInStagger>
                 </div>
             </Container>
-            {isPopupOpen && (
-                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-8 rounded-md shadow-lg">
-                        <MyForm onClose={closePopup} infosUserById={infosUserById} />
+            {
+                isPopupOpen && (
+                    <div
+                        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="bg-white p-8 rounded-md shadow-lg">
+                            <MyForm onClose={closePopup} infosUserById={infosUserById}/>
+                        </div>
                     </div>
-                </div>
-            )}
+                )
+            }
+            {
+                isPopupCvOpen && (
+                    <div
+                        className="fixed top-0 left-0 z-50 p-4 lg:p-8 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                        <button
+                            onClick={closePopup}
+                            className="absolute top-8 right-8 lg:top-16 lg:right-16 rounded-full bg-error hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105 z-50"
+                        >
+                            X
+                        </button>
+                        <div className="relative bg-white p-8 rounded-md shadow-lg max-h-full w-full overflow-y-auto">
+                            <CVForm
+                                infosUserById={infosUserById}
+                                closePopup={closePopup}
+                                setShowNotification={setShowNotification}
+                                setNotificationType={setNotificationType}
+                                setNotificationMessage={setNotificationMessage}
+                                setIsSubmitted={() => setSubmitCount(count => count + 1)}
+                            />
+                        </div>
+                    </div>
+                )
+            }
         </Layout>
-    );
+    )
+        ;
 }
 
 export default MyAccount;

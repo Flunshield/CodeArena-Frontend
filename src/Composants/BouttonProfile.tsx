@@ -10,7 +10,6 @@ import loginIcons from "/assets/icons/iconsLogin.svg";
 import {checkUrl} from "../Helpers/methodeHelper.ts";
 import clsx from "clsx";
 import {getElementByEndpoint} from "../Helpers/apiHelper.ts";
-import {PRICING} from "../constantes/constanteEntreprise.ts";
 
 const BouttonProfile = () => {
     const authContext = useAuthContext();
@@ -40,10 +39,6 @@ const BouttonProfile = () => {
         getUserById.then(async (response) => {
             if (response.status === 200) {
                 const result = await response.json();
-                result.commandeEntrepriseFormatted = {
-                    commande: result?.commandeEntreprise[0],
-                    pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0].item)
-                };
                 setInfosUserById(result);
                 setAvatar(infosUserById?.avatar ?? loginIcons);
             }

@@ -73,7 +73,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                 <FadeIn>
                     <div className="flex flex-col items-center text-neutral-900 w-full">
                         <div className="mb-10 text-center">
-                            <ProfilePicture classname="max-sm:hidden ml-16" />
+                            <ProfilePicture classname="max-sm:hidden ml-16" infosUserById={infosUserById}/>
                             <div className="mt-10">
                                 <p className="text-neutral-900 mb-1 uppercase font-bold max-sm:text-xl text-2xl">
                                     {infosUserById?.firstName && infosUserById?.lastName ? `${infosUserById?.firstName} ${infosUserById?.lastName}` : infosUserById?.userName}
