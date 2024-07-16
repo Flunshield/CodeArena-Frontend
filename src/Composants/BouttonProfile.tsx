@@ -6,7 +6,7 @@ import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";
 import {DataToken, User} from "../Interface/Interface.ts";
 import {ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT} from "../constantes/constantesRoutes.ts";
-import loginIcons from "/assets/icons/iconsLogin.svg";
+import loginIcons from "/assets/photosProfiles/noImage.svg";
 import {checkUrl} from "../Helpers/methodeHelper.ts";
 import clsx from "clsx";
 import {getElementByEndpoint} from "../Helpers/apiHelper.ts";
@@ -72,7 +72,7 @@ const BouttonProfile = () => {
                 <img
                     src={avatar}
                     alt="profile"
-                    className="h-16 transform hover:scale-110 transition-transform duration-300"
+                    className="h-16 transform hover:scale-110 transition-transform duration-300 rounded-full"
                     onClick={handlerPopUp}
                 />
                 {showPopup && (

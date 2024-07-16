@@ -1,19 +1,21 @@
 import {useAuthContext} from "../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
-import {useEffect, useState} from "react";
-import {DataToken, listUser, listUserEntreprise} from "../../Interface/Interface.ts";
+import {MouseEvent, useEffect, useState} from "react";
+import {DataToken, listUser, listUserEntreprise, User} from "../../Interface/Interface.ts";
 import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
 import DataTable from "../../ComposantsCommun/DataTable.tsx";
 import Pagination from "../../ComposantsCommun/Pagination.tsx";
 import {JwtPayload} from "jwt-decode";
 import {GROUPS} from "../../constantes/constantes.ts";
-import { Container } from "../../ComposantsCommun/Container.tsx";
-import { SectionIntro } from "../../ComposantsCommun/SectionIntro.tsx";
+import {Container} from "../../ComposantsCommun/Container.tsx";
+import {SectionIntro} from "../../ComposantsCommun/SectionIntro.tsx";
 import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
-import { FadeIn } from "../../ComposantsCommun/FadeIn.tsx";
+import {FadeIn} from "../../ComposantsCommun/FadeIn.tsx";
 import Notification from "../../ComposantsCommun/Notification.tsx";
+import {downloadPdf} from "../../Helpers/methodeHelper.ts";
+import PopupUsers from "../dashboard/entreprise/popupUsers.tsx";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();
@@ -30,6 +32,8 @@ function Tableau(): JSX.Element {
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [userInfos, setUserInfos] = useState<User>();
+    const [isPopupOpenGetUser, setIsPopupOpenGetUser] = useState(false);
 
     async function getUsers() {
         return await getElementByEndpoint(`user/getUsers?page=${currentPage}&itemPerPage=${itemPerPage}&isEntreprise=${isEntreprise}`, {
@@ -46,26 +50,39 @@ function Tableau(): JSX.Element {
         setUsers(await result.json());
     }
 
-    async function getPdf(idCv: number) {
+    async function clickedUser(username: string) {
+        if (isEntreprise) {
+            const response = await getElementByEndpoint(`user/getUser?username=${username}&isEntreprise=${isEntreprise}`, {
+                token,
+                data: '',
+            });
+
+            const result = await response.json();
+            result.idCvUser = users.item.find((elem) => elem.userName === username)?.cvUser[0]?.id ?? "";
+            setUserInfos(result);
+            setIsPopupOpenGetUser(true);
+        }
+    }
+
+    async function getPdf(idCv: number | string, event?: MouseEvent<HTMLButtonElement, MouseEvent>) {
+        event?.stopPropagation();
         const response = await getElementByEndpoint(`entreprise/pdfCvUser?id=${infos.data.id}&idCv=${idCv}`, {
             token,
             data: '',
         });
 
-        if (response.status === 200) {
-            const result = await response.blob();
-            const url = window.URL.createObjectURL(new Blob([result]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'cv.pdf');
-            document.body.appendChild(link);
-            link.click();
-        } else {
+        const pdfDownloadPromise = downloadPdf(response);
+        if (!pdfDownloadPromise) {
             setNotificationMessage(t('errorUserInfos'));
             setNotificationType('error');
             setShowNotification(true);
         }
     }
+
+    const closePopup = async () => {
+        document.body.style.overflow = "auto";
+        setIsPopupOpenGetUser(false);
+    };
 
     const headers = infos.data.groups.roles === GROUPS.ENTREPRISE ? [
         {key: 'firstName', label: 'firstName'},
@@ -75,7 +92,6 @@ function Tableau(): JSX.Element {
         {key: 'userRankingTitle', label: 'userRanking'},
         {key: 'userRankingPoints', label: 'points'},
         {key: 'nbGames', label: 'nbGames'},
-        {key: 'actions', label: 'Cv'},
     ] : [
         {key: 'userName', label: 'userName'},
         {key: 'userRankingTitle', label: 'userRanking'},
@@ -83,18 +99,16 @@ function Tableau(): JSX.Element {
         {key: 'nbGames', label: 'nbGames'},
     ]
 
-// Transform user data to fit the table headers
     const transformedData = users.item.map(user =>
         ({
-        firstName: user.firstName ?? "",
-        lastName: user.lastName ?? "",
-        email: user.email ?? "",
-        userName: user.userName ?? "",
-        userRankingTitle: user?.userRanking?.map(elem => elem?.rankings?.title).join(', ') ?? "",
-        userRankingPoints: user?.userRanking?.map(elem => elem.points).join(', ') ?? "",
-        nbGames: user.nbGames as string ?? "0",
-        actions: user.cvUser && user.cvUser.length > 0 ? <button className="rounded-xl pr-5 pl-5 p-1 bg-olive-green text-tertiari" onClick={() => getPdf(user.cvUser[0].id)}>{t('getCv')}</button> : <button className="rounded-xl pr-5 pl-5 p-1 bg-soft-gray text-secondary cursor-default">{t('getCv')}</button>,
-    }));
+            firstName: user.firstName ?? "",
+            lastName: user.lastName ?? "",
+            email: user.email ?? "",
+            userName: user.userName ?? "",
+            userRankingTitle: user?.userRanking?.map(elem => elem?.rankings?.title).join(', ') ?? "",
+            userRankingPoints: user?.userRanking?.map(elem => elem.points).join(', ') ?? "",
+            nbGames: user.nbGames as string ?? "0"
+        }));
 
     const maxPage = Math.ceil(users.total / itemPerPage);
 
@@ -105,6 +119,7 @@ function Tableau(): JSX.Element {
             }
         );
     }, [submitCount, itemPerPage, currentPage]);
+
     return (
         <Container className="py-12">
             {showNotification && (
@@ -134,7 +149,8 @@ function Tableau(): JSX.Element {
                             />
                         </div>
                         <div className="overflow-hidden rounded-lg shadow-md">
-                            <DataTable headers={headers} data={transformedData} className="w-full" />
+                            <DataTable headers={headers} data={transformedData} className="w-full"
+                                       clickedUser={clickedUser}/>
                         </div>
                         <Pagination
                             item={users.item}
@@ -148,6 +164,9 @@ function Tableau(): JSX.Element {
                     </CardContent>
                 </Card>
             </FadeIn>
+            {isPopupOpenGetUser && (
+                <PopupUsers closePopup={closePopup} userInfos={userInfos} getPdf={getPdf}/>
+            )}
         </Container>
     );
 }

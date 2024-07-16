@@ -1,5 +1,6 @@
 export interface User {
     id?: number;
+    idCvUser?: number;
     token?: string;
     userName?: string;
     email?: string;

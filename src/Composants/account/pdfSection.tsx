@@ -6,6 +6,7 @@ import {getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelp
 import {useAuthContext} from "../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
 import clsx from "clsx";
+import {downloadPdf} from "../../Helpers/methodeHelper.ts";
 
 interface pdfSectionProps {
     getCvs: CVFormState[];
@@ -31,21 +32,13 @@ const PdfSection = ({
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
 
-
     const getPdf = async (idCv: number) => {
         getElementByEndpoint("user/pdfCvUser?id=" + infos.data.id + "&idCv=" + idCv, {
             token: authContext.accessToken ?? "",
             data: "",
         }).then(async (response) => {
-            if (response.status === 200) {
-                const result = await response.blob();
-                const url = window.URL.createObjectURL(new Blob([result]));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'cv.pdf');
-                document.body.appendChild(link);
-                link.click();
-            } else {
+            const pdfDownloadPromise = downloadPdf(response);
+            if (!pdfDownloadPromise) {
                 setNotificationMessage(t('errorUserInfos'));
                 setNotificationType('error');
                 setShowNotification(true);
@@ -79,7 +72,8 @@ const PdfSection = ({
         })
     }
 
-    return (<Container>
+    return (
+        <Container>
             <FadeIn>
                 <div className="flex flex-col w-full justify-center">
                     <label id="labelVosCv" className="text-neutral-900 text-3xl font-bold mb-4">

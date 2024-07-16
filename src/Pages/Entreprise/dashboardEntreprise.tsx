@@ -81,7 +81,7 @@ function DashboardEntreprise() {
                                    setIsSubmitted={() => setSubmitCount(count => count + 1)}
                                    submitCount={submitCount}
                                    setPuzzleToPopup={setPuzzleToPopup} lastCommande={lastCommande}
-                                   nbPuzzleCreated={nbPuzzleCreated}/>
+                                   nbPuzzleCreated={nbPuzzleCreated} setSubmitCount={setSubmitCount}/>
                     <PuzzleList setIsSubmitted={() => setSubmitCount(count => count + 1)} submitCount={submitCount} infosUserById={infosUserById}/>
                     <Tableau/>
                 </div>

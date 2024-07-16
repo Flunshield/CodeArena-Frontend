@@ -9,6 +9,7 @@ import {useTranslation} from "react-i18next";
 import clsx from "clsx";
 import Notification from "../../../ComposantsCommun/Notification.tsx";
 import Pagination from "../../../ComposantsCommun/Pagination.tsx";
+import {ITEMS_PER_PAGE_QUATRE} from "../../../constantes/constantes.ts";
 
 interface PuzzleListProps {
     setIsSubmitted: () => void;
@@ -30,7 +31,7 @@ const PuzzleList = ({
     const [notificationMessage, setNotificationMessage] = useState('');
 
     const [puzzleFinish, setPuzzleFinish] = useState<listPuzzleSend>({item: [], total: 0});
-    const maxPage = puzzleFinish.item.length > 0 ? Math.ceil(puzzleFinish.total / 4) : 1;
+    const maxPage = puzzleFinish.item.length > 0 ? Math.ceil(puzzleFinish.total / ITEMS_PER_PAGE_QUATRE) : 1;
 
     const getPuzzle = getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infosUserById?.id}&page=${currentPage}`, {
             token: authContext.accessToken ?? "",

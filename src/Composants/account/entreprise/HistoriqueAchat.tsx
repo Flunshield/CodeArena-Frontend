@@ -8,6 +8,7 @@ import {JwtPayload} from "jwt-decode";
 import {HEADER_FACTURE} from "../../../constantes/constanteEntreprise.ts";
 import clsx from "clsx";
 import Pagination from "../../../ComposantsCommun/Pagination.tsx";
+import {ITEMS_PER_PAGE_DIX} from "../../../constantes/constantes.ts";
 
 interface historiqueAchatProps {
     className?: string;
@@ -29,17 +30,7 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
         token: authContext.accessToken ?? ""
     })
 
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-        setSubmitCount(count => count + 1);
-    };
-
-    const prevPage = () => {
-        setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
-        setSubmitCount(count => count + 1);
-    };
-
-    const maxPage = Math.ceil(commandes.total / commandes.item.length);
+    const maxPage = commandes.item.length > 0 ? Math.ceil(commandes.total / ITEMS_PER_PAGE_DIX) : 1;
 
     const lastCommandFormatted = formatItemCommande(commandes.item, t);
 
@@ -79,7 +70,7 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
                     ))}
                     </tbody>
                 </table>
-                <Pagination item={lastCommandFormatted} maxPage={maxPage} currentPage={currentPage} nextPage={nextPage} prevPage={prevPage} classNameCurrentPage="text-tertiari"/>
+                <Pagination item={lastCommandFormatted} maxPage={maxPage} currentPage={currentPage} classNameCurrentPage="text-tertiari" setCurrentPage={setCurrentPage} setSubmitCount={setSubmitCount}/>
             </div>
             <div className="flex justify-between items-center w-full">
             </div>

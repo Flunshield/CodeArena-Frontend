@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import NavBar from "./NavBar.tsx";
 import BouttonProfile from "../Composants/BouttonProfile.tsx";
 import { DASHBOARD, HOME } from "../constantes/constantesRoutes.ts";
-import loginIcons from "/assets/icons/iconsLogin.svg";
+import loginIcons from "/assets/photosProfiles/noImage.svg";
 
 const Header = () => {
     const authContext = useAuthContext();
@@ -70,6 +70,7 @@ const Header = () => {
                                     id="login icons"
                                     src={loginIcons}
                                     alt="logo du site web"
+                                    className="pb-10 pl-10 rounded-full"
                                     onMouseEnter={() => setShowIconsPopUp(true)}
                                     onMouseLeave={() => setShowIconsPopUp(false)}
                                 />

@@ -50,8 +50,8 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
     };
 
     const addPicture = (id: string | undefined) => {
-        const picture = document.getElementById(id ?? "iconsLogin.svg");
-        setIsPictureClicked(id ?? "iconsLogin.svg");
+        const picture = document.getElementById(id ?? "noImage.svg");
+        setIsPictureClicked(id ?? "noImage.svg");
 
         const picturesNotSelected = imagePaths.filter((path) => path !== id);
         picturesNotSelected.forEach((notSelectedId) => {
@@ -62,11 +62,23 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
         picture?.classList.add("border-4", "border-tertiari");
     };
 
+    // Définir la source de l'image
+    const imgSrc = isPictureClicked !== ""
+        ? `/assets/photosProfiles/${isPictureClicked || "noImage.svg"}`
+        : infosUserById?.avatar;
+
     return (
         <div className={clsx(classname, "relative")}>
             <img
-                className="rounded-full w-48 h-48 border-2 border-tertiari cursor-pointer"
-                src={isPictureClicked !== "" ? `/assets/photosProfiles/${isPictureClicked ? isPictureClicked : "iconsLogin.svg"}` : infosUserById?.avatar}
+                className={clsx(
+                    imgSrc === "/assets/photosProfiles/noImage.svg" ? "pl-10 pb-10" : "",
+                    "rounded-full w-48 h-48 border-2 border-tertiari cursor-pointer bg-gris-chaud"
+                )}
+                src={
+                    isPictureClicked !== ""
+                        ? `/assets/photosProfiles/${isPictureClicked || "noImage.svg"}`
+                        : infosUserById?.avatar
+                }
                 alt="Avatar"
                 onClick={openPopup}
             />
@@ -76,36 +88,36 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
                         className="fixed z-50 top-0 left-0 w-full h-full flex items-center justify-center"
                     >
                         <Container className="flex flex-row-reverse bg-secondary rounded-md pb-4">
-                        <Button
-                            type="button"
-                            id="navBarButtonClose"
-                            onClick={closePopup}
-                            className="absolute ml-5"
-                        >
-                            <img src={btnClose} alt="icone bouton clsoe" className="w-8 h-8 mr-3"/>
-                        </Button>
-                        <div className="flex flex-col z-50">
-                               
-                            <div className="flex flex-wrap w-96">
+                            <Button
+                                type="button"
+                                id="navBarButtonClose"
+                                onClick={closePopup}
+                                className="absolute ml-5"
+                            >
+                                <img src={btnClose} alt="icone bouton clsoe" className="w-8 h-8 mr-3"/>
+                            </Button>
+                            <div className="flex flex-col z-50">
+
+                                <div className="flex flex-wrap w-96">
                                     {imagePaths.map((path) => (
                                         <img
-                                        className="rounded-full w-20 h-20 m-5 cursor-pointer"
-                                        key={path}
-                                        id={path}
+                                            className="rounded-full w-20 h-20 m-5 cursor-pointer"
+                                            key={path}
+                                            id={path}
                                             onClick={() => addPicture(path)}
                                             src={`/assets/photosProfiles/${path}`}
-                                        alt={`Image ${path}`}
-                                    />
+                                            alt={`Image ${path}`}
+                                        />
                                     ))}
                                 </div>
                                 <div className="mt-6 flex justify-center">
-                                <button
-                                    onClick={closePopup}
-                                    className="bg-tertiary hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
-                                >
-                                    {t("update")}
-                                </button>
-                        </div>
+                                    <button
+                                        onClick={closePopup}
+                                        className="bg-tertiary hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                                    >
+                                        {t("update")}
+                                    </button>
+                                </div>
                             </div>
                         </Container>
                     </div>
@@ -114,4 +126,5 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
         </div>
     );
 }
+
 export default ProfilePicture;

@@ -10,9 +10,10 @@ interface DataTableProps {
     headers: HeaderDataTable[];
     data: Record<string, string | JSX.Element>[];
     className?: string;
+    clickedUser?: (username: string) => void;
 }
 
-const DataTable = ({headers, data, className}: DataTableProps) => {
+const DataTable = ({headers, data, className, clickedUser}: DataTableProps) => {
     const {t} = useTranslation();
     return (
         <div className={clsx("overflow-x-auto", className)}>
@@ -28,10 +29,14 @@ const DataTable = ({headers, data, className}: DataTableProps) => {
                 </thead>
                 <tbody>
                 {data.map((item, index) => (
-                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-soft-gray hover:text-tertiari" onClick={() => {
+                        if (clickedUser) {
+                            clickedUser(data[index].userName as string);
+                        }
+                    }}>
                         {headers.map((header) => (
                             <td key={header.key} className="py-4 px-6">
-                                {header.key === 'actions' ? item[header.key] : String(item[header.key])}
+                                {String(item[header.key])}
                             </td>
                         ))}
                     </tr>
