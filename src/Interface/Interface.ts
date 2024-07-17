@@ -300,5 +300,5 @@ export interface CVFormState {
     educations: Education[];
     technicalSkills: Skill[];
     softSkills: Skill[];
-    activate: boolean;
+    activate?: boolean;
 }

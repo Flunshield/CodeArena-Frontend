@@ -20,7 +20,6 @@ function EventDashboard() {
         if (infosEvent.length === 0) {
             getAllEvents.then(async (response) => {
                 const result = await response.json();
-                console.log("Received events:", result); // Vérifiez les données reçues ici
                 setInfosEvent(result);
             });
         }

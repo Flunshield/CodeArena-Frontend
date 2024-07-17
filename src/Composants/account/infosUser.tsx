@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import map from "/assets/iconeProfile/map-marker.png";
-import company from "/assets/iconeProfile/company.png";
-import school from "/assets/iconeProfile/school.png";
-import github from "/assets/iconeProfile/github.png";
-import link from "/assets/iconeProfile/link.png";
-import titles from "/assets/iconeProfile/flag.png";
+import map from "/assets/icones/map-marker.png";
+import company from "/assets/icones/company.png";
+import school from "/assets/icones/school.png";
+import github from "/assets/icones/github.png";
+import link from "/assets/icones/link.png";
+import code from "/assets/icones/code.svg";
+import titles from "/assets/icones/flag.png";
 import Button from "../../ComposantsCommun/Button.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../AuthContext.tsx";
@@ -115,6 +116,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                             <ListItem icon={github} id="github" text={infosUserById?.github ?? ""} />
                                             <ListItem icon={link} id="link" text={infosUserById?.url ?? ""} />
                                             <ListItem icon={titles} id="titles" text={title ? title : "Aucun titre"} />
+                                            <ListItem icon={code} id="languagePreference" text={infosUserById.languagePreference ?? ""} classNameSvg="bg-tertiari" />
                                         </ul>
                                     </div>
                                     <Button

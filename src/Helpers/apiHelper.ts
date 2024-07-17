@@ -135,6 +135,7 @@ export const updateUser = async (endpoint?: string, data?: User): Promise<Respon
             firstName: data?.firstName,
             titlesId: data?.titlesId as number,
             siren: data?.siren,
+            languagePreference: data?.languagePreference,
         }),
         credentials: 'include'
     });

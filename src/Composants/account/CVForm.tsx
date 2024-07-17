@@ -23,7 +23,6 @@ const CVForm = ({
                 }: CVFormProps) => {
     const authContext = useAuthContext();
     const {t} = useTranslation();
-    console.log(infosUserById)
     const [formData, setFormData] = useState<CVFormState>({
         id: infosUserById.id ?? 0,
         cvName: '',
@@ -36,7 +35,7 @@ const CVForm = ({
         experiences: [{company: '', position: '', startDate: '', endDate: '', description: ''}],
         educations: [{institution: '', degree: '', startDate: '', endDate: '', description: ''}],
         technicalSkills: [{name: ''}],
-        softSkills: [{name: ''}],
+        softSkills: [{name: ''}]
     });
 
     const handleChange = (

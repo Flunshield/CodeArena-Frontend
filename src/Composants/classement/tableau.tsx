@@ -29,6 +29,7 @@ function Tableau(): JSX.Element {
     const [submitCount, setSubmitCount] = useState(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemPerPage, setItemPerPage] = useState(10);
+    const [languagePreference, setLanguagePreference] = useState<string>('all');
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
@@ -36,7 +37,7 @@ function Tableau(): JSX.Element {
     const [isPopupOpenGetUser, setIsPopupOpenGetUser] = useState(false);
 
     async function getUsers() {
-        return await getElementByEndpoint(`user/getUsers?page=${currentPage}&itemPerPage=${itemPerPage}&isEntreprise=${isEntreprise}`, {
+        return await getElementByEndpoint(`user/getUsers?page=${currentPage}&itemPerPage=${itemPerPage}&isEntreprise=${isEntreprise}&languagePreference=${languagePreference}`, {
             token,
             data: '',
         });
@@ -118,7 +119,7 @@ function Tableau(): JSX.Element {
                 setUsers(result);
             }
         );
-    }, [submitCount, itemPerPage, currentPage]);
+    }, [submitCount, itemPerPage, currentPage, languagePreference]);
 
     return (
         <Container className="py-12">
@@ -138,7 +139,7 @@ function Tableau(): JSX.Element {
                 <Card className="bg-white shadow-elevated p-6">
                     <CardContent>
                         <div className="flex flex-col md:flex-row items-center justify-between mb-6">
-                            <h2 className="text-lg font-semibold text-secondary mb-4 md:mb-0 shadow-lg bg-gray-200 dark:bg-gray-800 dark:text-gray-300 rounded-lg p-4">
+                            <h2 className="text-lg font-semibold text-secondary m-4 md:mb-0 shadow-lg bg-gray-200 dark:bg-gray-800 dark:text-gray-300 rounded-lg p-4">
                                 {t('listUtilisateurs')}
                             </h2>
                             <SearchBar
@@ -146,6 +147,8 @@ function Tableau(): JSX.Element {
                                 setItemPerPage={setItemPerPage}
                                 placeholder={t('serachByUsername')}
                                 setCurrentPage={setCurrentPage}
+                                setLanguagePreference={setLanguagePreference}
+                                isEntreprise={isEntreprise}
                             />
                         </div>
                         <div className="overflow-hidden rounded-lg shadow-md">

@@ -64,12 +64,10 @@ function LoginPage() {
             if (response.ok) {
                 setNotificationMessage(t('connectSuccess'));
                 setNotificationType('success');
-                console.log(authContext)
                 setShowNotification(true);
                 setTimeout(async () => {
                     try {
                         const result = await response.json();
-                        console.log(result)
                         const jwtDecoded = jwtDecode(result.message);
                         localStorage.setItem('authState', JSON.stringify({
                             accessToken: result.message,

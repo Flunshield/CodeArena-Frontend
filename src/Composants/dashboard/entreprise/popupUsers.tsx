@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {User} from "../../../Interface/Interface.ts";
 
 interface popupUsersProps {
-    userInfos: User;
+    userInfos?: User;
     closePopup: () => void;
     getPdf: (idCv: number) => void;
 }
@@ -50,6 +50,10 @@ const PopupUsers = ({userInfos, closePopup, getPdf}: popupUsersProps) => {
                             <div>
                                         <span
                                             className="font-semibold">{t('userName')}:</span> {userInfos?.userName ?? t("noRenseignement")}
+                            </div>
+                            <div>
+                                        <span
+                                            className="font-semibold">{t('languagePreference')}:</span> {userInfos?.languagePreference ?? t("noRenseignement")}
                             </div>
                             <div>
                                         <span

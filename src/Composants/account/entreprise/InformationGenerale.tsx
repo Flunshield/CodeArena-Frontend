@@ -82,7 +82,7 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
         if (isValidAddress(formData.localisation) && algoLuhn(formData.siren)) {
             setErrorSiren(false);
             setErrorLocalisation(false);
-            console.log(formData)
+
             const response = await updateUser("user/updateUser", {
                 id: infosUserById?.id,
                 token: authContext.accessToken,

@@ -83,7 +83,6 @@ function MyAccount() {
         getUserById.then(async (response) => {
             if (response.status === 200) {
                 const result = await response.json();
-                console.log("result : ", result)
                 result.commandeEntrepriseFormatted = {
                     commande: result?.commandeEntreprise[0],
                     pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0]?.item),
@@ -99,7 +98,6 @@ function MyAccount() {
         getAllCv.then(async (response) => {
             if (response.status === 200) {
                 const result = await response.json();
-                console.log(result);
                 setCvs(result);
             } else {
                 setNotificationMessage(t('errorUserInfos'));
@@ -163,10 +161,9 @@ function MyAccount() {
             {
                 isPopupOpen && (
                     <div
-                        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-                        <div className="bg-white p-8 rounded-md shadow-lg">
-                            <MyForm onClose={closePopup} infosUserById={infosUserById}/>
-                        </div>
+                        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-tertiari bg-opacity-75 p-6">
+                        <MyForm onClose={closePopup} infosUserById={infosUserById}
+                                setIsSubmitted={() => setSubmitCount(count => count + 1)}/>
                     </div>
                 )
             }
