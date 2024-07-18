@@ -5,21 +5,22 @@ import MyForm from "../Composants/account/MyForm";
 import InfosUser from "../Composants/account/infosUser";
 import {useAuthContext} from "../AuthContext";
 import {JwtPayload} from "jwt-decode";
-import {CVFormState, DataToken, User} from "../Interface/Interface";
+import {CVFormState, DataToken} from "../Interface/Interface";
 import {GROUPS} from "../constantes/constantes";
 import HistoriqueAchat from "../Composants/account/entreprise/HistoriqueAchat";
 import {deleteElementByEndPoint, getElementByEndpoint} from "../Helpers/apiHelper";
 import Notification from "../ComposantsCommun/Notification";
 import InformationGenerale from "../Composants/account/entreprise/InformationGenerale";
-import {PRICING} from "../constantes/constanteEntreprise";
 import {useTranslation} from "react-i18next";
 import {Container} from "../ComposantsCommun/Container";
 import {SectionIntro} from "../ComposantsCommun/SectionIntro";
 import {FadeIn, FadeInStagger} from "../ComposantsCommun/FadeIn";
 import CVForm from "../Composants/account/CVForm.tsx";
 import PdfSection from "../Composants/account/pdfSection.tsx";
+import useUserInfos from "../hook/useUserInfos.ts";
 
 function MyAccount() {
+    const infosUserById = useUserInfos();
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isPopupCvOpen, setPopupCvOpen] = useState(false);
     const [isInformationGeneraleCliked, setIsInformationGeneraleCliked] = useState(false);
@@ -33,12 +34,7 @@ function MyAccount() {
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
-    const [infosUserById, setInfosUserById] = useState<User>({} as User);
     const [getCvs, setCvs] = useState<CVFormState[]>([]);
-    const getUserById = getElementByEndpoint("user/getUser?id=" + infos.data.id, {
-        token: authContext.accessToken ?? "",
-        data: "",
-    });
     const getAllCv = getElementByEndpoint("user/getCv?id=" + infos.data.id, {
         token: authContext.accessToken ?? "",
         data: "",
@@ -79,21 +75,6 @@ function MyAccount() {
             document.getElementById('historiqueAchat')?.scrollIntoView({behavior: "smooth"});
             setIsHistoriqueOrderClicked(false);
         }
-
-        getUserById.then(async (response) => {
-            if (response.status === 200) {
-                const result = await response.json();
-                result.commandeEntrepriseFormatted = {
-                    commande: result?.commandeEntreprise[0],
-                    pricing: PRICING.find((pricing) => pricing.idApi === result?.commandeEntreprise[0]?.item),
-                };
-                setInfosUserById(result);
-            } else {
-                setNotificationMessage(t('errorUserInfos'));
-                setNotificationType('error');
-                setShowNotification(true);
-            }
-        });
 
         getAllCv.then(async (response) => {
             if (response.status === 200) {

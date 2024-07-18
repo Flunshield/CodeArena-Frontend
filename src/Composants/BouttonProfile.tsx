@@ -4,15 +4,16 @@ import {Link, useNavigate} from 'react-router-dom';
 import {useAuthContext} from "../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";
-import {DataToken, User} from "../Interface/Interface.ts";
+import {DataToken} from "../Interface/Interface.ts";
 import {ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT} from "../constantes/constantesRoutes.ts";
 import loginIcons from "/assets/photosProfiles/noImage.svg";
 import {checkUrl} from "../Helpers/methodeHelper.ts";
 import clsx from "clsx";
-import {getElementByEndpoint} from "../Helpers/apiHelper.ts";
+import useUserInfos from "../hook/useUserInfos.ts";
 
 const BouttonProfile = () => {
     const authContext = useAuthContext();
+    const infosUserById = useUserInfos();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
     const navigate = useNavigate();
@@ -22,11 +23,6 @@ const BouttonProfile = () => {
     const role = infos.data.groups.roles;
     const [currentPage, setCurrentPage] = useState<string>();
     const popupRef = useRef<HTMLDivElement | null>(null);
-    const [infosUserById, setInfosUserById] = useState<User>({} as User);
-    const getUserById = getElementByEndpoint("user/getUser?id=" + infos.data.id, {
-        token: authContext.accessToken ?? "",
-        data: "",
-    })
     const handleClickSingOut = () => {
         navigate(LOGOUT);
     };
@@ -36,13 +32,7 @@ const BouttonProfile = () => {
     };
 
     useEffect(() => {
-        getUserById.then(async (response) => {
-            if (response.status === 200) {
-                const result = await response.json();
-                setInfosUserById(result);
-                setAvatar(infosUserById?.avatar ?? loginIcons);
-            }
-        });
+        setAvatar(infosUserById?.avatar ?? loginIcons);
         setCurrentPage(checkUrl());
     }, [infosUserById?.avatar]);
 
