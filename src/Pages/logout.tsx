@@ -33,7 +33,7 @@ export function LogoutPage() {
         } else {
             logoutFunction().then((response) => {
                 if (response?.ok) {
-                    localStorage.removeItem('authState');
+                    sessionStorage.removeItem('authState');
                     setTimeout(() => {
                         window.location.reload();
                         setLoading(false);

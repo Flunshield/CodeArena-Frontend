@@ -19,7 +19,7 @@ function GameEntreprise () {
     const {t} = useTranslation();
     const [code, setCode] = useState('');
     const [theme, setTheme] = useState('monokai');
-    const [remainingTime, setRemainingTime] = useState(() => Number(localStorage.getItem('remainingTime')) || DIX_MIN);
+    const [remainingTime, setRemainingTime] = useState(() => Number(sessionStorage.getItem('remainingTime')) || DIX_MIN);
     const [isDisabled, setIsDisabled] = useState(false);
     const [testPassed, setTestPassed] = useState<string[]>([]);
     const [testFailed, setTestFailed] = useState<string[]>([]);
@@ -71,7 +71,7 @@ function GameEntreprise () {
         const timer = setInterval(() => {
             setRemainingTime(prevTime => {
                 const newTime = prevTime > 0 ? prevTime - 1 : 0;
-                localStorage.setItem('remainingTime', newTime.toString());
+                sessionStorage.setItem('remainingTime', newTime.toString());
                 return newTime;
             });
         }, 1000);

@@ -69,7 +69,7 @@ function LoginPage() {
                     try {
                         const result = await response.json();
                         const jwtDecoded = jwtDecode(result.message);
-                        localStorage.setItem('authState', JSON.stringify({
+                        sessionStorage.setItem('authState', JSON.stringify({
                             accessToken: result.message,
                             connected: true,
                             infosUser: jwtDecoded,

@@ -3,7 +3,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import HttpBackend from 'i18next-http-backend';
 
-const savedLanguage = localStorage.getItem('selectedLanguage');
+const savedLanguage = sessionStorage.getItem('selectedLanguage');
 
 i18n
     .use(HttpBackend)
@@ -22,6 +22,6 @@ i18n
 
 export default i18n;
 export const changeLanguage = async (language: string) => {
-    localStorage.setItem('selectedLanguage', language);
+    sessionStorage.setItem('selectedLanguage', language);
     await i18n.changeLanguage(language);
 };
