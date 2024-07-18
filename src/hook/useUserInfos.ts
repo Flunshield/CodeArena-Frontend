@@ -5,7 +5,7 @@ import {PRICING} from "../constantes/constanteEntreprise.ts";
 import {useAuthContext} from "../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
 
-const useUserInfos = () => {
+const useUserInfos = (refresh?: number) => {
 
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
@@ -28,7 +28,7 @@ const useUserInfos = () => {
                 setInfosUserById(result);
             }
         });
-    }, []);
+    }, [refresh]);
 
     return {...infosUserById};
 

@@ -20,12 +20,12 @@ import PdfSection from "../Composants/account/pdfSection.tsx";
 import useUserInfos from "../hook/useUserInfos.ts";
 
 function MyAccount() {
-    const infosUserById = useUserInfos();
+    const [submitCount, setSubmitCount] = useState(0);
+    const infosUserById= useUserInfos(submitCount);
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isPopupCvOpen, setPopupCvOpen] = useState(false);
     const [isInformationGeneraleCliked, setIsInformationGeneraleCliked] = useState(false);
     const [isHistoriqueOrderClicked, setIsHistoriqueOrderClicked] = useState(false);
-    const [submitCount, setSubmitCount] = useState(0);
     const {t} = useTranslation();
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
