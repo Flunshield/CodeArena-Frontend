@@ -35,7 +35,7 @@ const Notification: React.FC<NotificationProps> = ({ message, type, onClose, del
     }[type] || 'bg-gray-500';
 
     return (
-        <div className={`fixed z-50 top-5 right-0 m-5 p-4 rounded shadow-lg text-white transform transition-all duration-500 ease-out ${notificationClass} ${backgroundColor}`}>
+        <div className={`fixed z-50 top-5 right-0 m-5 p-4 rounded shadow-lg text-tertiari transform transition-all duration-500 ease-out ${notificationClass} ${backgroundColor}`}>
             <span>{message}</span>
         </div>
     );

@@ -97,8 +97,8 @@ function MyAccount() {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            <Container className="mt-16 bg-white">
-                <SectionIntro title={t("myAccount")} className="mb-12 text-center"/>
+            <Container className="rounded-xl bg-tertiari mx-auto">
+                <SectionIntro title={t("myAccount")} className="text-center mt-10"/>
                 <div className="flex flex-col items-center">
                     <FadeInStagger className="w-full max-w-4xl">
                         <FadeIn>
@@ -158,7 +158,7 @@ function MyAccount() {
                         >
                             X
                         </button>
-                        <div className="relative bg-white p-8 rounded-md shadow-lg max-h-full w-full overflow-y-auto">
+                        <div className="relative bg-tertiari p-8 rounded-md shadow-lg max-h-full w-full overflow-y-auto">
                             <CVForm
                                 infosUserById={infosUserById}
                                 closePopup={closePopup}

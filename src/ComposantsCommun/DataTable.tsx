@@ -29,7 +29,7 @@ const DataTable = ({headers, data, className, clickedUser}: DataTableProps) => {
                 </thead>
                 <tbody>
                 {data.map((item, index) => (
-                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-soft-gray hover:text-tertiari" onClick={() => {
+                    <tr key={index} className="bg-tertiari border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-soft-gray hover:text-tertiari" onClick={() => {
                         if (clickedUser) {
                             clickedUser(data[index].userName as string);
                         }

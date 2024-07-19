@@ -136,7 +136,7 @@ function Tableau(): JSX.Element {
                 className="mb-8"
             />
             <FadeIn>
-                <Card className="bg-white shadow-elevated p-6">
+                <Card className="bg-tertiari shadow-elevated p-6">
                     <CardContent>
                         <div className="flex flex-col md:flex-row items-center justify-between mb-6">
                             <h2 className="text-lg font-semibold text-secondary m-4 md:mb-0 shadow-lg bg-gray-200 dark:bg-gray-800 dark:text-gray-300 rounded-lg p-4">

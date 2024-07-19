@@ -54,7 +54,7 @@ const BouttonProfile = () => {
     }, []);
 
     return (
-        <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "hidden" : "block")}>
+        <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "block xs:mt-10" : "block")}>
             <div
                 id="id-bouton-profile"
                 className="relative cursor-pointer w-max pr-5 xs:p-10 xs:pt-0"

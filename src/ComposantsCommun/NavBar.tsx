@@ -51,9 +51,9 @@ const NavBar: React.FC = () => {
                 type="button"
                 id="navBarButton"
                 onClick={toggleNavbar}
-                className="border-0 ml-5 mt-0.5 w-12"
+                className="ml-5 w-12"
             >
-                <img src={iconeMenu} alt="icone menu" className="w-12 mt-2" />
+                <img src={iconeMenu} alt="icone menu" className="w-12" />
             </Button>
 
             <AnimatePresence>

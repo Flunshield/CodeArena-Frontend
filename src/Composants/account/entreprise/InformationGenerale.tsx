@@ -162,7 +162,7 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
                     delay={2000}
                 />
             )}
-            <h2 className="text-2xl text-center text-tertiari font-bold">{t('generalinformation')}</h2>
+            <h2 className="text-2xl text-center text-secondary font-bold">{t('generalinformation')}</h2>
             <div className="flex max-lg:flex-col bg-tertiari m-5 rounded-lg shadow-lg">
                 <form onSubmit={handleSubmit} className="flex-1 m-5 p-6">
                     <h2 className="text-2xl text-center -mb-5 text-secondary font-bold">{t('modify')}</h2>
@@ -211,7 +211,7 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
                     <div className="flex justify-center w-full relative bottom-0">
                         <button
                             type="submit"
-                            className="px-4 py-2 rounded bg-petroleum-blue text-white hover:bg-petroleum-blue-dark transition duration-300 shadow-md"
+                            className="px-4 py-2 rounded bg-petroleum-blue text-tertiari hover:bg-petroleum-blue-dark transition duration-300 shadow-md"
                         >
                             {t('send')}
                         </button>
@@ -283,9 +283,9 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
                         <h2 className="text-xl">{t('seriousUnsubscribe')}</h2>
                         <div className="flex justify-around mt-5">
                             <Button id="button-unscribed" type="button" onClick={handleClick}
-                                    className="bg-gris-chaud text-white p-2 rounded-lg">{t('yes')}</Button>
+                                    className="bg-gris-chaud text-tertiari p-2 rounded-lg">{t('yes')}</Button>
                             <Button id="button-unscribed" type="button" onClick={closePopup}
-                                    className="bg-olive-green text-white p-2 rounded-lg">{t('no')}</Button>
+                                    className="bg-olive-green text-tertiari p-2 rounded-lg">{t('no')}</Button>
                         </div>
                     </div>
                 </div>

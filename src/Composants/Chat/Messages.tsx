@@ -35,7 +35,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
     };
 
     return (
-        <div className="flex w-full flex-col gap-4 p-4 max-w-2xl mx-auto bg-white rounded-lg shadow-lg h-[500px] overflow-y-auto" ref={messagesContainerRef}>
+        <div className="flex w-full flex-col gap-4 p-4 max-w-2xl mx-auto bg-tertiari rounded-lg shadow-lg h-[500px] overflow-y-auto" ref={messagesContainerRef}>
             {messages.length === 0 ? (
                 <p className="text-center text-gray-500 dark:text-gray-400">Pas de message ici</p>
             ) : (
@@ -54,7 +54,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
                                 className={`flex flex-col p-4 text-sm min-w-[200px] ${
                                     isCurrentUser 
                                         ? 'ml-auto max-w-[80%] md:max-w-[60%] rounded-l-xl rounded-tr-xl bg-blue-700 text-slate-100 dark:bg-blue-600 dark:text-slate-100' 
-                                        : 'mr-auto max-w-[80%] md:max-w-[60%] rounded-r-xl rounded-tl-xl bg-slate-100 text-black dark:bg-slate-800 dark:text-white'
+                                        : 'mr-auto max-w-[80%] md:max-w-[60%] rounded-r-xl rounded-tl-xl bg-slate-100 text-black dark:bg-slate-800 dark:text-tertiari'
                                 }`}
                             >
                                 {!isCurrentUser && (

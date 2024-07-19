@@ -108,11 +108,11 @@ function GameEntreprise () {
                         />
                     </div>
                     <Card className="mt-4 flex-2 md:mt-0 md:ml-10 border-0">
-                        <CardContent className="flex justify-center flex-col p-4 text-white">
+                        <CardContent className="flex justify-center flex-col p-4 text-secondary">
                             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold">{t('sujet')}</h2>
                             <p className="mt-2 text-sm md:text-base lg:text-lg">{puzzle.details}</p>
                         </CardContent>
-                        <CardContent className="flex justify-center flex-col p-4 text-white border-2 rounded-md">
+                        <CardContent className="flex justify-center flex-col p-4 text-secondary border-2 rounded-md">
                             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold">{t('stateOfTest')}</h2>
                             <ul>
                                 <li>
@@ -138,11 +138,11 @@ function GameEntreprise () {
                             </ul>
                         </CardContent>
                         <Button id="btn-send-test" type="button"
-                                className="border-2 rounded-md mt-5 p-2 w-auto text-white bg-green-800"
+                                className="border-2 rounded-md mt-5 p-2 w-auto text-tertiari bg-green-800"
                                 onClick={handleSendTest}>{t('testYourCode')}</Button>
                         {testTested &&
                         <Button id="btn-send-test" type="button"
-                                className="border-2 rounded-md mt-5 p-2 w-auto text-white bg-green-800"
+                                className="border-2 rounded-md mt-5 p-2 w-auto text-tertiari bg-green-800"
                                 onClick={handleSendCode}>{t('sendYourCode')}</Button>
                         }
                     </Card>

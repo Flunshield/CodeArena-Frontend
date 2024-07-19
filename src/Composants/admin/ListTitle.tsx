@@ -76,7 +76,7 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
                         </thead>
                         <tbody>
                         {titles.map((title) => (
-                            <tr key={title.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <tr key={title.id} className="bg-tertiari border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td className="py-4 px-6">{title.label}</td>
                                 <td className="py-4 px-6">{title.value}</td>
                                 <td className="py-4 px-6">
@@ -92,7 +92,7 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
                                         <Button
                                             type="button"
                                             onClick={() => deleteTitleFunction(title)}
-                                            className="bg-error hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg"
+                                            className="bg-error hover:bg-red-700 text-tertiari font-medium py-2 px-4 rounded-lg"
                                             id="deleteTitle"
                                         >
                                             {t("delete")}

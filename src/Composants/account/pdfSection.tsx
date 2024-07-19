@@ -1,12 +1,12 @@
-import {FadeIn} from "../../ComposantsCommun/FadeIn.tsx";
-import {Container} from "../../ComposantsCommun/Container.tsx";
-import {useTranslation} from "react-i18next";
-import {CVFormState, DataToken} from "../../Interface/Interface.ts";
-import {getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelper.ts";
-import {useAuthContext} from "../../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
+import { FadeIn } from "../../ComposantsCommun/FadeIn.tsx";
+import { Container } from "../../ComposantsCommun/Container.tsx";
+import { useTranslation } from "react-i18next";
+import { CVFormState, DataToken } from "../../Interface/Interface.ts";
+import { getElementByEndpoint, postElementByEndpoint } from "../../Helpers/apiHelper.ts";
+import { useAuthContext } from "../../AuthContext.tsx";
+import { JwtPayload } from "jwt-decode";
 import clsx from "clsx";
-import {downloadPdf} from "../../Helpers/methodeHelper.ts";
+import { downloadPdf } from "../../Helpers/methodeHelper.ts";
 
 interface pdfSectionProps {
     getCvs: CVFormState[];
@@ -27,7 +27,7 @@ const PdfSection = ({
                         setNotificationMessage,
                         setIsSubmitted
                     }: pdfSectionProps) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
@@ -43,8 +43,8 @@ const PdfSection = ({
                 setNotificationType('error');
                 setShowNotification(true);
             }
-        })
-    }
+        });
+    };
 
     const activateCv = async (idCv: number) => {
         postElementByEndpoint("user/activateCv", {
@@ -69,48 +69,49 @@ const PdfSection = ({
                 setNotificationType('error');
                 setShowNotification(true);
             }
-        })
-    }
+        });
+    };
 
     return (
         <Container>
             <FadeIn>
                 <div className="flex flex-col w-full justify-center">
-                    <label id="labelVosCv" className="text-neutral-900 text-3xl font-bold mb-4">
+                    <label id="labelVosCv" className="text-neutral-900 text-3xl font-bold mb-4 text-center">
                         {t("voscvs")}
                     </label>
-                    <div className="overflow-x-auto text-center border-2 rounded-xl m-5">
-                        <table className="min-w-full bg-white">
+                    <div className="overflow-x-auto text-center border-2 rounded-xl m-5 p-4 bg-gray-50 shadow-lg">
+                        <table className="min-w-full bg-white rounded-lg">
                             <thead>
                             <tr className="rounded-xl">
-                                <th className="py-2 px-4 sm:px-6 md:px-8 lg:px-10 bg-gray-100 border-b border-gray-200">#</th>
-                                <th className="py-2 px-4 sm:px-6 md:px-8 lg:px-10 bg-gray-100 border-b border-gray-200">CV
-                                    Name
-                                </th>
-                                <th className="py-2 px-4 sm:px-6 md:px-8 lg:px-10 bg-gray-100 border-b border-gray-200">{t('action')}</th>
+                                <th className="py-3 px-2 sm:px-4 md:px-6 lg:px-8 bg-gray-100 border-b border-gray-200">#</th>
+                                <th className="py-3 px-2 sm:px-4 md:px-6 lg:px-8 bg-gray-100 border-b border-gray-200">CV Name</th>
+                                <th className="py-3 px-2 sm:px-4 md:px-6 lg:px-8 bg-gray-100 border-b border-gray-200">{t('action')}</th>
                             </tr>
                             </thead>
                             <tbody>
                             {getCvs.map((cv, index) => (
                                 <tr key={cv.id} className="border-b">
-                                    <td className="py-2 px-4 sm:px-6 md:px-8 lg:px-10">{index + 1}</td>
-                                    <td className="py-2 px-4 sm:px-6 md:px-8 lg:px-10">{cv.cvName}</td>
-                                    <td className="py-2 px-4 sm:px-6 md:px-8 lg:px-10">
-                                        <div className="flex space-x-2 justify-center">
+                                    <td className="py-2 px-2 sm:px-4 md:px-6 lg:px-8">{index + 1}</td>
+                                    <td className="py-2 px-2 sm:px-4 md:px-6 lg:px-8">{cv.cvName}</td>
+                                    <td className="py-2 px-2 sm:px-4 md:px-6 lg:px-8">
+                                        <div className="flex flex-wrap justify-center space-x-2">
                                             <button
-                                                className="bg-petroleum-blue text-tertiari font-bold rounded-xl p-2 border-2 border-tertiari shadow-2xl w-24"
+                                                className="bg-petroleum-blue text-tertiari font-bold rounded-xl p-2 border-2 border-tertiari shadow-lg w-24 transition duration-300 ease-in-out transform hover:scale-105"
                                                 onClick={() => getPdf(cv.id)}
                                             >
                                                 {t('visualiser')}
                                             </button>
                                             <button
-                                                className="bg-error text-tertiari font-bold rounded-xl p-2 border-2 border-tertiari shadow-2xl w-12"
+                                                className="bg-error text-tertiari font-bold rounded-xl p-2 border-2 border-tertiari shadow-lg w-12 transition duration-300 ease-in-out transform hover:scale-105"
                                                 onClick={() => deleteCv(cv.id)}
                                             >
                                                 X
                                             </button>
                                             <button
-                                                className={clsx(cv.activate ? "bg-olive-green" : "bg-tertiari", "text-tertiari font-bold rounded-xl p-2 border-2 border-tertiari shadow-2xl w-12")}
+                                                className={clsx(
+                                                    cv.activate ? "bg-olive-green" : "bg-tertiari",
+                                                    "text-tertiari font-bold rounded-xl p-2 border-2 border-tertiari shadow-lg w-12 transition duration-300 ease-in-out transform hover:scale-105"
+                                                )}
                                                 onClick={() => activateCv(cv.id)}
                                             >
                                                 X
@@ -124,7 +125,7 @@ const PdfSection = ({
                         {getCvs.length <= 4 && (
                             <button
                                 onClick={() => setPopupCvOpen(true)}
-                                className="bg-petroleum-blue text-tertiari font-bold rounded-xl p-5 border-2 border-tertiari shadow-2xl w-2/3 mt-5 mb-5"
+                                className="bg-petroleum-blue text-tertiari font-bold rounded-xl p-5 border-2 border-tertiari shadow-lg w-full sm:w-2/3 mt-5 mb-5 transition duration-300 ease-in-out transform hover:scale-105"
                             >
                                 {t('createCv')}
                             </button>
@@ -134,6 +135,6 @@ const PdfSection = ({
             </FadeIn>
         </Container>
     );
-}
+};
 
 export default PdfSection;

@@ -86,13 +86,13 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                     {!emailVerified && (
                                         <div className="flex flex-col md:flex-row justify-center items-center mt-6">
                                             <div className="flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-3">
-                                                <p className="bg-red-500 text-white rounded-lg p-2 text-center">{t("emailNotVerified")}</p>
+                                                <p className="bg-red-500 text-tertiari rounded-lg p-2 text-center">{t("emailNotVerified")}</p>
                                                 {!isSendMail && (
                                                     <Button
                                                         id="button-valid-mail"
                                                         type="button"
                                                         onClick={valdMail}
-                                                        className="bg-green-800 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                                                        className="bg-green-800 hover:bg-green-700 text-tertiari font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
                                                     >
                                                         {t("validMail")}
                                                     </Button>
@@ -105,14 +105,14 @@ const InfosUser: React.FC<InfosUserProps> = ({
                         </div>
                         <div className={clsx(isEntreprise ? "flex-col-reverse" : "max-2xl:flex-col", "flex flex-row w-full justify-center")}>
                             {!isEntreprise && (
-                                <FadeIn className="flex flex-col text-secondary bg-secondary m-5 border rounded-lg shadow-lg  p-6">
-                                    <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                                        <ul className="space-y-4 w-full">
+                                <FadeIn className="flex flex-col text-secondary bg-secondary m-5 border rounded-lg shadow-lg p-6">
+                                    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                                        <ul className="space-y-4 w-full md:w-1/2">
                                             <ListItem icon={map} id="map" text={infosUserById?.localisation ?? ""} />
                                             <ListItem icon={company} id="company" text={infosUserById?.company ?? ""} />
                                             <ListItem icon={school} id="school" text={infosUserById?.school ?? ""} />
                                         </ul>
-                                        <ul className="space-y-4">
+                                        <ul className="space-y-4 w-full md:w-1/2">
                                             <ListItem icon={github} id="github" text={infosUserById?.github ?? ""} />
                                             <ListItem icon={link} id="link" text={infosUserById?.url ?? ""} />
                                             <ListItem icon={titles} id="titles" text={title ? title : "Aucun titre"} />
@@ -122,12 +122,13 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                     <Button
                                         type="button"
                                         onClick={openPopup}
-                                        className="bg-tertiari hover:bg-primary-light  text-secondary font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mt-4 self-center"
+                                        className="bg-tertiari hover:bg-primary-light text-secondary font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 mt-4 self-center md:self-end"
                                         id="save"
                                     >
                                         {t("update")}
                                     </Button>
                                 </FadeIn>
+
                             )}
                             {isEntreprise ? (
                                 <FadeIn>

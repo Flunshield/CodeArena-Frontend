@@ -13,10 +13,10 @@ type LayoutProps = {
 
 const Layout = ({children, classnameMain, classnameFooter}: LayoutProps) => {
     return (
-        <div className="flex flex-col bg-white/50 min-h-screen w-auto">
+        <div className="flex flex-col bg-tertiari/50 min-h-screen w-auto">
             <Header/>
             <div id="mainFooter" className="">
-                <main className={clsx(classnameMain, "flex-grow min-h-screen mb-32")} id="main">
+                <main className={clsx(classnameMain, "flex-grow min-h-screen")} id="main">
                     {children}
                 </main>
                 <CookieConsentBanner />

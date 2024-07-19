@@ -100,7 +100,7 @@ function TournamentInfos(): JSX.Element {
                 />
             )}
             <FadeIn className="flex flex-col items-center">
-                <Card className="border-2 border-tertiary shadow-lg bg-white rounded-lg w-full">
+                <Card className="border-2 border-tertiary shadow-lg bg-tertiari rounded-lg w-full">
                     <CardContent className="text-neutral-900 p-8">
                         <ul className="flex flex-col items-center">
                             <li className="text-neutral-900 text-3xl text-center font-bold mb-6">

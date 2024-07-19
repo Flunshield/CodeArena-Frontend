@@ -90,7 +90,7 @@ const CVForm = ({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto p-4 bg-white shadow-md rounded-md space-y-6">
+        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto p-4 bg-tertiari shadow-md rounded-md space-y-6">
             <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-gray-700">{t('cvName')}</h2>
                     <label htmlFor="cvName" className="block text-gray-700">{t('cvName')}</label>
@@ -240,7 +240,7 @@ const CVForm = ({
                             <button
                                 type="button"
                                 onClick={() => removeSection('experiences', index)}
-                                className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md"
+                                className="mt-2 px-4 py-2 bg-red-500 text-tertiari rounded-md"
                             >
                                 {t('deleteThisExperience')}
                             </button>
@@ -251,7 +251,7 @@ const CVForm = ({
                     <button
                         type="button"
                         onClick={() => addSection('experiences')}
-                        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+                        className="mt-2 px-4 py-2 bg-blue-500 text-tertiari rounded-md"
                     >
                         {t('addExperience')}
                     </button>
@@ -324,7 +324,7 @@ const CVForm = ({
                             <button
                                 type="button"
                                 onClick={() => removeSection('educations', index)}
-                                className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md"
+                                className="mt-2 px-4 py-2 bg-red-500 text-tertiari rounded-md"
                             >
                                 {t('deleteThisDiplome')}
                             </button>
@@ -335,7 +335,7 @@ const CVForm = ({
                     <button
                         type="button"
                         onClick={() => addSection('educations')}
-                        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+                        className="mt-2 px-4 py-2 bg-blue-500 text-tertiari rounded-md"
                     >
                         {t('addDiplome')}
                     </button>
@@ -363,7 +363,7 @@ const CVForm = ({
                                 <button
                                     type="button"
                                     onClick={() => removeSection('technicalSkills', index)}
-                                    className="px-4 py-2 bg-red-500 text-white rounded-md"
+                                    className="px-4 py-2 bg-red-500 text-tertiari rounded-md"
                                 >
                                     X
                                 </button>
@@ -375,7 +375,7 @@ const CVForm = ({
                     <button
                         type="button"
                         onClick={() => addSection('technicalSkills')}
-                        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+                        className="mt-2 px-4 py-2 bg-blue-500 text-tertiari rounded-md"
                     >
                         {t('addCompetence')}
                     </button>
@@ -400,7 +400,7 @@ const CVForm = ({
                                 <button
                                     type="button"
                                     onClick={() => removeSection('softSkills', index)}
-                                    className="px-4 py-2 bg-red-500 text-white rounded-md"
+                                    className="px-4 py-2 bg-red-500 text-tertiari rounded-md"
                                 >
                                     X
                                 </button>
@@ -412,14 +412,14 @@ const CVForm = ({
                     <button
                         type="button"
                         onClick={() => addSection('softSkills')}
-                        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+                        className="mt-2 px-4 py-2 bg-blue-500 text-tertiari rounded-md"
                     >
                         {t('addCompetence')}
                     </button>
                 </div>
             </div>
 
-            <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md">{t('send')}</button>
+            <button type="submit" className="w-full bg-blue-500 text-tertiari py-2 px-4 rounded-md">{t('send')}</button>
         </form>
     );
 };

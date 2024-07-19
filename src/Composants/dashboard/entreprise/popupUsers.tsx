@@ -20,7 +20,7 @@ const PopupUsers = ({userInfos, closePopup, getPdf}: popupUsersProps) => {
         <div
             className="fixed top-0 left-0 w-full h-full overflow-auto flex items-center justify-center bg-black bg-opacity-75 z-50">
             <div
-                className="bg-white w-11/12 md:w-3/4 lg:w-1/2 xl:w-1/3 h-auto rounded-lg shadow-lg p-6 max-md:p-1 m-5">
+                className="bg-tertiari w-11/12 md:w-3/4 lg:w-1/2 xl:w-1/3 h-auto rounded-lg shadow-lg p-6 max-md:p-1 m-5">
                 <div className="flex justify-end">
                     <button
                         className="text-3xl text-gray-700 hover:text-gray-600"

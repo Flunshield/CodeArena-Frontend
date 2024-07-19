@@ -43,7 +43,7 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
 
     return (
         <div id="historiqueAchat" className={className}>
-            <h2 className="text-2xl text-center text-tertiari font-bold">{t('historiqueAchat')}</h2>
+            <h2 className="text-2xl text-center text-secondary font-bold">{t('historiqueAchat')}</h2>
             <div className="overflow-x-auto m-5 rounded-lg">
                 <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
                     <thead

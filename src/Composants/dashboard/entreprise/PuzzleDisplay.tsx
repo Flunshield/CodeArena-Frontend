@@ -147,14 +147,14 @@ const PuzzleDisplay = (
                                     <div
                                         className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center items-center m-5">
                                         <Button type="button" onClick={() => openPopup(puzzle, "1")}
-                                                className="bg-petroleum-blue hover:shadow-md hover:shadow-light-blue text-white font-bold py-2 px-4 rounded"
+                                                className="bg-petroleum-blue hover:shadow-md hover:shadow-light-blue text-tertiari font-bold py-2 px-4 rounded"
                                                 id="updateTitle">{t("modify")}</Button>
                                         <Button type="button"
-                                                className="bg-olive-green hover:shadow-lg hover:shadow-olive-green text-white font-bold py-2 px-4 rounded"
+                                                className="bg-olive-green hover:shadow-lg hover:shadow-olive-green text-tertiari font-bold py-2 px-4 rounded"
                                                 id="deleteTitle"
                                                 onClick={() => openPopup(puzzle, "2")}>{t("sendPuzzle")}</Button>
                                         <Button type="button"
-                                                className="bg-[#D63864] hover:shadow-lg hover:shadow-rose-300 text-white font-bold py-2 px-4 rounded"
+                                                className="bg-[#D63864] hover:shadow-lg hover:shadow-rose-300 text-tertiari font-bold py-2 px-4 rounded"
                                                 id="deleteTitle"
                                                 onClick={() => handleClickDelete(puzzle.id)}>{t("delete")}</Button>
                                     </div>

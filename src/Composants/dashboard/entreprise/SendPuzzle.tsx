@@ -111,12 +111,12 @@ const SendPuzzle = ({className, closePopup, puzzleToPopup}: SendPuzzleProps) => 
                                 </div>
                                 <div className="flex justify-center sm:justify-start">
                                     <button type="submit" disabled={isSubmitting}
-                                            className="bg-petroleum-blue hover:shadow-md hover:shadow-light-blue text-white font-bold py-1 sm:py-2 px-2 sm:px-4 rounded mr-2 sm:mr-5">
+                                            className="bg-petroleum-blue hover:shadow-md hover:shadow-light-blue text-tertiari font-bold py-1 sm:py-2 px-2 sm:px-4 rounded mr-2 sm:mr-5">
                                         {t("send")}
                                     </button>
                                     {closePopup && (
                                         <button type="button" onClick={closePopup}
-                                                className="py-1 sm:py-2 px-2 sm:px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-secondary hover:bg-primary">
+                                                className="py-1 sm:py-2 px-2 sm:px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-tertiari bg-secondary hover:bg-primary">
                                             {t("close")}
                                         </button>
                                     )}
