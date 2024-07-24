@@ -11,7 +11,7 @@ interface PrivateRouteProps {
 
 const PrivateRouteEntreprise: React.FC<PrivateRouteProps> = ({ children }) => {
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
     const isAdmin = infos.data.groups.roles

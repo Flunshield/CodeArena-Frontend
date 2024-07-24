@@ -50,7 +50,7 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({ setSelectedTheme, selecte
     };
 
     return (
-        <select value={selectedTheme} onChange={handleChangeTheme} className="border-white border-2 rounded-md bg-secondary text-white p-1 mb-5" name="selecteurTheme" id="selecteurTheme">
+        <select value={selectedTheme} onChange={handleChangeTheme} className="border-white border-2 rounded-md bg-secondary text-tertiari p-1 mb-5" name="selecteurTheme" id="selecteurTheme">
             {ALL_THEME.map((theme, key: number) => (
                 <option key={theme} value={theme} id={key.toString()}>
                     {theme}

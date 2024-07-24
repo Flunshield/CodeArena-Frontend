@@ -1,27 +1,28 @@
-import { useEffect, useState, useRef } from "react";
+import {useEffect, useRef, useState} from "react";
 import Button from '../ComposantsCommun/Button';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuthContext } from "../AuthContext.tsx";
-import { useTranslation } from "react-i18next";
-import { JwtPayload } from "jwt-decode";
-import { DataToken } from "../Interface/Interface.ts";
-import { ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT } from "../constantes/constantesRoutes.ts";
-import loginIcons from "/assets/icons/iconsLogin.svg";
-import { checkUrl } from "../Helpers/methodeHelper.ts";
+import {Link, useNavigate} from 'react-router-dom';
+import {useAuthContext} from "../AuthContext.tsx";
+import {useTranslation} from "react-i18next";
+import {JwtPayload} from "jwt-decode";
+import {DataToken} from "../Interface/Interface.ts";
+import {ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT} from "../constantes/constantesRoutes.ts";
+import loginIcons from "/assets/photosProfiles/noImage.svg";
+import {checkUrl} from "../Helpers/methodeHelper.ts";
 import clsx from "clsx";
+import useUserInfos from "../hook/useUserInfos.ts";
 
 const BouttonProfile = () => {
     const authContext = useAuthContext();
+    const infosUserById = useUserInfos();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [showPopup, setShowPopup] = useState(false);
     const [avatar, setAvatar] = useState<string>(loginIcons);
     const role = infos.data.groups.roles;
     const [currentPage, setCurrentPage] = useState<string>();
     const popupRef = useRef<HTMLDivElement | null>(null);
-
     const handleClickSingOut = () => {
         navigate(LOGOUT);
     };
@@ -31,11 +32,9 @@ const BouttonProfile = () => {
     };
 
     useEffect(() => {
-        if (infos.data.avatar !== "") {
-            setAvatar(infos?.data?.avatar ?? loginIcons);
-        }
+        setAvatar(infosUserById?.avatar ?? loginIcons);
         setCurrentPage(checkUrl());
-    }, [infos?.data?.avatar]);
+    }, [infosUserById?.avatar]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -55,7 +54,7 @@ const BouttonProfile = () => {
     }, []);
 
     return (
-        <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "hidden" : "block")}>
+        <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "block" : "block")}>
             <div
                 id="id-bouton-profile"
                 className="relative cursor-pointer w-max pr-5 xs:p-10 xs:pt-0"
@@ -63,7 +62,7 @@ const BouttonProfile = () => {
                 <img
                     src={avatar}
                     alt="profile"
-                    className="h-16 transform hover:scale-110 transition-transform duration-300"
+                    className="h-16 transform hover:scale-110 transition-transform duration-300 rounded-full"
                     onClick={handlerPopUp}
                 />
                 {showPopup && (
@@ -73,17 +72,20 @@ const BouttonProfile = () => {
                     >
                         <div className='p-2'>
                             <div className='flex flex-col items-center'>
-                                <Button id='button-compte' type={'button'} className={clsx(currentPage === "myAccount" ? "hidden" : "block", "mb-5 hover:underline")}>
+                                <Button id='button-compte' type={'button'}
+                                        className={clsx(currentPage === "myAccount" )}>
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
                                 {role === GROUPS.ADMIN &&
-                                    <Button id='button-compte-admin' type={'button'} className={clsx(currentPage === "admin" ? "hidden" : "block", "mb-5 hover:underline")}>
+                                    <Button id='button-compte-admin' type={'button'}
+                                            className={clsx(currentPage === "admin" ? "hidden" : "block", "mb-5 hover:underline")}>
                                         <Link to={ADMIN}>{t('administration')}</Link>
                                     </Button>
                                 }
                                 {role === GROUPS.ENTREPRISE &&
-                                    <Button id='button-compte-entreprise' type={'button'} className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5 hover:underline")}>
-                                        <Link to={DASHBOARD_ENTREPRISE} >{t('dashboardEntreprise')}</Link>
+                                    <Button id='button-compte-entreprise' type={'button'}
+                                            className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5 hover:underline")}>
+                                        <Link to={DASHBOARD_ENTREPRISE}>{t('dashboardEntreprise')}</Link>
                                     </Button>
                                 }
                             </div>

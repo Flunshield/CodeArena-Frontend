@@ -1,5 +1,6 @@
 export interface User {
     id?: number;
+    idCvUser?: number;
     token?: string;
     userName?: string;
     email?: string;
@@ -11,12 +12,14 @@ export interface User {
     firstName?: string;
     lastName?: string;
     groupsId?: number;
+    groups?: Groups;
     languagePreference?: string;
     localisation?: string;
     titlesId?: number;
     titles?: Titles;
     data?: string[];
-    badges?: string;
+    badgesWin?: string[];
+    titlesWin?: string[];
     company?: string;
     url?: string;
     school?: string;
@@ -30,35 +33,11 @@ export interface User {
 
 export interface DataToken {
     data: {
+        userTournament: any;
+        userRanking: any;
         id?: number;
-        token?: string;
-        userName?: string;
-        email?: string;
-        emailVerified?: boolean;
-        createdAt?: Date;
-        lastLogin?: Date;
-        status?: string;
-        avatar?: string;
-        firstName?: string;
-        lastName?: string;
-        groupsId?: number;
-        languagePreference?: string;
-        localisation?: string;
-        titlesId?: number;
-        titles?: Titles;
-        titlesWin?: string[];
-        badgesWin?: string[];
-        company?: string;
-        url?: string;
-        school?: string;
-        github?: string;
-        presentation?: string;
-        userRanking?: UserRanking[];
-        userTournament?: UserTournament[];
         groups: Groups;
-        commandeEntreprise?: CommandeEntreprise[];
-        puzzlesEntreprise: PuzzlesEntreprise[];
-        siren?: string;
+        
     }
 }
 
@@ -281,9 +260,47 @@ export interface UserClassementEntreprise {
     userRanking: UserRanking[];
     points: string;
     nbGames: string;
+    cvUser: CVFormState[];
 }
 
 export interface listPuzzleSend {
     item: PuzzleSend[];
     total: number;
+}
+
+
+export interface Experience {
+    company: string;
+    position: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
+
+export interface Education {
+    institution: string;
+    degree: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
+
+export interface Skill {
+    name: string;
+}
+
+export interface CVFormState {
+    id: number;
+    cvName: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+    summary: string;
+    experiences: Experience[];
+    educations: Education[];
+    technicalSkills: Skill[];
+    softSkills: Skill[];
+    activate?: boolean;
 }

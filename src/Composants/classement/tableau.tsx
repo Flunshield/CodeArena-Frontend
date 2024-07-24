@@ -1,13 +1,21 @@
 import {useAuthContext} from "../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
-import {useEffect, useState} from "react";
-import {DataToken, listUser, listUserEntreprise} from "../../Interface/Interface.ts";
+import {MouseEvent, useEffect, useState} from "react";
+import {DataToken, listUser, listUserEntreprise, User} from "../../Interface/Interface.ts";
 import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
 import DataTable from "../../ComposantsCommun/DataTable.tsx";
 import Pagination from "../../ComposantsCommun/Pagination.tsx";
 import {JwtPayload} from "jwt-decode";
 import {GROUPS} from "../../constantes/constantes.ts";
+import {Container} from "../../ComposantsCommun/Container.tsx";
+import {SectionIntro} from "../../ComposantsCommun/SectionIntro.tsx";
+import Card from "../../ComposantsCommun/Card.tsx";
+import CardContent from "../../ComposantsCommun/CardContent.tsx";
+import {FadeIn} from "../../ComposantsCommun/FadeIn.tsx";
+import Notification from "../../ComposantsCommun/Notification.tsx";
+import {downloadPdf} from "../../Helpers/methodeHelper.ts";
+import PopupUsers from "../dashboard/entreprise/popupUsers.tsx";
 
 function Tableau(): JSX.Element {
     const authContext = useAuthContext();
@@ -21,9 +29,15 @@ function Tableau(): JSX.Element {
     const [submitCount, setSubmitCount] = useState(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemPerPage, setItemPerPage] = useState(10);
+    const [languagePreference, setLanguagePreference] = useState<string>('all');
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
+    const [userInfos, setUserInfos] = useState<User>();
+    const [isPopupOpenGetUser, setIsPopupOpenGetUser] = useState(false);
 
     async function getUsers() {
-        return await getElementByEndpoint(`user/getUsers?page=${currentPage}&itemPerPage=${itemPerPage}&isEntreprise=${isEntreprise}`, {
+        return await getElementByEndpoint(`user/getUsers?page=${currentPage}&itemPerPage=${itemPerPage}&isEntreprise=${isEntreprise}&languagePreference=${languagePreference}`, {
             token,
             data: '',
         });
@@ -36,6 +50,40 @@ function Tableau(): JSX.Element {
         });
         setUsers(await result.json());
     }
+
+    async function clickedUser(username: string) {
+        if (isEntreprise) {
+            const response = await getElementByEndpoint(`user/getUser?username=${username}&isEntreprise=${isEntreprise}`, {
+                token,
+                data: '',
+            });
+
+            const result = await response.json();
+            result.idCvUser = users.item.find((elem) => elem.userName === username)?.cvUser[0]?.id ?? "";
+            setUserInfos(result);
+            setIsPopupOpenGetUser(true);
+        }
+    }
+
+    async function getPdf(idCv: number | string, event?: MouseEvent<HTMLButtonElement, MouseEvent>) {
+        event?.stopPropagation();
+        const response = await getElementByEndpoint(`entreprise/pdfCvUser?id=${infos.data.id}&idCv=${idCv}`, {
+            token,
+            data: '',
+        });
+
+        const pdfDownloadPromise = downloadPdf(response);
+        if (!pdfDownloadPromise) {
+            setNotificationMessage(t('errorUserInfos'));
+            setNotificationType('error');
+            setShowNotification(true);
+        }
+    }
+
+    const closePopup = async () => {
+        document.body.style.overflow = "auto";
+        setIsPopupOpenGetUser(false);
+    };
 
     const headers = infos.data.groups.roles === GROUPS.ENTREPRISE ? [
         {key: 'firstName', label: 'firstName'},
@@ -52,16 +100,17 @@ function Tableau(): JSX.Element {
         {key: 'nbGames', label: 'nbGames'},
     ]
 
-// Transform user data to fit the table headers
-    const transformedData = users.item.map(user => ({
-        firstName: user.firstName ?? "",
-        lastName: user.lastName ?? "",
-        email: user.email ?? "",
-        userName: user.userName ?? "",
-        userRankingTitle: user?.userRanking?.map(elem => elem?.rankings?.title).join(', ') ?? "",
-        userRankingPoints: user?.userRanking?.map(elem => elem.points).join(', ') ?? "",
-        nbGames: user.nbGames as string ?? "0",
-    }));
+    const transformedData = users.item.map(user =>
+        ({
+            firstName: user.firstName ?? "",
+            lastName: user.lastName ?? "",
+            email: user.email ?? "",
+            userName: user.userName ?? "",
+            userRankingTitle: user?.userRanking?.map(elem => elem?.rankings?.title).join(', ') ?? "",
+            userRankingPoints: user?.userRanking?.map(elem => elem.points).join(', ') ?? "",
+            nbGames: user.nbGames as string ?? "0"
+        }));
+
     const maxPage = Math.ceil(users.total / itemPerPage);
 
     useEffect(() => {
@@ -70,29 +119,59 @@ function Tableau(): JSX.Element {
                 setUsers(result);
             }
         );
-    }, [submitCount, itemPerPage, currentPage]);
+    }, [submitCount, itemPerPage, currentPage, languagePreference]);
+
     return (
-        <div className="m-5">
-            <div className="flex max-md:flex-col flex-row max-md:text-center justify-between">
-                <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des utilisateurs')}</h2>
-                <SearchBar onSearch={onSearch} setItemPerPage={setItemPerPage} placeholder={"serachByUsername"}
-                           setCurrentPage={setCurrentPage}/>
-            </div>
-            <div className="flex flex-col justify-center w-full">
-                <div className="overflow-x-auto rounded-lg">
-                    {transformedData && transformedData.length === 0 ?
-                        <p>{t('NoUserFound')}</p>
-                        :
-                        <DataTable headers={headers} data={transformedData}/>
-                    }
-                </div>
-                <Pagination item={users.item} maxPage={maxPage} currentPage={currentPage}
+        <Container className="py-12">
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
+            <SectionIntro
+                title={t('listUtilisateurs')}
+                subtitle={t('serachByUsername')}
+                className="mb-8"
+            />
+            <FadeIn>
+                <Card className="bg-tertiari shadow-elevated p-6">
+                    <CardContent>
+                        <div className="flex flex-col md:flex-row items-center justify-between mb-6">
+                            <h2 className="text-lg font-semibold text-secondary m-4 md:mb-0 shadow-lg bg-gray-200 dark:bg-gray-800 dark:text-gray-300 rounded-lg p-4">
+                                {t('listUtilisateurs')}
+                            </h2>
+                            <SearchBar
+                                onSearch={onSearch}
+                                setItemPerPage={setItemPerPage}
+                                placeholder={t('serachByUsername')}
+                                setCurrentPage={setCurrentPage}
+                                setLanguagePreference={setLanguagePreference}
+                                isEntreprise={isEntreprise}
+                            />
+                        </div>
+                        <div className="overflow-hidden rounded-lg shadow-md">
+                            <DataTable headers={headers} data={transformedData} className="w-full"
+                                       clickedUser={clickedUser}/>
+                        </div>
+                        <Pagination
+                            item={users.item}
+                            maxPage={maxPage}
+                            currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
-                            setSubmitCount={setSubmitCount} classNameCurrentPage="text-tertiari"
-                            itemPerPage={itemPerPage}/>
-            </div>
-        </div>
-    )
+                            setSubmitCount={setSubmitCount}
+                            classNameCurrentPage="text-primary"
+                            itemPerPage={itemPerPage}
+                        />
+                    </CardContent>
+                </Card>
+            </FadeIn>
+            {isPopupOpenGetUser && (
+                <PopupUsers closePopup={closePopup} userInfos={userInfos} getPdf={getPdf}/>
+            )}
+        </Container>
+    );
 }
 
 export default Tableau;

@@ -14,7 +14,7 @@ const LoaderMatch = ({ msg, className }: LoaderProps) => {
                 <div id="square4"></div>
                 <div id="square5"></div>
             </div>
-            <span className='text-white flex justify-center font-bold text-xl'>{msg}</span>
+            <span className='text-tertiari flex justify-center font-bold text-xl'>{msg}</span>
         </div>
     );
 }

@@ -148,7 +148,7 @@ const PuzzleForm = ({
                             </button>
                             {closePopup && (
                                 <button type="button" onClick={closePopup}
-                                        className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-secondary hover:bg-primary">
+                                        className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-tertiari bg-secondary hover:bg-primary">
                                     {t("close")}
                                 </button>
                             )}

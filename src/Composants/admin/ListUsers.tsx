@@ -55,7 +55,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
     return (
         <div className="">
             <div className="flex flex-row justify-between">
-                <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des utilisateurs')}</h2>
+                <h2 className="text-lg font-semibold text-tertiari mb-4">{t('listUtilisateurs')}</h2>
             </div>
             <div className="flex flex-col justify-center w-full">
                 <div className="overflow-x-auto rounded-lg">
@@ -88,7 +88,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
                         </thead>
                         <tbody>
                         {users.map((user: User) => (
-                            <tr key={user.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <tr key={user.id} className="bg-tertiari border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td className="py-4 px-6">{user.firstName}</td>
                                 <td className="py-4 px-6">{user.lastName}</td>
                                 <td className="py-4 px-6">{user.userName}</td>
@@ -127,7 +127,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
                 <div className="flex justify-between items-center w-full mt-4">
                     {currentPage > 1 ? (
                         <button
-                            className="px-4 py-2 rounded bg-petroleum-blue text-white"
+                            className="px-4 py-2 rounded bg-petroleum-blue text-tertiari"
                             onClick={prevPage}
                         >
                             {t('previous')}
@@ -138,7 +138,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
                     <p className="text-center flex-grow">{currentPage}</p>
                     {users.length > 0 ? (
                         <button
-                            className="px-4 py-2 rounded bg-petroleum-blue text-white"
+                            className="px-4 py-2 rounded bg-petroleum-blue text-tertiari"
                             onClick={nextPage}
                         >
                             {t('next')}

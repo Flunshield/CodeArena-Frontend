@@ -62,6 +62,62 @@ export const DIX_MIN = 600;
 
 export const INFINITE_PUZZLE = 999999;
 
-export const DIX = 10;
-export const VINGT_CINQ = 25;
-export const CINQUANTE = 50;
+export const DIX = "10";
+
+export const VINGT_CINQ = "25";
+
+export const CINQUANTE = "50";
+
+export const ITEMS_PER_PAGE_DIX = 10;
+
+export const ITEMS_PER_PAGE_QUATRE = 4;
+
+export const CODE_LANGUAGES_FAVORITES = [
+    "javascript",
+    "java",
+    "python",
+    "c",
+    "c++",
+    "c#",
+    "typescript",
+    "php",
+    "html",
+    "css",
+    "ruby",
+    "go",
+    "swift",
+    "kotlin",
+    "rust",
+    "scala",
+    "r",
+    "shell",
+    "powershell",
+    "sql",
+    "objective-c",
+    "perl",
+    "lua",
+    "dart",
+    "haskell",
+    "groovy",
+    "elixir",
+    "clojure",
+    "f#",
+    "assembly",
+    "racket",
+    "scheme",
+    "erlang",
+    "ocaml",
+    "fortran",
+    "julia",
+    "pascal",
+    "smalltalk",
+    "lisp",
+    "prolog",
+    "cobol",
+    "ada",
+    "abap",
+    "apex",
+    "bash",
+    "batch",
+    "brain",
+    ]

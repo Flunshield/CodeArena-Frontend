@@ -9,6 +9,7 @@ import {useTranslation} from "react-i18next";
 import clsx from "clsx";
 import Notification from "../../../ComposantsCommun/Notification.tsx";
 import Pagination from "../../../ComposantsCommun/Pagination.tsx";
+import {ITEMS_PER_PAGE_QUATRE} from "../../../constantes/constantes.ts";
 
 interface PuzzleListProps {
     setIsSubmitted: () => void;
@@ -30,7 +31,7 @@ const PuzzleList = ({
     const [notificationMessage, setNotificationMessage] = useState('');
 
     const [puzzleFinish, setPuzzleFinish] = useState<listPuzzleSend>({item: [], total: 0});
-    const maxPage = puzzleFinish.item.length > 0 ? Math.ceil(puzzleFinish.total / 4) : 1;
+    const maxPage = puzzleFinish.item.length > 0 ? Math.ceil(puzzleFinish.total / ITEMS_PER_PAGE_QUATRE) : 1;
 
     const getPuzzle = getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infosUserById?.id}&page=${currentPage}`, {
             token: authContext.accessToken ?? "",
@@ -132,7 +133,7 @@ const PuzzleList = ({
             <h1 className="text-center font-bold text-3xl">{t("puzzleRealized")}</h1>
             <div className="flex justify-end max-sm:flex-col space-x-2 max-sm:space-y-1 mb-4 mt-5">
                 <select
-                    className="px-4 py-2 w-40 h-10 rounded bg-petroleum-blue text-white cursor-pointer"
+                    className="px-4 py-2 w-40 h-10 rounded bg-petroleum-blue text-tertiari cursor-pointer"
                     value={selectedTitle}
                     onChange={e => setSelectedTitle(e.target.value)}
                 >
@@ -143,18 +144,18 @@ const PuzzleList = ({
                         </option>
                     ))}
                 </select>
-                <button className="px-4 py-2 w-32 h-10 overflow-hidden rounded bg-petroleum-blue text-white"
+                <button className="px-4 py-2 w-32 h-10 overflow-hidden rounded bg-petroleum-blue text-tertiari"
                         onClick={() => handleSort('sendDate')}>{t("triDate")}
                 </button>
                 <Button type={"submit"} id={"delete"}
-                        className={"px-4 py-2 w-32 h-10 rounded bg-[#D63864] text-white font-bold"}
+                        className={"px-4 py-2 w-32 h-10 rounded bg-[#D63864] text-tertiari font-bold"}
                         onClick={() => deleteOldPuzzlePuzzle()}>X ({'>'} 1 {t("month")})</Button>
             </div>
             {sortedData.map(result => (
-                <div key={result.id} className="rounded-lg p-4 mb-4 border border-gray-300 bg-white">
+                <div key={result.id} className="rounded-lg p-4 mb-4 border border-gray-300 bg-tertiari">
                     <div className="flex flex-row-reverse justify-between w-full">
                         <Button type={"submit"} id={"delete-" + result.id.toString()}
-                                className={"px-4 py-2 rounded bg-[#D63864] text-white font-bold"}
+                                className={"px-4 py-2 rounded bg-[#D63864] text-tertiari font-bold"}
                                 onClick={() => deleteOnePuzzle(result.id)}>X</Button>
                         <h1 className="flex-1 text-center text-xl font-bold">{result.puzzlesEntreprise.title}</h1>
                     </div>

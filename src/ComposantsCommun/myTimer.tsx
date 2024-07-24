@@ -20,7 +20,7 @@ const MyTimer: React.FC<MyTimerProps> = ({expiryTimestamp, setRemainingTime}) =>
     }, [seconds, minutes, setRemainingTime]);
     return (
         <div style={{textAlign: 'center'}} id="timer">
-            <div style={{fontSize: '100px'}} className="text-white">
+            <div style={{fontSize: '100px'}} className="text-secondary">
                 <span>{formatNumber(minutes)}</span>:<span>{formatNumber(seconds)}</span>
             </div>
         </div>
