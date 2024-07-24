@@ -97,7 +97,7 @@ function MyAccount() {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            <Container className="rounded-xl bg-tertiari mx-auto">
+            <Container >
                 <SectionIntro title={t("myAccount")} className="text-center mt-10"/>
                 <div className="flex flex-col items-center">
                     <FadeInStagger className="w-full">
