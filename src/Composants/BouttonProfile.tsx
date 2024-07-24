@@ -54,7 +54,7 @@ const BouttonProfile = () => {
     }, []);
 
     return (
-        <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "block xs:mt-10" : "block")}>
+        <div className={clsx(currentPage === "myAccount" && infos.data.groups.roles === "User" ? "block" : "block")}>
             <div
                 id="id-bouton-profile"
                 className="relative cursor-pointer w-max pr-5 xs:p-10 xs:pt-0"
@@ -73,7 +73,7 @@ const BouttonProfile = () => {
                         <div className='p-2'>
                             <div className='flex flex-col items-center'>
                                 <Button id='button-compte' type={'button'}
-                                        className={clsx(currentPage === "myAccount" ? "hidden" : "block", "mb-5 hover:underline")}>
+                                        className={clsx(currentPage === "myAccount" )}>
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
                                 {role === GROUPS.ADMIN &&

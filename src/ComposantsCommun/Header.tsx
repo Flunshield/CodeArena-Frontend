@@ -44,7 +44,7 @@ const Header = () => {
     return (
         <header className="z-50 text-tertiari px-4 md:px-8 bg-secondary relative">
             <div className="flex justify-between items-center w-full">
-                {isConnected && <div className="flex start-0 top-0 absolute py-6 w-full"><NavBar/></div>}
+                {isConnected && <div className="flex start-0 top-0 absolute sm:py-10 py-6 w-full"><NavBar/></div>}
 
                 <div className="flex justify-between px-10 py-3 w-full items-center md:space-x-1">
                     <div className="flex items-center">
@@ -52,7 +52,7 @@ const Header = () => {
                         {!isConnected ?
                             <a href={isConnected ? DASHBOARD : HOME}> <img src="/logo.svg" alt="Logo codeArena"
                                                                            className="sm:block w-12 h-12 sm:w-16 sm:h-16  mr-3"/></a> : ""}
-                        <a className="hidden sm:block text-tertiari text-3xl m-3 font-bold"
+                        <a className="hidden sm:block text-tertiari text-3xl  font-bold"
                            href={isConnected ? DASHBOARD : HOME}>
                             {t('CodeArena')}
                         </a>
