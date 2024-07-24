@@ -1,3 +1,5 @@
+// Path: src/Components/EventDashboard.tsx
+
 import { useEffect, useState } from "react";
 import Layout from "../ComposantsCommun/Layout.tsx";
 import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
@@ -27,19 +29,19 @@ function EventDashboard() {
 
     return (
         <Layout>
-            <Container className="py-12 px-4 md:px-8 lg:px-12">
+            <Container className="py-12 px-4 sm:px-6 md:px-8 lg:px-12">
                 <SectionIntro
                     title="Upcoming Events"
                     subtitle="Discover the latest events happening near you."
-                    className="mb-8 text-center"
+                    className="mb-6 sm:mb-8 text-center"
                 />
                 <FadeIn>
-                    <Card className="bg-secondary shadow-elevated p-6 rounded-xl">
+                    <Card className="bg-secondary shadow-elevated p-4 sm:p-6 rounded-xl">
                         <CardContent>
                             <TableauEvent
                                 infosEvents={infosEvent}
                                 isImg={false}
-                                className="m-5 rounded-xl border-tertiari p-5 h-full w-full bg-tertiary-light"
+                                className="m-3 sm:m-5 rounded-xl border-tertiari p-4 sm:p-5 h-full w-full bg-tertiary-light"
                             />
                         </CardContent>
                     </Card>
