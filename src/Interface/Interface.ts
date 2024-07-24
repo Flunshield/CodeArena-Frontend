@@ -33,6 +33,8 @@ export interface User {
 
 export interface DataToken {
     data: {
+        userTournament: any;
+        userRanking: any;
         id?: number;
         groups: Groups;
         

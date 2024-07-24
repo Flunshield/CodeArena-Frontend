@@ -82,7 +82,6 @@ function Navigation() {
         {
             title: t('Société'),
             links: [
-                { title: t('A propos'), href: '#' },
                 { title: t('politiqueConfidentialite'), href: PRIVACY_POLICY },
                 { title: t('mentionLegal'), href: LEGAL },
                 { title: t('cgv'), href: TERMS },

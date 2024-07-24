@@ -11,7 +11,7 @@ import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn.tsx";
 import { Container } from "../ComposantsCommun/Container.tsx";
 import { SectionIntro } from "../ComposantsCommun/SectionIntro";
 import Button from "../ComposantsCommun/Button.tsx";
-import { GridPattern } from "../ComposantsCommun/GridPattern.tsx";
+
 
 function Dashboard() {
     const authContext = useAuthContext();
@@ -39,10 +39,7 @@ function Dashboard() {
     return (
         <>
             <Layout>
-                <GridPattern
-                    className="absolute inset-0 -z-10 h-full w-full fill-neutral-100 stroke-neutral-950/5 [mask-image:linear-gradient(to_bottom_left,white_50%,transparent_60%)]"
-                    yOffset={-256}
-                />
+            
                 <Container className="mt-12">
                     <SectionIntro title="Dashboard">
                         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
@@ -61,7 +58,7 @@ function Dashboard() {
                         <FadeIn className="lg:col-span-2 xl:col-span-1">
                             <UserRank infosUserRank={infosUserRank} />
                         </FadeIn>
-                        <FadeIn className="col-span-1 lg:col-span-2 xl:col-span-3">
+                        <FadeIn className="col-span-1 lg:col-span-2 xl:col-span-3 mb-4">
                             <TableauTournament infosTournament={infosTournament} isImg={false} />
                         </FadeIn>
                     </FadeInStagger>

@@ -26,12 +26,12 @@ function TableauTournament(value: TableauTournamentProps): JSX.Element {
             <FadeIn>
             {infosTournament && infosTournament.length > 0 ? (
                 infosTournament.map((item: Tournament, index: number) => (
-                    <Card key={index} className="  rounded-xl m-5 border-tertiari shadow-md">
-                        <CardContent className="text-tertiari p-5">
+                    <Card key={index} className="  rounded-xl m-5 border-quaternary bg-tertiari shadow-md">
+                        <CardContent className="text-secondary p-5">
                             <div className="flex flex-col">
                                 <p className="font-bold text-2xl mb-5">{item.title}</p>
                                 <p className="mb-3">{formatDate(item.startDate, t)}</p>
-                                <p className="text-tertiari text-justify">{item.description}</p>
+                                <p className="text-secondary text-justify">{item.description}</p>
                                 <div className="flex items-center mt-5">
                                     <Link to={"/tournament/" + item.id} className="uppercase text-red-600 font-bold hover:underline mr-2">{t("seeMore")}</Link>
                                     <img src="/assets/arrowRightRed.svg" className="h-5 mt-0.5" alt="flèche rouge"/>
@@ -41,7 +41,7 @@ function TableauTournament(value: TableauTournamentProps): JSX.Element {
                     </Card>
                 ))
             ) : (
-                <p className="font-bold text-tertiari text-xl m-5 pt-5 border-t-2">{t("noTournament")}</p>
+                <p className="font-bold text-secondary text-xl m-5 pt-5 border-t-2">{t("noTournament")}</p>
             )}
             </FadeIn>
         </Card>
