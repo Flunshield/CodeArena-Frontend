@@ -52,13 +52,13 @@ const Header = () => {
                         {!isConnected ?
                             <a href={isConnected ? DASHBOARD : HOME}> <img src="/logo.svg" alt="Logo codeArena"
                                                                            className="sm:block w-12 h-12 sm:w-16 sm:h-16  mr-3"/></a> : ""}
-                        <a className="hidden sm:block text-tertiari text-3xl  font-bold"
+                        <a className="hidden sm:block sm:mb-3 text-tertiari text-3xl  font-bold"
                            href={isConnected ? DASHBOARD : HOME}>
                             {t('CodeArena')}
                         </a>
                     </div>
                 </div>
-                <div className="flex py-3 items-center space-x-2">
+                <div className="flex sm:py-3 sm:mt-5 py-3 items-center space-x-2">
                     {isConnected ? (
                         <div className="flex items-center">
                             <BouttonProfile/>
