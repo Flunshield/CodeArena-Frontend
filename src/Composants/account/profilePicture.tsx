@@ -1,9 +1,9 @@
-import {imagePaths} from "../../constantes/constantesRoutes.ts";
-import {useState, useEffect} from "react";
-import {updateUser} from "../../Helpers/apiHelper.ts";
-import {useTranslation} from "react-i18next";
-import {useAuthContext} from "../../AuthContext.tsx";
-import {User} from "../../Interface/Interface.ts";
+import { imagePaths } from "../../constantes/constantesRoutes.ts";
+import { useState, useEffect } from "react";
+import { updateUser } from "../../Helpers/apiHelper.ts";
+import { useTranslation } from "react-i18next";
+import { useAuthContext } from "../../AuthContext.tsx";
+import { User } from "../../Interface/Interface.ts";
 import clsx from "clsx";
 import Button from "../../ComposantsCommun/Button.tsx";
 import btnClose from "/assets/btnClose.png";
@@ -12,8 +12,8 @@ interface ProfilePictureProps {
     classname?: string;
     infosUserById: User;
 }
-function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
-    const {t} = useTranslation();
+function ProfilePicture({ classname, infosUserById }: ProfilePictureProps) {
+    const { t } = useTranslation();
     const authContext = useAuthContext();
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isPictureClicked, setIsPictureClicked] = useState("");
@@ -88,14 +88,16 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
                         className="fixed z-50 top-0 left-0 w-full h-full flex items-center justify-center"
                     >
                         <Container className="flex flex-row-reverse bg-secondary rounded-md pb-4">
-                            <Button
-                                type="button"
-                                id="navBarButtonClose"
-                                onClick={closePopup}
-                                className="absolute ml-5"
-                            >
-                                <img src={btnClose} alt="icone bouton clsoe" className="w-8 h-8 mr-3"/>
-                            </Button>
+                            <div className="flex justify-end mr-10 mt-10">
+                                <Button
+                                    type="button"
+                                    id="navBarButtonClose"
+                                    onClick={closePopup}
+                                    className="absolute ml-5"
+                                >
+                                    <img src={btnClose} alt="icone bouton close" className="w-8 h-8 " />
+                                </Button>
+                            </div>
                             <div className="flex flex-col z-50">
 
                                 <div className="flex flex-wrap w-96">
@@ -110,7 +112,7 @@ function ProfilePicture({classname, infosUserById}: ProfilePictureProps) {
                                         />
                                     ))}
                                 </div>
-                                <div className="mt-6 flex justify-center">
+                                <div className="flex justify-left">
                                     <button
                                         onClick={closePopup}
                                         className="bg-tertiary hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"

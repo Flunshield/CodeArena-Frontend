@@ -62,7 +62,7 @@ const BouttonProfile = () => {
                 <img
                     src={avatar}
                     alt="profile"
-                    className="h-12 transform hover:scale-110 transition-transform duration-300 rounded-full"
+                    className=" rounded-3xl h-14  transform hover:scale-110 transition-transform duration-300 "
                     onClick={handlerPopUp}
                 />
                 {showPopup && (
