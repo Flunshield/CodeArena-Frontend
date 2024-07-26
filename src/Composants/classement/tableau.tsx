@@ -65,9 +65,9 @@ function Tableau(): JSX.Element {
         }
     }
 
-    async function getPdf(idCv: number | string, event?: MouseEvent<HTMLButtonElement, MouseEvent>) {
+    async function getPdf(userId: number, event?: MouseEvent<HTMLButtonElement, MouseEvent>) {
         event?.stopPropagation();
-        const response = await getElementByEndpoint(`entreprise/pdfCvUser?id=${infos.data.id}&idCv=${idCv}`, {
+        const response = await getElementByEndpoint(`entreprise/pdfCvUser?id=${infos.data.id}&userId=${userId}`, {
             token,
             data: '',
         });

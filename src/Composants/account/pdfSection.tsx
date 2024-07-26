@@ -122,7 +122,7 @@ const PdfSection = ({
                             ))}
                             </tbody>
                         </table>
-                        {getCvs.length <= 4 && (
+                        {getCvs.length < 3 && (
                             <button
                                 onClick={() => setPopupCvOpen(true)}
                                 className="bg-petroleum-blue text-tertiari font-bold rounded-xl p-5 border-2 border-tertiari shadow-lg w-full sm:w-2/3 mt-5 mb-5 transition duration-300 ease-in-out transform hover:scale-105"
