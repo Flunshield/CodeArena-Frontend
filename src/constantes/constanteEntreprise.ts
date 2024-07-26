@@ -32,7 +32,7 @@ export const PRICING = [
             "premiumFeature4"
         ],
         idealFor: "premiumIdeaFor",
-        price: "10€/mois",
+        price: "10€",
         url: URL_STRIPE,
         idApi: "price_1PKGuGFoLa8m0nzy88vB7lvd",
         typePayment: "subscription"
@@ -49,7 +49,7 @@ export const PRICING = [
             "entrepriseFeature5"
         ],
         idealFor: "entrepriseIdeaFor",
-        price: "100€/mois",
+        price: "100€",
         url: URL_STRIPE,
         idApi: "price_1PKHKWFoLa8m0nzyAWLDMBlQ",
         typePayment: "subscription"

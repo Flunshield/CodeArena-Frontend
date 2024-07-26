@@ -64,7 +64,7 @@ const PricingSection = () => {
                                     <p className="text-gray-700 mt-4">{t(plan.idealFor)}</p>
                                     <div className="mt-10 text-center">
                                         <h2 className="text-2xl">
-                                            <span className="font-bold">{t(plan.price)}</span> <span className="text-sm">/{t("perYear")}</span>
+                                            <span className="font-bold">{t(plan.price)}</span> <span className="text-sm">/{t("perMonth")}</span>
                                         </h2>
                                         {authContext.connected && infos.data.groups.roles === GROUPS.USER && (
                                             <Button
