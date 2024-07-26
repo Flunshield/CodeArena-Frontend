@@ -41,7 +41,7 @@ const PricingSection = () => {
                 className="absolute inset-0 -z-10 h-full w-full fill-neutral-100 stroke-neutral-950/5 [mask-image:linear-gradient(to_bottom_left,white_50%,transparent_60%)]"
                 yOffset={-256}
             />
-            <Container className="py-8 mt-16">
+            <Container className="mt-16 flex justify-center items-center lg:ml-72">
                 <FadeIn>
                     <h2 className="text-secondary m-2 text-center  sm:text-6xl font-bold">{t("choosePlan")}</h2>
                     {infos && infos.data.groups.roles === GROUPS.ENTREPRISE && (

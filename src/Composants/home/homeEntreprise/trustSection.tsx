@@ -7,7 +7,7 @@ const TrustSection = () => {
     const { t } = useTranslation();
 
     return (
-        <div id="TrustSection" className="w-full h-full rounded-2xl bg-neutral-950 py-20 sm:mt-32 sm:py-32 lg:mt-56 ">
+        <div id="TrustSection" className="w-full rounded-2xl bg-neutral-950 py-20 sm:mt-32 sm:py-32 lg:mt-56 lg:ml-96 ">
             <Container>
                 <FadeIn className="flex items-center gap-x-40">
                     <h2 className="text-center font-display text-3xl font-semibold tracking-wider text-tertiari sm:text-left">

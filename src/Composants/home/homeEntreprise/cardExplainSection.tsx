@@ -8,10 +8,10 @@ const CardExplainSection = () => {
     const { t } = useTranslation();
 
     return (
-        <div id="CardExplainSection" className="w-full flex flex-col items-center">
+        <div id="CardExplainSection" className="flex flex-col items-center justify-center lg:ml-48">
             <SectionIntro
                 title={t("avantageCodeArena")}
-                className="mt-24 sm:mt-32 lg:mt-40 text-secondary text-center"
+                className="mt-24 sm:mt-32 lg:mt-32 lg:ml-5  text-secondary text-center"
             />
             <Container className="mt-16">
                 <FadeInStagger>
