@@ -76,7 +76,7 @@ function TournamentInfos(): JSX.Element {
             const result = await response.json();
             setInfosTournament(result);
             if (result) {
-                infos?.data.userTournament?.find((tournament: { tournamentID: number; }) => {
+                infos?.data.userTournament?.find((tournament) => {
                     if (tournament?.tournamentID === parseInt(id ?? "")) {
                         setIsRegistered(true)
                     } else {

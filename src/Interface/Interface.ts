@@ -37,7 +37,7 @@ export interface DataToken {
         userRanking: UserRanking;
         id?: number;
         groups: Groups;
-        
+
     }
 }
 
@@ -83,7 +83,7 @@ export interface Tournament {
     title: string,
     description: string,
     displayStartDate?: string,
-    numberRegistered : number,
+    numberRegistered: number,
 }
 
 export interface UserRanking extends request {
