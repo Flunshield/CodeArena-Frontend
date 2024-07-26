@@ -126,8 +126,8 @@ const InfosUser: React.FC<InfosUserProps> = ({
                         >
                             {!isEntreprise && (
                                 <FadeIn
-                                    className="flex flex-col text-secondary bg-secondary m-5 border rounded-lg shadow-lg p-6 w-full sm:w-auto">
-                                    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                                    className="flex flex-col text-secondary bg-secondary m-0 border rounded-lg shadow-lg p-6 w-full sm:w-auto">
+                                    <div className="flex flex-col md:flex-row space-y-10 md:space-y-0 md:space-x-10">
                                         <ul className="space-y-4 w-full md:w-1/2">
                                             <ListItem
                                                 icon={map}

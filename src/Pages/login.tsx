@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
-import {useAuthContext} from "../AuthContext.tsx";
-import {login} from "../Helpers/apiHelper.ts";
-import {LoginForm} from "../Interface/Interface.ts";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../AuthContext.tsx";
+import { login } from "../Helpers/apiHelper.ts";
+import { LoginForm } from "../Interface/Interface.ts";
 import Card from "../ComposantsCommun/Card.tsx";
 import CardContent from "../ComposantsCommun/CardContent.tsx";
 import { useTranslation } from "react-i18next";
@@ -24,14 +24,18 @@ function LoginPage() {
     const [errorUserName, setErrorUsername] = useState<boolean | null>(false);
     const [errorPassword, setErrorPassword] = useState<boolean | null>(false);
     const navigate = useNavigate();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
     const [loading, setLoading] = useState(true);
-
+    const [showPassword, setShowPassword] = useState(false);
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
+
+    const toggleShowPassword = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -75,7 +79,7 @@ function LoginPage() {
                             infosUser: jwtDecoded,
                         }));
                         window.location.reload();
-                     
+
                     } catch (jsonError) {
                         console.error("Invalid JSON response:", jsonError);
                         setNotificationMessage(t('errorParsingResponse'));
@@ -84,7 +88,7 @@ function LoginPage() {
                         setLoading(false);
                     }
                 }, 1000);
-                
+
             } else {
                 setNotificationMessage(t('errorNdcMdp'));
                 setNotificationType('error');
@@ -150,15 +154,70 @@ function LoginPage() {
                                         <FadeIn duration={1.3}>
                                             <Label id="password" className="flex flex-col font-bold text-secondary">
                                                 {t('password')}
-                                                <input
-                                                    id="password"
-                                                    className={clsx(errorPassword && "border-error border-4", "h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300")}
-                                                    type="password"
-                                                    placeholder={t('password')}
-                                                    autoComplete="current-password"
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)}
-                                                />
+                                                <div className="relative">
+                                                    <input
+                                                        id="password"
+                                                        className={clsx(
+                                                            errorPassword && 'border-error border-4',
+                                                            'h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full'
+                                                        )}
+                                                        type={showPassword ? 'text' : 'password'}
+                                                        placeholder={t('password')}
+                                                        autoComplete="current-password"
+                                                        value={password}
+                                                        onChange={(e) => setPassword(e.target.value)}
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={toggleShowPassword}
+                                                        className="absolute inset-y-0 right-0 px-3 py-1"
+                                                        aria-label={showPassword ? t('Hide password') : t('Show password')}
+                                                    >
+                                                        {showPassword ? (
+                                                            <svg
+                                                                className="w-6 h-6 text-gray-500"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    strokeWidth={2}
+                                                                    d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10S6.477 3 12 3a10.05 10.05 0 011.875.175M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                                                />
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    strokeWidth={2}
+                                                                    d="M19.071 19.071l-2.828-2.828M4.929 4.929l2.828 2.828"
+                                                                />
+                                                            </svg>
+                                                        ) : (
+                                                            <svg
+                                                                className="w-6 h-6 text-gray-500"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    strokeWidth={2}
+                                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                                                />
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    strokeWidth={2}
+                                                                    d="M2.458 12C3.732 7.943 7.455 5 12 5c4.546 0 8.268 2.943 9.542 7-.846 2.81-3.016 5.062-5.741 6.234M12 5c4.546 0 8.268 2.943 9.542 7"
+                                                                />
+                                                            </svg>
+                                                        )}
+                                                    </button>
+                                                </div>
                                             </Label>
                                         </FadeIn>
                                     </FadeInStagger>

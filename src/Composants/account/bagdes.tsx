@@ -14,7 +14,7 @@ function Badges({infosUserById}: badgesProps): JSX.Element {
     const badges = infosUserById.badgesWin ?? [];
 
     return (
-        <Container className="bg-primary py-16">
+        <Container className="bg-primary py-12">
             <FadeInStagger>
                 <FadeIn >
                     <div className="flex flex-col items-center w-full">
