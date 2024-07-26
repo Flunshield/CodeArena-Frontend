@@ -44,7 +44,7 @@ const NavFlagsComponent = () => {
                             type="button"
                             onClick={() => handleChangeLanguage(item.value)}
                             className={clsx("transition-transform duration-300 transform hover:scale-110", {
-                                "opacity-50": isActive,
+                                "opacity-50": !isActive,
                             })}
                         >
                             <img src={item.src} alt={item.alt} className="w-10 h-auto" />
