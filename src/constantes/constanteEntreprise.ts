@@ -117,3 +117,85 @@ export const HEADER_FACTURE = [
     { key: 'etatCommande', label: 'etatCommande' },
 ];
 
+export const TIMER = [
+    {
+        value: 60,
+        label: "1 minute"
+    },
+    {
+        value: 120,
+        label: "2 minutes"
+    },
+    {
+        value: 180,
+        label: "3 minutes"
+    },
+    {
+        value: 240,
+        label: "4 minutes"
+    },
+    {
+        value: 300,
+        label: "5 minutes"
+    },
+    {
+        value: 360,
+        label: "6 minutes"
+    },
+    {
+        value: 420,
+        label: "7 minutes"
+    },
+    {
+        value: 480,
+        label: "8 minutes"
+    },
+    {
+        value: 540,
+        label: "9 minutes"
+    },
+    {
+        value: 600,
+        label: "10 minutes"
+    },
+    {
+        value: 660,
+        label: "11 minutes"
+    },
+    {
+        value: 720,
+        label: "12 minutes"
+    },
+    {
+        value: 780,
+        label: "13 minutes"
+    },
+    {
+        value: 840,
+        label: "14 minutes"
+    },
+    {
+        value: 900,
+        label: "15 minutes"
+    },
+    {
+        value: 960,
+        label: "16 minutes"
+    },
+    {
+        value: 1020,
+        label: "17 minutes"
+    },
+    {
+        value: 1080,
+        label: "18 minutes"
+    },
+    {
+        value: 1140,
+        label: "19 minutes"
+    },
+    {
+        value: 1200,
+        label: "20 minutes"
+    }
+]

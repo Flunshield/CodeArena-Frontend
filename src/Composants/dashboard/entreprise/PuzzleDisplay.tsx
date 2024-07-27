@@ -179,6 +179,7 @@ const PuzzleDisplay = (
                     <PuzzleForm className="w-full max-w-4xl mx-auto m-auto p-4 rounded-lg shadow"
                                 title={puzzleToPopup?.title} details={puzzleToPopup?.details}
                                 tests={puzzleToPopup?.tests}
+                                time={puzzleToPopup?.time}
                                 id={puzzleToPopup?.id?.toString()}
                                 closePopup={closePopup} setIsSubmitted={() => setIsSubmitted()}
                                 lastCommande={lastCommande} nbPuzzleCreated={nbPuzzleCreated}/>

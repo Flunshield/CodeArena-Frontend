@@ -175,6 +175,7 @@ export interface PuzzlesEntreprise {
     tests?: JSON[];
     details?: string;
     title?: string;
+    time?: number;
 }
 
 export interface Pricing {

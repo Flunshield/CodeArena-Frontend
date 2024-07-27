@@ -56,6 +56,7 @@ function DashboardEntreprise() {
             });
         }
     }, [submitCount]);
+
     return (
         <Layout>
             <div className="py-10">
