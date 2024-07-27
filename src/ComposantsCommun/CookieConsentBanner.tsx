@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {getCookie, setCookie} from "../Helpers/methodeHelper.ts";
 
 const CookieConsentBanner = () => {
-    const [consentGiven, setConsentGiven] = useState(false);
+    const [consentGiven, setConsentGiven] = useState(true);
     const {t} = useTranslation();
 
     // Fonction pour accepter les cookies
@@ -22,6 +22,8 @@ const CookieConsentBanner = () => {
 
         if(cookieGivenYet) {
             setConsentGiven(true);
+        } else {
+            setConsentGiven(false);
         }
     }, []);
 

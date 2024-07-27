@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import {useState} from 'react';
+import {ErrorMessage, Field, Form, Formik} from 'formik';
 import Label from "../ComposantsCommun/Label.tsx";
-import { shortUser } from "../Interface/Interface.ts";
-import { createUser } from "../Helpers/apiHelper.ts";
+import {shortUser} from "../Interface/Interface.ts";
+import {createUser} from "../Helpers/apiHelper.ts";
 import Layout from "../ComposantsCommun/Layout.tsx";
 import CardContent from '../ComposantsCommun/CardContent.tsx';
 import Card from '../ComposantsCommun/Card.tsx';
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import clsx from "clsx";
 import Button from "../ComposantsCommun/Button.tsx";
 import Notification from "../ComposantsCommun/Notification.tsx";
-import { useNavigate } from "react-router-dom";
-import { FadeIn, FadeInStagger } from '../ComposantsCommun/FadeIn.tsx';
-import { Container } from "../ComposantsCommun/Container.tsx";
-import { SectionIntro } from '../ComposantsCommun/SectionIntro.tsx';
+import {useNavigate} from "react-router-dom";
+import {FadeIn, FadeInStagger} from '../ComposantsCommun/FadeIn.tsx';
+import {Container} from "../ComposantsCommun/Container.tsx";
+import {SectionIntro} from '../ComposantsCommun/SectionIntro.tsx';
 
 // Interface pour définir la structure des données du formulaire
 interface SignUpFormValues {
@@ -23,7 +23,7 @@ interface SignUpFormValues {
 }
 
 function SignUpForm() {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const allowedDomains = ['gmail.com', 'gmail.fr', 'yahoo.com', 'yahoo.fr', 'hotmail.com', 'hotmail.fr', 'outlook.fr', 'outlook.com'];
     const [showNotification, setShowNotification] = useState(false);
@@ -60,6 +60,10 @@ function SignUpForm() {
         return allowedDomains.includes(domain);
     };
 
+    const goToLogin = () => {
+        navigate("/login");
+    }
+
     return (
         <Layout classnameMain="mt-16 sm:mt-1">
             {showNotification && (
@@ -79,7 +83,7 @@ function SignUpForm() {
                             >
                             </SectionIntro>
                             <Formik
-                                initialValues={{ userName: '', password: '', email: '' }}
+                                initialValues={{userName: '', password: '', email: ''}}
                                 validate={(values) => {
                                     const errors: Partial<SignUpFormValues> = {};
                                     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -107,7 +111,8 @@ function SignUpForm() {
                                 <Form className="space-y-6" id='createAccount'>
                                     <FadeInStagger className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                         <FadeIn duration={1.6}>
-                                            <Label id='userName' htmlFor="userName" className="flex flex-col font-bold text-secondary" >
+                                            <Label id='userName' htmlFor="userName"
+                                                   className="flex flex-col font-bold text-secondary">
                                                 {t('userName')}
                                                 <Field
                                                     type="text"
@@ -116,20 +121,21 @@ function SignUpForm() {
                                                     placeholder={t('userName')}
                                                     className={clsx("h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-secondary")}
                                                 />
-                                                <ErrorMessage name="userName" component="div" className="text-error" />
+                                                <ErrorMessage name="userName" component="div" className="text-error"/>
                                             </Label>
                                         </FadeIn>
                                         <FadeIn duration={1.9}>
-                                            <Label id='password' htmlFor="password" className="flex flex-col font-bold text-secondary">
+                                            <Label id='password' htmlFor="password"
+                                                   className="flex flex-col font-bold text-secondary">
                                                 {t('password')}
                                                 <div className="relative">
-                                                <Field
-                                                    type={showPassword ? 'text' : 'password'}
-                                                    id="password"
-                                                    name="password"
-                                                    placeholder={t('password')}
-                                                    className={clsx("h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-secondary")}
-                                                />
+                                                    <Field
+                                                        type={showPassword ? 'text' : 'password'}
+                                                        id="password"
+                                                        name="password"
+                                                        placeholder={t('password')}
+                                                        className={clsx("h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-secondary")}
+                                                    />
                                                     <button
                                                         type="button"
                                                         onClick={toggleShowPassword}
@@ -181,11 +187,12 @@ function SignUpForm() {
                                                         )}
                                                     </button>
                                                 </div>
-                                                <ErrorMessage name="password" component="div" className="text-error" />
+                                                <ErrorMessage name="password" component="div" className="text-error"/>
                                             </Label>
                                         </FadeIn>
                                         <FadeIn duration={2.2}>
-                                            <Label id='email' htmlFor="email" className="flex flex-col font-bold text-secondary">
+                                            <Label id='email' htmlFor="email"
+                                                   className="flex flex-col font-bold text-secondary">
                                                 {t('email')}
                                                 <Field
                                                     type="email"
@@ -194,18 +201,20 @@ function SignUpForm() {
                                                     placeholder={t('email')}
                                                     className={clsx("h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full text-secondary")}
                                                 />
-                                                <ErrorMessage name="email" component="div" className="text-error" />
+                                                <ErrorMessage name="email" component="div" className="text-error"/>
                                             </Label>
                                         </FadeIn>
                                     </FadeInStagger>
                                     <div className="flex flex-col justify-center mt-10">
-                                        <Button id='submitButton' type="submit" className="bg-secondary hover:bg-button-hover text-tertiari w-full h-12 rounded-md uppercase">
+                                        <Button id='submitButton' type="submit"
+                                                className="bg-secondary hover:bg-button-hover text-tertiari w-full h-12 rounded-md uppercase">
                                             {t('register')}
                                         </Button>
-                                        <div className="flex flex-col mt-5">
-                                            <a href="/login" className="text-center hover:text-cyan-800 text-secondary">
+                                        <div className="text-center mt-5">
+                                            <Button type="button" id="goToLogin"
+                                                    className="hover:text-cyan-800 text-secondary" onClick={goToLogin}>
                                                 {t('signIntoCodeArena')}
-                                            </a>
+                                            </Button>
                                         </div>
                                     </div>
                                 </Form>

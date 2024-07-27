@@ -104,6 +104,14 @@ function LoginPage() {
         }
     };
 
+    const goToForgotPassword = () => {
+        navigate("/forgotPassword");
+    }
+
+    const goToSignUp = () => {
+        navigate("/signup");
+    }
+
     useEffect(() => {
         if (isConnected) {
             navigate("/dashboard");
@@ -226,13 +234,13 @@ function LoginPage() {
                                             className="bg-secondary hover:bg-button-hover text-tertiari w-full h-12 rounded-md uppercase transition duration-300">
                                             {t('connect')}
                                         </Button>
-                                        <div className="flex flex-col mt-5">
-                                            <a href="/forgotPassword" className="text-center hover:text-cyan-800 text-secondary">
+                                        <div className="flex flex-col text-center mt-5">
+                                            <Button type="button" id="goToForgotPassword" className="text-center hover:text-cyan-800 text-secondary" onClick={goToForgotPassword}>
                                                 {t('forgotPassword')}
-                                            </a>
-                                            <a href="/signUp" className="text-center hover:text-cyan-800 text-secondary">
+                                            </Button>
+                                            <Button type="button" id="goToSignUp" className="text-center hover:text-cyan-800 text-secondary" onClick={goToSignUp}>
                                                 {t('register')}
-                                            </a>
+                                            </Button>
                                         </div>
                                     </div>
                                 </form>

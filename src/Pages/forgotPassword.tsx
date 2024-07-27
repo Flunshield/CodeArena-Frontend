@@ -40,6 +40,10 @@ function ForgotPassword() {
         }
     };
 
+    const goToSignUp = () => {
+        navigate("/signup");
+    }
+
     return (
         <Layout classnameMain="sm:mt-1">
             {showNotification && (
@@ -91,10 +95,10 @@ function ForgotPassword() {
                                             {t('submitRequest')}
                                         </Button>
                                     </div>
-                                    <div className="flex ">
-                                        <a href="/login" className="text-center hover:text-cyan-800 text-secondary">
+                                    <div className="text-center">
+                                        <Button type="button" id="goToLogin" className="hover:text-cyan-800 text-secondary" onClick={goToSignUp}>
                                             {t('signIntoCodeArena')}
-                                        </a>
+                                        </Button>
                                     </div>
                                 </Form>
                             </Formik>
