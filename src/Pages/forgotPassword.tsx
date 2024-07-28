@@ -40,8 +40,8 @@ function ForgotPassword() {
         }
     };
 
-    const goToSignUp = () => {
-        navigate("/signup");
+    const gotoLogin = () => {
+        navigate("/login");
     }
 
     return (
@@ -96,7 +96,7 @@ function ForgotPassword() {
                                         </Button>
                                     </div>
                                     <div className="text-center">
-                                        <Button type="button" id="goToLogin" className="hover:text-cyan-800 text-secondary" onClick={goToSignUp}>
+                                        <Button type="button" id="goToLogin" className="hover:text-cyan-800 text-secondary" onClick={gotoLogin}>
                                             {t('signIntoCodeArena')}
                                         </Button>
                                     </div>
