@@ -224,6 +224,7 @@ export interface PuzzleSend {
     result?: JSON;  // Devrait être adapté au format JSON attendu
     testValidated?: number;
     time?: string;
+    verified?: boolean;
 }
 
 export interface ArrayItem {
