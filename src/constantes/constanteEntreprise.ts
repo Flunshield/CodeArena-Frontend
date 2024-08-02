@@ -32,9 +32,9 @@ export const PRICING = [
             "premiumFeature4"
         ],
         idealFor: "premiumIdeaFor",
-        price: "10€",
+        price: "70€",
         url: URL_STRIPE,
-        idApi: "price_1PKGuGFoLa8m0nzy88vB7lvd",
+        idApi: "price_1PjFrZFoLa8m0nzy2vEhq1TG",
         typePayment: "subscription"
     },
     {
@@ -49,9 +49,9 @@ export const PRICING = [
             "entrepriseFeature5"
         ],
         idealFor: "entrepriseIdeaFor",
-        price: "100€",
+        price: "300€",
         url: URL_STRIPE,
-        idApi: "price_1PKHKWFoLa8m0nzyAWLDMBlQ",
+        idApi: "price_1PjFxQFoLa8m0nzylaifhB6O",
         typePayment: "subscription"
     }
 ];
