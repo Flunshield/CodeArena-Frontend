@@ -1,6 +1,5 @@
-import {DataToken, Tournament} from "../../Interface/Interface.ts";
+import {Tournament} from "../../Interface/Interface.ts";
 import {useAuthContext} from "../../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
@@ -13,12 +12,12 @@ import Notification from "../../ComposantsCommun/Notification.tsx";
 import {GROUPS} from "../../constantes/constantes.ts";
 import { Container } from "../../ComposantsCommun/Container.tsx";
 import { FadeIn } from "../../ComposantsCommun/FadeIn.tsx";
+import useUserInfos from "../../hook/useUserInfos.ts";
 
 function TournamentInfos(): JSX.Element {
     const authContext = useAuthContext();
-    const infosUser = authContext?.infosUser as JwtPayload
-    const infos = infosUser.aud as unknown as DataToken
-    const isUser = infos.data.groups.roles === GROUPS.USER
+    const infosUser = useUserInfos();
+    const isUser = infosUser.groups?.roles === GROUPS.USER
     const {t} = useTranslation();
     const data = {token: authContext.accessToken ?? ""}
     const {id} = useParams<{ id: string }>();
@@ -29,14 +28,14 @@ function TournamentInfos(): JSX.Element {
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
-
+    console.log(infosUser)
     const handleClickRegistered = () => {
         postElementByEndpoint('tournament/inscription', {
             token: authContext.accessToken ?? "",
             data: {
-                userID: infosUser?.sub,
+                userID: infosUser.id,
                 tournamentID: infosTournament?.id,
-                points: infos?.data?.userRanking?.[0]?.points ?? 0
+                points: infosUser.userRanking?.[0]?.points ?? 0
             }
         }).then(response => {
             if (response.status === 201) {
@@ -55,7 +54,7 @@ function TournamentInfos(): JSX.Element {
     const handleClickUnsubscribe = () => {
         unsubscribeTournament('tournament/unsubscribe', {
             token: authContext.accessToken ?? "",
-            userID: infosUser?.sub,
+            userID: infosUser.id?.toString() ?? "",
             tournamentID: infosTournament?.id
         }).then(response => {
             if (response.status === 200) {
@@ -76,7 +75,7 @@ function TournamentInfos(): JSX.Element {
             const result = await response.json();
             setInfosTournament(result);
             if (result) {
-                infos?.data.userTournament?.find((tournament) => {
+                infosUser.userTournament?.find((tournament) => {
                     if (tournament?.tournamentID === parseInt(id ?? "")) {
                         setIsRegistered(true)
                     } else {
