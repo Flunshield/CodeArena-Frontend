@@ -9,7 +9,7 @@ describe('Test de l\'authentification', () => {
         cy.visit('http://localhost:5173');
 
         login();
-        cy.wait(2000);
+        cy.wait(4000);
         logout();
 
     });

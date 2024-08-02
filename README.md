@@ -88,3 +88,13 @@ Ne plus utiliser de window.alert mais plutot le composant <Notification> (voir s
 - Gardez vos commits atomiques, c'est-à-dire focalisés sur une seule tâche ou correction.
 
 - Écrivez des messages de commit clairs et descriptifs pour expliquer pourquoi et comment les changements ont été faits.
+
+# Section debug
+
+Si vous avez un windows et que la commande npm run dev ne fonctionne pas, vous pouvez essayer de lancer les commandes suivantes :
+
+```bash
+# Ouvrez PowerShell en tant qu\’administrateur.
+# Arrêtez winnat avec la commande :net stop winnat
+# Redémarrez winnat avec la commande :net start winnat
+```

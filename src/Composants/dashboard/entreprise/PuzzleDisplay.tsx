@@ -19,6 +19,7 @@ interface PuzzleDisplayProps {
     puzzleToPopup?: PuzzlesEntreprise;
     lastCommande?: Pricing;
     nbPuzzleCreated: number;
+    setSubmitCount: (value: (count: number) => number) => void;
 }
 
 const PuzzleDisplay = (
@@ -29,6 +30,7 @@ const PuzzleDisplay = (
         puzzleToPopup,
         lastCommande,
         nbPuzzleCreated,
+        setSubmitCount
     }: PuzzleDisplayProps) => {
     const [isPopupOpenModify, setPopupOpenModify] = useState(false);
     const [isPopupOpenSend, setPopupOpenSend] = useState(false);
@@ -42,7 +44,9 @@ const PuzzleDisplay = (
     const [notificationMessage, setNotificationMessage] = useState('');
 
     const [tabPuzzlesEntreprise, setTabPuzzlesEntreprise] = useState<listPuzzleEntreprise>({item: [], total: 0});
-    const maxPage = tabPuzzlesEntreprise.item.length > 0 ? Math.ceil(tabPuzzlesEntreprise.total / 4) : 1;
+    const itemPerPage = 4;
+    const maxPage = tabPuzzlesEntreprise.item.length > 0 ? Math.ceil(tabPuzzlesEntreprise.total / itemPerPage): 1;
+
 
     /**
      * Effectue une requête asynchrone pour récupérer les données d'un puzzle spécifique via un endpoint API.
@@ -86,7 +90,7 @@ const PuzzleDisplay = (
             setNotificationType('error');
             setShowNotification(true);
         });
-    }
+    };
 
     const openPopup = (puzzle?: PuzzlesEntreprise, type?: string) => {
         document.body.style.overflow = "hidden";
@@ -143,14 +147,14 @@ const PuzzleDisplay = (
                                     <div
                                         className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center items-center m-5">
                                         <Button type="button" onClick={() => openPopup(puzzle, "1")}
-                                                className="bg-petroleum-blue hover:shadow-md hover:shadow-light-blue text-white font-bold py-2 px-4 rounded"
+                                                className="bg-petroleum-blue hover:shadow-md hover:shadow-light-blue text-tertiari font-bold py-2 px-4 rounded"
                                                 id="updateTitle">{t("modify")}</Button>
                                         <Button type="button"
-                                                className="bg-olive-green hover:shadow-lg hover:shadow-olive-green text-white font-bold py-2 px-4 rounded"
+                                                className="bg-olive-green hover:shadow-lg hover:shadow-olive-green text-tertiari font-bold py-2 px-4 rounded"
                                                 id="deleteTitle"
                                                 onClick={() => openPopup(puzzle, "2")}>{t("sendPuzzle")}</Button>
                                         <Button type="button"
-                                                className="bg-[#D63864] hover:shadow-lg hover:shadow-rose-300 text-white font-bold py-2 px-4 rounded"
+                                                className="bg-[#D63864] hover:shadow-lg hover:shadow-rose-300 text-tertiari font-bold py-2 px-4 rounded"
                                                 id="deleteTitle"
                                                 onClick={() => handleClickDelete(puzzle.id)}>{t("delete")}</Button>
                                     </div>
@@ -158,7 +162,15 @@ const PuzzleDisplay = (
                             </li>
                         ))}
                     </ul>
-                    <Pagination item={tabPuzzlesEntreprise?.item} maxPage={maxPage} currentPage={currentPage}  setCurrentPage={setCurrentPage} setSubmitCount={setIsSubmitted} itemPerPage={3}/>
+                    <Pagination
+                        item={tabPuzzlesEntreprise?.item}
+                        maxPage={maxPage}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        setSubmitCount={setSubmitCount}
+                        classNameCurrentPage="text-primary"
+                        itemPerPage={itemPerPage}
+                    />
                 </div>
             </div>
             {isPopupOpenModify && (
@@ -167,6 +179,7 @@ const PuzzleDisplay = (
                     <PuzzleForm className="w-full max-w-4xl mx-auto m-auto p-4 rounded-lg shadow"
                                 title={puzzleToPopup?.title} details={puzzleToPopup?.details}
                                 tests={puzzleToPopup?.tests}
+                                time={puzzleToPopup?.time}
                                 id={puzzleToPopup?.id?.toString()}
                                 closePopup={closePopup} setIsSubmitted={() => setIsSubmitted()}
                                 lastCommande={lastCommande} nbPuzzleCreated={nbPuzzleCreated}/>

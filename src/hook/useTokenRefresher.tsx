@@ -10,10 +10,11 @@ export interface AuthHookProps {
 
 const useAuth = () => {
     const [authState, setAuthState] = useState<AuthHookProps | null>(() => {
-        const storedAuthState = localStorage.getItem('authState');
+        const storedAuthState = sessionStorage.getItem('authState');
         return storedAuthState ? JSON.parse(storedAuthState) : null;
     });
     const [timeToRefresh, setTimeToRefresh] = useState<number>(0);
+    const [hasTriedRefresh, setHasTriedRefresh] = useState<boolean>(false);
 
     const refreshAccessToken = async () => {
         try {
@@ -32,7 +33,6 @@ const useAuth = () => {
             const data = await response.json();
             return data.accessToken;
         } catch (error) {
-            console.error('Failed to refresh access token', error);
             return '';
         }
     };
@@ -55,7 +55,7 @@ const useAuth = () => {
                         connected: true,
                         infosUser: newJwtDecoded,
                     });
-                    localStorage.setItem('authState', JSON.stringify({
+                    sessionStorage.setItem('authState', JSON.stringify({
                         accessToken: newAccessToken,
                         connected: true,
                         infosUser: newJwtDecoded,
@@ -67,16 +67,39 @@ const useAuth = () => {
                     setTimeToRefresh(0);
                 }
             }
+        } else if (!hasTriedRefresh) {
+            setHasTriedRefresh(true);
+            const newAccessToken = await refreshAccessToken();
+            if (newAccessToken) {
+                const newJwtDecoded = jwtDecode(newAccessToken);
+                setAuthState({
+                    accessToken: newAccessToken,
+                    connected: true,
+                    infosUser: newJwtDecoded,
+                });
+                sessionStorage.setItem('authState', JSON.stringify({
+                    accessToken: newAccessToken,
+                    connected: true,
+                    infosUser: newJwtDecoded,
+                }));
+                const newTimeLeft = (newJwtDecoded.exp ?? 0) - parseInt((Date.now() / 1000).toFixed(0));
+                setTimeToRefresh(newTimeLeft * 1000); // Convert to milliseconds
+            } else {
+                setAuthState(null);
+                setTimeToRefresh(0);
+            }
         }
     };
 
     useEffect(() => {
-        checkAndRefreshToken();
+        if (!hasTriedRefresh) {
+            checkAndRefreshToken();
+        }
         const interval = setInterval(() => {
             checkAndRefreshToken();
-        }, timeToRefresh);
+        }, timeToRefresh > 0 ? timeToRefresh : 60000); // Check every minute if no timeToRefresh is set
         return () => clearInterval(interval);
-    }, [authState?.accessToken, timeToRefresh]);
+    }, [authState?.accessToken, timeToRefresh, hasTriedRefresh]);
 
     return authState;
 };

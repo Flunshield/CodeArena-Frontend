@@ -13,8 +13,12 @@ export default {
             '2xl': '1536px',
         },
         extend: {
+            boxShadow: {
+                'angelic-white': '0 8px 12px -4px rgba(255, 255, 255, 0.2), 0 4px 8px -2px rgba(255, 255, 255, 0.1)',
+                'glow': '0 0 10px rgba(255, 255, 255, 0.6)'
+            },
             colors: {
-                primary: '#0D1117',
+                primary: '',
                 secondary: '#161B22',
                 tertiari: '#E3E8EF',
                 quaternary: '#0F1319',
@@ -33,4 +37,3 @@ export default {
     },
     plugins: [],
 }
-

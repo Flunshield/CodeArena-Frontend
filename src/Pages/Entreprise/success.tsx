@@ -1,5 +1,5 @@
 import Layout from "../../ComposantsCommun/Layout.tsx";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
@@ -8,14 +8,16 @@ import {useEffect, useState} from "react";
 import Card from "../../ComposantsCommun/Card.tsx";
 import {useTranslation} from "react-i18next";
 import Notification from "../../ComposantsCommun/Notification.tsx";
+import {LOGOUT} from "../../constantes/constantesRoutes.ts";
 
 function Success (){
     const {search} = useLocation();
     const {t} = useTranslation();
     const params = new URLSearchParams(search);
+    const navigate = useNavigate();
     const sessionId = params.get('session_id');
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
 
@@ -28,7 +30,7 @@ function Success (){
     useEffect(() => {
         postElementByEndpoint('stripe/success', {
             token: authContext.accessToken ?? "",
-            data: {sessionId: sessionId ?? "", user: infos}
+            data: {sessionId: sessionId ?? "", userId: infos.data.id}
         })
             .then(response => {
                 return response.status;
@@ -38,9 +40,8 @@ function Success (){
                     setNotificationMessage(t("successSubscription"));
                     setNotificationType('success');
                     setShowNotification(true);
-                    localStorage.removeItem('authState');
                     setTimeout(() => {
-                        window.location.href = "/";
+                        navigate(LOGOUT);
                     }, 3000);
                 } else {
                     setIsError(true);

@@ -7,7 +7,7 @@ function Entreprise () {
     return (
         <Layout>
             <div className="md:flex md:flex-row md:justify-between mt-16 mb-24 w-full">
-                <div className="pt-16 z-20 flex flex-col justify-center">
+                <div className="pt-16 z-20 flex flex-col justify-center w-full">
                     <CardExplainSection/>
                     <PricingSection/>
                     <TrustSection/>

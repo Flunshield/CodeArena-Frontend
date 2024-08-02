@@ -48,7 +48,7 @@ const Pagination = ({
                     <button
                         key={i}
                         className={clsx(
-                            "px-4 py-2 rounded-md text-white ml-2",
+                            "px-4 py-2 rounded-md text-tertiari ml-2",
                             i === currentPage ? "bg-gray-600" : "bg-petroleum-blue"
                         )}
                         onClick={() => setCurrentPage(i)}
@@ -78,7 +78,7 @@ const Pagination = ({
                 <td className="py-4 text-center align-middle w-1/3">
                     {currentPage > 1 ? (
                         <button
-                            className="px-4 py-2 rounded bg-petroleum-blue text-white"
+                            className="px-4 py-2 rounded bg-petroleum-blue text-tertiari"
                             onClick={prevPage}
                         >
                             {t('previous')}
@@ -94,7 +94,7 @@ const Pagination = ({
                 <td className="py-4 text-center align-middle w-1/3">
                     {maxPage > currentPage && item.length > (itemPerPage - 1) && (
                         <button
-                            className="px-4 py-2 rounded bg-petroleum-blue text-white"
+                            className="px-4 py-2 rounded bg-petroleum-blue text-tertiari"
                             onClick={nextPage}
                         >
                             {t('next')}

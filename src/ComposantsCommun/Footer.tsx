@@ -1,129 +1,171 @@
 import React from 'react';
-import logo from '/assets/logo.svg';
-import iconeMail from '/assets/iconeMail.png';
+import { Link } from 'react-router-dom'; // Changer l'importation
 import { useTranslation } from "react-i18next";
-import { ENTREPRISE, LEGAL, MAIL, PRIVACY_POLICY, TERMS } from "../constantes/constantesRoutes.ts";
+import { ENTREPRISE, EVENT, LEGAL, PRIVACY_POLICY, RANKING, TERMS, TOURNAMENT } from "../constantes/constantesRoutes.ts";
 import { NavFlags } from "../Interface/Interface.ts";
-import { useAuthContext } from "../AuthContext.tsx";
 import drapFr from "/assets/drapeaux/fr.svg";
 import drapEn from "/assets/drapeaux/gb.svg";
 import { changeLanguage } from "../i18n.ts";
 import clsx from "clsx";
+import { FadeIn } from './FadeIn.tsx';
 
+// Ajout de la déclaration pour FooterProps
 interface FooterProps {
     className?: string;
 }
 
-const Footer: React.FC<FooterProps> = ({ className }) => {
-    const authContext = useAuthContext();
-    const isConnected = authContext.connected;
-    const { t, i18n } = useTranslation();
+// Assurez-vous que le composant Logo est correctement importé ou défini
+const Logo = ({ className }: { className?: string; fillOnHover?: boolean }) => (
+    <div className={className}>
+        <img src="/logo.svg" alt="Logo" className='w-16' />
+    </div>
+);
+
+const NavFlagsComponent = () => {
+    const { i18n } = useTranslation();
+    const navItems: NavFlags[] = [
+        { src: drapFr, value: 'fr', displayLink: true, alt: 'drapeau français' },
+        { src: drapEn, value: 'en', displayLink: true, alt: 'drapeau anglais' },
+    ];
 
     const handleChangeLanguage = async (language: string) => {
         await changeLanguage(language);
         await i18n.reloadResources();
     };
 
-    const navItems: NavFlags[] = [
+    return (
+        <div className="flex space-x-4">
+            {navItems.map((item) => {
+                const isActive = i18n.language === item.value;
+                return (
+                    item.displayLink && (
+                        <button
+                            key={item.value}
+                            type="button"
+                            onClick={() => handleChangeLanguage(item.value)}
+                            className={clsx("transition-transform duration-300 transform hover:scale-110", {
+                                "opacity-50": !isActive,
+                            })}
+                        >
+                            <img src={item.src} alt={item.alt} className="w-10 h-auto" />
+                        </button>
+                    )
+                );
+            })}
+        </div>
+    );
+};
+const socialMediaProfiles = [
+    { title: 'Facebook', href: 'https://facebook.com', icon: '/assets/facebook.svg', bgColor: '#316FF6', hoverColor: '#2558b1' },
+    { title: 'X', href: 'https://x.com', icon: '/assets/x.svg', bgColor: '#1DA1F2', hoverColor: '#1A91DA' },
+    { title: 'Discord', href: 'https://discord.com', icon: '/assets/discord.svg', bgColor: '#7289da', hoverColor: '#5A73B5' },
+];
+function Navigation() {
+
+    const { t } = useTranslation();
+
+    const navigation = [
         {
-            src: drapFr,
-            value: "fr",
-            displayLink: true,
-            alt: "drapeau français"
+            title: t('Développeur'),
+            links: [
+                { title: t('event'), href: EVENT },
+                { title: t('tournaments'), href: TOURNAMENT },
+                { title: t('ranking'), href: RANKING },
+            ],
         },
         {
-            src: drapEn,
-            value: "en",
-            displayLink: true
-        }
+            title: t('entreprise'),
+            links: [
+                { title: t('entreprise'), href: ENTREPRISE },
+            ],
+        },
+        {
+            title: t('Société'),
+            links: [
+                { title: t('politiqueConfidentialite'), href: PRIVACY_POLICY },
+                { title: t('mentionLegal'), href: LEGAL },
+                { title: t('cgv'), href: TERMS },
+            ],
+        },
     ];
 
-    const NavFlagsComponent = () => (
-        <div>
-            {navItems.map((item) =>
-                item.displayLink ? (
-                    // Ajoutez une clé unique pour chaque élément
-                    <button key={item.value} type="button" onClick={() => handleChangeLanguage(item.value)} className="mr-3">
-                        <img src={"../" + item.src} alt={item.alt} className="w-10 h-auto" />
-                    </button>
-                ) : null
-            )}
-        </div>)
+    return (
+        <nav>
+            <ul role="list" className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+                {navigation.map((section, sectionIndex) => (
+                    <li key={sectionIndex}>
+                        <div className="font-display text-sm font-semibold tracking-wider text-neutral-950">
+                            {section.title}
+                        </div>
+                        <ul role="list" className="mt-4 text-sm text-neutral-700">
+                            {section.links.map((link, linkIndex) => (
+                                <li key={linkIndex} className="mt-4">
+                                    <Link to={link.href} className="transition hover:text-neutral-950">
+                                        {link.title}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    );
+}
+
+
+
+const Footer: React.FC<FooterProps> = ({ className }) => {
+    const { t } = useTranslation();
 
     return (
-        <footer className={clsx(className, "w-full h-auto text-tertiari bottom-0 relative p-4 z-0 bg-secondary")}>
-            <div className="flex mb-3 flex-col md:flex-row md:justify-between">
-                <div className="max-lg:hidden">
-                    <img
-                        className=""
-                        src={logo}
-                        alt="logo du site web" />
-                </div>
-                {isConnected &&
-                    <div className="mt-5 md:flex-col ">
-                        <p className="font-bold text-2xl">{t('CodeArena')}</p>
-                        <p className="mt-5 hover:underline"><a href={ENTREPRISE} id="entrepriseAchat">{t('entreprise')}</a></p>
-                        {/*<p className="mt-5 hover:underline"><a href="">{t('partenaire')}</a></p>*/}
-                    </div>
-                }
-                <div className="md:flex-col mt-5">
-                    <ul>
-                        <li className="font-bold text-2xl">{t('contact')}</li>
-                        <li className="mt-5 flex md:justify-between"><img src={iconeMail} alt="icone de mail" className="mr-5" />{MAIL}</li>
-                        <li className="mt-10 hover:underline"><a href={PRIVACY_POLICY}>{t('politiqueConfidentialite')}</a></li>
-                        <li className="mt-2 hover:underline"><a href={LEGAL}>{t('mentionLegal')}</a></li>
-                        <li className="mt-2 hover:underline"><a href={TERMS}>{t('cgv')}</a></li>
-                    </ul>
-                </div>
-                <div className="flex-col mt-5">
-                    <p className="font-bold text-2xl">{t('retrouverNous')}</p>
-                    <div className="flex mt-10 justify-around">
-                        <button
-                            onClick={() => { window.location.href = 'https://facebook.com'; }}
-                            className="group flex justify-center p-2 rounded-md drop-shadow-xl from-gray-800 bg-[#316FF6] text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:from-[#331029] hover:to-[#310413]"
-                        >
-                            <img src="/assets/facebook.svg" alt="Facebook" />
-                            <span
-                                className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700"
-                            >
-                                Facebook
-                            </span>
-                        </button>
-                        <button
-                            onClick={() => { window.location.href = 'https://x.com'; }}
-                            className="group flex justify-center p-2 rounded-md drop-shadow-xl bg-gradient-to-r from-gray-800 to-black text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:from-[#331029] hover:to-[#310413]"
-                        >
-                            <img src="/assets/x.svg" alt="X" />
-                            <span
-                                className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700"
-                            >
-                                X
-                            </span>
-                        </button>
-                        <button
-                            onClick={() => { window.location.href = 'https://discord.com'; }}
-                            className="group flex justify-center p-2 rounded-md drop-shadow-xl bg-[#7289da] from-gray-800 text-white font-semibold hover:translate-y-3 hover:rounded-[50%] transition-all duration-500 hover:from-[#331029] hover:to-[#310413]"
-                        >
-                            <img src="/assets/discord.svg" alt="Discord" />
-                            <span
-                                className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-sm group-hover:-translate-y-10 duration-700"
-                            >
-                                Discord
-                            </span>
-                        </button>
+        <FadeIn duration={0.5}>
+            <footer className={clsx(className, "w-full text-secondary bottom-0 relative p-8 shadow-angelic-white")}>
+                <FadeIn duration={1.0}>
+                    <div className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
+                        <Navigation/>
+                        <div className="flex justify-center items-center">
+                            <div className="flex flex-col items-center justify-center text-center">
+                                <h2 className="font-bold text-2xl mb-4">{t('retrouverNous')}</h2>
+                                <div className="flex flex-wrap justify-center gap-4 mb-4">
+                                    {socialMediaProfiles.map((profile) => (
+                                        <button
+                                            key={profile.title}
+                                            onClick={() => {
+                                                window.location.href = profile.href;
+                                            }}
+                                            style={{backgroundColor: profile.bgColor}}
+                                            className="group flex justify-center p-2 rounded-full drop-shadow-xl transition-all duration-300 relative"
+                                        >
+                                            <img src={profile.icon} alt={profile.title}/>
+                                            <span
+                                                style={{backgroundColor: profile.bgColor}}
+                                                className="absolute opacity-0 group-hover:opacity-100 group-hover:text-sm group-hover:translate-y-[-24px] group-hover:scale-110 duration-500 text-secondary rounded px-1 py-0.5"
+                                            >
+                        {profile.title}
+                    </span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
+                <div
+                    className="mb-20 mt-24 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-neutral-950/10 pt-12">
+                    <Link to="/" aria-label="Home">
+                        <Logo className="h-8" fillOnHover/>
+                    </Link>
+                    <p className="mb-4 md:mb-0 flex-1 text-center">© {new Date().getFullYear()} CodeArena</p>
+                    <div className="flex justify-center md:justify-end">
+                        <NavFlagsComponent/>
+                    </div>
                 </div>
-                <div className="flex-col mt-24 md:mt-10 text-center">
-                    <NavFlagsComponent />
-                </div>
-            </div>
-            <div className="mx-auto border-t-2 border-white w-2/3"></div>
-            <div className="mt-16 text-center">
-                <p>Copyright © {new Date().getFullYear()} CodeArena</p>
-            </div>
-        </footer>
-    );
+        </FadeIn>
+</footer>
+</FadeIn>
+)
+    ;
 };
 
 export default Footer;

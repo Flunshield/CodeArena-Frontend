@@ -7,7 +7,7 @@ import {useAuthContext} from "../AuthContext.tsx";
 import {checkNbTestCreated} from "../Helpers/methodeHelper.ts";
 import {useEffect, useState} from "react";
 import {GROUPS} from "../constantes/constantesRoutes.ts";
-import {DONNEES_TESTS} from "../constantes/constanteEntreprise.ts";
+import {DONNEES_TESTS, TIMER} from "../constantes/constanteEntreprise.ts";
 import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";
 
@@ -15,6 +15,7 @@ interface PuzzleFormValues {
     title: string;
     details: string;
     tests: string;
+    time: number;
 }
 
 interface PuzzleFormProps {
@@ -28,6 +29,7 @@ interface PuzzleFormProps {
     nbPuzzleCreated?: number;
     lastCommande?: Pricing;
     sendPuzzle?: boolean;
+    time?: number;
 }
 
 const PuzzleSchema = Yup.object().shape({
@@ -57,7 +59,8 @@ const PuzzleForm = ({
                         setIsSubmitted,
                         nbPuzzleCreated,
                         lastCommande = {} as Pricing,
-                        sendPuzzle = false
+                        sendPuzzle = false,
+                        time
                     }: PuzzleFormProps) => {
     const {t} = useTranslation();
     const [canCreateTest, setCanCreateTest] = useState<boolean>(true);
@@ -68,7 +71,8 @@ const PuzzleForm = ({
     const initialValues: PuzzleFormValues = {
         title: title || t("titlePuzzle"),
         tests: tests ? JSON.stringify(tests, null, 2) : JSON.stringify(DONNEES_TESTS, null, 2),
-        details: details || "Sujet du puzzle"
+        details: details || "Sujet du puzzle",
+        time: time || 60 // 60 secondes par défaud si rien n'est passé
     };
 
     useEffect(() => {
@@ -91,18 +95,19 @@ const PuzzleForm = ({
                         actions.setSubmitting(false);
                         return;
                     }
-
                     const endpoint = id ? "puzzle/updatePuzzle" : "puzzle/create";
                     const data = id ? {
                         title: values.title,
                         details: values.details,
                         tests: JSON.parse(values.tests),
                         id: parseInt(id),
+                        time: values.time,
                         patch: true
                     } : {
                         "title": values.title,
                         "details": values.details,
                         "tests": JSON.parse(values.tests),
+                        "time": values.time,
                         "user": infos?.data,
                     };
 
@@ -120,12 +125,25 @@ const PuzzleForm = ({
             >
                 {({isSubmitting}) => (
                     <Form className="space-y-6">
-                        <div>
-                            <label htmlFor="title"
-                                   className="block text-sm font-medium text-quaternary">{t("titlePuzzle")}</label>
-                            <Field id="title" name="title" type="text"
-                                   className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"/>
-                            <ErrorMessage name="title" component="div" className="text-error text-xs mt-1"/>
+                        <div className="flex justify-around max-md:flex-col max-md:space-y-6">
+                            <div className="md:w-1/2">
+                                <label htmlFor="title"
+                                       className="block text-sm font-medium text-quaternary">{t("titlePuzzle")}</label>
+                                <Field id="title" name="title" type="text"
+                                       className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"/>
+                                <ErrorMessage name="title" component="div" className="text-error text-xs mt-1"/>
+                            </div>
+                            <div className="md:w-1/3">
+                                <label htmlFor="time"
+                                       className="block text-sm font-medium text-quaternary">{t("selectTimer")}</label>
+                                <Field as="select" id="time" name="time"
+                                       className="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 mt-1">
+                                    {TIMER.map((timer) => (
+                                        <option key={timer.value} value={timer.value}>{timer.label}</option>
+                                    ))}
+                                </Field>
+                                <ErrorMessage name="time" component="div" className="text-error text-xs mt-1"/>
+                            </div>
                         </div>
                         <div>
                             <label htmlFor="details"
@@ -148,7 +166,7 @@ const PuzzleForm = ({
                             </button>
                             {closePopup && (
                                 <button type="button" onClick={closePopup}
-                                        className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-secondary hover:bg-primary">
+                                        className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-tertiari bg-secondary hover:bg-primary">
                                     {t("close")}
                                 </button>
                             )}

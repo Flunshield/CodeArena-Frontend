@@ -8,6 +8,7 @@ import {JwtPayload} from "jwt-decode";
 import {HEADER_FACTURE} from "../../../constantes/constanteEntreprise.ts";
 import clsx from "clsx";
 import Pagination from "../../../ComposantsCommun/Pagination.tsx";
+import {ITEMS_PER_PAGE_DIX} from "../../../constantes/constantes.ts";
 
 interface historiqueAchatProps {
     className?: string;
@@ -16,7 +17,7 @@ interface historiqueAchatProps {
 const historiqueAchat = ({className}: historiqueAchatProps) => {
     const {t} = useTranslation();
     const authContext = useAuthContext();
-    // Obliger de faire ces étapes pour récupérer les infos de l'utilisateur
+    // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
     const [submitCount, setSubmitCount] = useState(0);
@@ -27,8 +28,10 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
     const getAllCommande = getElementByEndpoint('entreprise/getAllCommandeForUser?id=' + infos.data.id + "&page=" + currentPage, {
         data: "",
         token: authContext.accessToken ?? ""
-    });
-    const maxPage = Math.ceil(commandes.total / 10);
+    })
+
+    const maxPage = commandes.item.length > 0 ? Math.ceil(commandes.total / ITEMS_PER_PAGE_DIX) : 1;
+
     const lastCommandFormatted = formatItemCommande(commandes.item, t);
 
     useEffect(() => {
@@ -40,7 +43,7 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
 
     return (
         <div id="historiqueAchat" className={className}>
-            <h2 className="text-2xl text-center text-tertiari font-bold">{t('historiqueAchat')}</h2>
+            <h2 className="text-2xl text-center text-secondary font-bold">{t('historiqueAchat')}</h2>
             <div className="overflow-x-auto m-5 rounded-lg">
                 <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
                     <thead
@@ -67,9 +70,7 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
                     ))}
                     </tbody>
                 </table>
-                <Pagination item={lastCommandFormatted} maxPage={maxPage} currentPage={currentPage}
-                            setCurrentPage={setCurrentPage} setSubmitCount={setSubmitCount}
-                            classNameCurrentPage="text-tertiari"/>
+                <Pagination item={lastCommandFormatted} maxPage={maxPage} currentPage={currentPage} classNameCurrentPage="text-tertiari" setCurrentPage={setCurrentPage} setSubmitCount={setSubmitCount}/>
             </div>
             <div className="flex justify-between items-center w-full">
             </div>

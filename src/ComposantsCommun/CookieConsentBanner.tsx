@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {getCookie, setCookie} from "../Helpers/methodeHelper.ts";
 
 const CookieConsentBanner = () => {
-    const [consentGiven, setConsentGiven] = useState(false);
+    const [consentGiven, setConsentGiven] = useState(true);
     const {t} = useTranslation();
 
     // Fonction pour accepter les cookies
@@ -22,21 +22,23 @@ const CookieConsentBanner = () => {
 
         if(cookieGivenYet) {
             setConsentGiven(true);
+        } else {
+            setConsentGiven(false);
         }
     }, []);
 
     return (
         !consentGiven && (
-            <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 text-center z-50">
+            <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-tertiari p-4 text-center z-50">
                 <p className="mb-5">{t('utiliseCookiePrevent')}</p>
                 <div className="max-md:flex-col flex justify-center items-center">
                     <div>
                     <button onClick={acceptCookies}
-                            className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            className="ml-4 bg-blue-500 hover:bg-blue-700 text-tertiari font-bold py-2 px-4 rounded">
                         Accepter
                     </button>
                     <button onClick={refuseCookies}
-                            className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            className="ml-4 bg-blue-500 hover:bg-blue-700 text-tertiari font-bold py-2 px-4 rounded">
                         Refuser
                     </button>
                 </div>
