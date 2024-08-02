@@ -1,13 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuthContext } from "../AuthContext";
 import { getElementByEndpoint, postElementByEndpoint } from "../Helpers/apiHelper";
+import { JwtPayload } from "jwt-decode";
+import { DataToken } from "../Interface/Interface";
 import useUserInfos from "./useUserInfos.ts";
 
 const useMatchmaking = () => {
     const authContext = useAuthContext();
-    const infosUser = useUserInfos();
-    const username = infosUser.userName;
-    const id = infosUser.id;
+    const tokenInfos = authContext?.infosUser as JwtPayload;
+    const userInfos = useUserInfos();
+    const infos = tokenInfos.aud as unknown as DataToken;
+    const id = infos?.data?.id;
+    const username = userInfos?.userName;
 
     const [loading, setLoading] = useState(true);
     const [inQueue, setInQueue] = useState(false);
