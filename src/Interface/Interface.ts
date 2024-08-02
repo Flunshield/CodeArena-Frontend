@@ -29,6 +29,7 @@ export interface User {
     userRanking?: UserRanking[];
     siren?: string;
     commandeEntrepriseFormatted?: CommandeEntrepriseFormatted;
+    userTournament?: UserTournament[];
 }
 
 export interface DataToken {
