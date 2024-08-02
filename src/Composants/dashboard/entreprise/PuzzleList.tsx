@@ -10,6 +10,7 @@ import clsx from "clsx";
 import Notification from "../../../ComposantsCommun/Notification.tsx";
 import Pagination from "../../../ComposantsCommun/Pagination.tsx";
 import {ITEMS_PER_PAGE_QUATRE} from "../../../constantes/constantes.ts";
+import Poubelle from "../../../../public/assets/icones/bean.png";
 
 interface PuzzleListProps {
     setIsSubmitted: () => void;
@@ -177,10 +178,10 @@ const PuzzleList = ({
                         <div className="flex flex-row">
                             <Button type={"button"} id={"validate-" + result.id.toString()}
                                     className={clsx(result.verified ? "bg-olive-green" : "bg-gris-chaud", "px-4 py-2 rounded  text-tertiari font-bold mr-2")}
-                                    onClick={() => validatePuzzle(result.id)}>V</Button>
+                                   onClick={() => validatePuzzle(result.id)}>V</Button>
                             <Button type={"button"} id={"delete-" + result.id.toString()}
                                     className={"px-4 py-2 rounded bg-error text-tertiari font-bold"}
-                                    onClick={() => deleteOnePuzzle(result.id)}>X</Button>
+                                    onClick={() => deleteOnePuzzle(result.id)}><img src={Poubelle} alt="bean" className="w-4 h-5"/></Button>
                         </div>
                         <h1 className="flex-1 text-center text-xl font-bold">{result.puzzlesEntreprise.title}</h1>
                     </div>
