@@ -28,7 +28,7 @@ function TournamentInfos(): JSX.Element {
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
-    console.log(infosUser)
+
     const handleClickRegistered = () => {
         postElementByEndpoint('tournament/inscription', {
             token: authContext.accessToken ?? "",

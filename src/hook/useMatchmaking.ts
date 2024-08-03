@@ -31,8 +31,6 @@ const useMatchmaking = () => {
             if (checkRoom.isInRoom) {
                 setMatchFound(true);
                 setRoomId(checkRoom.roomId);
-                console.log("isInRoom", checkRoom.isInRoom);
-                console.log("roomId", checkRoom.roomId);
             } else {
                 const isInQueue = await checkIsInQueue(authContext.accessToken ?? "", id);
                 setInQueue(isInQueue);
@@ -84,7 +82,6 @@ const useMatchmaking = () => {
 
         const responseData = await response.json();
         if (responseData.success) {
-            console.log("Retiré de la file d'attente");
             setInQueue(false);
             setMatchFound(false);
             setRoomId(null);
@@ -149,7 +146,7 @@ async function checkIsInQueue(token: string, id: number) {
                 return false;
             }
         } else {
-            console.log('Erreur lors de la vérification de la file d\'attente du match');
+            console.error('Erreur lors de la vérification de la file d\'attente du match');
             return false;
         }
     } catch (error) {
@@ -177,7 +174,7 @@ async function checkIsInRoom(token: string, id: number) {
                 return { isInRoom: responseData.isInRoom, roomId: null };
             }
         } else {
-            console.log('Erreur lors de la vérification de la salle de match');
+            console.error('Erreur lors de la vérification de la salle de match');
             return { isInRoom: false, roomId: null };
         }
     } catch (error) {

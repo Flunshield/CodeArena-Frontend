@@ -27,7 +27,7 @@ const GameEntreprise = () => {
     const [results, setResults] = useState<responseTest>();
     const [testTested, setTestTested] = useState(false);
     const testsAjouer = puzzle.tests;
-console.log(puzzle);
+
     const handleChange = (newCode: SetStateAction<string>) => {
         setCode(newCode);
     };

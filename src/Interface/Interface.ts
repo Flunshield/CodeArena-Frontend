@@ -269,8 +269,8 @@ export interface UserClassementEntreprise {
 export interface listPuzzleSend {
     item: PuzzleSend[];
     total: number;
+    titles: [{ title: string }];
 }
-
 
 export interface Experience {
     company: string;

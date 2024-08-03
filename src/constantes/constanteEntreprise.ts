@@ -53,6 +53,18 @@ export const PRICING = [
         url: URL_STRIPE,
         idApi: "price_1PjFxQFoLa8m0nzylaifhB6O",
         typePayment: "subscription"
+    },
+    {
+        title: "Partenariat",
+        nbCreateTest: "",
+        description: "Désireux d'offrir un partenariat à votre entreprise ? Contactez-nous pour en discuter.",
+        features: [],
+        idealFor: "Conçu pour les entreprises souhaitant un partenariat.",
+        price: "Contactez-nous",
+        url: "",
+        idApi: "",
+        typePayment: ""
+
     }
 ];
 
