@@ -26,18 +26,25 @@ function DashboardEntreprise() {
     const [puzzleToPopup, setPuzzleToPopup] = useState<PuzzlesEntreprise>();
     const infosUserById = useUserInfos();
     const [lastCommande, setLastCommande] = useState<Pricing>();
+    const [nbPuzzlesPlayed, setNbPuzzlesPlayed] = useState(0);
+    const [nbPuzzleCreated, setNbPuzzleCreated] = useState(0);
+    const [nbPuzzlesSend, setNbPuzzlesSend] = useState(0);
     const findLastCommande = getElementByEndpoint('user/lastCommande?id=' + userId, {
         data: "",
         token: authContext.accessToken ?? ""
     })
-    const [nbPuzzlesPlayed, setNbPuzzlesPlayed] = useState(0);
-    const [nbPuzzleCreated, setNbPuzzleCreated] = useState(0);
     const countPuzzles = async () => {
         return await getElementByEndpoint(`puzzle/countPuzzles?id=${userId}`, {
             token: authContext.accessToken ?? "",
             data: ''
         });
     };
+    const countPuzzlesSend = async () => {
+        return await getElementByEndpoint(`puzzle/countPuzzleSendInMonth?id=${userId}`, {
+            token: authContext.accessToken ?? "",
+            data: ''
+        });
+    }
 
     useEffect(() => {
         if (authContext.connected) {
@@ -54,8 +61,14 @@ function DashboardEntreprise() {
                     setNbPuzzleCreated(result.puzzleCreate);
                 }
             });
+            countPuzzlesSend().then(async (response) => {
+                const result: {count: number } = await response.json();
+                if (response.status === 200) {
+                    setNbPuzzlesSend(result.count);
+                }
+            });
         }
-    }, [submitCount]);
+    }, []);
 
     return (
         <Layout>
@@ -63,7 +76,7 @@ function DashboardEntreprise() {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <Stats lastCommande={lastCommande ?? PRICING[0]} submitCount={submitCount}
                            nbPuzzlesPlayed={nbPuzzlesPlayed}
-                           nbPuzzleCreated={nbPuzzleCreated}/>
+                           nbPuzzleCreated={nbPuzzleCreated} nbPuzzlesSend={nbPuzzlesSend}/>
                     <PuzzleForm setIsSubmitted={() => setSubmitCount(count => count + 1)}
                                 nbPuzzleCreated={nbPuzzleCreated} lastCommande={lastCommande}/>
                     <PuzzleDisplay puzzleToPopup={puzzleToPopup}

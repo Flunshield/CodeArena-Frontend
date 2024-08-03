@@ -19,7 +19,7 @@ interface PuzzleListProps {
 }
 
 const PuzzleList = ({
-                        setIsSubmitted, submitCount, infosUserById
+                        setIsSubmitted, infosUserById
                     }: PuzzleListProps) => {
     const {t} = useTranslation();
     const [isAscending, setIsAscending] = useState<boolean>(true);
@@ -42,7 +42,7 @@ const PuzzleList = ({
             data: ''
         });
         const result = await response.json();
-        if(result.total === 0) {
+        if (result.total === 0) {
             result.total = result.item.length;
             setPuzzleVerifiedEtat(1);
             handlePuzzleCheck();
@@ -140,7 +140,7 @@ const PuzzleList = ({
         if (authContext?.connected) {
             getPuzzle().then(r => r);
         }
-    }, [currentPage, submitCount, selectedTitle, isAscending, puzzleCheck, authContext?.connected]);
+    }, []);
 
     return (
         <div id="PuzzleList"
@@ -179,12 +179,31 @@ const PuzzleList = ({
                     <div className="flex max-md:flex-col justify-between w-full">
                         <h1 className="flex-1 text-center text-xl font-bold">{result.puzzlesEntreprise.title}</h1>
                         <div className="flex flex-row max-md:justify-center max-md:m-5">
-                            <Button type="button" id={"validate-" + result.id.toString()}
-                                    className={clsx(result.verified ? "bg-olive-green" : "bg-gris-chaud", "px-4 py-2 w-32 rounded text-tertiari font-bold mr-2")}
-                                    onClick={() => validatePuzzle(result.id)}>V</Button>
-                            <Button type="button" id={"delete-" + result.id.toString()}
-                                    className="px-4 py-2 w-32 rounded bg-error text-tertiari font-bold"
-                                    onClick={() => deleteOnePuzzle(result.id)}>
+                            <Button
+                                type="button"
+                                id={"validate-" + result.id.toString()}
+                                className={clsx(result.verified ? "bg-olive-green" : "bg-gris-chaud", "px-4 py-2 w-32 rounded text-tertiari font-bold mr-2 flex items-center justify-center")}
+                                onClick={() => validatePuzzle(result.id)}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-6 h-6"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </Button>
+                            <Button
+                                type="button"
+                                id={"delete-" + result.id.toString()}
+                                className="px-4 py-2 w-32 rounded bg-error text-tertiari font-bold flex items-center justify-center"
+                                onClick={() => deleteOnePuzzle(result.id)}
+                            >
                                 <img src={Poubelle} alt="bean" className="w-4 h-5"/>
                             </Button>
                         </div>
