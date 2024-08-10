@@ -60,10 +60,12 @@ const PricingSection = () => {
                                     </ul>
                                     <p className="text-gray-700 mb-4">{t(plan.idealFor)}</p>
                                     <div className="mt-6 text-center">
-                                        <h2 className="text-xl">
-                                            <span className="font-bold">{t(plan.price)}</span> <span className="text-sm">/{t("perMonth")}</span>
+                                        <h2 className="text-xl"><span className="font-bold">{t(plan.price)}</span>
+                                            {plan.btnAction && (
+                                                <span className="text-sm">/{t("perMonth")}</span>
+                                            )}
                                         </h2>
-                                        {authContext.connected && infos.data.groups.roles === GROUPS.USER && (
+                                        {authContext.connected && infos.data.groups.roles === GROUPS.USER && plan.btnAction && (
                                             <Button
                                                 type="submit"
                                                 id={plan.title}

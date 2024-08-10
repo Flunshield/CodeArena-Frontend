@@ -63,9 +63,9 @@ function ProfilePicture({ classname, infosUserById }: ProfilePictureProps) {
     };
 
     // Définir la source de l'image
-    const imgSrc = isPictureClicked !== ""
-        ? `/assets/photosProfiles/${isPictureClicked || "noImage.svg"}`
-        : infosUserById?.avatar;
+    const imgSrc = isPictureClicked
+        ? `/assets/photosProfiles/${isPictureClicked}`
+        : infosUserById?.avatar ? infosUserById?.avatar : "/assets/photosProfiles/noImage.svg";
 
     return (
         <div className={clsx(classname, "relative")}>
@@ -74,11 +74,7 @@ function ProfilePicture({ classname, infosUserById }: ProfilePictureProps) {
                     imgSrc === "/assets/photosProfiles/noImage.svg" ? "pl-10 pb-10" : "",
                     "rounded-full w-48 h-48 border-2 border-tertiari cursor-pointer bg-gris-chaud"
                 )}
-                src={
-                    isPictureClicked !== ""
-                        ? `/assets/photosProfiles/${isPictureClicked || "noImage.svg"}`
-                        : infosUserById?.avatar
-                }
+                src={imgSrc}
                 alt="Avatar"
                 onClick={openPopup}
             />

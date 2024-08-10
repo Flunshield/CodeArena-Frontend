@@ -204,6 +204,15 @@ export interface CommandeEntreprise {
     colorEtatCommande?: string;
 }
 
+export interface lastCommandFormatted {
+    id: number;
+    item: string;
+    dateCommande: string;
+    idPayment: string;
+    etatCommande: string;
+    colorEtatCommande: string;
+}
+
 export interface CommandeEntrepriseFormatted {
     commande: CommandeEntreprise;
     pricing: Pricing;

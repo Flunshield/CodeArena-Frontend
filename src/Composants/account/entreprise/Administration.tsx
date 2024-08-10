@@ -39,7 +39,7 @@ const Administration: React.FC<AdministrationProps> = ({
     ];
 
     return (
-        <div className="m-5 mb-52">
+        <div className="m-5">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-auto w-full">
                 {stats.map(stat => (
                     <div

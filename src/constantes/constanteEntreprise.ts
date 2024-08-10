@@ -35,7 +35,8 @@ export const PRICING = [
         price: "70€",
         url: URL_STRIPE,
         idApi: "price_1PjFrZFoLa8m0nzy2vEhq1TG",
-        typePayment: "subscription"
+        typePayment: "subscription",
+        btnAction: true
     },
     {
         title: "Pack entreprise",
@@ -52,7 +53,8 @@ export const PRICING = [
         price: "300€",
         url: URL_STRIPE,
         idApi: "price_1PjFxQFoLa8m0nzylaifhB6O",
-        typePayment: "subscription"
+        typePayment: "subscription",
+        btnAction: true
     },
     {
         title: "Partenariat",
@@ -63,8 +65,8 @@ export const PRICING = [
         price: "Contactez-nous",
         url: "",
         idApi: "",
-        typePayment: ""
-
+        typePayment: "",
+        btnAction: false
     }
 ];
 
