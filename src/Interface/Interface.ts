@@ -108,15 +108,30 @@ export interface userRangList {
 
 export interface Event {
     id?: number;
-    startDate?: Date;
-    endDate?: Date;
-    playerMax?: number;
-    title?: string;
-    description?: string;
-    rewards?: string;
-    organize?: string;
+    startDate: Date;
+    endDate: Date;
+    playerMax: number;
+    title: string;
+    description: string;
+    rewards: string;
+    organize: string;
+    createPuzzles?: boolean;
+    priceAdjustment?: number;
+    basePrice?: number;
+    priceDetails?: priceDetails;
     matches?: Match[];
     userEvent?: UserEvent[];
+    puzzles?: PuzzlesEntreprise[];
+}
+
+export interface priceDetails {
+    id: number;
+    basePrice: number;
+    proximityCharge: number;
+    durationCharge: number;
+    puzzlesCharge: number;
+    adjustmentCharge: number;
+    finalPrice: number;
 }
 
 export interface Match {

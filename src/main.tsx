@@ -19,10 +19,10 @@ import TournamentDashboard from "./Pages/tournamentDashboard.tsx";
 import EventDashboard from "./Pages/eventDashboard.tsx";
 import PageTournamentInfos from "./Pages/pageTournamentInfos.tsx";
 import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
-import AdminDashboard from "./Pages/AdminDashboard.tsx";
+import AdminDashboard from "./Pages/Admin/AdminDashboard.tsx";
 import GameEntreprise from "./Pages/Entreprise/gameEntreprise.tsx";
 import {
-    ADMIN,
+    ADMIN, ADMIN_EVENT_CREATE,
     CANCEL,
     COMPTE,
     COOKIE_POLICY,
@@ -61,6 +61,7 @@ import DashboardEntreprise from "./Pages/Entreprise/dashboardEntreprise.tsx";
 import ErrorPage from "./Pages/ErrorPage.tsx";
 import ResultPage from "./Pages/Entreprise/ResultPage.tsx";
 import {NotificationProvider} from "./NotificationContext.tsx";
+import AdmineventCreate from "./Pages/Admin/AdmineventCreate.tsx";
 
 const router = createBrowserRouter([
     {
@@ -156,6 +157,11 @@ const router = createBrowserRouter([
     {
         path: ADMIN,
         element: <PrivateRouteAdmin><AdminDashboard/></PrivateRouteAdmin>,
+        errorElement: <ErrorPage/>
+    },
+    {
+        path: ADMIN_EVENT_CREATE,
+        element: <PrivateRouteAdmin><AdmineventCreate/></PrivateRouteAdmin>,
         errorElement: <ErrorPage/>
     },
     {

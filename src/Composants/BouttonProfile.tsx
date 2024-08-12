@@ -5,7 +5,14 @@ import {useAuthContext} from "../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import {JwtPayload} from "jwt-decode";
 import {DataToken} from "../Interface/Interface.ts";
-import {ADMIN, COMPTE, DASHBOARD_ENTREPRISE, GROUPS, LOGOUT} from "../constantes/constantesRoutes.ts";
+import {
+    ADMIN,
+    ADMIN_EVENT_CREATE,
+    COMPTE,
+    DASHBOARD_ENTREPRISE,
+    GROUPS,
+    LOGOUT
+} from "../constantes/constantesRoutes.ts";
 import loginIcons from "/assets/photosProfiles/noImage.svg";
 import {checkUrl} from "../Helpers/methodeHelper.ts";
 import clsx from "clsx";
@@ -71,16 +78,22 @@ const BouttonProfile = () => {
                         className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 text-xl rounded shadow"
                     >
                         <div className='p-2'>
-                            <div className='flex flex-col items-center'>
+                            <div className='flex flex-col items-center space-y-5'>
                                 <Button id='button-compte' type={'button'}
-                                        className={clsx(currentPage === "myAccount" )}>
+                                        className={clsx(currentPage === "myAccount")}>
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
                                 {role === GROUPS.ADMIN &&
-                                    <Button id='button-compte-admin' type={'button'}
-                                            className={clsx(currentPage === "admin" ? "hidden" : "block", "mb-5 hover:underline")}>
-                                        <Link to={ADMIN}>{t('administration')}</Link>
-                                    </Button>
+                                    <div className="flex flex-col items-center space-y-5">
+                                        <Button id='button-compte-admin' type={'button'}
+                                                className={clsx(currentPage === "admin" ? "hidden" : "block", "hover:underline")}>
+                                            <Link to={ADMIN}>{t('administration')}</Link>
+                                        </Button>
+                                        <Button id='button-compte-admin' type={'button'}
+                                                className={clsx(currentPage === "adminEvent" ? "hidden" : "block", "hover:underline")}>
+                                            <Link to={ADMIN_EVENT_CREATE}>{t('createEvent')}</Link>
+                                        </Button>
+                                    </div>
                                 }
                                 {role === GROUPS.ENTREPRISE &&
                                     <Button id='button-compte-entreprise' type={'button'}

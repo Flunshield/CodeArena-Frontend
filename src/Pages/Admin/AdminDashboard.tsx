@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
-import Layout from "../ComposantsCommun/Layout.tsx";
-import Card from "../ComposantsCommun/Card.tsx";
-import CardContent from "../ComposantsCommun/CardContent.tsx";
-import {useAuthContext} from "../AuthContext.tsx";
-import {getElementByEndpoint} from "../Helpers/apiHelper.ts";
-import {Ranking, Titles} from "../Interface/Interface.ts";
-import ListTitle from "../Composants/admin/ListTitle.tsx";
-import ListRank from "../Composants/admin/ListRank.tsx";
-import ListUsers from "../Composants/admin/ListUsers.tsx";
-import PuzzleForm from "../ComposantsCommun/PuzzleForm.tsx";
+import Layout from "../../ComposantsCommun/Layout.tsx";
+import Card from "../../ComposantsCommun/Card.tsx";
+import CardContent from "../../ComposantsCommun/CardContent.tsx";
+import {useAuthContext} from "../../AuthContext.tsx";
+import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
+import {Ranking, Titles} from "../../Interface/Interface.ts";
+import ListTitle from "../../Composants/admin/ListTitle.tsx";
+import ListRank from "../../Composants/admin/ListRank.tsx";
+import ListUsers from "../../Composants/admin/ListUsers.tsx";
+import PuzzleForm from "../../ComposantsCommun/PuzzleForm.tsx";
 
 function AdminDashboard() {
     const authContext = useAuthContext();
