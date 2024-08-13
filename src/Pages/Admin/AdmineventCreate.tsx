@@ -2,9 +2,17 @@ import React, {useEffect, useState} from "react";
 import Layout from "../../ComposantsCommun/Layout.tsx";
 import {postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../AuthContext.tsx";
+import {useTranslation} from "react-i18next";
+import Notification from "../../ComposantsCommun/Notification.tsx";
+import {ADMIN_EVENT_CREATE_DATABASE} from "../../constantes/constantesRoutes.ts";
+import {downloadPdf} from "../../Helpers/methodeHelper.ts";
 
 function AdmineventCreate() {
     const authContext = useAuthContext();
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         startDate: "",
         endDate: "",
@@ -119,30 +127,48 @@ function AdmineventCreate() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         formData.priceDetails = priceDetails;
-        console.log(formData);
-        const newEvent = postElementByEndpoint("evenement/createEvent", {
+        const newEvent = postElementByEndpoint(ADMIN_EVENT_CREATE_DATABASE, {
             token: authContext.accessToken ?? "",
             data: formData
         });
-        newEvent.then((response) => {
+        newEvent.then(async (response) => {
             if (response.status === 201) {
-                alert("Événement créé avec succès !");
+                console.log(response);
+                setNotificationMessage(t('createEventSuccess'));
+                setNotificationType('success');
+                setShowNotification(true);
+                const pdfDownloadPromise = downloadPdf(response, "devis.pdf");
+                console.log(pdfDownloadPromise);
+                if (!pdfDownloadPromise) {
+                    setNotificationMessage(t('errordownloadPdf'));
+                    setNotificationType('error');
+                    setShowNotification(true);
+                }
             } else {
-                alert("Une erreur s'est produite lors de la création de l'événement.");
+                setNotificationMessage(t('createEventError'));
+                setNotificationType('error');
+                setShowNotification(true);
             }
         });
     }
 
     return (
         <Layout>
-            <h1 className="text-3xl text-center font-bold text-gray-600 m-5">Créer un Nouvel Événement</h1>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
+            <h1 className="text-3xl text-center font-bold text-gray-600 m-5">{t("createNewevent")}</h1>
             <form
                 onSubmit={handleSubmit}
                 className="bg-secondary p-6 rounded-lg shadow-angelic-white m-5 space-y-6"
             >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">Date de Début :</label>
+                        <label className="block text-tertiari font-semibold mb-2">{t("dateDebut")} :</label>
                         <input
                             type="datetime-local"
                             name="startDate"
@@ -153,7 +179,7 @@ function AdmineventCreate() {
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">Date de Fin :</label>
+                        <label className="block text-tertiari font-semibold mb-2">{t("dateFin")} :</label>
                         <input
                             type="datetime-local"
                             name="endDate"
@@ -164,7 +190,7 @@ function AdmineventCreate() {
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">Nombre Maximum de Joueurs :</label>
+                        <label className="block text-tertiari font-semibold mb-2">{t("maxPlayer")} :</label>
                         <input
                             type="number"
                             name="playerMax"
@@ -175,7 +201,7 @@ function AdmineventCreate() {
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">Titre :</label>
+                        <label className="block text-tertiari font-semibold mb-2">{t("title")} :</label>
                         <input
                             type="text"
                             name="title"
@@ -186,7 +212,7 @@ function AdmineventCreate() {
                         />
                     </div>
                     <div className="md:col-span-2">
-                        <label className="block text-tertiari font-semibold mb-2">Description :</label>
+                        <label className="block text-tertiari font-semibold mb-2">{t("description")} :</label>
                         <textarea
                             name="description"
                             value={formData.description}
@@ -196,7 +222,7 @@ function AdmineventCreate() {
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">Récompenses :</label>
+                        <label className="block text-tertiari font-semibold mb-2">{t("recompense")} :</label>
                         <input
                             type="text"
                             name="rewards"
@@ -207,7 +233,7 @@ function AdmineventCreate() {
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">Organisateur :</label>
+                        <label className="block text-tertiari font-semibold mb-2">{t("organisateur")} :</label>
                         <input
                             type="text"
                             name="organize"
@@ -226,11 +252,11 @@ function AdmineventCreate() {
                                 onChange={handleChange}
                                 className="mr-2 h-4 w-4 text-light-blue focus:ring-light-blue border-soft-gray rounded"
                             />
-                            <label className="text-tertiari font-semibold">Créer les puzzles (+500€)</label>
+                            <label className="text-tertiari font-semibold">{t("createPuzzle")} (+500€)</label>
                         </div>
                     </div>
                     <div className="md:col-span-2">
-                        <label className="block text-tertiari font-semibold mb-2">Ajustement du prix (%) :</label>
+                        <label className="block text-tertiari font-semibold mb-2">{t("ajustPrice")} (%) :</label>
                         <select
                             name="priceAdjustment"
                             value={formData.priceAdjustment}
@@ -251,26 +277,26 @@ function AdmineventCreate() {
                     </p>
                 </div>
                 <div className="bg-quaternary p-4 rounded-lg mt-6">
-                    <h2 className="text-xl font-bold text-tertiari mb-4">Détail du prix :</h2>
+                    <h2 className="text-xl font-bold text-tertiari mb-4">{t("detailPrice")} :</h2>
                     <ul className="text-tertiari">
-                        <li>Prix de base : {priceDetails.basePrice}€</li>
-                        <li>Majoration pour date proche : {priceDetails.proximityCharge.toFixed(2)}€</li>
-                        <li>Majoration pour durée ({(priceDetails.durationCharge / 50).toFixed(2)} jours)
+                        <li>{t("basePrice")} : {priceDetails.basePrice}€</li>
+                        <li>{t("majorationDateProche")} : {priceDetails.proximityCharge.toFixed(2)}€</li>
+                        <li>{t("majorationDuree")} ({(priceDetails.durationCharge / 50).toFixed(2)} jours)
                             : {priceDetails.durationCharge.toFixed(2)}€
                         </li>
-                        <li>Joueurs supplémentaires : {priceDetails.extraPlayersCharge.toFixed(2)}€</li>
-                        <li>Création des puzzles : {priceDetails.puzzlesCharge.toFixed(2)}€</li>
-                        <li>Ajustement de prix ({formData.priceAdjustment.toFixed(2)}%)
+                        <li>{t("addPlayers")} : {priceDetails.extraPlayersCharge.toFixed(2)}€</li>
+                        <li>{t("creationPuzzles")} : {priceDetails.puzzlesCharge.toFixed(2)}€</li>
+                        <li>{t("ajustementPrice")} ({formData.priceAdjustment.toFixed(2)}%)
                             : {priceDetails.adjustmentCharge.toFixed(2)}€
                         </li>
-                        <li>Total : {priceDetails.finalPrice.toFixed(2)}€</li>
+                        <li>{t("totalPrice")} : {priceDetails.finalPrice.toFixed(2)}€</li>
                     </ul>
                 </div>
                 <button
                     type="submit"
                     className="w-full bg-light-blue text-quaternary font-bold py-2 rounded shadow-glow hover:bg-petroleum-blue transition duration-300 mt-6"
                 >
-                    Créer lÉvénement
+                    {t("createEvent")}
                 </button>
             </form>
         </Layout>
