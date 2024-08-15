@@ -1,6 +1,3 @@
-export const MAIL = "contact@codearena.fr"
-export const NO_PHOTO = "/assets/icons/noImage.svg"
-
 export const imagePaths: string[] = [
     'badge2.png',
     'badge3.png',
@@ -55,10 +52,13 @@ export const PRIVACY_POLICY = "/politique-de-confidentialite"
 export const TERMS = "/cgv"
 export const LEGAL = "/mention-legale"
 export const LOAD_GAME = "/loadGame"
-export const GAME = "/game"
 export const GAME_ENTREPRISE = "/gameEntreprise"
 export const ERROR_PAGE = "/errorPage"
 export const RESULT_PAGE = "/resultPage"
 export const TEST_JS = "tests/js"
 export const ADMIN_EVENT_CREATE = "/adminEvent"
+export const ADMIN_EVENT_DASHBOARD = "/adminEventDashboard"
+
+//ROUTAGE EXTERNES
 export const ADMIN_EVENT_CREATE_DATABASE = "evenement/createEvent"
+export const ADMIN_EVENT_FIND_EVENTS_ENTREPRISES = "evenement/findEventEntreprise"

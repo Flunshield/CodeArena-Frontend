@@ -7,7 +7,7 @@ import {JwtPayload} from "jwt-decode";
 import {DataToken} from "../Interface/Interface.ts";
 import {
     ADMIN,
-    ADMIN_EVENT_CREATE,
+    ADMIN_EVENT_CREATE, ADMIN_EVENT_DASHBOARD,
     COMPTE,
     DASHBOARD_ENTREPRISE,
     GROUPS,
@@ -80,24 +80,28 @@ const BouttonProfile = () => {
                         <div className='p-2'>
                             <div className='flex flex-col items-center space-y-5'>
                                 <Button id='button-compte' type={'button'}
-                                        className={clsx(currentPage === "myAccount")}>
+                                        className={clsx(currentPage === "myAccount" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "")}>
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
                                 {role === GROUPS.ADMIN &&
                                     <div className="flex flex-col items-center space-y-5">
                                         <Button id='button-compte-admin' type={'button'}
-                                                className={clsx(currentPage === "admin" ? "hidden" : "block", "hover:underline")}>
+                                                className={clsx(currentPage === "admin" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "", "hover:underline")}>
                                             <Link to={ADMIN}>{t('administration')}</Link>
                                         </Button>
                                         <Button id='button-compte-admin' type={'button'}
-                                                className={clsx(currentPage === "adminEvent" ? "hidden" : "block", "hover:underline")}>
+                                                className={clsx(currentPage === "adminEvent" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "", "hover:underline")}>
                                             <Link to={ADMIN_EVENT_CREATE}>{t('createEvent')}</Link>
+                                        </Button>
+                                        <Button id='button-compte-admin' type={'button'}
+                                                className={clsx(currentPage === "adminEventDashboard" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "", "hover:underline")}>
+                                            <Link to={ADMIN_EVENT_DASHBOARD}>{t('dashboardEvent')}</Link>
                                         </Button>
                                     </div>
                                 }
                                 {role === GROUPS.ENTREPRISE &&
                                     <Button id='button-compte-entreprise' type={'button'}
-                                            className={clsx(currentPage === "dashboardEntreprise" ? "hidden" : "block", "mb-5 hover:underline")}>
+                                            className={clsx(currentPage === "dashboardEntreprise" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "", "mb-5 hover:underline")}>
                                         <Link to={DASHBOARD_ENTREPRISE}>{t('dashboardEntreprise')}</Link>
                                     </Button>
                                 }

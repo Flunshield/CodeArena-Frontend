@@ -11,9 +11,11 @@ interface DataTableProps {
     data: Record<string, string | JSX.Element>[];
     className?: string;
     clickedUser?: (username: string) => void;
+    classNameHeader?: string;
+    classNameBody?: string;
 }
 
-const DataTable = ({headers, data, className, clickedUser}: DataTableProps) => {
+const DataTable = ({headers, data, className, clickedUser, classNameHeader, classNameBody}: DataTableProps) => {
     const {t} = useTranslation();
     return (
         <div className={clsx("overflow-x-auto", className)}>
@@ -21,7 +23,7 @@ const DataTable = ({headers, data, className, clickedUser}: DataTableProps) => {
                 <thead className="text-xs text-secondary uppercase bg-tertiari dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     {headers.map((header) => (
-                        <th key={String(header.key)} scope="col" className="py-3 px-6">
+                        <th key={String(header.key)} scope="col" className={clsx(classNameHeader, "py-3 px-6")}>
                             {t(header.label)}
                         </th>
                     ))}
@@ -35,7 +37,7 @@ const DataTable = ({headers, data, className, clickedUser}: DataTableProps) => {
                         }
                     }}>
                         {headers.map((header) => (
-                            <td key={header.key} className="py-4 px-6">
+                            <td key={header.key} className={clsx(classNameBody, "py-4 px-6")}>
                                 {String(item[header.key])}
                             </td>
                         ))}

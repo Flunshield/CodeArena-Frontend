@@ -118,10 +118,11 @@ export interface Event {
     createPuzzles?: boolean;
     priceAdjustment?: number;
     basePrice?: number;
-    priceDetails?: priceDetails;
+    priceDetails: priceDetails;
     matches?: Match[];
     userEvent?: UserEvent[];
     puzzles?: PuzzlesEntreprise[];
+    accepted?: boolean;
 }
 
 export interface priceDetails {

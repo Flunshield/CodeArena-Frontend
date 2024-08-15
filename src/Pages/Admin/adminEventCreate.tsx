@@ -7,7 +7,7 @@ import Notification from "../../ComposantsCommun/Notification.tsx";
 import {ADMIN_EVENT_CREATE_DATABASE} from "../../constantes/constantesRoutes.ts";
 import {downloadPdf} from "../../Helpers/methodeHelper.ts";
 
-function AdmineventCreate() {
+function adminEventCreate() {
     const authContext = useAuthContext();
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
@@ -303,4 +303,4 @@ function AdmineventCreate() {
     );
 }
 
-export default AdmineventCreate;
+export default adminEventCreate;
