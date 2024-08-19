@@ -61,4 +61,5 @@ export const ADMIN_EVENT_DASHBOARD = "/adminEventDashboard"
 
 //ROUTAGE EXTERNES
 export const ADMIN_EVENT_CREATE_DATABASE = "evenement/createEvent"
-export const ADMIN_EVENT_FIND_EVENTS_ENTREPRISES = "evenement/findEventEntreprise"
+export const ADMIN_EVENT_FIND_EVENTS_ENTREPRISES = "evenement/findEventsEntreprise"
+export const ADMIN_EVENT_FIND_EVENT_ENTREPRISE = "evenement/findEventEntreprise"

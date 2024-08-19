@@ -93,12 +93,12 @@ const SearchBar = ({
                         </select>
                     </div>
                     <div className="flex flex-col text-center mr-10 mb-2 max-md:mb-0">
-                        <label htmlFor="technologiePreferences"
+                        <label htmlFor="isAccepted"
                                className="block text-sm font-medium text-tertiary max-md:text-left">
                             {t('accepted')}
                         </label>
                         <select
-                            id="technologiePreferences"
+                            id="isAccepted"
                             className="text-secondary rounded-lg border border-gray-300 w-32 text-center mt-1 focus:outline-none focus:border-primary"
                             onChange={(e) => handleAccepted(e.target.value)}
                         >

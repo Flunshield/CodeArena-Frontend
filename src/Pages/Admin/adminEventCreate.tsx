@@ -133,12 +133,10 @@ function adminEventCreate() {
         });
         newEvent.then(async (response) => {
             if (response.status === 201) {
-                console.log(response);
                 setNotificationMessage(t('createEventSuccess'));
                 setNotificationType('success');
                 setShowNotification(true);
                 const pdfDownloadPromise = downloadPdf(response, "devis.pdf");
-                console.log(pdfDownloadPromise);
                 if (!pdfDownloadPromise) {
                     setNotificationMessage(t('errordownloadPdf'));
                     setNotificationType('error');

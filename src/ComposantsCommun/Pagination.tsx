@@ -22,7 +22,6 @@ const Pagination = ({
                     }: PaginationProps) => {
     const {t} = useTranslation();
 
-
     const nextPage = () => {
         setCurrentPage(currentPage + 1);
         setSubmitCount(count => count + 1);
