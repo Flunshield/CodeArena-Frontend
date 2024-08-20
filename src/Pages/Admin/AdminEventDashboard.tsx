@@ -10,9 +10,12 @@ import {getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelp
 import DataTable from "../../ComposantsCommun/DataTable.tsx";
 import {useTranslation} from "react-i18next";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
-import {Event} from "../../Interface/Interface.ts";
+import {DataToken, Event} from "../../Interface/Interface.ts";
 import Pagination from "../../ComposantsCommun/Pagination.tsx";
 import {formatDate} from "../../Helpers/formatHelper.ts";
+import useUserInfos from "../../hook/useUserInfos.ts";
+import {GROUPS} from "../../constantes/constantes.ts";
+import {JwtPayload} from "jwt-decode";
 
 export interface eventsFormated {
     accepted: string;
@@ -24,6 +27,10 @@ export interface eventsFormated {
 
 function AdminEventDashboard() {
     const authContext = useAuthContext();
+    // Obliger de faire ces étapes pour récupérer les infos
+    const infosUser = authContext?.infosUser as JwtPayload
+    const infos = infosUser.aud as unknown as DataToken
+    const userInfos = useUserInfos();
     const {t} = useTranslation();
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
@@ -36,6 +43,9 @@ function AdminEventDashboard() {
     const [searchTitle, setSearchTitle] = useState<string>("");
     const [eventReceived, setEventReceived] = useState<Event>();
     const [openPopup, setOpenPopup] = useState(false);
+    const isEntreprise = userInfos?.groups?.roles === GROUPS.ENTREPRISE;
+    const isAdmin = userInfos?.groups?.roles === GROUPS.ADMIN;
+    const title = isAdmin ? t('adminEventDashboard') : isEntreprise ? t('entrepriseEventDashboard') : "";
     const [eventClicked, setEventClicked] = useState<eventsFormated>({
         accepted: "",
         title: "",
@@ -44,10 +54,14 @@ function AdminEventDashboard() {
         id: ""
     });
     const [data, setData] = useState<{ items: Event[], total: number }>({items: [], total: 0});
-    const getEventsEntreprises = getElementByEndpoint(ADMIN_EVENT_FIND_EVENTS_ENTREPRISES + `?order=${order}&currentPage=${currentPage}&itemPerPage=${itemPerPage}&accepted=${accepted}&searchTitle=${searchTitle}`, {
-        token: authContext?.accessToken ?? "",
-        data: ""
-    });
+    function getEventsEntreprises() {
+        return getElementByEndpoint(ADMIN_EVENT_FIND_EVENTS_ENTREPRISES + `?order=${order}&currentPage=${currentPage}&itemPerPage=${itemPerPage}&accepted=${accepted}&searchTitle=${searchTitle}&id=${infos.data.id}`, {
+            token: authContext?.accessToken ?? "",
+            data: ""
+        });
+    }
+
+
     function getEventEntreprise (){
         return getElementByEndpoint(ADMIN_EVENT_FIND_EVENT_ENTREPRISE + `?id=${eventClicked.id}`, {
             token: authContext?.accessToken ?? "",
@@ -93,7 +107,7 @@ function AdminEventDashboard() {
     const maxPage = Math.ceil(data.total / itemPerPage);
 
     useEffect(() => {
-        getEventsEntreprises.then(async (response) => {
+        getEventsEntreprises().then(async (response) => {
             if (response.status === 200) {
                 const result = await response.json();
                 setData(result);
@@ -131,7 +145,7 @@ function AdminEventDashboard() {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            <h1 className="text-lg text-center m-5 font-bold">Admin Event Dashboard</h1>
+            <h1 className="text-lg text-center m-5 font-bold">{title}</h1>
             <SearchBar
                 setAccepted={setAccepted}
                 setItemPerPage={setItemPerPage}
@@ -183,7 +197,7 @@ function AdminEventDashboard() {
                             >
                                 {t('close')}
                             </button>
-                            {eventReceived?.accepted === false &&
+                            {eventReceived?.accepted === false && isAdmin &&
                                 <button type={"submit"}
                                         className="w-full py-3 bg-olive-green text-white rounded-lg hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
                                         onClick={() => postValidationEvent(eventReceived?.id?.toString() ?? "")}>{t('valide')}</button>

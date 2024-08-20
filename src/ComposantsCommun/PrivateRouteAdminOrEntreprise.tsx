@@ -9,14 +9,14 @@ interface PrivateRouteProps {
     children: ReactNode;
 }
 
-const PrivateRouteEntreprise: React.FC<PrivateRouteProps> = ({ children }) => {
+const PrivateRouteAdminOrEntreprise: React.FC<PrivateRouteProps> = ({ children }) => {
     const authContext = useAuthContext();
     // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
-    const isEntreprise = infos.data.groups.roles
+    const isAdmin = infos.data.groups.roles
     // Redirigez vers la page de connexion si l'utilisateur n'est pas connecté
-    if (isEntreprise !== GROUPS.ENTREPRISE) {
+    if (isAdmin === GROUPS.USER) {
         return <Navigate to="/myAccount" />;
     }
 
@@ -24,4 +24,4 @@ const PrivateRouteEntreprise: React.FC<PrivateRouteProps> = ({ children }) => {
     return children;
 };
 
-export default PrivateRouteEntreprise;
+export default PrivateRouteAdminOrEntreprise;

@@ -7,7 +7,8 @@ import {JwtPayload} from "jwt-decode";
 import {DataToken} from "../Interface/Interface.ts";
 import {
     ADMIN,
-    ADMIN_EVENT_CREATE, ADMIN_EVENT_DASHBOARD,
+    ADMIN_EVENT_CREATE,
+    ADMIN_EVENT_DASHBOARD,
     COMPTE,
     DASHBOARD_ENTREPRISE,
     GROUPS,
@@ -28,6 +29,8 @@ const BouttonProfile = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [avatar, setAvatar] = useState<string>(loginIcons);
     const role = infos.data.groups.roles;
+    const isEntreprise = role === GROUPS.ENTREPRISE;
+    const isAdmin = role === GROUPS.ADMIN;
     const [currentPage, setCurrentPage] = useState<string>();
     const popupRef = useRef<HTMLDivElement | null>(null);
     const handleClickSingOut = () => {
@@ -83,7 +86,7 @@ const BouttonProfile = () => {
                                         className={clsx(currentPage === "myAccount" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "")}>
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
-                                {role === GROUPS.ADMIN &&
+                                {isAdmin &&
                                     <div className="flex flex-col items-center space-y-5">
                                         <Button id='button-compte-admin' type={'button'}
                                                 className={clsx(currentPage === "admin" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "", "hover:underline")}>
@@ -99,11 +102,17 @@ const BouttonProfile = () => {
                                         </Button>
                                     </div>
                                 }
-                                {role === GROUPS.ENTREPRISE &&
-                                    <Button id='button-compte-entreprise' type={'button'}
-                                            className={clsx(currentPage === "dashboardEntreprise" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "", "mb-5 hover:underline")}>
-                                        <Link to={DASHBOARD_ENTREPRISE}>{t('dashboardEntreprise')}</Link>
-                                    </Button>
+                                {isEntreprise &&
+                                    <div className="flex flex-col items-center space-y-5">
+                                        <Button id='button-compte-entreprise' type={'button'}
+                                                className={clsx(currentPage === "dashboardEntreprise" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "", "hover:underline")}>
+                                            <Link to={DASHBOARD_ENTREPRISE}>{t('dashboardEntreprise')}</Link>
+                                        </Button>
+                                        <Button id='button-compte-admin' type={'button'}
+                                                className={clsx(currentPage === "adminEventDashboard" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "", "hover:underline")}>
+                                            <Link to={ADMIN_EVENT_DASHBOARD}>{t('dashboardEvent')}</Link>
+                                        </Button>
+                                    </div>
                                 }
                             </div>
                             <Button
