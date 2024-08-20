@@ -1,18 +1,39 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../ComposantsCommun/Layout.tsx";
-import {postElementByEndpoint} from "../../Helpers/apiHelper.ts";
+import {getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import Notification from "../../ComposantsCommun/Notification.tsx";
 import {ADMIN_EVENT_CREATE_DATABASE} from "../../constantes/constantesRoutes.ts";
 import {downloadPdf} from "../../Helpers/methodeHelper.ts";
+import {User} from "../../Interface/Interface.ts";
 
 function adminEventCreate() {
     const authContext = useAuthContext();
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
-    const { t } = useTranslation();
+    const {t} = useTranslation();
+    const [filteredSuggestions, setFilteredSuggestions] = useState<User[]>([]);
+    const [userName, setUserName] = useState<string | undefined>("");
+    const getAllUserEntreprise = async () => {
+        const response = await getElementByEndpoint("entreprise/getUserEntreprise?userName=" + userName, {
+            token: authContext.accessToken ?? "",
+            data: ""
+        })
+        return await response.json();
+
+    }
+console.log(userName)
+    function handleChangeUserName(event: string) {
+        setUserName(event);
+        if (event.length > 4) {
+            getAllUserEntreprise().then((response) => {
+                setFilteredSuggestions(response);
+            });
+        }
+    }
+
     const [formData, setFormData] = useState({
         startDate: "",
         endDate: "",
@@ -23,6 +44,7 @@ function adminEventCreate() {
         organize: "",
         createPuzzles: false,
         priceAdjustment: 0,
+        userName: "",
         priceDetails: {
             basePrice: 1000,
             proximityCharge: 0,
@@ -33,7 +55,6 @@ function adminEventCreate() {
             finalPrice: 1000
         },
     });
-
     const [priceDetails, setPriceDetails] = useState({
         basePrice: 1000,
         proximityCharge: 0,
@@ -127,6 +148,7 @@ function adminEventCreate() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         formData.priceDetails = priceDetails;
+        formData.userName = userName ?? "";
         const newEvent = postElementByEndpoint(ADMIN_EVENT_CREATE_DATABASE, {
             token: authContext.accessToken ?? "",
             data: formData
@@ -232,14 +254,35 @@ function adminEventCreate() {
                     </div>
                     <div>
                         <label className="block text-tertiari font-semibold mb-2">{t("organisateur")} :</label>
-                        <input
-                            type="text"
-                            name="organize"
-                            value={formData.organize}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
-                        />
+                        <div>
+                            <input
+                                type="text"
+                                name="organize"
+                                value={userName}
+                                onChange={(event) => handleChangeUserName(event.target.value)}
+                                required
+                                className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
+                            />
+
+                            {/* Affichage des suggestions filtrées */}
+                            {filteredSuggestions.length > 0 && userName && userName.length > 4 && (
+                                <ul className="suggestions-list text-tertiari border border-gray-300 mt-2 rounded">
+                                    {filteredSuggestions.map((suggestion, index) => (
+                                        <li
+                                            key={index}
+                                            onClick={() => {
+                                                setUserName(suggestion.userName)
+                                                setFilteredSuggestions([])
+                                            }
+                                            }
+                                            className="px-4 py-2 hover:bg-light-blue cursor-pointer"
+                                        >
+                                            {suggestion.userName}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
                     </div>
                     <div className="md:col-span-2">
                         <div className="flex items-center">

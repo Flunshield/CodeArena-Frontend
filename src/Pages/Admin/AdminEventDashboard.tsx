@@ -6,7 +6,7 @@ import {
     ADMIN_EVENT_FIND_EVENT_ENTREPRISE,
     ADMIN_EVENT_FIND_EVENTS_ENTREPRISES
 } from "../../constantes/constantesRoutes.ts";
-import {getElementByEndpoint} from "../../Helpers/apiHelper.ts";
+import {getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import DataTable from "../../ComposantsCommun/DataTable.tsx";
 import {useTranslation} from "react-i18next";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
@@ -36,16 +36,43 @@ function AdminEventDashboard() {
     const [searchTitle, setSearchTitle] = useState<string>("");
     const [eventReceived, setEventReceived] = useState<Event>();
     const [openPopup, setOpenPopup] = useState(false);
-    const [eventClicked, setEventClicked] = useState<eventsFormated>({accepted: "", title: "", startDate: "", priceDetails: "", id: ""});
+    const [eventClicked, setEventClicked] = useState<eventsFormated>({
+        accepted: "",
+        title: "",
+        startDate: "",
+        priceDetails: "",
+        id: ""
+    });
     const [data, setData] = useState<{ items: Event[], total: number }>({items: [], total: 0});
     const getEventsEntreprises = getElementByEndpoint(ADMIN_EVENT_FIND_EVENTS_ENTREPRISES + `?order=${order}&currentPage=${currentPage}&itemPerPage=${itemPerPage}&accepted=${accepted}&searchTitle=${searchTitle}`, {
         token: authContext?.accessToken ?? "",
         data: ""
     });
-    const getEvententreprise = getElementByEndpoint(ADMIN_EVENT_FIND_EVENT_ENTREPRISE + `?id=${eventClicked.id}`, {
-        token: authContext?.accessToken ?? "",
-        data: ""
-    });
+    function getEventEntreprise (){
+        return getElementByEndpoint(ADMIN_EVENT_FIND_EVENT_ENTREPRISE + `?id=${eventClicked.id}`, {
+            token: authContext?.accessToken ?? "",
+            data: ""
+        });
+    }
+
+    function postValidationEvent(id: string) {
+        postElementByEndpoint("evenement/validateEvent", {
+            token: authContext?.accessToken ?? "",
+            data: {id: id}
+        }).then(async (response) => {
+            if (response.status === 200) {
+                setNotificationMessage(t('eventAccepted'));
+                setNotificationType('success');
+                setShowNotification(true);
+                setSubmitCount(submitCount + 1);
+                setOpenPopup(false);
+            } else {
+                setNotificationMessage(t('errorEventAccepted'));
+                setNotificationType('error');
+                setShowNotification(true);
+            }
+        });
+    }
 
     const headers = [
         {key: 'accepted', label: t('accepted')},
@@ -80,8 +107,8 @@ function AdminEventDashboard() {
 
     // Cas aprticulier, j'ia besoinde faire un appel API à chaque fois que l'eventClicked change et uniquement dans ce cas.
     useEffect(() => {
-        if(eventClicked.id !== "") {
-            getEvententreprise.then(async (response) => {
+        if (eventClicked.id !== "") {
+            getEventEntreprise().then(async (response) => {
                 if (response.status === 200) {
                     const result = await response.json();
                     setEventReceived(result);
@@ -129,31 +156,39 @@ function AdminEventDashboard() {
                     itemPerPage={itemPerPage}
                 />
             )}
-            {openPopup && (<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-xl max-w-lg w-full">
-                        <h2 className="text-xl font-semibold mb-4">{t('title')} : {eventReceived?.title}</h2>
-                        <p className="text-gray-700 mb-2"><span
-                            className="font-medium">{t('description')}</span> : {eventReceived?.description}</p>
-                        <p className="text-gray-700 mb-2"><span
-                            className="font-medium">{t('dateDebut')}</span> : {formatDate(eventReceived?.startDate, t)}
-                        </p>
-                        <p className="text-gray-700 mb-2"><span
-                            className="font-medium">{t('dateFin')}</span> : {formatDate(eventReceived?.endDate, t)}</p>
-                        <p className="text-gray-700 mb-2"><span
-                            className="font-medium">{t('priceDetails')}</span> : {eventReceived?.priceDetails?.finalPrice}
+            {openPopup && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="bg-white p-8 rounded-lg shadow-2xl max-w-lg w-full">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6">{t('title')} : {eventReceived?.title}</h2>
+                        <p className="text-gray-700 mb-4"><span
+                            className="font-semibold">{t('description')}</span> : {eventReceived?.description}</p>
+                        <p className="text-gray-700 mb-4"><span
+                            className="font-semibold">{t('dateDebut')}</span> : {formatDate(eventReceived?.startDate, t)}
                         </p>
                         <p className="text-gray-700 mb-4"><span
-                            className="font-medium">{t('accepted')}</span> : {eventReceived?.accepted ? t('yes') : t('no')}
+                            className="font-semibold">{t('dateFin')}</span> : {formatDate(eventReceived?.endDate, t)}
                         </p>
                         <p className="text-gray-700 mb-4"><span
-                            className="font-medium">{t('accepted')}</span> : {eventReceived?.id}
+                            className="font-semibold">{t('priceDetails')}</span> : {eventReceived?.priceDetails?.finalPrice}
                         </p>
-                        <button
-                            onClick={() => setOpenPopup(false)}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-                        >
-                            {t('close')}
-                        </button>
+                        <p className="text-gray-700 mb-4"><span
+                            className="font-semibold">{t('accepted')}</span> : {eventReceived?.accepted ? t('yes') : t('no')}
+                        </p>
+                        <p className="text-gray-700 mb-4"><span
+                            className="font-semibold">{t('id')}</span> : {eventReceived?.id}</p>
+                        <div className="flex space-x-5">
+                            <button
+                                onClick={() => setOpenPopup(false)}
+                                className="w-full py-3 bg-blue-600 text-white rounded-lg hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
+                            >
+                                {t('close')}
+                            </button>
+                            {eventReceived?.accepted === false &&
+                                <button type={"submit"}
+                                        className="w-full py-3 bg-olive-green text-white rounded-lg hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
+                                        onClick={() => postValidationEvent(eventReceived?.id?.toString() ?? "")}>{t('valide')}</button>
+                            }
+                        </div>
                     </div>
                 </div>
             )}
