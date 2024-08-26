@@ -6,7 +6,7 @@ import {
     ADMIN_EVENT_FIND_EVENT_ENTREPRISE,
     ADMIN_EVENT_FIND_EVENTS_ENTREPRISES
 } from "../../constantes/constantesRoutes.ts";
-import {getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelper.ts";
+import {deleteElementByEndPoint, getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import DataTable from "../../ComposantsCommun/DataTable.tsx";
 import {useTranslation} from "react-i18next";
 import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
@@ -145,7 +145,7 @@ function AdminEventDashboard() {
         });
     }, [order, currentPage, itemPerPage, accepted, searchTitle, submitCount]);
 
-    // Cas aprticulier, j'ia besoinde faire un appel API à chaque fois que l'eventClicked change et uniquement dans ce cas.
+    // Cas aprticulier, j'ai besoin de faire un appel API à chaque fois que l'eventClicked change et uniquement dans ce cas.
     useEffect(() => {
         if (eventClicked.id !== "") {
             getEventEntreprise().then(async (response) => {
@@ -161,6 +161,26 @@ function AdminEventDashboard() {
             });
         }
     }, [eventClicked]);
+
+    function deleteEvent(idEvent: string): void {
+        deleteElementByEndPoint("evenement/deleteEvent", {
+            token: authContext?.accessToken ?? "",
+            userId: infos.data.id,
+            idElementToDelete: parseInt(idEvent)
+        }).then(async (response) => {
+            if (response.status === 200) {
+                setNotificationMessage(t('eventDeleted'));
+                setNotificationType('success');
+                setShowNotification(true);
+                setSubmitCount(submitCount + 1);
+                setOpenPopup(false);
+            } else {
+                setNotificationMessage(t('errorEventDeleted'));
+                setNotificationType('error');
+                setShowNotification(true);
+            }
+        });
+    }
 
     return (
         <Layout>
@@ -231,12 +251,6 @@ function AdminEventDashboard() {
                         </p>
 
                         <div className="flex space-x-5">
-                            <button
-                                onClick={() => setOpenPopup(false)}
-                                className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all ease-in-out duration-200"
-                            >
-                                {t('close')}
-                            </button>
 
                             {eventReceived?.accepted === false && (isAdmin || isEntreprise) && (
                                 <button
@@ -257,7 +271,21 @@ function AdminEventDashboard() {
                                     {t('buy')}
                                 </button>
                             )}
+                            {eventReceived?.statusPayment !== "paid" && (isAdmin || isEntreprise) && (
+                                                                
+                                <button type="submit" onClick={() => deleteEvent(eventReceived?.id?.toString() ?? "")}
+                                className="w-full py-3 bg-error text-white rounded-lg focus:outline-none hover:bg-red-700 focus:ring-4 focus:ring-green-300 transition-all ease-in-out duration-200">
+                                    {t('delete')}
+                                </button>
+                            )}
+                            
                         </div>
+                            <button
+                                onClick={() => setOpenPopup(false)}
+                                className="w-full mt-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all ease-in-out duration-200"
+                            >
+                                {t('close')}
+                            </button>
                     </div>
                 </div>
 
