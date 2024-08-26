@@ -41,7 +41,7 @@ function Clients() {
         </FadeInStagger>
         <FadeIn>
           <h2 className="text-center font-display text-sm font-semibold tracking-wider text-tertiari sm:text-left mt-4">
-            Il nous reste à prévoir l'implémentation d'autre langage de programmation pour les prochaines mise à jour de notre application web.
+            Il nous reste à prévoir l&apos;implémentation d&apos;autre langage de programmation pour les prochaines mise à jour de notre application web.
 
           </h2>
           <div className="h-px flex-auto bg-neutral-800" />
