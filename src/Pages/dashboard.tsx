@@ -1,12 +1,12 @@
 import Layout from "../ComposantsCommun/Layout.tsx";
-import { Event, Tournament, userRangList } from "../Interface/Interface.ts";
+import { Event, userRangList } from "../Interface/Interface.ts";
 import { useAuthContext } from "../AuthContext.tsx";
 import { JwtPayload } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
 import TableauEvent from "../Composants/dashboard/TableauEvent.tsx";
 import UserRank from "../Composants/dashboard/UserRank.tsx";
-import TableauTournament from "../Composants/tournament/TableauTournament.tsx";
+// import TableauTournament from "../Composants/tournament/TableauTournament.tsx";
 import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn.tsx";
 import { Container } from "../ComposantsCommun/Container.tsx";
 import { SectionIntro } from "../ComposantsCommun/SectionIntro";
@@ -17,7 +17,7 @@ import {useNavigate} from "react-router-dom";
 function Dashboard() {
     const authContext = useAuthContext();
     const [infosUserRank, setInfosUserRank] = useState<userRangList>();
-    const [infosTournament, setInfosTournament] = useState<Tournament[]>([]);
+    // const [infosTournament, setInfosTournament] = useState<Tournament[]>([]);
     const [infosEvents, setInfosEvents] = useState<Event[]>([]);
     const infosUser = authContext?.infosUser as JwtPayload;
     const userId = infosUser?.sub as unknown as number;
@@ -29,9 +29,9 @@ function Dashboard() {
             responsePromise.then(async (response) => {
                 const result = await response.json();
                 setInfosUserRank(result.userRanking);
-                setInfosTournament(result.tournament);
+                // setInfosTournament(result.tournament);
                 setInfosEvents(result.events);
-                setInfosTournament(result.tournament);
+                // setInfosTournament(result.tournament);
                 setInfosEvents(result.events);
             });
         }
@@ -57,9 +57,9 @@ function Dashboard() {
                         <FadeIn className="lg:col-span-2 xl:col-span-1">
                             <UserRank infosUserRank={infosUserRank} />
                         </FadeIn>
-                        <FadeIn className="col-span-1 lg:col-span-2 xl:col-span-3 mb-4">
+                        {/* <FadeIn className="col-span-1 lg:col-span-2 xl:col-span-3 mb-4">
                             <TableauTournament infosTournament={infosTournament} />
-                        </FadeIn>
+                        </FadeIn> */}
                     </FadeInStagger>
                 </Container>
             </Layout>
