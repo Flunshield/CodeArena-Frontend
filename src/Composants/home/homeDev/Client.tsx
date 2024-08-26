@@ -20,7 +20,8 @@ function Clients() {
       <Container>
         <FadeIn className="flex items-center gap-x-8">
           <h2 className="text-center font-display text-sm font-semibold tracking-wider text-tertiari sm:text-left">
-            We’ve worked with hundreds of amazing people
+            Nous serons sous peu mis en relation avec différents structures comme des écoles où même des entreprises de techs.
+            
           </h2>
           <div className="h-px flex-auto bg-neutral-800" />
         </FadeIn>
