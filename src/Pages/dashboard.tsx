@@ -58,7 +58,7 @@ function Dashboard() {
                             <UserRank infosUserRank={infosUserRank} />
                         </FadeIn>
                         <FadeIn className="col-span-1 lg:col-span-2 xl:col-span-3 mb-4">
-                            <TableauTournament infosTournament={infosTournament} isImg={false} />
+                            <TableauTournament infosTournament={infosTournament} />
                         </FadeIn>
                     </FadeInStagger>
                 </Container>
