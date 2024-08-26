@@ -2,7 +2,7 @@ Pour la gestion des EVENTS
 - [X] Ajouter le bouton pour payer l'évènement validé
 - [] Ajouter le bouton pour annuler l'évènement validé
 - [X] Ajouter la fonctionnalité stripe pour payer l'évènement en fonction du prix définie
-- [] Envoyer un mail de confirmation de paiement
+- [X] Envoyer un mail de confirmation de paiement
 - [] Envoyer un mail de confirmation d'annulation
 - [X] Générer la facture de l'évènement à payé
 - [X] Envoyer la facture de l'évènement à payé par mail

@@ -123,6 +123,7 @@ export interface Event {
     userEvent?: UserEvent[];
     puzzles?: PuzzlesEntreprise[];
     accepted?: boolean;
+    statusPayment?: string;
 }
 
 export interface priceDetails {

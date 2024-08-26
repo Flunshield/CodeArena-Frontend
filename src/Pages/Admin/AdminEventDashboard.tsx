@@ -91,7 +91,7 @@ function AdminEventDashboard() {
 
     function postBuyEvent(event: Event): string | void {
         if (!event?.priceDetails?.finalPrice) {
-            console.error("Le prix final de l'événement est manquant.");
+            console.error(t('finalPriceIsMissing'));
             return;
         }
         postElementByEndpoint("stripe/create-checkout-session-event", {
@@ -197,46 +197,70 @@ function AdminEventDashboard() {
                 />
             )}
             {openPopup && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                    <div className="bg-white p-8 rounded-lg shadow-2xl max-w-lg w-full">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">{t('title')} : {eventReceived?.title}</h2>
-                        <p className="text-gray-700 mb-4"><span
-                            className="font-semibold">{t('description')}</span> : {eventReceived?.description}</p>
-                        <p className="text-gray-700 mb-4"><span
-                            className="font-semibold">{t('dateDebut')}</span> : {formatDate(eventReceived?.startDate, t)}
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-300">
+                    <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-lg w-full">
+                        <h2 className="text-3xl font-extrabold text-gray-900 mb-6">
+                            {t('title')} : {eventReceived?.title}
+                        </h2>
+                        <p className="text-gray-700 mb-4">
+                            <span className="font-semibold">{t('description')}</span> : {eventReceived?.description}
                         </p>
-                        <p className="text-gray-700 mb-4"><span
-                            className="font-semibold">{t('dateFin')}</span> : {formatDate(eventReceived?.endDate, t)}
+                        <p className="text-gray-700 mb-4">
+                            <span
+                                className="font-semibold">{t('dateDebut')}</span> : {formatDate(eventReceived?.startDate, t)}
                         </p>
-                        <p className="text-gray-700 mb-4"><span
-                            className="font-semibold">{t('priceDetails')}</span> : {eventReceived?.priceDetails?.finalPrice}
+                        <p className="text-gray-700 mb-4">
+                            <span
+                                className="font-semibold">{t('dateFin')}</span> : {formatDate(eventReceived?.endDate, t)}
                         </p>
-                        <p className="text-gray-700 mb-4"><span
-                            className="font-semibold">{t('accepted')}</span> : {eventReceived?.accepted ? t('yes') : t('no')}
+                        <p className="text-gray-700 mb-4">
+                            <span
+                                className="font-semibold">{t('totalPrice')}</span> : {eventReceived?.priceDetails?.finalPrice}€
                         </p>
-                        <p className="text-gray-700 mb-4"><span
-                            className="font-semibold">{t('id')}</span> : {eventReceived?.id}</p>
+                        <p className="text-gray-700 mb-4">
+                            <span
+                                className="font-semibold">{t('accepted')}</span> : {eventReceived?.accepted ? t('yes') : t('no')}
+                        </p>
+                        <p className="text-gray-700 mb-4">
+                            <span className="font-semibold">{t('id')}</span> : {eventReceived?.id}
+                        </p>
+                        <p className="text-gray-700 mb-4">
+                            <span
+                                className="font-semibold">{t('statusPayment')}</span> : {t(eventReceived?.statusPayment === "not paid" ? "notpaid" : eventReceived?.statusPayment ?? "")}
+                        </p>
+
                         <div className="flex space-x-5">
                             <button
                                 onClick={() => setOpenPopup(false)}
-                                className="w-full py-3 bg-blue-600 text-white rounded-lg hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
+                                className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all ease-in-out duration-200"
                             >
                                 {t('close')}
                             </button>
-                            {eventReceived?.accepted === false && isAdmin || isEntreprise &&
-                                <button type={"submit"}
-                                        className="w-full py-3 bg-olive-green text-white rounded-lg hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
-                                        onClick={() => postValidationEvent(eventReceived?.id?.toString() ?? "")}>{t('valide')}</button>
-                            }
-                            {
-                                eventReceived?.accepted === true && isEntreprise &&
-                                <button type={"submit"}
-                                        className="w-full py-3 bg-olive-green text-white rounded-lg hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
-                                        onClick={() => postBuyEvent(eventReceived)}>{t('buy')}</button>
-                            }
+
+                            {eventReceived?.accepted === false && (isAdmin || isEntreprise) && (
+                                <button
+                                    type="submit"
+                                    className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all ease-in-out duration-200"
+                                    onClick={() => postValidationEvent(eventReceived?.id?.toString() ?? "")}
+                                >
+                                    {t('valider')}
+                                </button>
+                            )}
+
+                            {eventReceived?.accepted === true && isEntreprise && eventReceived?.statusPayment !== "paid" && (
+                                <button
+                                    type="submit"
+                                    className="w-full py-3 bg-olive-green text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all ease-in-out duration-200"
+                                    onClick={() => postBuyEvent(eventReceived)}
+                                >
+                                    {t('buy')}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
+
             )}
         </Layout>
     );
