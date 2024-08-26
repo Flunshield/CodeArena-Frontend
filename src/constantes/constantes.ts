@@ -70,7 +70,7 @@ export const CINQUANTE = "50";
 
 export const ITEMS_PER_PAGE_DIX = 10;
 
-export const ITEMS_PER_PAGE_QUATRE = 4;
+export const ITEMS_PER_PAGE_TROIS = 3;
 
 export const CODE_LANGUAGES_FAVORITES = [
     "javascript",

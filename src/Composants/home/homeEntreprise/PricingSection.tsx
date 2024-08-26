@@ -11,7 +11,6 @@ import Button from "../../../ComposantsCommun/Button.tsx";
 import { GROUPS } from "../../../constantes/constantes.ts";
 import { Container } from "../../../ComposantsCommun/Container";
 import { FadeIn, FadeInStagger } from "../../../ComposantsCommun/FadeIn";
-import { GridPattern } from "../../../ComposantsCommun/GridPattern.tsx";
 
 const PricingSection = () => {
     const { t } = useTranslation();
@@ -37,41 +36,41 @@ const PricingSection = () => {
 
     return (
         <>
-            <GridPattern
-                className="absolute inset-0 -z-10 h-full w-full fill-neutral-100 stroke-neutral-950/5 [mask-image:linear-gradient(to_bottom_left,white_50%,transparent_60%)]"
-                yOffset={-256}
-            />
-            <Container className="py-8 mt-16">
+            <Container className="mt-16 flex flex-col justify-center items-center px-4 sm:px-8">
                 <FadeIn>
-                    <h2 className="text-secondary m-2 text-center  sm:text-6xl font-bold">{t("choosePlan")}</h2>
+                    <h2 className="text-secondary m-2 text-center text-3xl sm:text-4xl lg:text-5xl font-bold">
+                        {t("choosePlan")}
+                    </h2>
                     {infos && infos.data.groups.roles === GROUPS.ENTREPRISE && (
                         <div className="bg-[#D63864] rounded-lg border-l-4 border-red-500 text-tertiari p-4 m-10 mb-0" role="alert">
                             <p className="font-bold">Attention !</p>
                             <p>Un plan est déjà actif, vous ne pouvez donc pas en prendre un nouveau plan sans annuler le précédent.</p>
                         </div>
                     )}
-                    <FadeInStagger className="flex flex-col xl:grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+                    <FadeInStagger className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {PRICING.map((plan, index) => (
-                            <FadeIn key={index} className="flex">
-                                <article className={clsx(isMobile ? "" : "transition duration-300 ease-in-out transform hover:scale-105", "m-10 rounded-3xl p-6 shadow-lg flex flex-col justify-between")}>
-                                    <h3 className="text-4xl font-semibold mb-4 text-center">{t(plan.title)}</h3>
-                                    <p className="text-gray-700">{t(plan.description)}</p>
-                                    <ul className="list-disc list-inside mt-2 text-gray-700">
+                            <FadeIn key={index}>
+                                <article className={clsx(isMobile ? "" : "transition duration-300 ease-in-out transform hover:scale-105", "rounded-3xl p-6 shadow-lg flex flex-col justify-between bg-white")}>
+                                    <h3 className="text-2xl font-semibold mb-4 text-center">{t(plan.title)}</h3>
+                                    <p className="text-gray-700 mb-4">{t(plan.description)}</p>
+                                    <ul className="list-disc list-inside mb-4 text-gray-700">
                                         {plan.features.map((feature, idx) => (
                                             <li key={idx}>{t(feature)}</li>
                                         ))}
                                     </ul>
-                                    <p className="text-gray-700 mt-4">{t(plan.idealFor)}</p>
-                                    <div className="mt-10 text-center">
-                                        <h2 className="text-2xl">
-                                            <span className="font-bold">{t(plan.price)}</span> <span className="text-sm">/{t("perYear")}</span>
+                                    <p className="text-gray-700 mb-4">{t(plan.idealFor)}</p>
+                                    <div className="mt-6 text-center">
+                                        <h2 className="text-xl"><span className="font-bold">{t(plan.price)}</span>
+                                            {plan.btnAction && (
+                                                <span className="text-sm">/{t("perMonth")}</span>
+                                            )}
                                         </h2>
-                                        {authContext.connected && infos.data.groups.roles === GROUPS.USER && (
+                                        {authContext.connected && infos.data.groups.roles === GROUPS.USER && plan.btnAction && (
                                             <Button
                                                 type="submit"
                                                 id={plan.title}
                                                 onClick={() => handleCheckoutBtn(plan.url ?? "", plan.idApi ?? "", plan.typePayment ?? "")}
-                                                className="block w-full mt-10 border-2 border-secondary bg-secondary text-tertiari rounded-lg p-2"
+                                                className="block w-full mt-6 border-2 border-secondary bg-secondary text-tertiari rounded-lg p-2"
                                             >
                                                 {t("buy")}
                                             </Button>

@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react';
 import {useTimer} from 'react-timer-hook';
+import clsx from "clsx";
 
 interface MyTimerProps {
     expiryTimestamp: Date;
     setRemainingTime: (time: number) => void;
+    className?: string;
 }
 
-const MyTimer: React.FC<MyTimerProps> = ({expiryTimestamp, setRemainingTime}) => {
+const MyTimer: React.FC<MyTimerProps> = ({expiryTimestamp, setRemainingTime, className}) => {
     const {
         seconds,
         minutes,
@@ -20,7 +22,7 @@ const MyTimer: React.FC<MyTimerProps> = ({expiryTimestamp, setRemainingTime}) =>
     }, [seconds, minutes, setRemainingTime]);
     return (
         <div style={{textAlign: 'center'}} id="timer">
-            <div style={{fontSize: '100px'}} className="text-secondary">
+            <div style={{fontSize: '100px'}} className={clsx(className)}>
                 <span>{formatNumber(minutes)}</span>:<span>{formatNumber(seconds)}</span>
             </div>
         </div>

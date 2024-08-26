@@ -6,7 +6,7 @@ import {User} from "../../../Interface/Interface.ts";
 interface popupUsersProps {
     userInfos?: User;
     closePopup: () => void;
-    getPdf: (idCv: number) => void;
+    getPdf: (id: number) => void;
 }
 
 const PopupUsers = ({userInfos, closePopup, getPdf}: popupUsersProps) => {
@@ -97,7 +97,7 @@ const PopupUsers = ({userInfos, closePopup, getPdf}: popupUsersProps) => {
                         {userInfos && userInfos?.idCvUser !== null &&
                             <button
                                 className={clsx(userInfos?.idCvUser ? "" : "hidden", "rounded-xl pr-5 pl-5 p-1 bg-olive-green text-tertiari")}
-                                onClick={() => getPdf(userInfos?.idCvUser ?? -1)}>{t('getCv')}</button>
+                                onClick={() => getPdf(userInfos?.id ?? -1)}>{t('getCv')}</button>
                         }
                     </div>
                 </div>

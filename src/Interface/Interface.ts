@@ -29,15 +29,16 @@ export interface User {
     userRanking?: UserRanking[];
     siren?: string;
     commandeEntrepriseFormatted?: CommandeEntrepriseFormatted;
+    userTournament?: UserTournament[];
 }
 
 export interface DataToken {
     data: {
-        userTournament: any;
-        userRanking: any;
+        userTournament: UserTournament;
+        userRanking: UserRanking;
         id?: number;
         groups: Groups;
-        
+
     }
 }
 
@@ -83,7 +84,7 @@ export interface Tournament {
     title: string,
     description: string,
     displayStartDate?: string,
-    numberRegistered : number,
+    numberRegistered: number,
 }
 
 export interface UserRanking extends request {
@@ -175,6 +176,7 @@ export interface PuzzlesEntreprise {
     tests?: JSON[];
     details?: string;
     title?: string;
+    time?: number;
 }
 
 export interface Pricing {
@@ -202,6 +204,15 @@ export interface CommandeEntreprise {
     colorEtatCommande?: string;
 }
 
+export interface lastCommandFormatted {
+    id: number;
+    item: string;
+    dateCommande: string;
+    idPayment: string;
+    etatCommande: string;
+    colorEtatCommande: string;
+}
+
 export interface CommandeEntrepriseFormatted {
     commande: CommandeEntreprise;
     pricing: Pricing;
@@ -223,6 +234,7 @@ export interface PuzzleSend {
     result?: JSON;  // Devrait être adapté au format JSON attendu
     testValidated?: number;
     time?: string;
+    verified?: boolean;
 }
 
 export interface ArrayItem {
@@ -266,8 +278,8 @@ export interface UserClassementEntreprise {
 export interface listPuzzleSend {
     item: PuzzleSend[];
     total: number;
+    titles: [{ title: string }];
 }
-
 
 export interface Experience {
     company: string;

@@ -40,8 +40,12 @@ function ForgotPassword() {
         }
     };
 
+    const gotoLogin = () => {
+        navigate("/login");
+    }
+
     return (
-        <Layout classnameMain="-mt-16">
+        <Layout classnameMain="sm:mt-1">
             {showNotification && (
                 <Notification
                     message={notificationMessage}
@@ -52,7 +56,7 @@ function ForgotPassword() {
             <Container className="flex flex-col items-center justify-center min-h-screen py-12">
                 <FadeIn className="w-full max-w-md">
                     <Card className="rounded-xl shadow-lg">
-                        <CardContent className="bg-tertiari text-secondary w-full pb-6 pt-6">
+                        <CardContent className="text-secondary w-full pb-6 pt-6">
                             <SectionIntro
                                 title={t('forgotPasswordTitle')}
                                 className="mb-12 text-center"
@@ -73,7 +77,7 @@ function ForgotPassword() {
                                 <Form className="space-y-6">
                                     <FadeInStagger>
                                         <FadeIn duration={1}>
-                                            <Label  id='email' htmlFor="email" className="flex flex-col font-bold text-secondary">
+                                            <Label id='email' htmlFor="email" className="flex flex-col font-bold text-secondary">
                                                 {t('email')}
                                                 <Field
                                                     type="email"
@@ -89,6 +93,11 @@ function ForgotPassword() {
                                     <div className="flex flex-col justify-center mt-10">
                                         <Button id='submit' type="submit" className="bg-secondary text-tertiari w-full h-12 rounded-md uppercase">
                                             {t('submitRequest')}
+                                        </Button>
+                                    </div>
+                                    <div className="text-center">
+                                        <Button type="button" id="goToLogin" className="hover:text-cyan-800 text-secondary" onClick={gotoLogin}>
+                                            {t('signIntoCodeArena')}
                                         </Button>
                                     </div>
                                 </Form>

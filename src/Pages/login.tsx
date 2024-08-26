@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
-import {useAuthContext} from "../AuthContext.tsx";
-import {login} from "../Helpers/apiHelper.ts";
-import {LoginForm} from "../Interface/Interface.ts";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../AuthContext.tsx";
+import { login } from "../Helpers/apiHelper.ts";
+import { LoginForm } from "../Interface/Interface.ts";
 import Card from "../ComposantsCommun/Card.tsx";
 import CardContent from "../ComposantsCommun/CardContent.tsx";
 import { useTranslation } from "react-i18next";
@@ -16,6 +16,7 @@ import { jwtDecode } from "jwt-decode";
 import { FadeIn, FadeInStagger } from '../ComposantsCommun/FadeIn.tsx';
 import { Container } from "../ComposantsCommun/Container.tsx";
 import { SectionIntro } from '../ComposantsCommun/SectionIntro.tsx';
+import ButtonVisible from '../ComposantsCommun/buttonVisible.tsx';
 
 function LoginPage() {
     const [userName, setUserName] = useState("");
@@ -24,14 +25,18 @@ function LoginPage() {
     const [errorUserName, setErrorUsername] = useState<boolean | null>(false);
     const [errorPassword, setErrorPassword] = useState<boolean | null>(false);
     const navigate = useNavigate();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
     const [loading, setLoading] = useState(true);
-
+    const [showPassword, setShowPassword] = useState(false);
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
+
+    const toggleShowPassword = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -75,7 +80,7 @@ function LoginPage() {
                             infosUser: jwtDecoded,
                         }));
                         window.location.reload();
-                     
+
                     } catch (jsonError) {
                         console.error("Invalid JSON response:", jsonError);
                         setNotificationMessage(t('errorParsingResponse'));
@@ -84,7 +89,7 @@ function LoginPage() {
                         setLoading(false);
                     }
                 }, 1000);
-                
+
             } else {
                 setNotificationMessage(t('errorNdcMdp'));
                 setNotificationType('error');
@@ -99,6 +104,14 @@ function LoginPage() {
             console.error(error);
         }
     };
+
+    const goToForgotPassword = () => {
+        navigate("/forgotPassword");
+    }
+
+    const goToSignUp = () => {
+        navigate("/signup");
+    }
 
     useEffect(() => {
         if (isConnected) {
@@ -150,15 +163,25 @@ function LoginPage() {
                                         <FadeIn duration={1.3}>
                                             <Label id="password" className="flex flex-col font-bold text-secondary">
                                                 {t('password')}
-                                                <input
-                                                    id="password"
-                                                    className={clsx(errorPassword && "border-error border-4", "h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300")}
-                                                    type="password"
-                                                    placeholder={t('password')}
-                                                    autoComplete="current-password"
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)}
-                                                />
+                                                <div className="relative">
+                                                    <input
+                                                        id="password"
+                                                        className={clsx(
+                                                            errorPassword && 'border-error border-4',
+                                                            'h-14 shadow-2xl rounded-md p-2 mt-2 border-gray-300 border-2 placeholder-gray-300 w-full'
+                                                        )}
+                                                        type={showPassword ? 'text' : 'password'}
+                                                        placeholder={t('password')}
+                                                        autoComplete="current-password"
+                                                        value={password}
+                                                        onChange={(e) => setPassword(e.target.value)}
+                                                    />
+                                                    <ButtonVisible
+                                                        isVisible={showPassword}
+                                                        onToggle={toggleShowPassword}
+                                                        ariaLabel={showPassword ? t('Hide password') : t('Show password')}
+                                                    />
+                                                </div>
                                             </Label>
                                         </FadeIn>
                                     </FadeInStagger>
@@ -167,13 +190,13 @@ function LoginPage() {
                                             className="bg-secondary hover:bg-button-hover text-tertiari w-full h-12 rounded-md uppercase transition duration-300">
                                             {t('connect')}
                                         </Button>
-                                        <div className="flex flex-col mt-5">
-                                            <a href="/forgotPassword" className="text-center hover:text-cyan-800 text-secondary">
+                                        <div className="flex flex-col text-center mt-5">
+                                            <Button type="button" id="goToForgotPassword" className="text-center hover:text-cyan-800 text-secondary" onClick={goToForgotPassword}>
                                                 {t('forgotPassword')}
-                                            </a>
-                                            <a href="/signUp" className="text-center hover:text-cyan-800 text-secondary">
+                                            </Button>
+                                            <Button type="button" id="goToSignUp" className="text-center hover:text-cyan-800 text-secondary" onClick={goToSignUp}>
                                                 {t('register')}
-                                            </a>
+                                            </Button>
                                         </div>
                                     </div>
                                 </form>

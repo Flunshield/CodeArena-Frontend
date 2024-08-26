@@ -5,6 +5,8 @@ import {updateUser} from "../../Helpers/apiHelper.ts";
 import Label from "../../ComposantsCommun/Label.tsx";
 import { Container } from "../../ComposantsCommun/Container";
 import { FadeIn } from "../../ComposantsCommun/FadeIn";
+import {useState} from "react";
+import Notification from "../../ComposantsCommun/Notification.tsx";
 
 interface PresentationProps {
     infosUserById: User;
@@ -13,6 +15,9 @@ interface PresentationProps {
 function Presentation({infosUserById}: PresentationProps) {
     const {t} = useTranslation();
     const authContext = useAuthContext();
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const updatePresentation = async () => {
         const presentationTextarea = document.getElementById("presentation") as HTMLTextAreaElement | null;
@@ -25,14 +30,25 @@ function Presentation({infosUserById}: PresentationProps) {
         });
 
         if (response.ok) {
-            alert("Présentation mise à jour");
+            setNotificationMessage(t('presentationUpdated'));
+            setNotificationType('success');
+            setShowNotification(true);
         } else {
-            alert("Erreur lors de la mise à jour de la présentation");
+            setNotificationMessage(t('errorPresentationUpdated'));
+            setNotificationType('error');
+            setShowNotification(true);
         }
     };
 
     return (
         <Container>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             <FadeIn>
                 <div className="flex flex-col items-start w-full">
                     <Label id="labelTextArea" className="text-neutral-900 text-3xl font-bold mb-4">{t("presentation")}</Label>

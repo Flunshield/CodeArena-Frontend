@@ -7,23 +7,34 @@ const TrustSection = () => {
     const { t } = useTranslation();
 
     return (
-        <div id="TrustSection" className="w-full h-full rounded-2xl bg-neutral-950 py-20 sm:mt-32 sm:py-32 lg:mt-56 ">
+        <div
+            id="TrustSection"
+            className="w-full rounded-2xl bg-neutral-950 py-12 sm:py-20 lg:py-32 mt-16 sm:mt-32 lg:mt-56"
+        >
             <Container>
-                <FadeIn className="flex items-center gap-x-40">
-                    <h2 className="text-center font-display text-3xl font-semibold tracking-wider text-tertiari sm:text-left">
+                <FadeIn className="flex flex-col sm:flex-row items-center sm:items-start gap-y-6 sm:gap-y-0 sm:gap-x-8">
+                    <h2 className="text-center sm:text-left font-display text-2xl sm:text-3xl font-semibold tracking-wider text-tertiari">
                         {t("trustSection")}
                     </h2>
-                    <div className="h-px flex-auto bg-neutral-800 w-full" />
+                    <div className="flex-auto sm:w-auto w-full h-px bg-neutral-800" />
                 </FadeIn>
                 <FadeInStagger faster>
-                    <ul role="list" className="mt-10 grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
+                    <ul
+                        role="list"
+                        className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-8"
+                    >
                         {ENTREPRISE_TRUST.map((client, index) => (
                             <li key={index}>
                                 <FadeIn>
                                     <div className="flex flex-col items-center">
-                                       
-                                        <img src={client.src} alt={client.alt} className="mx-16 w-16" />
-                                        <h2 className="text-center text-xl text-tertiari mb-2">{client.name}</h2>
+                                        <img
+                                            src={client.src}
+                                            alt={client.alt}
+                                            className="w-20 h-20 object-contain mb-2"
+                                        />
+                                        <h3 className="text-center text-lg sm:text-xl text-tertiari">
+                                            {client.name}
+                                        </h3>
                                     </div>
                                 </FadeIn>
                             </li>

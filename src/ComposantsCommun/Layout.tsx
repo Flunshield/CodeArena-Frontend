@@ -6,14 +6,15 @@ import clsx from "clsx";
 
 
 type LayoutProps = {
+    id?: string
     children: ReactNode
     classnameMain?: string
     classnameFooter?: string
 }
 
-const Layout = ({children, classnameMain, classnameFooter}: LayoutProps) => {
+const Layout = ({ children, classnameMain, classnameFooter}: LayoutProps) => {
     return (
-        <div className="flex flex-col bg-tertiari/50 min-h-screen w-auto">
+        <div  className="flex flex-col bg-tertiari/50 min-h-screen w-auto">
             <Header/>
             <div id="mainFooter" className="">
                 <main className={clsx(classnameMain, "flex-grow min-h-screen")} id="main">

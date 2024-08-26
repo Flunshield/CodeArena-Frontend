@@ -24,7 +24,7 @@ const Switcher: React.FC<SwitcherProps> = (data) => {
     return (
         <div className={clsx(className)}>
         <div className="flex justify-center">
-            <Card className="flex p-5 px-9 m-5 border-0 bg-secondary">
+            <Card className="flex p-5 px-9 m-7 sm:m-10 border-0   bg-secondary">
                 <Button
                     id="btnDev"
                     type={'button'}

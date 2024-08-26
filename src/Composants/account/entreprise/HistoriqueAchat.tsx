@@ -33,7 +33,6 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
     const maxPage = commandes.item.length > 0 ? Math.ceil(commandes.total / ITEMS_PER_PAGE_DIX) : 1;
 
     const lastCommandFormatted = formatItemCommande(commandes.item, t);
-
     useEffect(() => {
         getAllCommande.then(async (response) => {
             const result = await response.json();
@@ -61,7 +60,9 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
                         <tr key={commande.id}
                             className="bg-tertiari border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-soft-gray hover:text-tertiari">
                             <td className="py-4 px-6">{commande.item}</td>
-                            <td className="py-4 px-6">{commande.dateCommande as string}</td>
+                            <td className="py-4 px-6">
+                                {commande.dateCommande.toString()}
+                            </td>
                             <td className="py-4 px-6">{commande.idPayment}</td>
                             <td className="py-4 px-6"><span
                                 className={clsx(commande.colorEtatCommande, "p-1.5 rounded-lg ")}>{commande.etatCommande}</span>

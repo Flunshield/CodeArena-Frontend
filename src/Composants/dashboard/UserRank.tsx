@@ -1,7 +1,7 @@
 import Card from "../../ComposantsCommun/Card.tsx";
 import { userRangList } from "../../Interface/Interface.ts";
 import { useTranslation } from "react-i18next";
-import { NO_PHOTO } from "../../constantes/constantesRoutes.ts";
+import loginIcons from "/assets/photosProfiles/noImage.svg";
 import clsx from "clsx";
 import { Container } from "../../ComposantsCommun/Container.tsx";
 
@@ -13,6 +13,7 @@ interface UserRankProps {
 function UserRank(value: UserRankProps): JSX.Element {
     const { className, infosUserRank } = value;
     const { t } = useTranslation();
+    const imgSrc = infosUserRank?.user?.user?.avatar ? infosUserRank?.user?.user?.avatar : loginIcons;
 
     return (
         <Container>
@@ -24,8 +25,8 @@ function UserRank(value: UserRankProps): JSX.Element {
                             {infosUserRank?.usersAbove && infosUserRank?.usersAbove.map((element) => (
                                 <div key={element.id} className="flex justify-between border-b-2 pt-6 pb-6">
                                     <div className="flex">
-                                        <img src={element.user?.avatar ?? NO_PHOTO} className="rounded-3xl w-10 h-10 mr-4" alt="photo de Profile"></img>
-                                        <p className="truncate overflow-ellipsis w-64 mt-1">{element.user?.userName}</p>
+                                        <img src={element.user?.avatar ? element.user?.avatar : loginIcons} className=" w-10 h-10 mr-4" alt="photo de Profile"></img>
+                                        <p className="truncate overflow-ellipsis w-32 mt-1">{element.user?.userName}</p>
                                     </div>
                                     <p className="text-gray-500 font-bold">{element.points}</p>
                                 </div>
@@ -34,9 +35,9 @@ function UserRank(value: UserRankProps): JSX.Element {
                         <div>
                             <div className="flex justify-between pt-6 pb-6">
                                 <div className="flex">
-                                    <img src={infosUserRank?.user?.user?.avatar !== "" ? infosUserRank?.user?.user?.avatar : NO_PHOTO}
-                                        className="rounded-3xl w-10 h-10 mr-4" alt="photo de Profile"></img>
-                                    <p className="truncate overflow-ellipsis w-64 font-bold mt-1">{infosUserRank?.user?.user?.userName}</p>
+                                    <img src={imgSrc}
+                                        className=" w-10 h-10 mr-4" alt="photo de Profile"></img>
+                                    <p className="truncate overflow-ellipsis w-32 font-bold mt-1">{infosUserRank?.user?.user?.userName}</p>
                                 </div>
                                 <p className="font-bold">{infosUserRank?.user.points}</p>
                             </div>
@@ -45,8 +46,8 @@ function UserRank(value: UserRankProps): JSX.Element {
                             {infosUserRank?.usersBelow && infosUserRank?.usersBelow.map((element) => (
                                 <div key={element.id} className="flex justify-between border-t-2 pt-6 pb-6">
                                     <div className="mr-5 flex">
-                                        <img src={element.user?.avatar ?? NO_PHOTO} className="rounded-3xl w-10 h-10 mr-4" alt="photo de Profile"></img>
-                                        <p className="truncate overflow-ellipsis w-64 mt-1">{element.user?.userName}</p>
+                                        <img src={element.user?.avatar ? element.user?.avatar : loginIcons} className=" w-10 h-10 mr-4" alt="photo de Profile"></img>
+                                        <p className="truncate overflow-ellipsis w-32 mt-1">{element.user?.userName}</p>
                                     </div>
                                     <p className="text-gray-500 font-bold">{element.points}</p>
                                 </div>

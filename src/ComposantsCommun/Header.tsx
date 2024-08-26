@@ -12,18 +12,30 @@ const Header = () => {
     const authContext = useAuthContext();
     const isConnected = authContext.connected;
     const navigate = useNavigate();
-    const {t} = useTranslation();
-    const [showIconsPopUp, setShowIconsPopUp] = useState(false);
+    const { t } = useTranslation();
     const popupRef = useRef<HTMLDivElement | null>(null);
+    const [showPopup, setShowPopup] = useState(false);
 
+    const handlerPopUp = () => {
+        setShowPopup(!showPopup);
+    };
+
+    const handleClickSignIn = () => {
+        navigate("/login");
+    };
+
+    const handleClickSignUp = () => {
+        navigate("/signUp");
+    };
+    
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
-                setShowIconsPopUp(false);
+                setShowPopup(false);
             }
         };
         const handleScroll = () => {
-            setShowIconsPopUp(false);
+            setShowPopup(false);
         };
         document.addEventListener("mousedown", handleClickOutside);
         window.addEventListener("scroll", handleScroll);
@@ -33,27 +45,19 @@ const Header = () => {
         };
     }, []);
 
-    const handleClickSignIn = () => {
-        navigate("/login");
-    };
-
-    const handleClickSignUp = () => {
-        navigate("/signUp");
-    };
-
     return (
         <header className="z-50 text-tertiari px-4 md:px-8 bg-secondary relative">
             <div className="flex justify-between items-center w-full">
-                {isConnected && <div className="flex start-0 top-0 absolute sm:py-10 py-6 w-full"><NavBar/></div>}
+                {isConnected && <div className="flex start-0 top-0 absolute sm:py-10 py-6 w-full"><NavBar /></div>}
 
                 <div className="flex justify-between px-10 py-3 w-full items-center md:space-x-1">
                     <div className="flex items-center">
 
                         {!isConnected ?
                             <a href={isConnected ? DASHBOARD : HOME}> <img src="/logo.svg" alt="Logo codeArena"
-                                                                           className="sm:block w-12 h-12 sm:w-16 sm:h-16  mr-3"/></a> : ""}
-                        <a className="hidden sm:block sm:mb-3 text-tertiari text-3xl  font-bold"
-                           href={isConnected ? DASHBOARD : HOME}>
+                                className="sm:block w-12 h-12 sm:w-16 sm:h-16 mr-3 sm:mr-3 sm:mt-2 -ml-5 " /></a> : ""}
+                        <a className="hidden sm:block  text-tertiari text-3xl  font-bold"
+                            href={isConnected ? DASHBOARD : HOME}>
                             {t('CodeArena')}
                         </a>
                     </div>
@@ -61,7 +65,7 @@ const Header = () => {
                 <div className="flex sm:py-3 sm:mt-5 py-3 items-center space-x-2">
                     {isConnected ? (
                         <div className="flex items-center">
-                            <BouttonProfile/>
+                            <BouttonProfile />
                         </div>
                     ) : (
                         <>
@@ -70,18 +74,22 @@ const Header = () => {
                                     id="login icons"
                                     src={loginIcons}
                                     alt="logo du site web"
-                                    className="pb-10 pl-10 rounded-full"
-                                    onMouseEnter={() => setShowIconsPopUp(true)}
-                                    onMouseLeave={() => setShowIconsPopUp(false)}
+                                    className="pb-5 pl-10 h-full w-36 rounded-full"
+                                    onClick={handlerPopUp}
+                                    onMouseEnter={() => setShowPopup(true)}
+                                    onMouseLeave={() => setShowPopup(false)}
                                 />
-                                {showIconsPopUp && (
-                                    <div ref={popupRef}
-                                         className="fixed right-5 bg-secondary text-tertiari border-2 border-tertiari p-2 rounded shadow">
-                                        <div className="flex  flex-col items-center space-y-2">
+                                {showPopup && (
+                                    <div
+                                        ref={popupRef}
+                                        className="fixed right-2 bg-secondary text-tertiari border-2 border-tertiari p-2 rounded shadow"
+                                    >
+                                        
+                                        <div className="flex flex-col items-center justify-center space-y-2">
                                             <Button
                                                 type="button"
                                                 id="signIn"
-                                                className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                                className="bg-gray-700 text-tertiari p-3 md:px-2 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
                                                 onClick={handleClickSignIn}
                                             >
                                                 {t('connection')}
@@ -89,7 +97,7 @@ const Header = () => {
                                             <Button
                                                 type="button"
                                                 id="signUp"
-                                                className="bg-gray-700 text-tertiari p-2 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary ml-2 transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                                className="bg-gray-700 text-tertiari p-3 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
                                                 onClick={handleClickSignUp}
                                             >
                                                 {t('inscription')}
@@ -98,7 +106,7 @@ const Header = () => {
                                     </div>
                                 )}
                             </div>
-                            <div className="hidden sm:flex flex-row space-x-4 mt-4">
+                            <div className="hidden sm:flex flex-row justify-center items-center space-x-4 mt-2 mb-3">
                                 <Button
                                     type="button"
                                     id="signIn"
