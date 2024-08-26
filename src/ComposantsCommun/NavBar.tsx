@@ -6,12 +6,11 @@ import iconeMenu from "/assets/menu.png";
 import btnClose from "/assets/btnClose.png";
 import logo from "/assets/logo.svg";
 import event from "/assets/event.png";
-import tournois from "/assets/tournois.png";
 import classement from "/assets/classement.png";
 import ranked from "/assets/ranked.png";
 import dashboard from "/assets/dashboard.png";
 import clsx from "clsx";
-import {DASHBOARD, EVENT, RANKED, RANKING, TOURNAMENT} from "../constantes/constantesRoutes.ts";
+import {DASHBOARD, EVENT, RANKED, RANKING} from "../constantes/constantesRoutes.ts";
 import {checkUrl} from "../Helpers/methodeHelper.ts";
 import { FadeIn, FadeInStagger } from './FadeIn.tsx'; // Assurez-vous d'importer correctement FadeIn
 import { useTranslation } from "react-i18next";
@@ -112,12 +111,12 @@ const NavBar: React.FC = () => {
                                                     <a href={RANKING} className="p-4 hover:underline" id="click-ranking">{t("ranking")}</a>
                                                 </li>
                                             </FadeIn>
-                                            <FadeIn duration={0.6}>
+                                            {/* <FadeIn duration={0.6}>
                                                 <li className={clsx(currentPage === "tournaments" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-primary")} id="link-tournaments">
                                                     <img src={tournois} alt="icone bouton tournois" className="w-6 h-6 mt-5" />
                                                     <a href={TOURNAMENT} className="p-4 hover:underline" id="click-tournaments">{t("tournaments")}</a>
                                                 </li>
-                                            </FadeIn>
+                                            </FadeIn> */}
                                             <FadeIn duration={0.6}>
                                                 <li className={clsx(currentPage === "event" ? "bg-secondary pl-3" : "", "ml-3 flex flex-row rounded-lg w-72 hover:bg-primary")} id="link-event">
                                                     <img src={event} alt="icone bouton event" className="w-6 h-6 mt-5" />
