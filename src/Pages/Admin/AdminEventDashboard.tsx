@@ -197,7 +197,7 @@ function AdminEventDashboard() {
                             >
                                 {t('close')}
                             </button>
-                            {eventReceived?.accepted === false && isAdmin &&
+                            {eventReceived?.accepted === false && isAdmin || isEntreprise &&
                                 <button type={"submit"}
                                         className="w-full py-3 bg-olive-green text-white rounded-lg hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
                                         onClick={() => postValidationEvent(eventReceived?.id?.toString() ?? "")}>{t('valide')}</button>
