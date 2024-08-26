@@ -46,7 +46,7 @@ import {
     REGISTER,
     RESET_PASSWORD,
     RESULT_PAGE,
-    SUCCESS,
+    SUCCESS, SUCCESS_BUY_EVENT,
     TERMS,
     TOURNAMENT
 } from "./constantes/constantesRoutes.ts";
@@ -66,6 +66,7 @@ import {NotificationProvider} from "./NotificationContext.tsx";
 import AdminEventDashboard from "./Pages/Admin/AdminEventDashboard.tsx";
 import AdminEventCreate from "./Pages/Admin/adminEventCreate.tsx";
 import PrivateRouteAdminOrEntreprise from "./ComposantsCommun/PrivateRouteAdminOrEntreprise.tsx";
+import SuccessEvent from "./Pages/Entreprise/successEvent.tsx";
 
 const router = createBrowserRouter([
     {
@@ -186,6 +187,11 @@ const router = createBrowserRouter([
     {
         path: SUCCESS,
         element: <PrivateRoute><Success/></PrivateRoute>,
+        errorElement: <ErrorPage/>
+    },
+    {
+        path: SUCCESS_BUY_EVENT,
+        element: <PrivateRoute><SuccessEvent/></PrivateRoute>,
         errorElement: <ErrorPage/>
     },
     {

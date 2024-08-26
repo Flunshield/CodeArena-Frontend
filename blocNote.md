@@ -1,42 +1,29 @@
-Tests de Fonctionnalités
+Pour la gestion des EVENTS
+- [X] Ajouter le bouton pour payer l'évènement validé
+- [] Ajouter le bouton pour annuler l'évènement validé
+- [X] Ajouter la fonctionnalité stripe pour payer l'évènement en fonction du prix définie
+- [] Envoyer un mail de confirmation de paiement
+- [] Envoyer un mail de confirmation d'annulation
+- [X] Générer la facture de l'évènement à payé
+- [X] Envoyer la facture de l'évènement à payé par mail
+- [] Mettre en place un système de gestion des remboursements en cas d’annulation
+- [] Intégrer un calendrier interactif pour visualiser tous les événements programmés
+- [] Ajouter un bouton pour ajouter un évènement au calendrier
+- [] Intégrer une option de don pour les événements caritatifs
+- [] Créer des modèles d’e-mails personnalisables pour les communications liées aux événements
+- [] Mettre en place un lien pour l'inscription à l'évènement
 
-Exemple : Tester une API qui calcule des statistiques.
-
-```
-[
-  {
-    "name": "Test Moyenne",
-    "condition": "getAverage([10, 20, 30]) === 20",
-    "successMessage": "La moyenne est correcte.",
-    "failureMessage": "Erreur de calcul de la moyenne."
-  },
-  {
-    "name": "Test Médiane",
-    "condition": "getMedian([10, 20, 30, 40]) === 25",
-    "successMessage": "La médiane est correcte.",
-    "failureMessage": "Erreur de calcul de la médiane."
-  }
-]
-```
-
-Tests d'Intégrité des Données
-Exemple : Tester une API de gestion de données pour assurer que les entrées invalides sont correctement gérées.
-
-```
-[
-{
-"name": "Test Entrée Nulle",
-"condition": "postData(null) === 'Invalid input'",
-"successMessage": "Gestion correcte des entrées nulles.",
-"failureMessage": "Échec de la gestion des entrées nulles."
-},
-{
-"name": "Test Entrée Mal Formée",
-"condition": "postData('unstructured string') === 'Invalid input'",
-"successMessage": "Gestion correcte des chaînes mal formées.",
-"failureMessage": "Échec de la gestion des entrées mal formées."
-}
-]
-```
-
-
+Temps estimé :
+- Ajouter le bouton pour payer l’évènement validé: 0.25 jour  
+- Ajouter le bouton pour annuler l’évènement validé: 0.25 jour  
+- Ajouter la fonctionnalité Stripe pour payer l’évènement en fonction du prix défini: 0.75 jour  
+- Envoyer un mail de confirmation de paiement: 0.25 jour  
+- Envoyer un mail de confirmation d’annulation: 0.25 jour  
+- Générer la facture de l’évènement payé: 0.5 jour  
+- Envoyer la facture de l’évènement payé par mail: 0.25 jour  
+- Mettre en place un système de gestion des remboursements en cas d’annulation: 0.75 jour  
+- Intégrer un calendrier interactif pour visualiser tous les événements programmés: 3 jours  
+- Ajouter un bouton pour ajouter un évènement au calendrier: 0.25 jour  
+- Intégrer une option de don pour les événements caritatifs: 1.5 jours  
+- Créer des modèles d’e-mails personnalisables pour les communications liées aux événements: 2 jours  
+- Mettre en place un lien pour l’inscription à l’évènement: 0.25 jour   

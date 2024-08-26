@@ -184,76 +184,76 @@ console.log(userName)
             <h1 className="text-3xl text-center font-bold text-gray-600 m-5">{t("createNewevent")}</h1>
             <form
                 onSubmit={handleSubmit}
-                className="bg-secondary p-6 rounded-lg shadow-angelic-white m-5 space-y-6"
+                className="bg-tertiari p-6 rounded-lg shadow-angelic-white m-5 space-y-6"
             >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">{t("dateDebut")} :</label>
+                        <label className="block text-secondary font-semibold mb-2">{t("dateDebut")} :</label>
                         <input
                             type="datetime-local"
                             name="startDate"
                             value={formData.startDate}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
+                            className="w-full px-4 py-2 bg-tertiari text-secondary border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">{t("dateFin")} :</label>
+                        <label className="block text-secondary font-semibold mb-2">{t("dateFin")} :</label>
                         <input
                             type="datetime-local"
                             name="endDate"
                             value={formData.endDate}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
+                            className="w-full px-4 py-2 bg-tertiari text-secondary border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">{t("maxPlayer")} :</label>
+                        <label className="block text-secondary font-semibold mb-2">{t("maxPlayer")} :</label>
                         <input
                             type="number"
                             name="playerMax"
                             value={formData.playerMax}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
+                            className="w-full px-4 py-2 bg-tertiari text-secondary border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">{t("title")} :</label>
+                        <label className="block text-secondary font-semibold mb-2">{t("title")} :</label>
                         <input
                             type="text"
                             name="title"
                             value={formData.title}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
+                            className="w-full px-4 py-2 bg-tertiari text-secondary border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
                         />
                     </div>
                     <div className="md:col-span-2">
-                        <label className="block text-tertiari font-semibold mb-2">{t("description")} :</label>
+                        <label className="block text-secondary font-semibold mb-2">{t("description")} :</label>
                         <textarea
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
+                            className="w-full px-4 py-2 bg-tertiari text-secondary border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">{t("recompense")} :</label>
+                        <label className="block text-secondary font-semibold mb-2">{t("recompense")} :</label>
                         <input
                             type="text"
                             name="rewards"
                             value={formData.rewards}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
+                            className="w-full px-4 py-2 bg-tertiari text-secondary border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
                         />
                     </div>
                     <div>
-                        <label className="block text-tertiari font-semibold mb-2">{t("organisateur")} :</label>
+                        <label className="block text-secondary font-semibold mb-2">{t("organisateur")} :</label>
                         <div>
                             <input
                                 type="text"
@@ -261,12 +261,12 @@ console.log(userName)
                                 value={userName}
                                 onChange={(event) => handleChangeUserName(event.target.value)}
                                 required
-                                className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
+                                className="w-full px-4 py-2 bg-tertiari text-secondary border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
                             />
 
                             {/* Affichage des suggestions filtrées */}
                             {filteredSuggestions.length > 0 && userName && userName.length > 4 && (
-                                <ul className="suggestions-list text-tertiari border border-gray-300 mt-2 rounded">
+                                <ul className="suggestions-list text-secondary border border-gray-300 mt-2 rounded">
                                     {filteredSuggestions.map((suggestion, index) => (
                                         <li
                                             key={index}
@@ -293,16 +293,16 @@ console.log(userName)
                                 onChange={handleChange}
                                 className="mr-2 h-4 w-4 text-light-blue focus:ring-light-blue border-soft-gray rounded"
                             />
-                            <label className="text-tertiari font-semibold">{t("createPuzzle")} (+500€)</label>
+                            <label className="text-secondary font-semibold">{t("createPuzzle")} (+500€)</label>
                         </div>
                     </div>
                     <div className="md:col-span-2">
-                        <label className="block text-tertiari font-semibold mb-2">{t("ajustPrice")} (%) :</label>
+                        <label className="block text-secondary font-semibold mb-2">{t("ajustPrice")} (%) :</label>
                         <select
                             name="priceAdjustment"
                             value={formData.priceAdjustment}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 bg-quaternary text-tertiari border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
+                            className="w-full px-4 py-2 bg-tertiari text-secondary border border-soft-gray rounded focus:outline-none focus:ring-2 focus:ring-light-blue"
                         >
                             <option value="-20">-20%</option>
                             <option value="-10">-10%</option>
@@ -313,13 +313,13 @@ console.log(userName)
                     </div>
                 </div>
                 <div className="mt-6">
-                    <p className="text-tertiari font-semibold text-lg">
+                    <p className="text-secondary font-semibold text-lg">
                         Prix estimé : <span className="text-light-blue">{priceDetails.finalPrice.toFixed(2)}€</span>
                     </p>
                 </div>
-                <div className="bg-quaternary p-4 rounded-lg mt-6">
-                    <h2 className="text-xl font-bold text-tertiari mb-4">{t("detailPrice")} :</h2>
-                    <ul className="text-tertiari">
+                <div className="bg-tertiari p-4 rounded-lg mt-6">
+                    <h2 className="text-xl font-bold text-secondary mb-4">{t("detailPrice")} :</h2>
+                    <ul className="text-secondary">
                         <li>{t("basePrice")} : {priceDetails.basePrice}€</li>
                         <li>{t("majorationDateProche")} : {priceDetails.proximityCharge.toFixed(2)}€</li>
                         <li>{t("majorationDuree")} ({(priceDetails.durationCharge / 50).toFixed(2)} jours)

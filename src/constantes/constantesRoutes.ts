@@ -58,6 +58,7 @@ export const RESULT_PAGE = "/resultPage"
 export const TEST_JS = "tests/js"
 export const ADMIN_EVENT_CREATE = "/adminEvent"
 export const ADMIN_EVENT_DASHBOARD = "/adminEventDashboard"
+export const SUCCESS_BUY_EVENT = "/successEvent"
 
 //ROUTAGE EXTERNES
 export const ADMIN_EVENT_CREATE_DATABASE = "evenement/createEvent"

@@ -54,6 +54,7 @@ function AdminEventDashboard() {
         id: ""
     });
     const [data, setData] = useState<{ items: Event[], total: number }>({items: [], total: 0});
+
     function getEventsEntreprises() {
         return getElementByEndpoint(ADMIN_EVENT_FIND_EVENTS_ENTREPRISES + `?order=${order}&currentPage=${currentPage}&itemPerPage=${itemPerPage}&accepted=${accepted}&searchTitle=${searchTitle}&id=${infos.data.id}`, {
             token: authContext?.accessToken ?? "",
@@ -62,7 +63,7 @@ function AdminEventDashboard() {
     }
 
 
-    function getEventEntreprise (){
+    function getEventEntreprise() {
         return getElementByEndpoint(ADMIN_EVENT_FIND_EVENT_ENTREPRISE + `?id=${eventClicked.id}`, {
             token: authContext?.accessToken ?? "",
             data: ""
@@ -86,6 +87,31 @@ function AdminEventDashboard() {
                 setShowNotification(true);
             }
         });
+    }
+
+    function postBuyEvent(event: Event): string | void {
+        if (!event?.priceDetails?.finalPrice) {
+            console.error("Le prix final de l'événement est manquant.");
+            return;
+        }
+        postElementByEndpoint("stripe/create-checkout-session-event", {
+            token: authContext?.accessToken ?? "",
+            data: {
+                productName: `${event.title}-${event.id}`,
+                amount: event.priceDetails.finalPrice * 100,
+                currency: "eur",
+                idEvent: event.id,
+            },
+        })
+            .then((response) =>
+                response.json()
+            ).then((data) => {
+                window.localStorage.setItem("idEvent", event.id?.toString() ?? "");
+            window.location.href = data.message;  // Redirection vers Stripe Checkout
+        })
+            .catch((error) => {
+                console.error("Erreur lors de la création de la session de paiement:", error);
+            });
     }
 
     const headers = [
@@ -201,6 +227,12 @@ function AdminEventDashboard() {
                                 <button type={"submit"}
                                         className="w-full py-3 bg-olive-green text-white rounded-lg hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
                                         onClick={() => postValidationEvent(eventReceived?.id?.toString() ?? "")}>{t('valide')}</button>
+                            }
+                            {
+                                eventReceived?.accepted === true && isEntreprise &&
+                                <button type={"submit"}
+                                        className="w-full py-3 bg-olive-green text-white rounded-lg hover:opacity-95 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-opacity-50 transition"
+                                        onClick={() => postBuyEvent(eventReceived)}>{t('buy')}</button>
                             }
                         </div>
                     </div>
