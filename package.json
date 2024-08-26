@@ -59,6 +59,7 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/lodash": "^4.14.202",
     "@types/react": "^18.2.45",
+    "@types/react-big-calendar": "^1.8.9",
     "@types/react-dom": "^18.2.18",
     "@types/react-highlight-words": "^0.20.0",
     "@types/react-modal": "^3.16.3",

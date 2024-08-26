@@ -8,12 +8,15 @@ function Services() {
     return (
       <>
         <SectionIntro
-          title="We help you identify, explore and respond to new opportunities."
+          title="Notre objectif : aider les developpeurs à améliorer leur compétences en prenant du plaisir "
           className="mt-24 sm:mt-32 lg:mt-40"
         >
           <p>
-            As long as those opportunities involve giving us money to re-purpose
-            old projects — we can come up with an endless number of those.
+           Aussi longtemps que Code Arena existera noous chercherons en permanence à améliorer la jouabilité et l'accessibilité de notre application.
+           Mais également accroitre la visibilité du métier de développeurs en facilitant l'accès a de nombreux poste disponible.
+          </p>
+          <p>
+            Code Arena permettera l'accessibilité à différent métiers : 
           </p>
         </SectionIntro>
         <Container className="mt-16">
@@ -24,24 +27,15 @@ function Services() {
               </FadeIn>
             </div>
             <List className="mt-16 lg:mt-0 lg:w-1/2 lg:min-w-[33rem] lg:pl-4">
-              <ItemList  id="List" title="Web development">
-                We specialise in crafting beautiful, high quality marketing pages.
-                The rest of the website will be a shell that uses lorem ipsum
-                everywhere.
+              <ItemList  id="List" title="Développeur Web">
+                En effet, suite à l'application et la résolution de nos problèmes proposé vous pouvez obtenir les compétences nécessaires requise à l'exersion de ce métier
               </ItemList>
-              <ItemList id="List" title="Application development">
-                We have a team of skilled developers who are experts in the latest
-                app frameworks, like Angular 1 and Google Web Toolkit.
+              <ItemList id="List" title="Développeur d'application mobile">
+                Développeur d'application sera également envisageable au cours de formation et de résolution de nos puzzle.
+                Notamment via des langages orienté objet comme C / C++ / C # et bien d'autre.
               </ItemList>
-              <ItemList id="List" title="E-commerce">
-                We are at the forefront of modern e-commerce development. Which
-                mainly means adding your logo to the Shopify store template we’ve
-                used for the past six years.
-              </ItemList>
-              <ItemList id="List" title="Custom content management">
-                At Studio we understand the importance of having a robust and
-                customised CMS. That’s why we run all of our client projects out
-                of a single, enormous Joomla instance.
+              <ItemList id="List" title="Développeur de jeu vidéo">
+                Notamment avec nos futur multiples langages de programmation orienté objet qui seront présent, vous permetterons d'avoir des base solides pour le développemennt de jeu vidéo
               </ItemList>
             </List>
           </div>

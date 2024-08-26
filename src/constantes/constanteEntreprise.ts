@@ -103,6 +103,29 @@ export const ENTREPRISE_TRUST = [
     }
 ]
 
+export const EXP_CODE = [
+    {
+        src: "/assets/icones/Competition.jpg",
+        alt: "Competition Logo",
+        name: "Competition"
+    },
+    {
+        src: "/assets/icones/Event.jpg",
+        alt: "Event Logo",
+        name: "Event"
+    },
+    {
+        src: "/assets/icones/puzzle.jpg",
+        alt: "puzzle Logo",
+        name: "Puzzle"
+    },
+    {
+        src: "/assets/icones/recrutement.jpg",
+        alt: "recrutement Logo",
+        name: "Recrutement"
+    }
+]
+
 export const LANGUAGE_USE = [
     {
         src: "/assets/icones/JS.png",

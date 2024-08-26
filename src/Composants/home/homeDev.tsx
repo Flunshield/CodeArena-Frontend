@@ -2,8 +2,9 @@ import { Container } from "../../ComposantsCommun/Container";
 import { FadeIn } from "../../ComposantsCommun/FadeIn";
 import Clients from "./homeDev/Client";
 import CaseStudiess from "./homeDev/CaseStudiess";
-import { Testimonial } from "./homeDev/Testimonial";
 import Services from "./homeDev/Services";
+// import { Testimonial } from "./homeDev/Testimonial";
+
 
 const HomeDev = () => {
     
@@ -26,13 +27,13 @@ const HomeDev = () => {
 
             <CaseStudiess />
 
-            <Testimonial
+            {/* <Testimonial
                 className="mt-24 sm:mt-32 lg:mt-40"
             >
                 The team at Studio went above and beyond with our onboarding, even
                 finding a way to access the user’s microphone without triggering one of
                 those annoying permission dialogs.
-            </Testimonial>
+            </Testimonial> */}
 
             <Services/>
         </>
