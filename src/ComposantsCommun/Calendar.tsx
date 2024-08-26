@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, dateFnsLocalizer, EventProps, Views } from 'react-big-calendar';
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
@@ -6,7 +6,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Tournament } from '../Interface/Interface';
 import { useTranslation } from 'react-i18next';
 import { Container } from './Container';
-import { useNavigate } from 'react-router-dom'; // Import de useNavigate
+import { useNavigate } from 'react-router-dom';
 
 interface CalendarTournamentProps {
     infosTournament: Tournament[];
@@ -21,7 +21,7 @@ interface Event {
 }
 
 const locales = {
-    locales: fr,
+    fr: fr,
 };
 
 const localizer = dateFnsLocalizer({
@@ -30,7 +30,7 @@ const localizer = dateFnsLocalizer({
     startOfWeek: () => startOfWeek(new Date(), { weekStartsOn: 1 }),
     getDay,
     locales
-})
+});
 
 const CustomEvent: React.FC<EventProps<Event>> = ({ event }) => {
     const navigate = useNavigate();
@@ -49,51 +49,91 @@ const CustomEvent: React.FC<EventProps<Event>> = ({ event }) => {
 
 const CalendarTournament: React.FC<CalendarTournamentProps> = ({ infosTournament }) => {
     const { t } = useTranslation();
+    const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 640);
 
-    // Assurez-vous que chaque tournoi a des heures précises de début et de fin
     const events: Event[] = infosTournament.map((tournament) => ({
         title: tournament.title,
-        // Convertir les dates en objets Date pour gérer les heures spécifiques
         start: new Date(tournament.startDate),
-        end: new Date(tournament.endDate || tournament.startDate), 
+        end: new Date(tournament.endDate || tournament.startDate),
         id: tournament.id,
         description: tournament.description,
     }));
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 640);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Nettoyage de l'écouteur d'événements lors du démontage du composant
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    useEffect(() => {
+        const today = new Date();
+        const todayEvents = events.filter(event => event.start.toDateString() === today.toDateString());
+
+        // Trier les événements futurs par date de début
+        const upcomingEvents = events
+            .filter(event => event.start > today)
+            .sort((a, b) => a.start.getTime() - b.start.getTime());
+
+        // Trouver le jour du prochain événement s'il n'y en a pas aujourd'hui
+        const nextEventDay = upcomingEvents.length > 0 ? upcomingEvents[0].start.toDateString() : null;
+
+        // Si on est sur mobile, n'afficher que les événements d'aujourd'hui et le prochain jour d'événement
+        if (isMobile) {
+            const mobileFilteredEvents = [
+                ...todayEvents,
+                ...events.filter(event => event.start.toDateString() === nextEventDay)
+            ];
+            setFilteredEvents(mobileFilteredEvents);
+        } else {
+            setFilteredEvents(events);
+        }
+
+    }, [isMobile, infosTournament]);
+
     return (
         <Container className="bg-white p-4 rounded-lg shadow-lg">
-            <Calendar<Event>
-                localizer={localizer}
-                events={events}
-                formats={{ timeGutterFormat: 'HH:mm'}}
-                startAccessor="start"
-                endAccessor="end"
-                style={{ height: 600 }}
-                messages={{
-                    next: t('next'),
-                    previous: t('previous'),
-                    today: t('today'),
-                    month: t('month'),
-                    week: t('week'),
-                    day: t('day'),
-                    agenda: t('agenda'),
-                }}
-                views={{ week: true, day: true }} 
-                defaultView={Views.WEEK} 
-                components={{
-                    event: CustomEvent,
-                    week: {
+            <div className="w-full overflow-x-auto">
+                <Calendar<Event>
+                    localizer={localizer}
+                    events={filteredEvents}
+                    startAccessor="start"
+                    endAccessor="end"
+                    style={{ height: '70vh', width: '100%' }}
+                    messages={{
+                        next: t('next'),
+                        previous: t('previous'),
+                        today: t('today'),
+                        month: t('month'),
+                        week: t('week'),
+                        day: t('day'),
+                        agenda: t('agenda'),
+                    }}
+                    views={isMobile ? { day: true } : { week: true, day: true }}
+                    defaultView={isMobile ? Views.DAY : Views.WEEK}  
+                    components={{
                         event: CustomEvent,
-                    },
-                    day: {
-                        event: CustomEvent,
-                    },
-                }}
-                step={30} // Intervalle de 30 minutes pour afficher les créneaux horaires
-                timeslots={2} // Divise chaque heure en 2 créneaux de 30 minutes
-                min={new Date(1970, 1, 1, 8, 0, 0)} // Début de la journée à 8h00
-                max={new Date(1970, 1, 1, 20, 0, 0)} // Fin de la journée à 20h00
-            />
+                        week: {
+                            event: CustomEvent,
+                        },
+                        day: {
+                            event: CustomEvent,
+                        },
+                    }}
+                    step={30}
+                    timeslots={2}
+                    min={new Date(1970, 1, 1, 8, 0, 0)}
+                    max={new Date(1970, 1, 1, 20, 0, 0)}
+                    className="responsive-calendar h-[50vh] sm:h-[60vh] md:h-[70vh]"
+                />
+            </div>
         </Container>
     );
 };
