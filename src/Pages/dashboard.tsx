@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
 import TableauEvent from "../Composants/dashboard/TableauEvent.tsx";
 import UserRank from "../Composants/dashboard/UserRank.tsx";
-// import TableauTournament from "../Composants/tournament/TableauTournament.tsx";
 import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn.tsx";
 import { Container } from "../ComposantsCommun/Container.tsx";
 import { SectionIntro } from "../ComposantsCommun/SectionIntro";
 import Button from "../ComposantsCommun/Button.tsx";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import TableauNews from "../Composants/dashboard/News.tsx";
 
 
 function Dashboard() {
@@ -40,22 +40,25 @@ function Dashboard() {
     return (
         <>
             <Layout>
-            
+
                 <Container className="mt-12">
                     <SectionIntro title="Dashboard">
                         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
                             <p className="mb-4 md:mb-0">Bienvenue sur votre tableau de bord, où vous pouvez voir vos événements, classements et tournois.</p>
-                            <Button className="bg-primary text-secondary rounded-lg py-3 px-6 shadow-lg hover:bg-yellow-500" type="button" id="game" onClick={() => {navigate("/ranked")}}>
-                                    Jouez Maintenant
+                            <Button className="bg-primary text-secondary rounded-lg py-3 px-6 shadow-lg hover:bg-yellow-500" type="button" id="game" onClick={() => { navigate("/ranked") }}>
+                                Jouez Maintenant
                             </Button>
                         </div>
                     </SectionIntro>
                     <FadeInStagger className="mt-10 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
                         <FadeIn className="lg:col-span-2 xl:col-span-2">
-                            <TableauEvent infosEvents={infosEvents} isImg={false} />
+                            <TableauNews infosEvents={infosEvents} isImg={false} />
                         </FadeIn>
                         <FadeIn className="lg:col-span-2 xl:col-span-1">
                             <UserRank infosUserRank={infosUserRank} />
+                        </FadeIn>
+                        <FadeIn className="col-span-1 lg:col-span-2 xl:col-span-3 mb-4">
+                            <TableauEvent infosEvents={infosEvents} isImg={false} />
                         </FadeIn>
                         {/* <FadeIn className="col-span-1 lg:col-span-2 xl:col-span-3 mb-4">
                             <TableauTournament infosTournament={infosTournament} />
