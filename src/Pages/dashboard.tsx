@@ -4,7 +4,7 @@ import { useAuthContext } from "../AuthContext.tsx";
 import { JwtPayload } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
-import TableauEvent from "../Composants/dashboard/TableauEvent.tsx";
+
 import UserRank from "../Composants/dashboard/UserRank.tsx";
 import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn.tsx";
 import { Container } from "../ComposantsCommun/Container.tsx";
@@ -13,6 +13,7 @@ import Button from "../ComposantsCommun/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import TableauNews, { getNewsData } from "../Composants/dashboard/News.tsx";
 import { useTranslation } from "react-i18next";  // Import de useTranslation
+import TableauEvent from "../Composants/event/TableauEvent.tsx";
 
 
 function Dashboard() {

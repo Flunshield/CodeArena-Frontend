@@ -5,11 +5,11 @@ import Layout from "../ComposantsCommun/Layout.tsx";
 import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
 import { useAuthContext } from "../AuthContext.tsx";
 import { Event } from "../Interface/Interface.ts";
-import TableauEvent from "../Composants/dashboard/TableauEvent.tsx";
 import { Container } from "../ComposantsCommun/Container.tsx";
 import Card from "../ComposantsCommun/Card.tsx";
 import CardContent from "../ComposantsCommun/CardContent.tsx";
 import { FadeIn } from "../ComposantsCommun/FadeIn.tsx";
+import AllEvent from "../Composants/event/AllEvent.tsx";
 
 function EventDashboard() {
     const authContext = useAuthContext();
@@ -32,7 +32,7 @@ function EventDashboard() {
                 <FadeIn>
                     <Card className="bg-secondary shadow-elevated p-4 sm:p-6 md:p-8 lg:p-10 rounded-xl">
                         <CardContent>
-                            <TableauEvent
+                            <AllEvent
                                 infosEvents={infosEvent}
                                 isImg={false}
                                 className="m-3 sm:m-5 md:m-6 lg:m-8 rounded-xl border-tertiari p-4 sm:p-5 md:p-6 lg:p-8 h-full w-full bg-tertiary-light"
