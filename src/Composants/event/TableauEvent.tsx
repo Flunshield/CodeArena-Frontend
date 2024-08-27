@@ -27,8 +27,7 @@ function TableauEvent({ infosEvents, className }: TableauEventProps) {
         </CardContent>
         {infosEvents && infosEvents.length > 0 ? (
           <div className="flex justify-center items-center">
-            {/* Centrer le calendrier */}
-            <div className="w-full max-w-4xl">
+            <div className="w-full  max-w-7xl">
               <FadeInStagger className="mt-10">
                 <CalendarEvent infosEvents={infosEvents} />
               </FadeInStagger>

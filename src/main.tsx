@@ -15,7 +15,7 @@ import Dashboard from "./Pages/dashboard.tsx";
 import MyAccount from "./Pages/myAccount.tsx";
 import Ranked from './Pages/ranked.tsx';
 import Classement from "./Pages/classement.tsx";
-import TournamentDashboard from "./Pages/tournamentDashboard.tsx";
+
 import EventDashboard from "./Pages/eventDashboard.tsx";
 import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
 import AdminDashboard from "./Pages/Admin/AdminDashboard.tsx";
@@ -47,7 +47,6 @@ import {
     RESULT_PAGE,
     SUCCESS, SUCCESS_BUY_EVENT,
     TERMS,
-    TOURNAMENT
 } from "./constantes/constantesRoutes.ts";
 import Entreprise from "./Pages/Entreprise/entreprise.tsx";
 import Success from "./Pages/Entreprise/success.tsx";
@@ -143,11 +142,11 @@ const router = createBrowserRouter([
         element: <PrivateRoute><Classement/></PrivateRoute>,
         errorElement: <ErrorPage/>
     },
-    {
-        path: TOURNAMENT,
-        element: <PrivateRoute><TournamentDashboard/></PrivateRoute>,
-        errorElement: <ErrorPage/>
-    },
+    // {
+    //     path: TOURNAMENT,
+    //     element: <PrivateRoute><TournamentDashboard/></PrivateRoute>,
+    //     errorElement: <ErrorPage/>
+    // },
     // {
     //     path: `${TOURNAMENT}/:id`,
     //     element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,

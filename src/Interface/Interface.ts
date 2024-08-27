@@ -126,6 +126,12 @@ export interface Event {
     statusPayment?: string;
 }
 
+export interface News {
+    title: string;
+    date: string;
+    description: string;
+  }
+
 export interface priceDetails {
     id: number;
     basePrice: number;

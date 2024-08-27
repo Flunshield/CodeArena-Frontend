@@ -31,6 +31,7 @@ const NavFlagsComponent = () => {
     const handleChangeLanguage = async (language: string) => {
         await changeLanguage(language);
         await i18n.reloadResources();
+        window.location.reload()
     };
 
     return (

@@ -6,7 +6,6 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Event } from '../Interface/Interface'; // Assurez-vous d'importer la bonne interface pour les événements
 import { useTranslation } from 'react-i18next';
 import { Container } from './Container';
-import { useNavigate } from 'react-router-dom';
 
 interface CalendarEventProps {
     infosEvents: Event[];
@@ -33,14 +32,12 @@ const localizer = dateFnsLocalizer({
 });
 
 const CustomEvent: React.FC<EventProps<CalendarEvent>> = ({ event }) => {
-    const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate(`/event/${event.id}`);
-    };
+
+
 
     return (
-        <div onClick={handleClick} className="m-2 p-2 border rounded bg-secondary cursor-pointer">
+        <div className="m-2 p-2 border rounded bg-secondary cursor-pointer">
             <p className="font-bold">{event.title}</p>
             {event.description && <p className="text-sm">{event.description}</p>}
         </div>
@@ -97,14 +94,14 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({ infosEvents }) => {
     }, [isMobile, infosEvents]);
 
     return (
-        <Container className="bg-white p-4 rounded-lg shadow-lg">
+        <Container className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg shadow-lg">
             <div className="w-full overflow-x-auto">
                 <Calendar<CalendarEvent>
                     localizer={localizer}
                     events={filteredEvents}
                     startAccessor="start"
                     endAccessor="end"
-                    style={{ height: '70vh', width: '100%' }}
+                    style={{ height: 'auto', width: '100%' }}
                     messages={{
                         next: t('next'),
                         previous: t('previous'),
@@ -129,10 +126,11 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({ infosEvents }) => {
                     timeslots={2}
                     min={new Date(1970, 1, 1, 8, 0, 0)}
                     max={new Date(1970, 1, 1, 20, 0, 0)}
-                    className="responsive-calendar h-[50vh] sm:h-[60vh] md:h-[70vh]"
+                    className="responsive-calendar h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh]"
                 />
             </div>
         </Container>
+
     );
 };
 
