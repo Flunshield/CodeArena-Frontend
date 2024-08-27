@@ -107,7 +107,6 @@ export interface userRangList {
 }
 
 export interface Event {
-    numberRegistered:number;
     id?: number;
     startDate: Date;
     endDate: Date;
