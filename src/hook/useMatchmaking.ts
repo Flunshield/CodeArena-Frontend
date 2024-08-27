@@ -3,6 +3,7 @@ import { useAuthContext } from "../AuthContext";
 import { getElementByEndpoint, postElementByEndpoint } from "../Helpers/apiHelper";
 import { JwtPayload } from "jwt-decode";
 import { DataToken } from "../Interface/Interface";
+import { Puzzle } from "../Interface/chatInterface";
 import useUserInfos from "./useUserInfos.ts";
 
 const useMatchmaking = () => {
@@ -17,27 +18,29 @@ const useMatchmaking = () => {
     const [inQueue, setInQueue] = useState(false);
     const [matchFound, setMatchFound] = useState(false);
     const [roomId, setRoomId] = useState<string | null>(null);
+    const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
 
     useEffect(() => {
         if (id === undefined) {
             console.error("ID utilisateur est indéfini");
             return;
         }
-
+    
         const refreshStatus = async () => {
             setLoading(true);
-            
+    
             const checkRoom = await checkIsInRoom(authContext.accessToken ?? "", id);
             if (checkRoom.isInRoom) {
                 setMatchFound(true);
                 setRoomId(checkRoom.roomId);
+                setPuzzle(checkRoom.puzzle);
             } else {
                 const isInQueue = await checkIsInQueue(authContext.accessToken ?? "", id);
                 setInQueue(isInQueue);
             }
+
             setLoading(false);
         };
-
         refreshStatus();
     }, [authContext.accessToken, id]);
 
@@ -111,8 +114,7 @@ const useMatchmaking = () => {
             alert(responseData.message || "Erreur lors de la sortie de la salle de match");
         }
         setLoading(false);
-    }, [authContext.accessToken, id]);
-
+    }, [authContext.accessToken, id]);    
     return {
         loading,
         inQueue,
@@ -120,11 +122,13 @@ const useMatchmaking = () => {
         roomId,
         id,
         username,
+        puzzle,
         handleJoinQueue,
         handleLeaveQueue,
         handleLeaveRoom,
         setMatchFound,
-        setRoomId
+        setRoomId,
+        setPuzzle
     };
 }
 
@@ -167,7 +171,8 @@ async function checkIsInRoom(token: string, id: number) {
             if (responseData.success) {
                 return {
                     isInRoom: responseData.isInRoom,
-                    roomId: responseData.roomId
+                    roomId: responseData.roomId,
+                    puzzle: responseData.puzzle
                 };
             } else {
                 console.error('Erreur lors de la vérification de la salle de match : succès est faux');
