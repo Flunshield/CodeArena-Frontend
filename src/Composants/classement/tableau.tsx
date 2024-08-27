@@ -72,7 +72,7 @@ function Tableau(): JSX.Element {
             data: '',
         });
 
-        const pdfDownloadPromise = downloadPdf(response);
+        const pdfDownloadPromise = downloadPdf(response, "cv.pdf");
         if (!pdfDownloadPromise) {
             setNotificationMessage(t('errorUserInfos'));
             setNotificationType('error');

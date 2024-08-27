@@ -32,7 +32,7 @@ export function formatSeconds(seconds: number) {
 }
 
 export function formatItemCommande(array: CommandeEntreprise[], t: TFunction<"translation", undefined>) {
-    function colorCommande(etat: string) {
+    function colorCommande(etat: string) {console.log(etat)
         if(!etat) return '';
         else if (etat === 'Cancel') return 'bg-error text-tertiari';
         else if (etat === 'paid') return 'bg-olive-green text-tertiari';
@@ -42,8 +42,8 @@ export function formatItemCommande(array: CommandeEntreprise[], t: TFunction<"tr
     for (let i = 0; i < array.length; i++) {
         array[i].item = PRICING.find((pricing) => pricing.idApi === array[i].item)?.title ?? array[i].item;
         array[i].dateCommande = formatDate(array[i].dateCommande, t);
-        array[i].etatCommande = t(array[i].etatCommande);
         array[i].colorEtatCommande = colorCommande(array[i].etatCommande);
+        array[i].etatCommande = t(array[i].etatCommande);
     }
     return array;
 }

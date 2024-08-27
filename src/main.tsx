@@ -17,12 +17,13 @@ import Ranked from './Pages/ranked.tsx';
 import Classement from "./Pages/classement.tsx";
 import TournamentDashboard from "./Pages/tournamentDashboard.tsx";
 import EventDashboard from "./Pages/eventDashboard.tsx";
-import PageTournamentInfos from "./Pages/pageTournamentInfos.tsx";
 import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
-import AdminDashboard from "./Pages/AdminDashboard.tsx";
+import AdminDashboard from "./Pages/Admin/AdminDashboard.tsx";
 import GameEntreprise from "./Pages/Entreprise/gameEntreprise.tsx";
 import {
     ADMIN,
+    ADMIN_EVENT_CREATE,
+    ADMIN_EVENT_DASHBOARD,
     CANCEL,
     COMPTE,
     COOKIE_POLICY,
@@ -44,7 +45,7 @@ import {
     REGISTER,
     RESET_PASSWORD,
     RESULT_PAGE,
-    SUCCESS,
+    SUCCESS, SUCCESS_BUY_EVENT,
     TERMS,
     TOURNAMENT
 } from "./constantes/constantesRoutes.ts";
@@ -61,6 +62,10 @@ import DashboardEntreprise from "./Pages/Entreprise/dashboardEntreprise.tsx";
 import ErrorPage from "./Pages/ErrorPage.tsx";
 import ResultPage from "./Pages/Entreprise/ResultPage.tsx";
 import {NotificationProvider} from "./NotificationContext.tsx";
+import AdminEventDashboard from "./Pages/Admin/AdminEventDashboard.tsx";
+import AdminEventCreate from "./Pages/Admin/adminEventCreate.tsx";
+import PrivateRouteAdminOrEntreprise from "./ComposantsCommun/PrivateRouteAdminOrEntreprise.tsx";
+import SuccessEvent from "./Pages/Entreprise/successEvent.tsx";
 
 const router = createBrowserRouter([
     {
@@ -143,11 +148,11 @@ const router = createBrowserRouter([
         element: <PrivateRoute><TournamentDashboard/></PrivateRoute>,
         errorElement: <ErrorPage/>
     },
-    {
-        path: `${TOURNAMENT}/:id`,
-        element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,
-        errorElement: <ErrorPage/>
-    },
+    // {
+    //     path: `${TOURNAMENT}/:id`,
+    //     element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,
+    //     errorElement: <ErrorPage/>
+    // },
     {
         path: EVENT,
         element: <PrivateRoute><EventDashboard/></PrivateRoute>,
@@ -156,6 +161,16 @@ const router = createBrowserRouter([
     {
         path: ADMIN,
         element: <PrivateRouteAdmin><AdminDashboard/></PrivateRouteAdmin>,
+        errorElement: <ErrorPage/>
+    },
+    {
+        path: ADMIN_EVENT_CREATE,
+        element: <PrivateRouteAdmin><AdminEventCreate/></PrivateRouteAdmin>,
+        errorElement: <ErrorPage/>
+    },
+    {
+        path: ADMIN_EVENT_DASHBOARD,
+        element: <PrivateRouteAdminOrEntreprise><AdminEventDashboard/></PrivateRouteAdminOrEntreprise>,
         errorElement: <ErrorPage/>
     },
     {
@@ -171,6 +186,11 @@ const router = createBrowserRouter([
     {
         path: SUCCESS,
         element: <PrivateRoute><Success/></PrivateRoute>,
+        errorElement: <ErrorPage/>
+    },
+    {
+        path: SUCCESS_BUY_EVENT,
+        element: <PrivateRoute><SuccessEvent/></PrivateRoute>,
         errorElement: <ErrorPage/>
     },
     {
