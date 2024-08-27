@@ -5,27 +5,32 @@ import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import { formatDate } from "../../Helpers/formatHelper.ts";
 import { Container } from "../../ComposantsCommun/Container.tsx";
 import { FadeIn, FadeInStagger } from "../../ComposantsCommun/FadeIn.tsx";
+import Button from "../../ComposantsCommun/Button.tsx";
 
-interface TableauEventProps {
+interface EventDetailsProps {
     infosEvents: Event[];
     isImg: boolean;
     className?: string;
+    canSubscribe: boolean;
+    isRegistered: boolean;
+    onRegister: () => void;
+    onUnregister: () => void;
 }
 
-function EventDetails({ infosEvents, }: TableauEventProps) {
+function EventDetails({ infosEvents, canSubscribe, isRegistered, onRegister, onUnregister }: EventDetailsProps) {
     const { t } = useTranslation();
-    
 
     return (
         <Container className="px-4 sm:px-6 md:px-8 lg:px-12">
             {infosEvents && infosEvents.length > 0 ? (
                 <FadeInStagger
-                    className={`mt-6 sm:mt-8 lg:mt-10 grid gap-6 ${infosEvents.length === 1
-                        ? "grid-cols-1"
-                        : infosEvents.length === 2
+                    className={`mt-6 sm:mt-8 lg:mt-10 grid gap-6 ${
+                        infosEvents.length === 1
+                            ? "grid-cols-1"
+                            : infosEvents.length === 2
                             ? "grid-cols-1 sm:grid-cols-2"
                             : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                        }`}
+                    }`}
                 >
                     {infosEvents.map((event: Event, index: number) => (
                         <FadeIn key={index} className="flex flex-col items-center">
@@ -38,44 +43,44 @@ function EventDetails({ infosEvents, }: TableauEventProps) {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                                             <div className="flex flex-col items-center p-4 bg-neutral-100 shadow-md rounded-lg">
                                                 <p className="mb-2">{t("dateDebut")}</p>
-                                                <p className="text-green-600 font-bold">{formatDate(event?.startDate, t)}</p>
+                                                <p className="text-green-600 font-bold">{formatDate(event.startDate, t)}</p>
                                             </div>
                                             <div className="flex flex-col items-center p-4 bg-neutral-100 shadow-md rounded-lg">
                                                 <p className="mb-2">{t("dateFin")}</p>
-                                                <p className="text-red-600 font-bold">{formatDate(event?.endDate, t)}</p>
+                                                <p className="text-red-600 font-bold">{formatDate(event.endDate, t)}</p>
                                             </div>
                                         </div>
                                         <div className="flex flex-col items-center p-4 bg-neutral-100 shadow-md rounded-lg mt-4 mb-6 w-full">
                                             <p className="mb-2 text-3xl">{t("maxPlayer")}</p>
-                                            <p className="text-5xl font-bold">{event?.numberRegistered}/{event?.playerMax}</p>
+                                            <p className="text-5xl font-bold">{event.numberRegistered}/{event.playerMax}</p>
                                         </div>
                                         <div className="mb-6 text-center">
                                             <p className="mb-2 text-3xl">{t("rules")}</p>
-                                            <p>{event?.description}</p>
+                                            <p>{event.description}</p>
                                         </div>
-                                        {/* <div className="flex justify-center">
-                                {canSubscribe && isUser && (
-                                    isRegistered ? (
-                                        <Button
-                                            type="button"
-                                            id="inscription"
-                                            onClick={handleClickUnsubscribe}
-                                            className="border-2 border-tertiary bg-neutral-200 hover:bg-neutral-300 rounded-xl p-3 font-bold text-2xl shadow-md"
-                                        >
-                                            {t("unsubscribe")}
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            type="button"
-                                            id="inscription"
-                                            onClick={handleClickRegistered}
-                                            className="border-2 border-tertiary bg-neutral-200 hover:bg-neutral-300 rounded-xl p-3 font-bold text-2xl shadow-md"
-                                        >
-                                            {t("inscription")}
-                                        </Button>
-                                    )
-                                )}
-                            </div> */}
+                                        <div className="flex justify-center">
+                                            {canSubscribe && (
+                                                isRegistered ? (
+                                                    <Button
+                                                        type="button"
+                                                        id="inscription"
+                                                        onClick={onUnregister}
+                                                        className="border-2 border-tertiary bg-neutral-200 hover:bg-neutral-300 rounded-xl p-3 font-bold text-2xl shadow-md"
+                                                    >
+                                                        {t("unsubscribe")}
+                                                    </Button>
+                                                ) : (
+                                                    <Button
+                                                        type="button"
+                                                        id="inscription"
+                                                        onClick={onRegister}
+                                                        className="border-2 border-tertiary bg-neutral-200 hover:bg-neutral-300 rounded-xl p-3 font-bold text-2xl shadow-md"
+                                                    >
+                                                        {t("inscription")}
+                                                    </Button>
+                                                )
+                                            )}
+                                        </div>
                                     </ul>
                                 </CardContent>
                             </Card>
