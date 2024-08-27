@@ -151,7 +151,7 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
     const closePopup = async () => {
         setPopupOpen(false);
     };
-console.log(infosUserById)
+
     return (
         <div id="informationGenerale" className={className}>
             {showNotification && (

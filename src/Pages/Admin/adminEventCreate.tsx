@@ -24,7 +24,7 @@ function adminEventCreate() {
         return await response.json();
 
     }
-console.log(userName)
+
     function handleChangeUserName(event: string) {
         setUserName(event);
         if (event.length > 4) {

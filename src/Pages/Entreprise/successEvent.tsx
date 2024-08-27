@@ -37,7 +37,6 @@ function SuccessEvent (){
                 return response.status;
             })
             .then(data => {
-                console.log(data)
                 if (data === 201) {
                     setNotificationMessage(t("successSubscription"));
                     setNotificationType('success');
