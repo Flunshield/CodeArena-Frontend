@@ -17,7 +17,6 @@ import Ranked from './Pages/ranked.tsx';
 import Classement from "./Pages/classement.tsx";
 import TournamentDashboard from "./Pages/tournamentDashboard.tsx";
 import EventDashboard from "./Pages/eventDashboard.tsx";
-import PageTournamentInfos from "./Pages/pageTournamentInfos.tsx";
 import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
 import AdminDashboard from "./Pages/Admin/AdminDashboard.tsx";
 import GameEntreprise from "./Pages/Entreprise/gameEntreprise.tsx";
@@ -149,11 +148,11 @@ const router = createBrowserRouter([
         element: <PrivateRoute><TournamentDashboard/></PrivateRoute>,
         errorElement: <ErrorPage/>
     },
-    {
-        path: `${TOURNAMENT}/:id`,
-        element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,
-        errorElement: <ErrorPage/>
-    },
+    // {
+    //     path: `${TOURNAMENT}/:id`,
+    //     element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,
+    //     errorElement: <ErrorPage/>
+    // },
     {
         path: EVENT,
         element: <PrivateRoute><EventDashboard/></PrivateRoute>,
