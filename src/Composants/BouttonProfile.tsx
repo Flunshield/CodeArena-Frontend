@@ -83,7 +83,7 @@ const BouttonProfile = () => {
                         <div className='p-2'>
                             <div className='flex flex-col items-center space-y-5'>
                                 <Button id='button-compte' type={'button'}
-                                        className={clsx(currentPage === "myAccount" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "")}>
+                                        className={clsx(currentPage === "myAccount" ? "bg-tertiari text-gray-600 rounded-xl p-2" : "", "hover:underline")}>
                                     <Link to={COMPTE}>{t('monCompte')}</Link>
                                 </Button>
                                 {isAdmin &&
