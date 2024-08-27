@@ -22,6 +22,7 @@ import {FadeIn, FadeInStagger} from "../../ComposantsCommun/FadeIn";
 import clsx from "clsx";
 import Notification from "../../ComposantsCommun/Notification.tsx";
 import MatchHistory from "./MatchHistory.tsx";
+import Presentation from "./presentation.tsx";
 
 interface InfosUserProps {
     openPopup: () => void;
@@ -89,6 +90,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
             }
         });
     }
+
     return (
         <Container className="py-16 px-4">
             {showNotification && (
@@ -211,28 +213,33 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                     />
                                 </FadeIn>
                             ) : (
-                                <FadeIn>
-                                    <Badges infosUserById={infosUserById}/>
-                                </FadeIn>
+                                <div className="flex align-baseline justify-between w-full space-x-5 mt-5">
+                                    <FadeIn>
+                                        <Badges infosUserById={infosUserById}/>
+                                    </FadeIn>
+                                    <FadeIn>
+                                        <Presentation infosUserById={infosUserById}/>
+                                    </FadeIn>
+                                </div>
                             )}
                         </div>
                     </div>
                 </FadeIn>
             </FadeInStagger>
             {isPopupOpen && (
-            <div
-                className="fixed top-0 left-0 z-50 p-4 lg:p-8 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-                <div className="relative bg-gray-100 p-8 rounded-md shadow-lg max-h-full w-auto overflow-y-auto">
-                    {isUser && <MatchHistory historiqueMatch={historiqueMatch}/>}
-                    <button
-                        onClick={closePopup}
-                        className="absolute top-2 right-2 rounded-full bg-error hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105"
-                    >
-                        X
-                    </button>
+                <div
+                    className="fixed top-0 left-0 z-50 p-4 lg:p-8 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="relative bg-gray-100 p-8 rounded-md shadow-lg max-h-full w-auto overflow-y-auto">
+                        {isUser && <MatchHistory historiqueMatch={historiqueMatch}/>}
+                        <button
+                            onClick={closePopup}
+                            className="absolute top-2 right-2 rounded-full bg-error hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                        >
+                            X
+                        </button>
+                    </div>
                 </div>
-            </div>
-                )}
+            )}
 
         </Container>
     );

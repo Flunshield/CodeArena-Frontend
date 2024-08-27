@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import Layout from "../ComposantsCommun/Layout";
-import Presentation from "../Composants/account/presentation";
 import MyForm from "../Composants/account/MyForm";
 import InfosUser from "../Composants/account/infosUser";
 import {useAuthContext} from "../AuthContext";
@@ -13,7 +12,6 @@ import Notification from "../ComposantsCommun/Notification";
 import InformationGenerale from "../Composants/account/entreprise/InformationGenerale";
 import {useTranslation} from "react-i18next";
 import {Container} from "../ComposantsCommun/Container";
-import {SectionIntro} from "../ComposantsCommun/SectionIntro";
 import {FadeIn, FadeInStagger} from "../ComposantsCommun/FadeIn";
 import CVForm from "../Composants/account/CVForm.tsx";
 import PdfSection from "../Composants/account/pdfSection.tsx";
@@ -97,11 +95,12 @@ function MyAccount() {
                     onClose={() => setShowNotification(false)}
                 />
             )}
+
             <Container>
-                <SectionIntro title={t("myAccount")} className="text-center mt-10"/>
                 <div className="flex flex-col items-center">
                     <FadeInStagger className="w-full">
-                        <FadeIn className="mb-24">
+                        {/* Section Infos User */}
+                        <FadeIn className="mb-12">
                             <InfosUser
                                 openPopup={openPopup}
                                 setIsInformationGeneraleCliked={setIsInformationGeneraleCliked}
@@ -110,9 +109,10 @@ function MyAccount() {
                                 infosUserById={infosUserById}
                             />
                         </FadeIn>
+
                         {isEntreprise ? (
-                            <div className="w-full">
-                                <FadeIn className="mb-24">
+                            <div className="w-full space-y-8">
+                                <FadeIn>
                                     <InformationGenerale
                                         infosUserById={infosUserById}
                                         setIsSubmitted={() => setSubmitCount(count => count + 1)}
@@ -123,55 +123,55 @@ function MyAccount() {
                                 </FadeIn>
                             </div>
                         ) : (
-                            <div>
-                                <FadeIn className="flex flex-col justify-items-center mb-10 space-y-8">
-                                    <Presentation infosUserById={infosUserById}/>
-                                </FadeIn>
-                                <FadeIn className="flex flex-col justify-items-center mb-10 space-y-8">
-                                    <PdfSection getCvs={getCvs} deleteCv={deleteCv} setPopupCvOpen={setPopupCvOpen}
-                                                setShowNotification={setShowNotification}
-                                                setNotificationType={setNotificationType}
-                                                setNotificationMessage={setNotificationMessage}
-                                                setIsSubmitted={() => setSubmitCount(count => count + 1)}/>
-                                </FadeIn>
-                            </div>
+                            <FadeIn>
+                                <PdfSection
+                                    getCvs={getCvs}
+                                    deleteCv={deleteCv}
+                                    setPopupCvOpen={setPopupCvOpen}
+                                    setShowNotification={setShowNotification}
+                                    setNotificationType={setNotificationType}
+                                    setNotificationMessage={setNotificationMessage}
+                                    setIsSubmitted={() => setSubmitCount(count => count + 1)}
+                                />
+                            </FadeIn>
                         )}
                     </FadeInStagger>
                 </div>
             </Container>
-            {
-                isPopupOpen && (
-                    <div
-                        className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-tertiari bg-opacity-75 p-6">
-                        <MyForm onClose={closePopup} infosUserById={infosUserById}
-                                setIsSubmitted={() => setSubmitCount(count => count + 1)}/>
+
+            {/* Popup Section */}
+            {isPopupOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-tertiary bg-opacity-75 p-6 z-50">
+                    <MyForm
+                        onClose={closePopup}
+                        infosUserById={infosUserById}
+                        setIsSubmitted={() => setSubmitCount(count => count + 1)}
+                    />
+                </div>
+            )}
+
+            {isPopupCvOpen && (
+                <div className="fixed inset-0 z-50 p-4 lg:p-8 flex items-center justify-center bg-black bg-opacity-50">
+                    <button
+                        onClick={closePopup}
+                        className="absolute top-8 right-8 lg:top-16 lg:right-16 rounded-full bg-error hover:bg-tertiary-light text-tertiary font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        X
+                    </button>
+                    <div className="relative bg-tertiary p-8 rounded-md shadow-lg max-h-full w-full overflow-y-auto">
+                        <CVForm
+                            infosUserById={infosUserById}
+                            closePopup={closePopup}
+                            setShowNotification={setShowNotification}
+                            setNotificationType={setNotificationType}
+                            setNotificationMessage={setNotificationMessage}
+                            setIsSubmitted={() => setSubmitCount(count => count + 1)}
+                        />
                     </div>
-                )
-            }
-            {
-                isPopupCvOpen && (
-                    <div
-                        className="fixed top-0 left-0 z-50 p-4 lg:p-8 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-                        <button
-                            onClick={closePopup}
-                            className="absolute top-8 right-8 lg:top-16 lg:right-16 rounded-full bg-error hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105 z-50"
-                        >
-                            X
-                        </button>
-                        <div className="relative bg-tertiari p-8 rounded-md shadow-lg max-h-full w-full overflow-y-auto">
-                            <CVForm
-                                infosUserById={infosUserById}
-                                closePopup={closePopup}
-                                setShowNotification={setShowNotification}
-                                setNotificationType={setNotificationType}
-                                setNotificationMessage={setNotificationMessage}
-                                setIsSubmitted={() => setSubmitCount(count => count + 1)}
-                            />
-                        </div>
-                    </div>
-                )
-            }
+                </div>
+            )}
         </Layout>
+
     )
         ;
 }
