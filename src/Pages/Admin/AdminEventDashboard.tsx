@@ -199,7 +199,7 @@ function AdminEventDashboard() {
                 setCurrentPage={setCurrentPage}
                 setOrder={setOrder}
                 isAdmin={true}
-                className={'m-5'}
+                className={'m-5 max-md:space-y-5'}
                 setSearchTitle={setSearchTitle}
             />
             <DataTable headers={headers} data={eventsFormated} className="rounded-xl m-5"
@@ -220,8 +220,8 @@ function AdminEventDashboard() {
                 <div
                     className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 transition-opacity duration-300">
                     <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-lg w-full">
-                        <h2 className="text-3xl font-extrabold text-gray-900 mb-6">
-                            {t('title')} : {eventReceived?.title}
+                        <h2 className="text-3xl text-center font-extrabold text-gray-900 mb-6">
+                            {eventReceived?.title}
                         </h2>
                         <p className="text-gray-700 mb-4">
                             <span className="font-semibold">{t('description')}</span> : {eventReceived?.description}

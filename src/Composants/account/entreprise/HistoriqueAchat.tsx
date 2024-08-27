@@ -121,7 +121,7 @@ const historiqueAchat = ({className}: historiqueAchatProps) => {
                                     </p>
                                     <p className="text-lg">
                                         <span
-                                            className="font-bold">Prix :</span> {PRICING.find((pricing) => pricing.idApi === commande.commande.item)?.price ? (PRICING.find((pricing) => pricing.idApi === commande.commande.item)?.price + "/" + t('perMonth')) : (commande.event.priceDetails.finalPrice + "€")}
+                                            className="font-bold">{t('prix')} :</span> {PRICING.find((pricing) => pricing.idApi === commande.commande.item)?.price ? (PRICING.find((pricing) => pricing.idApi === commande.commande.item)?.price + "/" + t('perMonth')) : (commande.event.priceDetails.finalPrice + "€")}
                                     </p>
                                     {commande.commande.nbCreateTest !== 0 && (
                                         <p className="text-lg">

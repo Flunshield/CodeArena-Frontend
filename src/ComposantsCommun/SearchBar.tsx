@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import {CINQUANTE, CODE_LANGUAGES_FAVORITES, DIX, VINGT_CINQ} from "../constantes/constantes.ts";
-import clsx from "clsx"; // Assurez-vous d'importer vos constantes correctement
+import clsx from "clsx";
 
 interface SearchBarProps {
     onSearch?: (username: string) => void;
@@ -81,7 +81,7 @@ const SearchBar = ({
                     <div className="flex flex-col text-center mr-10 mb-2 max-md:mb-0">
                         <label htmlFor="technologiePreferences"
                                className="block text-sm font-medium text-tertiary max-md:text-left">
-                            {t('Trie par date')}
+                            {t('triByDate')}
                         </label>
                         <select
                             id="technologiePreferences"
