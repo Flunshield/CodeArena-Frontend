@@ -107,7 +107,6 @@ export interface userRangList {
 }
 
 export interface Event {
-    numberRegistered:number;
     id?: number;
     startDate: Date;
     endDate: Date;
@@ -125,6 +124,7 @@ export interface Event {
     puzzles?: PuzzlesEntreprise[];
     accepted?: boolean;
     statusPayment?: string;
+    numberRegistered:number;
 }
 
 export interface priceDetails {
