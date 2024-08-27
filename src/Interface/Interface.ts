@@ -29,7 +29,7 @@ export interface User {
     userRanking?: UserRanking[];
     siren?: string;
     commandeEntrepriseFormatted?: CommandeEntrepriseFormatted;
-    userTournament?: UserTournament[];
+    userEvent?: UserEvent[];
 }
 
 export interface DataToken {
@@ -107,6 +107,7 @@ export interface userRangList {
 }
 
 export interface Event {
+    numberRegistered:number;
     id?: number;
     startDate: Date;
     endDate: Date;
@@ -125,12 +126,6 @@ export interface Event {
     accepted?: boolean;
     statusPayment?: string;
 }
-
-export interface News {
-    title: string;
-    date: string;
-    description: string;
-  }
 
 export interface priceDetails {
     id: number;

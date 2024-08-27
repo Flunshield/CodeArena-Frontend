@@ -6,6 +6,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Event } from '../Interface/Interface'; // Assurez-vous d'importer la bonne interface pour les événements
 import { useTranslation } from 'react-i18next';
 import { Container } from './Container';
+import { useNavigate } from 'react-router-dom';
 
 interface CalendarEventProps {
     infosEvents: Event[];
@@ -33,11 +34,14 @@ const localizer = dateFnsLocalizer({
 
 const CustomEvent: React.FC<EventProps<CalendarEvent>> = ({ event }) => {
 
+    const navigate = useNavigate();
 
-
+    const handleClick = () => {
+        navigate(`/event/${event.id}`);
+    };
 
     return (
-        <div className="m-2 p-2 border rounded bg-secondary cursor-pointer">
+        <div onClick={handleClick} className="m-2 p-2 border rounded bg-secondary cursor-pointer">
             <p className="font-bold">{event.title}</p>
             {event.description && <p className="text-sm">{event.description}</p>}
         </div>

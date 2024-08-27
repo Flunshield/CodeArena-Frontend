@@ -171,10 +171,10 @@ export const getElementByEndpoint = async (endpoint: string, data: { token: stri
  * @param data Les données à envoyer pour la désinscription du tournoi.
  * @returns Une promesse qui se résout avec la réponse du serveur.
  */
-export const unsubscribeTournament = async (endpoint?: string, data?: {
+export const unsubscribeEvent = async (endpoint?: string, data?: {
     token: string;
     userID?: string;
-    tournamentID?: number
+    eventID?: number
 }): Promise<Response> => {
 
     return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
@@ -185,7 +185,7 @@ export const unsubscribeTournament = async (endpoint?: string, data?: {
         },
         body: JSON.stringify({
             userID: data?.userID,
-            tournamentID: data?.tournamentID
+            eventID: data?.eventID
         }),
         credentials: 'include'
     });
