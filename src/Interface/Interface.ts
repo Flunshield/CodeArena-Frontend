@@ -149,10 +149,17 @@ export interface Match {
     location: string;
     status: string;
     score: number;
-    tournamentID: number;
-    tournament: Tournament;
+    eventId: number;
+    event: Event;
     rankingsID: number;
     rankings: Ranking;
+    winnerID: number;
+    winner: {userName: string}
+    looserID: number;
+    loser: {userName: string}
+    loserPoints: number;
+    winnerPoints: number;
+
 }
 
 export interface UserEvent {

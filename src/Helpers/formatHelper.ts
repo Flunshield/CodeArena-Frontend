@@ -44,3 +44,16 @@ export function formatItemCommande(array: CommandeEntreprise[]) {
     }
     return array;
 }
+
+export function formatHeure(dateString: Date | undefined | string): string {
+    if (!dateString) return '';
+
+    const date: Date = new Date(dateString);
+
+    const optionsHour: Intl.DateTimeFormatOptions = {
+        hour: 'numeric',
+        minute: 'numeric',
+    };
+
+    return date.toLocaleTimeString("fr", optionsHour);
+}

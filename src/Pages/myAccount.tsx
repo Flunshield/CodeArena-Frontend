@@ -21,7 +21,7 @@ import useUserInfos from "../hook/useUserInfos.ts";
 
 function MyAccount() {
     const [submitCount, setSubmitCount] = useState(0);
-    const infosUserById= useUserInfos(submitCount);
+    const infosUserById = useUserInfos(submitCount);
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [isPopupCvOpen, setPopupCvOpen] = useState(false);
     const [isInformationGeneraleCliked, setIsInformationGeneraleCliked] = useState(false);
@@ -97,7 +97,7 @@ function MyAccount() {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            <Container >
+            <Container>
                 <SectionIntro title={t("myAccount")} className="text-center mt-10"/>
                 <div className="flex flex-col items-center">
                     <FadeInStagger className="w-full">
