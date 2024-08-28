@@ -173,8 +173,8 @@ export const getElementByEndpoint = async (endpoint: string, data: { token: stri
  */
 export const unsubscribeEvent = async (endpoint?: string, data?: {
     token: string;
-    userID?: string;
-    eventID?: number
+    userID?: number;
+    eventsID?: number
 }): Promise<Response> => {
 
     return await fetch(`${VITE_API_BASE_URL_BACK}/${endpoint}`, {
@@ -185,7 +185,7 @@ export const unsubscribeEvent = async (endpoint?: string, data?: {
         },
         body: JSON.stringify({
             userID: data?.userID,
-            eventID: data?.eventID
+            eventsID: data?.eventsID
         }),
         credentials: 'include'
     });

@@ -3,7 +3,7 @@ import { Calendar, dateFnsLocalizer, EventProps, Views } from 'react-big-calenda
 import { format, parse, startOfWeek, getDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { Event } from '../Interface/Interface'; // Assurez-vous d'importer la bonne interface pour les événements
+import { Event } from '../Interface/Interface';
 import { useTranslation } from 'react-i18next';
 import { Container } from './Container';
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +33,6 @@ const localizer = dateFnsLocalizer({
 });
 
 const CustomEvent: React.FC<EventProps<CalendarEvent>> = ({ event }) => {
-
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -54,13 +53,13 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({ infosEvents }) => {
     const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 640);
 
     const events: CalendarEvent[] = infosEvents
-        .filter((event) => event.title && event.id)  // Vérifie que les valeurs nécessaires ne sont pas undefined
+        .filter((event) => event.title && event.id)
         .map((event) => ({
             title: event.title!,
             start: new Date(event.startDate!),
             end: new Date(event.endDate || event.startDate!),
             id: event.id!,
-            description: event.description || '', // Définit une valeur par défaut si la description est undefined
+            description: event.description || '',
         }));
 
     useEffect(() => {
@@ -76,26 +75,8 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({ infosEvents }) => {
     }, []);
 
     useEffect(() => {
-        const today = new Date();
-        const todayEvents = events.filter(event => event.start.toDateString() === today.toDateString());
-
-        const upcomingEvents = events
-            .filter(event => event.start > today)
-            .sort((a, b) => a.start.getTime() - b.start.getTime());
-
-        const nextEventDay = upcomingEvents.length > 0 ? upcomingEvents[0].start.toDateString() : null;
-
-        if (isMobile) {
-            const mobileFilteredEvents = [
-                ...todayEvents,
-                ...events.filter(event => event.start.toDateString() === nextEventDay)
-            ];
-            setFilteredEvents(mobileFilteredEvents);
-        } else {
-            setFilteredEvents(events);
-        }
-
-    }, [isMobile, infosEvents]);
+        setFilteredEvents(events);
+    }, [events]);
 
     return (
         <Container className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 rounded-lg shadow-lg">
@@ -105,7 +86,7 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({ infosEvents }) => {
                     events={filteredEvents}
                     startAccessor="start"
                     endAccessor="end"
-                    style={{ height: 'auto', width: '100%' }}
+                    style={{ height: '500px' }}
                     messages={{
                         next: t('next'),
                         previous: t('previous'),
@@ -119,12 +100,6 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({ infosEvents }) => {
                     defaultView={isMobile ? Views.DAY : Views.WEEK}
                     components={{
                         event: CustomEvent,
-                        week: {
-                            event: CustomEvent,
-                        },
-                        day: {
-                            event: CustomEvent,
-                        },
                     }}
                     step={30}
                     timeslots={2}
@@ -134,7 +109,6 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({ infosEvents }) => {
                 />
             </div>
         </Container>
-
     );
 };
 
