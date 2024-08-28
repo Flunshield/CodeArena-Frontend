@@ -115,14 +115,16 @@ const BouttonProfile = () => {
                                     </div>
                                 }
                             </div>
+                            <div className="w-full flex justify-center">
                             <Button
                                 type="button"
                                 id="signOut"
-                                className="border-1 text-tertiari text-1xl m-3 border-2 border-tertiari rounded-md p-2 mt-10 hover:underline"
+                                className="border-1 text-tertiari text-1xl border-2 border-tertiari rounded-md p-2 mt-10 hover:underline"
                                 onClick={handleClickSingOut}
                             >
                                 {t('disonnect')}
                             </Button>
+                            </div>
                         </div>
                     </div>
                 )}
