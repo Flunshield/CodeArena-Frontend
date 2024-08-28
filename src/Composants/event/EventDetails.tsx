@@ -98,7 +98,7 @@ function EventDetails(): JSX.Element {
 
             if (response.status === 200) {
                 setIsRegistered(false);
-                setNotificationMessage(t('unsubscribeSucces'));
+                setNotificationMessage(t('unsubscribeSuccess'));
                 setNotificationType('success');
 
                 // Décrémenter le nombre d'inscrits localement
