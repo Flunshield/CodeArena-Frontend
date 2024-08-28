@@ -16,6 +16,7 @@ import {FadeIn, FadeInStagger} from "../ComposantsCommun/FadeIn";
 import CVForm from "../Composants/account/CVForm.tsx";
 import PdfSection from "../Composants/account/pdfSection.tsx";
 import useUserInfos from "../hook/useUserInfos.ts";
+import "../css/general.css";
 
 function MyAccount() {
     const [submitCount, setSubmitCount] = useState(0);
@@ -152,13 +153,7 @@ function MyAccount() {
 
             {isPopupCvOpen && (
                 <div className="fixed inset-0 z-50 p-4 lg:p-8 flex items-center justify-center bg-black bg-opacity-50">
-                    <button
-                        onClick={closePopup}
-                        className="absolute top-8 right-8 lg:top-16 lg:right-16 rounded-full bg-error hover:bg-tertiary-light text-tertiary font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105"
-                    >
-                        X
-                    </button>
-                    <div className="relative bg-tertiary p-8 rounded-md shadow-lg max-h-full w-full overflow-y-auto">
+                    <div className="relative bg-tertiary p-8 rounded-md shadow-lg max-h-full w-full overflow-y-auto scrollbar-hide">
                         <CVForm
                             infosUserById={infosUserById}
                             closePopup={closePopup}
