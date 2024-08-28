@@ -6,6 +6,7 @@ import LoaderMatch from '../ComposantsCommun/LoaderMatch';
 import Chat from "../Composants/Chat/Chat";
 import useMatchmaking from '../hook/useMatchmaking';
 import useSocket from '../hook/useSocket';
+import CountdownTimer from './countDownTimer';
 
 const Ranked = () => {
     const { t } = useTranslation();
@@ -17,16 +18,19 @@ const Ranked = () => {
         id,
         username,
         puzzle,
+        startTimestamp,
         handleJoinQueue,
         handleLeaveQueue,
         handleLeaveRoom,
+        handleEndMatch,
         setMatchFound,
         setRoomId,
-        setPuzzle
+        setPuzzle,
+        setStartTimestamp,
     } = useMatchmaking();
 
     if (id !== undefined) {
-        useSocket(id, setMatchFound, setRoomId, setPuzzle);
+        useSocket(id, setMatchFound, setRoomId, setPuzzle, setStartTimestamp);
     }
 
     const handleJoinQueueClick = () => {
@@ -40,12 +44,13 @@ const Ranked = () => {
     return (
         <Layout>
             {matchFound && roomId && id && username && (
-                <div>
-                    <div className='text-center bg'>
-                        <h1>{puzzle?.title }</h1>
-                        <p>{puzzle?.details}</p>
+                <div className='w-[95%] mx-auto'>
+                    <div className="text-center">
+                        <h1 className="text-3xl font-bold font-sans text-gray-800 mb-2">{puzzle?.title}</h1>
+                        <p className="text-lg text-gray-600">{puzzle?.details}</p>
                     </div>
-                    <div className='flex'>
+
+                    <div className='flex gap-x-4'>
                         <div className='w-full'>
                             <AceEditor
                                 mode="javascript"
@@ -54,12 +59,17 @@ const Ranked = () => {
                                 style={{ height: '500px', width: '100%' }}
                                 className="border-2 border-white rounded-md"
                             />
-                            <div className='flex justify-end p-2'>
+                            <div className='flex justify-between py-2'>
+                                <CountdownTimer 
+                                    key={startTimestamp} 
+                                    startTimestamp={startTimestamp || 0} 
+                                    onComplete={handleEndMatch}
+                                />
+
                                 <Button
                                     id="validate-button"
                                     type="button"
                                     className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-tertiari text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
-
                                 >
                                     {'Valider'}
                                     <img src="/assets/arrowRightWhite.svg" className="w-5 text-tertiari" alt="rejoindre" />
