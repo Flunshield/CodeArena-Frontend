@@ -114,8 +114,8 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                         ? `${infosUserById?.firstName} ${infosUserById?.lastName}`
                                         : infosUserById?.userName}
                                 </p>
-                                <p className="text-petroleum-blue underline cursor-pointer"
-                                   onClick={() => getHistoriqueMatch()}>{t('historyMatch')}</p>
+                                {isUser && <p className="text-petroleum-blue underline cursor-pointer"
+                                   onClick={() => getHistoriqueMatch()}>{t('historyMatch')}</p>}
                                 <p className="text-neutral-900 mb-5 uppercase font-semibold text-lg">
                                     {infosUserById?.firstName && infosUserById?.lastName
                                         ? infosUserById?.userName
@@ -226,7 +226,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                     </div>
                 </FadeIn>
             </FadeInStagger>
-            {isPopupOpen && (
+            {isPopupOpen && isUser && (
                 <div
                     className="fixed top-0 left-0 z-50 p-4 lg:p-8 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
                     <div className="relative bg-gray-100 p-8 rounded-md shadow-lg max-h-full w-auto overflow-y-auto">
