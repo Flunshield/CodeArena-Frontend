@@ -17,6 +17,7 @@ export interface MatchFoundEvent {
     userId2: number;
     roomId: string;
     puzzle: Puzzle;
+    startTimestamp: number;
 }
 
 export interface Puzzle {
