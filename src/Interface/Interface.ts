@@ -29,12 +29,12 @@ export interface User {
     userRanking?: UserRanking[];
     siren?: string;
     commandeEntrepriseFormatted?: CommandeEntrepriseFormatted;
-    userTournament?: UserTournament[];
+    userEvent?: UserEvent[];
 }
 
 export interface DataToken {
     data: {
-        userTournament: UserTournament;
+        userEvent: UserEvent;
         userRanking: UserRanking;
         id?: number;
         groups: Groups;
@@ -124,13 +124,8 @@ export interface Event {
     puzzles?: PuzzlesEntreprise[];
     accepted?: boolean;
     statusPayment?: string;
+    numberRegistered:number;
 }
-
-export interface News {
-    title: string;
-    date: string;
-    description: string;
-  }
 
 export interface priceDetails {
     id: number;
