@@ -6,20 +6,24 @@ const useSocket = (
     id: number, 
     setMatchFound: (value: boolean) => void, 
     setRoomId: (value: string | null) => void,
-    setPuzzle: (value: Puzzle | null) => void
+    setPuzzle: (value: Puzzle | null) => void,
+    setStartTimestamp: (value: number | null) => void
   ) => {
     const socket = useMemo(() => io(import.meta.env.VITE_API_BASE_URL_BACK), []);
 
     useEffect(() => {
-        const handleMatchFound = ({ userId1, userId2, roomId, puzzle }: MatchFoundEvent) => {
+        const handleMatchFound = ({ userId1, userId2, roomId, puzzle, startTimestamp }: MatchFoundEvent) => {
             if (userId1 === id || userId2 === id) {
                 setMatchFound(true);
                 setRoomId(roomId);
                 setPuzzle({
                     ...puzzle,
                   });
+                setStartTimestamp(startTimestamp);
             }
         };
+        console.log(handleMatchFound);
+        
 
         socket.on('matchFound', handleMatchFound);        
         return () => {
