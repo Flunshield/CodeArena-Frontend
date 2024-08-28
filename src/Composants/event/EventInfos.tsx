@@ -3,7 +3,7 @@ import { useAuthContext } from "../../AuthContext.tsx";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getElementByEndpoint, postElementByEndpoint, unsubscribeTournament } from "../../Helpers/apiHelper.ts";
+import { getElementByEndpoint, postElementByEndpoint, unsubscribeEvent } from "../../Helpers/apiHelper.ts";
 import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import { formatDate } from "../../Helpers/formatHelper.ts";
@@ -49,8 +49,8 @@ function EventInfos(): JSX.Element {
     });
   };
 
-  const handleClickUnsubscribe = () => {
-    unsubscribeTournament('event/unsubscribe', {
+  const handleClickUnsubscribe = async () => {
+     await unsubscribeEvent('event/unsubscribe', {
       token: authContext.accessToken ?? "",
       userID: infosUser.id?.toString() ?? "",
       eventID: eventInfos?.id,
@@ -74,7 +74,7 @@ function EventInfos(): JSX.Element {
       setEventInfos(result);
       if (result) {
         infosUser.userEvent?.find((event) => {
-          if (event?.eventID === parseInt(id ?? "")) {
+          if (event?.eventsID === parseInt(id ?? "")) {
             setIsRegistered(true);
           } else {
             setIsRegistered(false);
@@ -82,7 +82,7 @@ function EventInfos(): JSX.Element {
         });
       }
     });
-    if (eventInfos && (eventInfos?.userEvent?.length >= eventInfos?.playerMax)) {
+    if (eventInfos && (eventInfos?.userEvent?.length ?? 0 >= eventInfos?.playerMax)) {
       setCanSubscribe(false);
     }
   }, [isRegistered]);
@@ -115,7 +115,7 @@ function EventInfos(): JSX.Element {
               </div>
               <div className="flex flex-col items-center p-4 bg-neutral-100 shadow-md rounded-lg mt-4 mb-6 w-full">
                 <p className="mb-2 text-3xl">{t("maxPlayer")}</p>
-                <p className="text-5xl font-bold">{eventInfos?.userEvent?.length}/{eventInfos?.playerMax}</p>
+                <p className="text-5xl font-bold">{eventInfos?.numberRegistered}/{eventInfos?.playerMax}</p>
               </div>
               <div className="mb-6 text-center">
                 <p className="mb-2 text-3xl">{t("rules")}</p>
