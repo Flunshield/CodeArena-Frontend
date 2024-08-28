@@ -7,6 +7,8 @@ import {useTranslation} from "react-i18next";
 import useUserInfos from "../../hook/useUserInfos.ts";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {Ranking} from "../../Interface/Interface.ts";
+import {useState} from "react";
+import Notification from "../../ComposantsCommun/Notification.tsx";
 
 interface puzzleAdminProps {
     className?: string;
@@ -55,6 +57,9 @@ const puzzleAdmin = ({
     const {t} = useTranslation();
     const authContext = useAuthContext();
     const userInfos = useUserInfos();
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     const initialValues: PuzzleFormValues = {
         title: title || t("titlePuzzle"),
@@ -90,12 +95,26 @@ const puzzleAdmin = ({
                     if ([200, 201].includes(result.status)) {
                         setIsSubmitted && setIsSubmitted();
                         closePopup && closePopup();
+                        setNotificationMessage(t('updateSuccess'));
+                        setNotificationType('success');
+                        setShowNotification(true);
+                    } else {
+                        setNotificationMessage(t('updateError'));
+                        setNotificationType('error');
+                        setShowNotification(true);
                     }
                     actions.setSubmitting(false);
                 }}
             >
                 {({isSubmitting}) => (
                     <Form className="space-y-6">
+                        {showNotification && (
+                            <Notification
+                                message={notificationMessage}
+                                type={notificationType}
+                                onClose={() => setShowNotification(false)}
+                            />
+                        )}
                         <div className="flex justify-around max-md:flex-col max-md:space-y-6">
                             <div className="md:w-1/2">
                                 <label htmlFor="title"
