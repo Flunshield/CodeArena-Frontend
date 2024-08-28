@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { VITE_API_BASE_URL_BACK } from "../../Helpers/apiHelper.ts";
 import io, { Socket } from 'socket.io-client';
 import { ChatInterface, ChatProps } from '../../Interface/chatInterface';
 import Messages from './Messages';
@@ -19,7 +20,7 @@ const Chat = ({ roomId, userId, username }: ChatProps) => {
     };
 
     useEffect(() => {
-        const newSocket = io('http://localhost:3000'); // Adjust the URL based on your backend configuration
+        const newSocket = io(`${VITE_API_BASE_URL_BACK}`); // Adjust the URL based on your backend configuration
         setSocket(newSocket);
 
         newSocket.on('connect', () => {
