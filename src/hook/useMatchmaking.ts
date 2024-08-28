@@ -19,21 +19,23 @@ const useMatchmaking = () => {
     const [matchFound, setMatchFound] = useState(false);
     const [roomId, setRoomId] = useState<string | null>(null);
     const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
+    const [startTimestamp, setStartTimestamp] = useState<number | null>(null);
+    const [matchEnded, setMatchEnded] = useState(false);
 
     useEffect(() => {
         if (id === undefined) {
             console.error("ID utilisateur est indéfini");
             return;
         }
-    
         const refreshStatus = async () => {
             setLoading(true);
-    
+
             const checkRoom = await checkIsInRoom(authContext.accessToken ?? "", id);
             if (checkRoom.isInRoom) {
                 setMatchFound(true);
                 setRoomId(checkRoom.roomId);
                 setPuzzle(checkRoom.puzzle);
+                setStartTimestamp(checkRoom.startTimestamp);
             } else {
                 const isInQueue = await checkIsInQueue(authContext.accessToken ?? "", id);
                 setInQueue(isInQueue);
@@ -43,6 +45,15 @@ const useMatchmaking = () => {
         };
         refreshStatus();
     }, [authContext.accessToken, id]);
+
+    useEffect(() => {
+        console.log('État actuel dans Ranked:');
+        console.log('matchFound:', matchFound);
+        console.log('roomId:', roomId);
+        console.log('inQueue:', inQueue);
+        console.log('puzzle:', puzzle);
+        console.log('startTimestamp:', startTimestamp);
+    }, [matchFound, roomId, inQueue, puzzle, startTimestamp]);
 
     const handleJoinQueue = useCallback(async () => {
         if (id === undefined) {
@@ -66,6 +77,7 @@ const useMatchmaking = () => {
         if (responseData.success) {
             console.log("Ajouté à la file d'attente et recherche de match en cours");
             setInQueue(true);
+            setMatchEnded(false);
         } else {
             alert(responseData.message || "Erreur lors de la recherche de match");
         }
@@ -107,14 +119,49 @@ const useMatchmaking = () => {
         const responseData = await response.json();
         if (responseData.success) {
             console.log("Quitter la salle de match");
+            setRoomId(null); 
+            setPuzzle(null);
+            setStartTimestamp(null);
             setMatchFound(false);
-            setRoomId(null);
             setInQueue(false);
         } else {
             alert(responseData.message || "Erreur lors de la sortie de la salle de match");
         }
         setLoading(false);
-    }, [authContext.accessToken, id]);    
+    }, [authContext.accessToken, id]);
+
+    const handleEndMatch = useCallback(async () => {
+        if (id === undefined || matchEnded) {
+            console.error("ID utilisateur est indéfini ou le match est déjà terminé");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await postElementByEndpoint('matchmaking/endMatchByTimer', {
+                token: authContext.accessToken ?? '',
+                data: { id }
+            });
+
+            if (response.ok) {
+                console.log("Match terminé par timer.");
+
+                setRoomId(null); 
+                setPuzzle(null);
+                setStartTimestamp(null);
+                setMatchFound(false);
+                setInQueue(false);
+                setMatchEnded(true);
+
+            } else {
+                console.error("Erreur lors de la fin du match.");
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'appel API pour terminer le match:", error);
+        }
+        setLoading(false);
+    }, [authContext.accessToken, id, matchEnded]);
+
     return {
         loading,
         inQueue,
@@ -123,18 +170,22 @@ const useMatchmaking = () => {
         id,
         username,
         puzzle,
+        startTimestamp,
         handleJoinQueue,
         handleLeaveQueue,
         handleLeaveRoom,
+        handleEndMatch,
         setMatchFound,
         setRoomId,
-        setPuzzle
+        setPuzzle,
+        setStartTimestamp,
     };
 }
 
 export default useMatchmaking;
 
-async function checkIsInQueue(token: string, id: number) {
+
+export async function checkIsInQueue(token: string, id: number) {
     try {
         const response = await getElementByEndpoint(`matchmaking/isInQueue?userId=` + id, {
             token,
@@ -159,7 +210,7 @@ async function checkIsInQueue(token: string, id: number) {
     }
 }
 
-async function checkIsInRoom(token: string, id: number) {
+export async function checkIsInRoom(token: string, id: number) {
     try {
         const response = await getElementByEndpoint(`matchmaking/isInRoom?userId=` + id, {
             token,
@@ -172,7 +223,8 @@ async function checkIsInRoom(token: string, id: number) {
                 return {
                     isInRoom: responseData.isInRoom,
                     roomId: responseData.roomId,
-                    puzzle: responseData.puzzle
+                    puzzle: responseData.puzzle,
+                    startTimestamp: responseData.startTimestamp
                 };
             } else {
                 console.error('Erreur lors de la vérification de la salle de match : succès est faux');
