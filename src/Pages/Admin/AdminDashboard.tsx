@@ -8,7 +8,7 @@ import {Ranking, Titles} from "../../Interface/Interface.ts";
 import ListTitle from "../../Composants/admin/ListTitle.tsx";
 import ListRank from "../../Composants/admin/ListRank.tsx";
 import ListUsers from "../../Composants/admin/ListUsers.tsx";
-import PuzzleForm from "../../ComposantsCommun/PuzzleForm.tsx";
+import PuzzleAdmin from "../../Composants/admin/puzzleAdmin.tsx";
 
 function AdminDashboard() {
     const authContext = useAuthContext();
@@ -36,10 +36,11 @@ function AdminDashboard() {
                 <Card className="bg-secondary text-tertiari">
                     <CardContent>
                         <h1 className="text-tertiari text-center text-3xl font-bold">Admin Dashboard</h1>
-                                <PuzzleForm setIsSubmitted={() => setSubmitCount(count => count + 1)} className="text-gray-600"/>
-                                <ListTitle titles={titles} setIsSubmitted={() => setSubmitCount(count => count + 1)}/>
-                                <ListRank ranks={ranks}/>
-                                <ListUsers setIsSubmitted={() => setSubmitCount(count => count + 1)} submitCount={submitCount}/>
+                        <PuzzleAdmin ranks={ranks} setIsSubmitted={() => setSubmitCount(count => count + 1)}
+                                     className="text-gray-600"/>
+                        <ListTitle titles={titles} setIsSubmitted={() => setSubmitCount(count => count + 1)}/>
+                        <ListRank ranks={ranks}/>
+                        <ListUsers setIsSubmitted={() => setSubmitCount(count => count + 1)} submitCount={submitCount}/>
                     </CardContent>
                 </Card>
             </div>

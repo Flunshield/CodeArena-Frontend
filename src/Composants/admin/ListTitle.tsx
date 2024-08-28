@@ -115,9 +115,9 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
                 </Button>
             </div>
             {isPopupOpen && (isType === 1 || isType === 2) && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
                     <div className="bg-secondary p-8 rounded-lg">
-                        <FormTitre onClose={closePopup} title={titleToUpdate} type={isType}/>
+                        <FormTitre setIsSubmitted={setIsSubmitted} onClose={closePopup} title={titleToUpdate} type={isType}/>
                     </div>
                 </div>
             )}
