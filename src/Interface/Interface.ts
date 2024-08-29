@@ -179,6 +179,16 @@ export interface Ranking {
     maxPoints: string;
 }
 
+export interface Puzzle {
+    id: number;
+    title: string;
+    description: string;
+    tests: JSON[];
+    details: string;
+    rankings?: Ranking;
+    events?: Event;
+}
+
 export interface UserTournament {
     id: number;
     userID: number;
