@@ -33,3 +33,16 @@ export interface Puzzle {
     details: string;
     title: string;
 }
+
+export interface Test {
+    name: string;
+    condition: string;
+    successMessage: string;
+    failureMessage: string;
+}
+
+export interface testCallBack {
+    message: string;
+    testPassed: string[];
+    testFailed: string[];
+}
