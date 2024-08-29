@@ -43,6 +43,10 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
             setNotificationType('success');
             setShowNotification(true);
             setIsSubmitted();
+        } else {
+            setNotificationMessage(t('updateError'));
+            setNotificationType('error');
+            setShowNotification(true);
         }
     };
 

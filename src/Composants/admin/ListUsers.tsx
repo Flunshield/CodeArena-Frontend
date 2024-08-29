@@ -57,7 +57,6 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
             setUsers(result);
         });
     }, [submitCount]);
-console.log(users)
     return (
         <div className="">
             <div className="flex flex-row justify-between">
