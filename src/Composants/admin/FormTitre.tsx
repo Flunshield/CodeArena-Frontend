@@ -81,7 +81,7 @@ const FormTitre: React.FC<formTitreProps> = ({onClose, title, type, setIsSubmitt
                 />
             )}
             <div className="flex flex-col w-full mb-10">
-                <p className="text-tertiari font-bold text-2xl text-center mb-6">{t("TitlesUpdate")}</p>
+                <p className="text-tertiari font-bold text-2xl text-center mb-6">{t("titlesUpdate")}</p>
                 <ul className="flex flex-col mt-5">
                     <li className="flex flex-row mb-2">
                         <p className="font-bold text-tertiari mr-10">{t("label")} : </p>

@@ -172,8 +172,8 @@ function AdminEventDashboard() {
                 setNotificationMessage(t('eventDeleted'));
                 setNotificationType('success');
                 setShowNotification(true);
-                setSubmitCount(submitCount + 1);
                 setOpenPopup(false);
+                setSubmitCount(submitCount + 1);
             } else {
                 setNotificationMessage(t('errorEventDeleted'));
                 setNotificationType('error');

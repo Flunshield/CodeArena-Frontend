@@ -115,7 +115,7 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
                 )}
                 <Button type="button" onClick={() => openPopup(2)}
                         className="bg-golden-yellow hover:bg-yellow-600 text-quaternary font-medium py-2 px-4 rounded-lg mt-5"
-                        id="addTitle">{t("Ajouter un titre")}
+                        id="addTitle">{t("addTitle")}
                 </Button>
             </div>
             {isPopupOpen && (isType === 1 || isType === 2) && (
