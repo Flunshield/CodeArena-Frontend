@@ -126,7 +126,7 @@ const puzzleAdmin = ({
                         </div>
                         <div>
                             <label htmlFor="rankingId"
-                                   className="block text-sm font-medium text-quaternary">Classement</label>
+                                   className="block text-sm font-medium text-quaternary">{t('ranking')}</label>
                             <Field as="select" id="rankingId" name="rankingId"
                                    className="block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 mt-1">
                                 <option value="">-</option>
@@ -138,14 +138,14 @@ const puzzleAdmin = ({
                         </div>
                         <div>
                             <label htmlFor="eventId"
-                                   className="block text-sm font-medium text-quaternary">Evénement</label>
+                                   className="block text-sm font-medium text-quaternary">{t('event')}</label>
                             <Field as="input" id="eventId" name="eventId" type="number"
                                    className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"/>
                             <ErrorMessage name="eventId" component="div" className="text-error text-xs mt-1"/>
                         </div>
                         <div>
                             <label htmlFor="details"
-                                   className="block text-sm font-medium text-quaternary">Sujet du puzzle</label>
+                                   className="block text-sm font-medium text-quaternary">{t('sujetPuzzle')}</label>
                             <Field as="textarea" id="details" name="details" type="text"
                                    className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"/>
                             <ErrorMessage name="details" component="div" className="text-error text-xs mt-1"/>

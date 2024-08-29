@@ -10,6 +10,7 @@ import ListRank from "../../Composants/admin/ListRank.tsx";
 import ListUsers from "../../Composants/admin/ListUsers.tsx";
 import PuzzleAdmin from "../../Composants/admin/puzzleAdmin.tsx";
 import ListPuzzle from "../../Composants/admin/listPuzzle.tsx";
+import {useTranslation} from "react-i18next";
 
 function AdminDashboard() {
     const authContext = useAuthContext();
@@ -19,6 +20,7 @@ function AdminDashboard() {
     const [ranks, setRanks] = useState<Ranking[]>([]);
     const getTitle = getElementByEndpoint("user/getTitles", {token: token, data: ""});
     const getRank = getElementByEndpoint("admin/getRanks", {token: token, data: ""});
+    const { t } = useTranslation();
 
     useEffect(() => {
         getTitle.then(async (response) => {
@@ -36,7 +38,7 @@ function AdminDashboard() {
             <div className="m-5">
                 <Card className="bg-secondary text-tertiari">
                     <CardContent>
-                        <h1 className="text-tertiari text-center text-3xl font-bold">Admin Dashboard</h1>
+                        <h1 className="text-tertiari text-center text-3xl font-bold">{t('adminDashboard')}</h1>
                         <PuzzleAdmin ranks={ranks} setIsSubmitted={() => setSubmitCount(count => count + 1)}
                                      className="text-gray-600"/>
                         <ListPuzzle setIsSubmitted={() => setSubmitCount(count => count + 1)}

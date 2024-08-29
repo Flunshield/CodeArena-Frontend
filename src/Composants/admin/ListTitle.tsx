@@ -59,7 +59,7 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des titres')}</h2>
+            <h2 className="text-lg font-semibold text-tertiari mb-4">{t('listOfTitle')}</h2>
             <div className="flex flex-col justify-center">
                 {titles.length > 0 ? (
                     <div className="overflow-x-auto rounded-lg">

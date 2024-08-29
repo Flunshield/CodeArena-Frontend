@@ -77,16 +77,16 @@ const ListPuzzle = ({className, submitCount, setIsSubmitted, ranks}: listPuzzleP
                 />
             )}
             <div className={clsx(className, "overflow-x-auto rounded-xl m-5")}>
-                <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des puzzles')}</h2>
+                <h2 className="text-lg font-semibold text-tertiari mb-4">{t('listPuzzle')}</h2>
                 <table className="min-w-full table-auto text-secondary">
                     <thead>
                     <tr className="bg-gray-200">
                         <th className="px-4 py-2 border">ID</th>
-                        <th className="px-4 py-2 border">Titre</th>
-                        <th className="px-4 py-2 border">Ranking ID</th>
-                        <th className="px-4 py-2 border">Event ID</th>
-                        <th className="px-4 py-2 border">Modifier</th>
-                        <th className="px-4 py-2 border">Supprimer</th>
+                        <th className="px-4 py-2 border">{t('title')}</th>
+                        <th className="px-4 py-2 border">{t('ranking')}</th>
+                        <th className="px-4 py-2 border">{t('event')}</th>
+                        <th className="px-4 py-2 border">{t('modify')}</th>
+                        <th className="px-4 py-2 border">{t('delete')}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -109,7 +109,7 @@ const ListPuzzle = ({className, submitCount, setIsSubmitted, ranks}: listPuzzleP
                                     className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                                     onClick={() => onDelete(puzzle.id)}
                                 >
-                                    Supprimer
+                                    {t('delete')}
                                 </button>
                             </td>
                         </tr>
