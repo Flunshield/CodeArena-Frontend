@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { VITE_API_BASE_URL_BACK } from "../../Helpers/apiHelper.ts";
 import io, { Socket } from 'socket.io-client';
 import { ChatInterface, ChatProps } from '../../Interface/chatInterface';
@@ -6,35 +6,37 @@ import Messages from './Messages';
 import MessageInput from './MessageInput';
 
 const Chat = ({ roomId, userId, username }: ChatProps) => {
-    const [socket, setSocket] = useState<Socket | null>(null);
     const [messages, setMessages] = useState<ChatInterface[]>([]);
     const [typingUsers, setTypingUsers] = useState<{ userId: number; username: string }[]>([]);
-
-    const send = (value: string) => {
-        if (userId && username) {
-            const message = { userId, username, body: value, timestamp: new Date().toISOString(), roomId };
-            socket?.emit('message', message);
-        } else {
-            console.error('User ID or username is not available');
-        }
-    };
+    const socketRef = useRef<Socket | null>(null);
 
     useEffect(() => {
-        const newSocket = io(`${VITE_API_BASE_URL_BACK}`); // Adjust the URL based on your backend configuration
-        setSocket(newSocket);
+        // Récupérer l'ID de session de la socket depuis le localStorage
+        const sessionId = localStorage.getItem(`socketSessionId_${userId}`);
 
-        newSocket.on('connect', () => {
+        // Initialiser la socket
+        socketRef.current = io(`${VITE_API_BASE_URL_BACK}`, {
+            query: { sessionId }, // Envoyer l'ID de session si disponible
+        });
+
+        // Vérification que socketRef.current n'est pas null
+        socketRef.current?.on('connect', () => {
             console.log('Socket connected, joining room:', roomId);
-            if (roomId) {
-                newSocket.emit('joinRoom', roomId);
+            if (socketRef.current && socketRef.current.id) {
+                localStorage.setItem(`socketSessionId_${userId}`, socketRef.current.id); // Sauvegarder l'ID de session
+            }
+            if (roomId && socketRef.current) {
+                socketRef.current.emit('joinRoom', roomId);
             }
         });
 
-        newSocket.on('message', (message: ChatInterface) => {
+        // Gérer les messages reçus
+        socketRef.current?.on('message', (message: ChatInterface) => {
             setMessages(prevMessages => [...prevMessages, message]);
         });
 
-        newSocket.on('typing', (payload: { isTyping: boolean; userId: number; username: string }) => {
+        // Gérer les événements de "typing"
+        socketRef.current?.on('typing', (payload: { isTyping: boolean; userId: number; username: string }) => {
             if (payload.isTyping) {
                 setTypingUsers(prevUsers => {
                     const existingUser = prevUsers.find(user => user.userId === payload.userId);
@@ -48,14 +50,25 @@ const Chat = ({ roomId, userId, username }: ChatProps) => {
             }
         });
 
+        // Nettoyer la connexion lors du démontage du composant
         return () => {
-            newSocket.disconnect();
+            socketRef.current?.disconnect();
+            socketRef.current = null;
         };
-    }, [roomId]);
+    }, [roomId, userId]);
+
+    const send = (value: string) => {
+        if (userId && username && socketRef.current) {
+            const message = { userId, username, body: value, timestamp: new Date().toISOString(), roomId };
+            socketRef.current.emit('message', message);
+        } else {
+            console.error('User ID, username, or socket is not available');
+        }
+    };
 
     const handleTyping = (isUserTyping: boolean) => {
-        if (socket) {
-            socket.emit('typing', { roomId, isTyping: isUserTyping, userId, username });
+        if (socketRef.current) {
+            socketRef.current.emit('typing', { roomId, isTyping: isUserTyping, userId, username });
         }
     };
 
@@ -70,4 +83,5 @@ const Chat = ({ roomId, userId, username }: ChatProps) => {
         </div>
     );
 };
+
 export default Chat;
