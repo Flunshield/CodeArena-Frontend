@@ -137,6 +137,13 @@ export interface priceDetails {
     finalPrice: number;
 }
 
+export interface News{
+    title: string;
+    date: string;
+    description: string;
+
+}
+
 export interface Match {
     id: number;
     date: Date;

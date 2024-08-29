@@ -8,7 +8,7 @@ import { FadeIn, FadeInStagger } from "../../ComposantsCommun/FadeIn.tsx";
 import { Container } from "../../ComposantsCommun/Container.tsx";
 
 interface TableauNewsProps {
-    newsData?: News[]; // Paramètre facultatif pour passer des données personnalisées
+    newsData?: News[]; 
     className?: string;
 }
 

@@ -122,7 +122,7 @@ const BouttonProfile = () => {
                                 className="border-1 text-tertiari text-1xl border-2 border-tertiari rounded-md p-2 mt-10 hover:underline"
                                 onClick={handleClickSingOut}
                             >
-                                {t('disonnect')}
+                                {t('disconnect')}
                             </Button>
                             </div>
                         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import Button from "./Button.tsx";
 import Card from "./Card.tsx";
 import clsx from "clsx";
+import { useTranslation } from 'react-i18next';
 
 
 interface SwitcherProps {
@@ -11,6 +12,7 @@ interface SwitcherProps {
 }
 
 const Switcher: React.FC<SwitcherProps> = (data) => {
+    const { t } = useTranslation();
     const { setCurrentHome, currentHome, className } = data;
 
     function goToDevHome() {
@@ -31,7 +33,7 @@ const Switcher: React.FC<SwitcherProps> = (data) => {
                     className={clsx(!currentHome ? "bg-gray-700 text-tertiari" : "bg-primary text-tertiari", "p-2 md:w-48 px-4 py-2 rounded-lg font-bold transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:rotate-1 shadow-angelic-white")}
                     onClick={() => goToDevHome()}
                 >
-                    <p>Développeur</p>
+                    <p>{t('Dev')}</p>
                 </Button>
                 <div className="hidden md:block w-4"></div> {/* Espacement entre les boutons sur les écrans moyens et grands */}
                 <Button
@@ -40,7 +42,7 @@ const Switcher: React.FC<SwitcherProps> = (data) => {
                     className={clsx(currentHome ? "bg-gray-700 text-tertiari" : "bg-primary text-tertiari", "p-2 md:w-48 px-4 py-2 rounded-lg font-bold transition duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1 hover:rotate-1 shadow-angelic-white")}
                     onClick={() => goToWorkOffice()}
                 >
-                    Entreprise
+                    <p>{t('entreprise')}</p>
                 </Button>
             </Card>
         </div>

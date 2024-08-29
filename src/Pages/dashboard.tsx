@@ -4,7 +4,6 @@ import { useAuthContext } from "../AuthContext.tsx";
 import { JwtPayload } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { getElementByEndpoint } from "../Helpers/apiHelper.ts";
-
 import UserRank from "../Composants/dashboard/UserRank.tsx";
 import { FadeIn, FadeInStagger } from "../ComposantsCommun/FadeIn.tsx";
 import { Container } from "../ComposantsCommun/Container.tsx";
@@ -42,11 +41,11 @@ function Dashboard() {
     return (
         <Layout>
             <Container className="mt-12">
-                <SectionIntro title="Dashboard">
+                <SectionIntro title={t("Dashboard")}>
                     <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-                        <p className="mb-4 md:mb-0">Bienvenue sur votre tableau de bord, où vous pouvez voir vos événements, classements et tournois.</p>
+                        <p className="mb-4 md:mb-0">{t("Welcome")}</p>
                         <Button className="bg-primary text-secondary rounded-lg py-3 px-6 shadow-lg hover:bg-yellow-500" type="button" id="game" onClick={() => { navigate("/ranked") }}>
-                            Jouez Maintenant
+                            {t("Jouez")}
                         </Button>
                     </div>
                 </SectionIntro>
