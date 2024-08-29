@@ -27,7 +27,7 @@ const Header = () => {
     const handleClickSignUp = () => {
         navigate("/signUp");
     };
-    
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
@@ -52,11 +52,13 @@ const Header = () => {
 
                 <div className="flex justify-between px-10 py-3 w-full items-center md:space-x-1">
                     <div className="flex items-center">
-
-                        {!isConnected ?
-                            <a href={isConnected ? DASHBOARD : HOME}> <img src="/logo.svg" alt="Logo codeArena"
-                                className="sm:block w-12 h-12 sm:w-16 sm:h-16 mr-3 sm:mr-3 sm:mt-2 -ml-5 " /></a> : ""}
-                        <a className="hidden sm:block  text-tertiari text-3xl  font-bold"
+                        {!isConnected && (
+                            <a href={isConnected ? DASHBOARD : HOME}>
+                                <img src="/logo.svg" alt="Logo codeArena"
+                                    className="sm:block w-12 h-12 sm:w-16 sm:h-16 mr-3 sm:mr-3 sm:mt-2 -ml-5" />
+                            </a>
+                        )}
+                        <a className="hidden sm:block text-tertiari text-3xl font-bold truncate"
                             href={isConnected ? DASHBOARD : HOME}>
                             {t('CodeArena')}
                         </a>
@@ -84,12 +86,11 @@ const Header = () => {
                                         ref={popupRef}
                                         className="fixed right-2 bg-secondary text-tertiari border-2 border-tertiari p-2 rounded shadow"
                                     >
-                                        
                                         <div className="flex flex-col items-center justify-center space-y-2">
                                             <Button
                                                 type="button"
                                                 id="signIn"
-                                                className="bg-gray-700 text-tertiari p-3 md:px-2 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                                className="bg-gray-700 text-tertiari p-3 md:px-2 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1 min-w-[100px] truncate"
                                                 onClick={handleClickSignIn}
                                             >
                                                 {t('connection')}
@@ -97,7 +98,7 @@ const Header = () => {
                                             <Button
                                                 type="button"
                                                 id="signUp"
-                                                className="bg-gray-700 text-tertiari p-3 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                                className="bg-gray-700 text-tertiari p-3 md:px-4 py-2 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1 min-w-[100px] truncate"
                                                 onClick={handleClickSignUp}
                                             >
                                                 {t('inscription')}
@@ -110,7 +111,7 @@ const Header = () => {
                                 <Button
                                     type="button"
                                     id="signIn"
-                                    className="bg-gray-700 text-tertiari p-2 md:px-4 py-3 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                    className="bg-gray-700 text-tertiari px-4 py-2 md:px-4 md:py-3 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1 min-w-[100px] truncate"
                                     onClick={handleClickSignIn}
                                 >
                                     {t('connection')}
@@ -118,7 +119,7 @@ const Header = () => {
                                 <Button
                                     type="button"
                                     id="signUp"
-                                    className="bg-gray-700 text-tertiari p-2 md:px-4 py-3 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1"
+                                    className="bg-gray-700 text-tertiari px-4 py-2 md:px-4 md:py-3 rounded-lg font-bold shadow-md focus:outline-none focus:ring-2 focus:ring-primary transform hover:scale-105 hover:-translate-y-1 hover:rotate-1 min-w-[100px] truncate"
                                     onClick={handleClickSignUp}
                                 >
                                     {t('inscription')}

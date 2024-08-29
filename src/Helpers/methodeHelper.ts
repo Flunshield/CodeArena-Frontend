@@ -101,15 +101,16 @@ export function isValidAddress(address: string) {
 /**
  * Télécharge un fichier PDF à partir de la réponse HTTP fournie.
  * @param response La réponse HTTP contenant le fichier PDF à télécharger.
+ * @param name
  * @returns Vrai si le téléchargement a réussi, sinon faux.
  */
-export async function downloadPdf(response: Response) {
-    if (response.status === 200) {
+export async function downloadPdf(response: Response, name: string) {
+    if (response.status === 200 || response.status === 201) {
         const result = await response.blob();
         const url = window.URL.createObjectURL(new Blob([result]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'cv.pdf');
+        link.setAttribute('download', name);
         document.body.appendChild(link);
         link.click();
     } else {

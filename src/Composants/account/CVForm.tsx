@@ -91,18 +91,27 @@ const CVForm = ({
 
     return (
         <form onSubmit={handleSubmit} className="max-w-2xl mx-auto p-4 bg-tertiari shadow-md rounded-md space-y-6">
+
             <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-gray-700">{t('cvName')}</h2>
-                    <label htmlFor="cvName" className="block text-gray-700">{t('cvName')}</label>
-                    <input
-                        type="text"
-                        id="cvName"
-                        name="cvName"
-                        value={formData.cvName}
-                        onChange={handleChange}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
-                        maxLength={25}
-                    />
+                <div className="flex justify-between">
+                <h2 className="text-xl font-semibold text-gray-700">{t('creatorCv')}</h2>
+                <button
+                    onClick={closePopup}
+                    className="rounded-full bg-error hover:bg-tertiary-light text-tertiary font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                >
+                    X
+                </button>
+                </div>
+                <label htmlFor="cvName" className="block text-gray-700">{t('cvName')}</label>
+                <input
+                    type="text"
+                    id="cvName"
+                    name="cvName"
+                    value={formData.cvName}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+                    maxLength={25}
+                />
                 <h2 className="text-xl font-semibold text-gray-700">{t('personalInformation')}</h2>
                 <div>
                     <label htmlFor="firstName" className="block text-gray-700">{t('firstName')}</label>

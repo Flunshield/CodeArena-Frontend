@@ -63,7 +63,7 @@ export function LogoutPage() {
                 )}
                 <div className="flex justify-center items-center h-screen">
                     {loading && (
-                        <LoaderMatch msg="Déconnexion en cours..." className="z-50 bg-gris-chaud rounded-lg"/>
+                        <LoaderMatch msg="Déconnexion en cours..." className="z-50 p-5 bg-gris-chaud rounded-lg flex flex-col items-center" type="login"/>
                     )}
                     {error && <p style={{color: 'red'}}>{error}</p>}
                 </div>

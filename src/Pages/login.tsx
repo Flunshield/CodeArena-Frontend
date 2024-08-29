@@ -132,7 +132,7 @@ function LoginPage() {
             )}
             {loading ? (
                 <div className="flex justify-center items-center h-screen">
-                    <LoaderMatch msg={t('attemptConnexion')} className="z-50 bg-gris-chaud rounded-lg" />
+                    <LoaderMatch msg={t('attemptConnexion')} className="z-50 p-5 bg-gris-chaud rounded-lg flex flex-col items-center" type="login" />
                 </div>
             ) : !isConnected ? (
                 <Container className="flex flex-col items-center justify-center min-h-screen ">
@@ -187,14 +187,18 @@ function LoginPage() {
                                     </FadeInStagger>
                                     <div className="flex flex-col justify-center mt-10">
                                         <Button type="submit" id="connect"
-                                            className="bg-secondary hover:bg-button-hover text-tertiari w-full h-12 rounded-md uppercase transition duration-300">
+                                                className="bg-secondary hover:bg-button-hover text-tertiari w-full h-12 rounded-md uppercase transition duration-300">
                                             {t('connect')}
                                         </Button>
                                         <div className="flex flex-col text-center mt-5">
-                                            <Button type="button" id="goToForgotPassword" className="text-center hover:text-cyan-800 text-secondary" onClick={goToForgotPassword}>
+                                            <Button type="button" id="goToForgotPassword"
+                                                    className="text-center hover:text-cyan-800 text-secondary"
+                                                    onClick={goToForgotPassword}>
                                                 {t('forgotPassword')}
                                             </Button>
-                                            <Button type="button" id="goToSignUp" className="text-center hover:text-cyan-800 text-secondary" onClick={goToSignUp}>
+                                            <Button type="button" id="goToSignUp"
+                                                    className="text-center hover:text-cyan-800 text-secondary"
+                                                    onClick={goToSignUp}>
                                                 {t('register')}
                                             </Button>
                                         </div>

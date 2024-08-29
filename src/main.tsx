@@ -1,13 +1,13 @@
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import {AuthContextProvider} from "./AuthContext.tsx";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { AuthContextProvider } from "./AuthContext.tsx";
 import Home from "./Pages/home.tsx";
 import PrivateRoute from "./ComposantsCommun/PrivateRoute.tsx";
-import {LogoutPage} from "./Pages/logout.tsx";
+import { LogoutPage } from "./Pages/logout.tsx";
 import SignUpForm from "./Pages/signUpForm.tsx";
 import Login from "./Pages/login.tsx";
-import {I18nextProvider} from "react-i18next";
+import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n.ts";
 import ForgotPassword from "./Pages/forgotPassword.tsx";
 import ChangePassword from "./Pages/changePassword.tsx";
@@ -15,14 +15,15 @@ import Dashboard from "./Pages/dashboard.tsx";
 import MyAccount from "./Pages/myAccount.tsx";
 import Ranked from './Pages/ranked.tsx';
 import Classement from "./Pages/classement.tsx";
-import TournamentDashboard from "./Pages/tournamentDashboard.tsx";
+
 import EventDashboard from "./Pages/eventDashboard.tsx";
-import PageTournamentInfos from "./Pages/pageTournamentInfos.tsx";
 import PrivateRouteAdmin from "./ComposantsCommun/PrivateRouteAdmin.tsx";
-import AdminDashboard from "./Pages/AdminDashboard.tsx";
+import AdminDashboard from "./Pages/Admin/AdminDashboard.tsx";
 import GameEntreprise from "./Pages/Entreprise/gameEntreprise.tsx";
 import {
     ADMIN,
+    ADMIN_EVENT_CREATE,
+    ADMIN_EVENT_DASHBOARD,
     CANCEL,
     COMPTE,
     COOKIE_POLICY,
@@ -44,9 +45,8 @@ import {
     REGISTER,
     RESET_PASSWORD,
     RESULT_PAGE,
-    SUCCESS,
+    SUCCESS, SUCCESS_BUY_EVENT,
     TERMS,
-    TOURNAMENT
 } from "./constantes/constantesRoutes.ts";
 import Entreprise from "./Pages/Entreprise/entreprise.tsx";
 import Success from "./Pages/Entreprise/success.tsx";
@@ -60,137 +60,162 @@ import PrivateRouteEntreprise from "./ComposantsCommun/PrivateRouteEntreprise.ts
 import DashboardEntreprise from "./Pages/Entreprise/dashboardEntreprise.tsx";
 import ErrorPage from "./Pages/ErrorPage.tsx";
 import ResultPage from "./Pages/Entreprise/ResultPage.tsx";
-import {NotificationProvider} from "./NotificationContext.tsx";
+import { NotificationProvider } from "./NotificationContext.tsx";
+import AdminEventDashboard from "./Pages/Admin/AdminEventDashboard.tsx";
+import AdminEventCreate from "./Pages/Admin/adminEventCreate.tsx";
+import PrivateRouteAdminOrEntreprise from "./ComposantsCommun/PrivateRouteAdminOrEntreprise.tsx";
+import SuccessEvent from "./Pages/Entreprise/successEvent.tsx";
+import PageEventDetails from './Pages/pageEventDetails.tsx';
 
 const router = createBrowserRouter([
     {
         path: LOGIN,
-        element: <Login/>,
-        errorElement: <ErrorPage/>,
+        element: <Login />,
+        errorElement: <ErrorPage />,
     },
     {
         path: HOME,
-        element: <Home/>,
-        errorElement: <ErrorPage/>
+        element: <Home />,
+        errorElement: <ErrorPage />
     },
     {
         path: LOGOUT,
-        element: <PrivateRoute><LogoutPage/></PrivateRoute>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRoute><LogoutPage /></PrivateRoute>,
+        errorElement: <ErrorPage />
     },
     {
         path: REGISTER,
-        element: <SignUpForm/>,
-        errorElement: <ErrorPage/>
+        element: <SignUpForm />,
+        errorElement: <ErrorPage />
     },
     {
         path: FORGOT_PASSWORD,
-        element: <ForgotPassword/>,
-        errorElement: <ErrorPage/>
+        element: <ForgotPassword />,
+        errorElement: <ErrorPage />
     },
     {
         path: RESET_PASSWORD,
-        element: <ChangePassword/>,
-        errorElement: <ErrorPage/>
+        element: <ChangePassword />,
+        errorElement: <ErrorPage />
     },
     {
         path: ENTREPRISE,
-        element: <Entreprise/>,
-        errorElement: <ErrorPage/>
+        element: <Entreprise />,
+        errorElement: <ErrorPage />
     },
     {
         path: COOKIE_POLICY,
-        element: <CookiePolicyPage/>,
-        errorElement: <ErrorPage/>
+        element: <CookiePolicyPage />,
+        errorElement: <ErrorPage />
     },
     {
         path: PRIVACY_POLICY,
-        element: <PrivacyPolicy/>,
-        errorElement: <ErrorPage/>
+        element: <PrivacyPolicy />,
+        errorElement: <ErrorPage />
     },
     {
         path: LEGAL,
-        element: <LegalMentions/>,
-        errorElement: <ErrorPage/>
+        element: <LegalMentions />,
+        errorElement: <ErrorPage />
     },
     {
         path: TERMS,
-        element: <Cgv/>,
-        errorElement: <ErrorPage/>
+        element: <Cgv />,
+        errorElement: <ErrorPage />
     },
     {
         path: DASHBOARD,
-        element: <PrivateRoute><Dashboard/></PrivateRoute>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRoute><Dashboard /></PrivateRoute>,
+        errorElement: <ErrorPage />
     },
     {
         path: COMPTE,
-        element: <PrivateRoute><MyAccount/></PrivateRoute>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRoute><MyAccount /></PrivateRoute>,
+        errorElement: <ErrorPage />
     },
     {
         path: RANKED,
-        element: <PrivateRoute><Ranked/></PrivateRoute>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRoute><Ranked /></PrivateRoute>,
+        errorElement: <ErrorPage />
     },
     {
         path: RANKING,
-        element: <PrivateRoute><Classement/></PrivateRoute>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRoute><Classement /></PrivateRoute>,
+        errorElement: <ErrorPage />
     },
+    // {
+    //     path: TOURNAMENT,
+    //     element: <PrivateRoute><TournamentDashboard/></PrivateRoute>,
+    //     errorElement: <ErrorPage/>
+    // },
+    // {
+    //     path: `${TOURNAMENT}/:id`,
+    //     element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,
+    //     errorElement: <ErrorPage/>
+    // },
     {
-        path: TOURNAMENT,
-        element: <PrivateRoute><TournamentDashboard/></PrivateRoute>,
-        errorElement: <ErrorPage/>
-    },
-    {
-        path: `${TOURNAMENT}/:id`,
-        element: <PrivateRoute><PageTournamentInfos/></PrivateRoute>,
-        errorElement: <ErrorPage/>
+        path: `${EVENT}/:id`,
+        element: <PrivateRoute><PageEventDetails /></PrivateRoute>,
+        errorElement: <ErrorPage />
     },
     {
         path: EVENT,
-        element: <PrivateRoute><EventDashboard/></PrivateRoute>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRoute><EventDashboard /></PrivateRoute>,
+        errorElement: <ErrorPage />
     },
     {
         path: ADMIN,
-        element: <PrivateRouteAdmin><AdminDashboard/></PrivateRouteAdmin>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRouteAdmin><AdminDashboard /></PrivateRouteAdmin>,
+        errorElement: <ErrorPage />
+    },
+    {
+        path: ADMIN_EVENT_CREATE,
+        element: <PrivateRouteAdmin><AdminEventCreate /></PrivateRouteAdmin>,
+        errorElement: <ErrorPage />
+    },
+    {
+        path: ADMIN_EVENT_DASHBOARD,
+        element: <PrivateRouteAdminOrEntreprise><AdminEventDashboard /></PrivateRouteAdminOrEntreprise>,
+        errorElement: <ErrorPage />
     },
     {
         path: GAME_ENTREPRISE,
-        element: <GameEntreprise/>,
-        errorElement: <ErrorPage/>
+        element: <GameEntreprise />,
+        errorElement: <ErrorPage />
     },
     {
         path: LOAD_GAME,
-        element: <LoadGame/>,
-        errorElement: <ErrorPage/>
+        element: <LoadGame />,
+        errorElement: <ErrorPage />
     },
     {
         path: SUCCESS,
-        element: <PrivateRoute><Success/></PrivateRoute>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRoute><Success /></PrivateRoute>,
+        errorElement: <ErrorPage />
+    },
+    {
+        path: SUCCESS_BUY_EVENT,
+        element: <PrivateRoute><SuccessEvent /></PrivateRoute>,
+        errorElement: <ErrorPage />
     },
     {
         path: CANCEL,
-        element: <PrivateRoute><Cancel/></PrivateRoute>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRoute><Cancel /></PrivateRoute>,
+        errorElement: <ErrorPage />
     },
     {
         path: DASHBOARD_ENTREPRISE,
-        element: <PrivateRouteEntreprise><DashboardEntreprise/></PrivateRouteEntreprise>,
-        errorElement: <ErrorPage/>
+        element: <PrivateRouteEntreprise><DashboardEntreprise /></PrivateRouteEntreprise>,
+        errorElement: <ErrorPage />
     },
     {
         path: ERROR_PAGE,
-        element: <ErrorPage/>
+        element: <ErrorPage />
     },
     {
         path: RESULT_PAGE,
-        element: <ResultPage/>,
-        errorElement: <ErrorPage/>
+        element: <ResultPage />,
+        errorElement: <ErrorPage />
     }
 ])
 
@@ -198,7 +223,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <I18nextProvider i18n={i18n}>
         <AuthContextProvider>
             <NotificationProvider>
-                <RouterProvider router={router}/>
+                <RouterProvider router={router} />
             </NotificationProvider>
         </AuthContextProvider>
     </I18nextProvider>

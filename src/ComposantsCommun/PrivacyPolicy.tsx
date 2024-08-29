@@ -1,14 +1,14 @@
-import { Container } from './Container';
+import {Container} from './Container';
 import Layout from './Layout';
-import { useTranslation } from "react-i18next";
-import { SectionIntro } from './SectionIntro';
+import {useTranslation} from "react-i18next";
+import {SectionIntro} from './SectionIntro';
 
 const PrivacyPolicy = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     return (
         <Layout>
             <Container className="mt-10 mb-3 py-5 bg-tertiari rounded-xl shadow-lg">
-                <SectionIntro title={t('privacyTitle')} >
+                <SectionIntro title={t('privacyTitle')}>
                     <div className="flex flex-col md:flex-row justify-between items-center mb-8">
                         <div className="container mx-auto p-6 text-secondary">
                             <p className="mb-4">

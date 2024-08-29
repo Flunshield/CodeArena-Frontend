@@ -29,12 +29,12 @@ export interface User {
     userRanking?: UserRanking[];
     siren?: string;
     commandeEntrepriseFormatted?: CommandeEntrepriseFormatted;
-    userTournament?: UserTournament[];
+    userEvent?: UserEvent[];
 }
 
 export interface DataToken {
     data: {
-        userTournament: UserTournament;
+        userEvent: UserEvent;
         userRanking: UserRanking;
         id?: number;
         groups: Groups;
@@ -108,15 +108,40 @@ export interface userRangList {
 
 export interface Event {
     id?: number;
-    startDate?: Date;
-    endDate?: Date;
-    playerMax?: number;
-    title?: string;
-    description?: string;
-    rewards?: string;
-    organize?: string;
+    startDate: Date;
+    endDate: Date;
+    playerMax: number;
+    title: string;
+    description: string;
+    rewards: string;
+    organize: string;
+    createPuzzles?: boolean;
+    priceAdjustment?: number;
+    basePrice?: number;
+    priceDetails: priceDetails;
     matches?: Match[];
     userEvent?: UserEvent[];
+    puzzles?: PuzzlesEntreprise[];
+    accepted?: boolean;
+    statusPayment?: string;
+    numberRegistered:number;
+}
+
+export interface priceDetails {
+    id: number;
+    basePrice: number;
+    proximityCharge: number;
+    durationCharge: number;
+    puzzlesCharge: number;
+    adjustmentCharge: number;
+    finalPrice: number;
+}
+
+export interface News{
+    title: string;
+    date: string;
+    description: string;
+
 }
 
 export interface Match {
@@ -126,10 +151,17 @@ export interface Match {
     location: string;
     status: string;
     score: number;
-    tournamentID: number;
-    tournament: Tournament;
+    eventId: number;
+    event: Event;
     rankingsID: number;
     rankings: Ranking;
+    winnerID: number;
+    winner: {userName: string}
+    looserID: number;
+    loser: {userName: string}
+    loserPoints: number;
+    winnerPoints: number;
+
 }
 
 export interface UserEvent {
@@ -152,6 +184,16 @@ export interface Ranking {
     userRanking: UserRanking[];
     minPoints: string;
     maxPoints: string;
+}
+
+export interface Puzzle {
+    id: number;
+    title: string;
+    description: string;
+    tests: JSON[];
+    details: string;
+    rankings?: Ranking;
+    events?: Event;
 }
 
 export interface UserTournament {

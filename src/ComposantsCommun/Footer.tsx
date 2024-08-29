@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
-import { ENTREPRISE, EVENT, LEGAL, PRIVACY_POLICY, RANKING, TERMS, TOURNAMENT } from "../constantes/constantesRoutes.ts";
+import { ENTREPRISE, EVENT, LEGAL, PRIVACY_POLICY, RANKING, TERMS } from "../constantes/constantesRoutes.ts";
 import { NavFlags } from "../Interface/Interface.ts";
 import drapFr from "/assets/drapeaux/fr.svg";
 import drapEn from "/assets/drapeaux/gb.svg";
@@ -31,6 +31,7 @@ const NavFlagsComponent = () => {
     const handleChangeLanguage = async (language: string) => {
         await changeLanguage(language);
         await i18n.reloadResources();
+        window.location.reload()
     };
 
     return (
@@ -70,7 +71,7 @@ function Navigation() {
             title: t('Développeur'),
             links: [
                 { title: t('event'), href: EVENT },
-                { title: t('tournaments'), href: TOURNAMENT },
+                // { title: t('tournaments'), href: TOURNAMENT },
                 { title: t('ranking'), href: RANKING },
             ],
         },
