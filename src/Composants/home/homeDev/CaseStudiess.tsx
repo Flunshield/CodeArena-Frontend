@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Container } from "../../../ComposantsCommun/Container";
 import { FadeIn, FadeInStagger } from "../../../ComposantsCommun/FadeIn";
 import { SectionIntro } from "../../../ComposantsCommun/SectionIntro";
@@ -31,14 +32,15 @@ const CASE_STUDIES = [
 ];
 
 function CaseStudies() {
+  const { t } = useTranslation();
   return (
     <>
       <SectionIntro
-        title="Amusez-vous, la totalité de Code Arena est gratuit pour un développeur"
+        title={t("homedevCaseStudiesTitle")}
         className="mt-24 sm:mt-32 lg:mt-40"
       >
         <p>
-          Jouez seul, ou contre vos amis et des inconnus. Prouvez que vous êtes le meilleur des développeurs.
+          {t("homedevCaseStudiesDescription")}
         </p>
       </SectionIntro>
       <Container className="mt-16">

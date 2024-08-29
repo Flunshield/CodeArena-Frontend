@@ -1,17 +1,17 @@
+import { useTranslation } from "react-i18next";
 import { Container } from "../../../ComposantsCommun/Container";
 import { FadeIn, FadeInStagger } from "../../../ComposantsCommun/FadeIn";
 import { LANGUAGE_USE, LANGUAGE_NOTUSE } from "../../../constantes/constanteEntreprise.ts";
 
 
 function Clients() {
+  const { t } = useTranslation();
   return (
     <div className="mt-24 rounded-2xl bg-neutral-950 py-20 sm:mt-32 sm:py-32 lg:mt-56">
       <Container>
         <FadeIn className="flex items-center gap-x-8">
           <h2 className="text-center font-display text-sm font-semibold tracking-wider text-tertiari sm:text-left">
-            Apprenez à coder avec code arena, nous possèdons que un seul langage pour le moment.
-
-
+            {t("homedevClientTitle")}
           </h2>
           <div className="h-px flex-auto bg-neutral-800" />
 
@@ -41,8 +41,7 @@ function Clients() {
         </FadeInStagger>
         <FadeIn>
           <h2 className="text-center font-display text-sm font-semibold tracking-wider text-tertiari sm:text-left mt-4">
-            Il nous reste à prévoir l&apos;implémentation d&apos;autre langage de programmation pour les prochaines mise à jour de notre application web.
-
+            {t("homedevClientTitlebis")}
           </h2>
           <div className="h-px flex-auto bg-neutral-800" />
         </FadeIn>
