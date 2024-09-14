@@ -11,9 +11,10 @@ interface formTitreProps {
     onClose: () => void;
     title: Titles;
     type: number;
+    setIsSubmitted: () => void;
 }
 
-const FormTitre: React.FC<formTitreProps> = ({onClose, title, type}) => {
+const FormTitre: React.FC<formTitreProps> = ({onClose, title, type, setIsSubmitted}) => {
     const {t} = useTranslation();
     const authContext = useAuthContext();
     const initialValues: Titles = {
@@ -35,6 +36,7 @@ const FormTitre: React.FC<formTitreProps> = ({onClose, title, type}) => {
                 setNotificationMessage(t('updateSuccess'));
                 setNotificationType('success');
                 setShowNotification(true);
+                setIsSubmitted();
             } else {
                 setNotificationMessage(t('errorUpdate'));
                 setNotificationType('error');
@@ -46,19 +48,19 @@ const FormTitre: React.FC<formTitreProps> = ({onClose, title, type}) => {
                 token: authContext.accessToken ?? "",
                 data: values
             });
-            if (result.status === 200) {
+            if (result.status === 201) {
                 setNotificationMessage(t('createSuccess'));
                 setNotificationType('success');
                 setShowNotification(true);
+                setIsSubmitted();
             } else {
                 setNotificationMessage(t('errorCreate'));
                 setNotificationType('error');
                 setShowNotification(true);
             }
         }
-        setTimeout(() => {
-            onClose();
-        }, 1000);
+
+        onClose();
     }
 
     const formik = useFormik({
@@ -79,14 +81,14 @@ const FormTitre: React.FC<formTitreProps> = ({onClose, title, type}) => {
                 />
             )}
             <div className="flex flex-col w-full mb-10">
-                <p className="text-tertiari font-bold text-2xl text-center mb-6">{t("TitlesUpdate")}</p>
+                <p className="text-tertiari font-bold text-2xl text-center mb-6">{t("titlesUpdate")}</p>
                 <ul className="flex flex-col mt-5">
                     <li className="flex flex-row mb-2">
                         <p className="font-bold text-tertiari mr-10">{t("label")} : </p>
                         <input
                             type="text"
                             id="label"
-                            className="bg-primary text-tertiari"
+                            className="bg-primary text-secondary p-1"
                             {...formik.getFieldProps('label')}
                         />
                     </li>
@@ -95,7 +97,7 @@ const FormTitre: React.FC<formTitreProps> = ({onClose, title, type}) => {
                         <input
                             type="text"
                             id="value"
-                            className="bg-primary text-tertiari ml-4"
+                            className="bg-primary text-secondary p-1 ml-4"
                             {...formik.getFieldProps('value')}
                         />
                     </li>

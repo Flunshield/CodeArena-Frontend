@@ -35,7 +35,8 @@ export const PRICING = [
         price: "70€",
         url: URL_STRIPE,
         idApi: "price_1PjFrZFoLa8m0nzy2vEhq1TG",
-        typePayment: "subscription"
+        typePayment: "subscription",
+        btnAction: true
     },
     {
         title: "Pack entreprise",
@@ -52,7 +53,20 @@ export const PRICING = [
         price: "300€",
         url: URL_STRIPE,
         idApi: "price_1PjFxQFoLa8m0nzylaifhB6O",
-        typePayment: "subscription"
+        typePayment: "subscription",
+        btnAction: true
+    },
+    {
+        title: "Partenariat",
+        nbCreateTest: "",
+        description: "Désireux d'offrir un partenariat à votre entreprise ? Contactez-nous pour en discuter.",
+        features: [],
+        idealFor: "Conçu pour les entreprises souhaitant un partenariat.",
+        price: "Contactez-nous",
+        url: "",
+        idApi: "",
+        typePayment: "",
+        btnAction: false
     }
 ];
 
@@ -88,6 +102,81 @@ export const ENTREPRISE_TRUST = [
         name: "TechNova"
     }
 ]
+
+export const EXP_CODE = [
+    {
+        src: "/assets/icones/Competition.jpg",
+        alt: "Competition Logo",
+        name: "Competition"
+    },
+    {
+        src: "/assets/icones/Event.jpg",
+        alt: "Event Logo",
+        name: "Event"
+    },
+    {
+        src: "/assets/icones/puzzle.jpg",
+        alt: "puzzle Logo",
+        name: "Puzzle"
+    },
+    {
+        src: "/assets/icones/recrutement.jpg",
+        alt: "recrutement Logo",
+        name: "Recrutement"
+    }
+]
+
+export const LANGUAGE_USE = [
+    {
+        src: "/assets/icones/JS.png",
+        alt: "Javascript Logo",
+        name: "Javascript"
+    }
+]
+export const LANGUAGE_NOTUSE = [
+    {
+        src: "/assets/icones/TS.png",
+        alt: "Typescript Logo",
+        name: "Typescript"
+    },
+    {
+        src: "/assets/icones/php.svg",
+        alt: "PHP Logo",
+        name: "PHP"
+    },
+    {
+        src: "/assets/icones/Ruby.png",
+        alt: "Ruby Logo",
+        name: "Ruby"
+    },
+    {
+        src: "/assets/icones/Python.png",
+        alt: "Python Logo",
+        name: "Python"
+    },
+    {
+        src: "/assets/icones/Java.svg",
+        alt: "Java Logo",
+        name: "Java"
+    },
+    {
+        src: "/assets/icones/C.png",
+        alt: "C Logo",
+        name: "C"
+    },
+    {
+        src: "/assets/icones/Csharp.png",
+        alt: "Csharp Logo",
+        name: "Csharp"
+    },
+    {
+        src: "/assets/icones/C++.png",
+        alt: "C++ Logo",
+        name: "C++"
+    },
+    
+]
+
 
 export const DONNEES_TESTS = [
     {

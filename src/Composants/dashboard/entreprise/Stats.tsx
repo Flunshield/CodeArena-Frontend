@@ -6,12 +6,14 @@ interface StatsProps {
     submitCount: number;
     nbPuzzlesPlayed: number;
     nbPuzzleCreated: number;
+    nbPuzzlesSend: number;
 }
 
 const stats = ({
                    lastCommande,
                    nbPuzzlesPlayed,
                    nbPuzzleCreated,
+                   nbPuzzlesSend,
                }: StatsProps) => {
     const {t} = useTranslation();
 
@@ -23,6 +25,7 @@ const stats = ({
         },
         {id: 2, title: t("nbTestCreate"), value: nbPuzzleCreated + "/" + (lastCommande?.nbCreateTest)},
         {id: 3, title: t("nbTestRealized"), value: nbPuzzlesPlayed},
+        {id: 4, title: t("nbTestSend"), value: nbPuzzlesSend + "/" + (lastCommande?.nbCreateTest)},
     ];
 
     return (

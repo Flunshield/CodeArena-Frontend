@@ -43,6 +43,10 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
             setNotificationType('success');
             setShowNotification(true);
             setIsSubmitted();
+        } else {
+            setNotificationMessage(t('updateError'));
+            setNotificationType('error');
+            setShowNotification(true);
         }
     };
 
@@ -55,7 +59,7 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            <h2 className="text-lg font-semibold text-tertiari mb-4">{t('Liste des titres')}</h2>
+            <h2 className="text-lg font-semibold text-tertiari mb-4">{t('listOfTitle')}</h2>
             <div className="flex flex-col justify-center">
                 {titles.length > 0 ? (
                     <div className="overflow-x-auto rounded-lg">
@@ -111,13 +115,13 @@ const ListTitle: React.FC<ListTitleProps> = ({titles, setIsSubmitted}) => {
                 )}
                 <Button type="button" onClick={() => openPopup(2)}
                         className="bg-golden-yellow hover:bg-yellow-600 text-quaternary font-medium py-2 px-4 rounded-lg mt-5"
-                        id="addTitle">{t("Ajouter un titre")}
+                        id="addTitle">{t("addTitle")}
                 </Button>
             </div>
             {isPopupOpen && (isType === 1 || isType === 2) && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
                     <div className="bg-secondary p-8 rounded-lg">
-                        <FormTitre onClose={closePopup} title={titleToUpdate} type={isType}/>
+                        <FormTitre setIsSubmitted={setIsSubmitted} onClose={closePopup} title={titleToUpdate} type={isType}/>
                     </div>
                 </div>
             )}

@@ -1,6 +1,6 @@
-import {SetStateAction, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {formatSeconds} from '../../../Helpers/formatHelper.ts';
-import {listPuzzleSend, PuzzleSend, User} from '../../../Interface/Interface.ts';
+import {listPuzzleSend, User} from '../../../Interface/Interface.ts';
 import CodeBlock from "../../../ComposantsCommun/CodeBlock.tsx";
 import Button from "../../../ComposantsCommun/Button.tsx";
 import {deletePuzzle, getElementByEndpoint, postElementByEndpoint} from "../../../Helpers/apiHelper.ts";
@@ -9,7 +9,8 @@ import {useTranslation} from "react-i18next";
 import clsx from "clsx";
 import Notification from "../../../ComposantsCommun/Notification.tsx";
 import Pagination from "../../../ComposantsCommun/Pagination.tsx";
-import {ITEMS_PER_PAGE_QUATRE} from "../../../constantes/constantes.ts";
+import {ITEMS_PER_PAGE_TROIS} from "../../../constantes/constantes.ts";
+import Poubelle from "/assets/icones/bean.png";
 
 interface PuzzleListProps {
     setIsSubmitted: () => void;
@@ -18,10 +19,9 @@ interface PuzzleListProps {
 }
 
 const PuzzleList = ({
-                        setIsSubmitted, submitCount, infosUserById
+                        setIsSubmitted, infosUserById
                     }: PuzzleListProps) => {
     const {t} = useTranslation();
-    const [sortKey, setSortKey] = useState<string>('sendDate');
     const [isAscending, setIsAscending] = useState<boolean>(true);
     const [selectedTitle, setSelectedTitle] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -29,50 +29,53 @@ const PuzzleList = ({
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [puzzleCheck, setPuzzleCheck] = useState<boolean | undefined>(undefined);
+    const [puzzleVerifiedEtat, setPuzzleVerifiedEtat] = useState<number>(1);
+    const [colorButtonVerified, setColorButtonVerified] = useState<string>('bg-petroleum-blue');
 
-    const [puzzleFinish, setPuzzleFinish] = useState<listPuzzleSend>({item: [], total: 0});
-    const maxPage = puzzleFinish.item.length > 0 ? Math.ceil(puzzleFinish.total / ITEMS_PER_PAGE_QUATRE) : 1;
+    const [puzzleFinish, setPuzzleFinish] = useState<listPuzzleSend>({item: [], total: 0, titles: [{title: ""}]});
+    const maxPage = puzzleFinish.item.length > 0 ? Math.ceil(puzzleFinish.total / ITEMS_PER_PAGE_TROIS) : 1;
 
-    const getPuzzle = getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infosUserById?.id}&page=${currentPage}`, {
-        token: authContext.accessToken ?? "",
-        data: ''
-    });
-
-    const handleSort = (key: SetStateAction<string>) => {
-        if (sortKey === key) {
-            setIsAscending(!isAscending);
-        } else {
-            setSortKey(key);
-            setIsAscending(true);
+    const getPuzzle = async () => {
+        const response = await getElementByEndpoint(`entreprise/getPuzzlePlaying?id=${infosUserById?.id}&page=${currentPage}&title=${selectedTitle}&ascending=${isAscending}&puzzleCheck=${puzzleCheck}`, {
+            token: authContext.accessToken ?? "",
+            data: ''
+        });
+        const result = await response.json();
+        if (result.total === 0) {
+            result.total = result.item.length;
+            setPuzzleVerifiedEtat(1);
+            handlePuzzleCheck();
         }
+        setPuzzleFinish(result);
     };
 
-    // Créer une liste unique de titres pour le sélecteur
-    const titles = Array.from(new Set(puzzleFinish?.item?.map(item => item.puzzlesEntreprise.title)));
+    const handleSort = () => {
+        setIsAscending(!isAscending);
+        setCurrentPage(1);
+    };
 
-    // Filtrer et trier les données
-    const filteredData = selectedTitle
-        ? puzzleFinish.item.filter(item => item.puzzlesEntreprise.title === selectedTitle)
-        : puzzleFinish.item;
-
-    const sortedData = filteredData.sort((a, b) => {
-        if (sortKey === 'sendDate') {
-            return isAscending ?
-                (new Date(a.sendDate).getTime() - new Date(b.sendDate).getTime()) :
-                (new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime());
-        } else {
-            const valueA = a[sortKey as keyof PuzzleSend];
-            const valueB = b[sortKey as keyof PuzzleSend];
-            if (valueA && valueB) {
-                if (valueA < valueB) {
-                    return isAscending ? -1 : 1;
-                } else if (valueA > valueB) {
-                    return isAscending ? 1 : -1;
-                }
-            }
+    const handlePuzzleCheck = () => {
+        if (puzzleVerifiedEtat === 0) {
+            setPuzzleVerifiedEtat(1);
+            setPuzzleCheck(true);
+            setColorButtonVerified('bg-olive-green');
+        } else if (puzzleVerifiedEtat === 1) {
+            setPuzzleVerifiedEtat(2);
+            setPuzzleCheck(false);
+            setColorButtonVerified('bg-gris-chaud');
+        } else if (puzzleVerifiedEtat === 2) {
+            setPuzzleVerifiedEtat(0);
+            setPuzzleCheck(undefined);
+            setColorButtonVerified('bg-petroleum-blue');
         }
-        return 0;
-    });
+
+        setCurrentPage(1);
+    }
+    const selectTitle = (title: string) => {
+        setSelectedTitle(title);
+        setCurrentPage(1);
+    }
 
     const deleteOnePuzzle = async (puzzleId: number) => {
         const result = await deletePuzzle("puzzle/deletePuzzleSend", {
@@ -91,7 +94,8 @@ const PuzzleList = ({
             setNotificationType('error');
             setShowNotification(true);
         }
-    }
+    };
+
     const deleteOldPuzzlePuzzle = async () => {
         const result = await deletePuzzle("puzzle/deletePuzzleSend", {
             token: authContext?.accessToken ?? "",
@@ -109,7 +113,7 @@ const PuzzleList = ({
             setNotificationType('error');
             setShowNotification(true);
         }
-    }
+    };
 
     const validatePuzzle = async (puzzleId: number) => {
         const result = await postElementByEndpoint("puzzle/validatePuzzleSend", {
@@ -130,16 +134,14 @@ const PuzzleList = ({
             setNotificationType('error');
             setShowNotification(true);
         }
-    }
+    };
 
     useEffect(() => {
         if (authContext?.connected) {
-            getPuzzle.then(async (response) => {
-                const result = await response.json();
-                setPuzzleFinish(result);
-            });
+            getPuzzle().then(r => r);
         }
-    }, [currentPage, submitCount, authContext?.connected]);
+    }, []);
+
     return (
         <div id="PuzzleList"
              className={clsx(puzzleFinish.total == 0 ? "hidden" : "", "m-5 rounded-lg bg-tertiari shadow-xl p-6")}>
@@ -151,59 +153,73 @@ const PuzzleList = ({
                 />
             )}
             <h1 className="text-center font-bold text-3xl">{t("puzzleRealized")}</h1>
-            <div className="flex justify-end max-sm:flex-col space-x-2 max-sm:space-y-1 mb-4 mt-5">
+            <div className="flex justify-end max-sm:flex-col space-x-2 max-sm:space-x-0 max-sm:space-y-2 mb-4 mt-5">
                 <select
-                    className="px-4 py-2 w-40 h-10 rounded bg-petroleum-blue text-tertiari cursor-pointer"
+                    className="px-4 py-2 w-40 rounded bg-petroleum-blue text-tertiari cursor-pointer"
                     value={selectedTitle}
-                    onChange={e => setSelectedTitle(e.target.value)}
+                    onChange={e => selectTitle(e.target.value)}
                 >
-                    <option value="">Tous les titres</option>
-                    {titles.map((title, index) => (
-                        <option key={index} value={title}>
-                            {title}
+                    <option value="">{t('allTitles')}</option>
+                    {puzzleFinish.titles.map((item, index) => (
+                        <option key={index} value={item.title}>
+                            {item.title}
                         </option>
                     ))}
                 </select>
-                <button className="px-4 py-2 w-32 h-10 overflow-hidden rounded bg-petroleum-blue text-tertiari"
-                        onClick={() => handleSort('sendDate')}>{t("triDate")}
-                </button>
-                <Button type={"submit"} id={"delete"}
-                        className={"px-4 py-2 w-32 h-10 rounded bg-[#D63864] text-tertiari font-bold"}
+                <button className="px-4 py-2 w-32 rounded bg-petroleum-blue text-tertiari"
+                        onClick={() => handleSort()}>{t("triDate")}</button>
+                <button className={clsx(colorButtonVerified, "px-4 py-2 w-32 rounded text-tertiari")}
+                        onClick={() => handlePuzzleCheck()}>{t("statusOfVerification")}</button>
+                <Button type="submit" id="delete"
+                        className="px-4 py-2 w-32 rounded bg-[#D63864] text-tertiari font-bold"
                         onClick={() => deleteOldPuzzlePuzzle()}>X ({'>'} 1 {t("month")})</Button>
             </div>
-            {sortedData.map(result => (
+            {puzzleFinish.item.map(result => (
                 <div key={result.id} className="rounded-lg p-4 mb-4 border border-gray-300 bg-tertiari">
-                    <div className="flex flex-row-reverse justify-between w-full">
-                        <div className="flex flex-row">
-                            <Button type={"button"} id={"validate-" + result.id.toString()}
-                                    className={clsx(result.verified ? "bg-olive-green" : "bg-gris-chaud", "px-4 py-2 rounded  text-tertiari font-bold mr-2")}
-                                    onClick={() => validatePuzzle(result.id)}>V</Button>
-                            <Button type={"button"} id={"delete-" + result.id.toString()}
-                                    className={"px-4 py-2 rounded bg-error text-tertiari font-bold"}
-                                    onClick={() => deleteOnePuzzle(result.id)}>X</Button>
-                        </div>
+                    <div className="flex max-md:flex-col justify-between w-full">
                         <h1 className="flex-1 text-center text-xl font-bold">{result.puzzlesEntreprise.title}</h1>
+                        <div className="flex flex-row max-md:justify-center max-md:m-5">
+                            <Button
+                                type="button"
+                                id={"validate-" + result.id.toString()}
+                                className={clsx(result.verified ? "bg-olive-green" : "bg-gris-chaud", "px-4 py-2 w-32 rounded text-tertiari font-bold mr-2 flex items-center justify-center")}
+                                onClick={() => validatePuzzle(result.id)}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-6 h-6"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </Button>
+                            <Button
+                                type="button"
+                                id={"delete-" + result.id.toString()}
+                                className="px-4 py-2 w-32 rounded bg-error text-tertiari font-bold flex items-center justify-center"
+                                onClick={() => deleteOnePuzzle(result.id)}
+                            >
+                                <img src={Poubelle} alt="bean" className="w-4 h-5"/>
+                            </Button>
+                        </div>
                     </div>
                     <h2 className="text-lg font-semibold text-gray-800">{result.firstName} {result.lastName}</h2>
                     <p className="text-gray-600">
-                        <strong>{t("sendAt")}</strong> {new Date(result.sendDate).toLocaleDateString()}
-                    </p>
-                    <p className="text-gray-600">
-                        <strong>{t("email")} :</strong> {result.email}
-                    </p>
+                        <strong>{t("sendAt")}</strong> {new Date(result.sendDate).toLocaleDateString()}</p>
+                    <p className="text-gray-600"><strong>{t("email")} :</strong> {result.email}</p>
                     <p className="text-gray-600">
                         <strong>{t("commentary")} :</strong> {result.commentaire !== "" ? result.commentaire : t("notCommentary")}
                     </p>
-                    <p className="text-gray-600">
-                        <strong>{t("nbTestPassing")} : </strong>
-                        <span
-                            className="text-blue-500">{result.testValidated} / {result.puzzlesEntreprise.tests?.length}</span>
+                    <p className="text-gray-600"><strong>{t("nbTestPassing")} : </strong><span
+                        className="text-blue-500">{result.testValidated} / {result.puzzlesEntreprise.tests?.length}</span>
                     </p>
-                    <p className="text-gray-600">
-                        <strong>{t("realizedIn")} : </strong>
-                        <span
-                            className="text-blue-500">{result.time && formatSeconds(parseInt(result.time))}</span>
-                    </p>
+                    <p className="text-gray-600"><strong>{t("realizedIn")} : </strong><span
+                        className="text-blue-500">{result.time && formatSeconds(parseInt(result.time))}</span></p>
                     <div>
                         <h3 className="font-semibold text-gray-800">{t("codeSend")} :</h3>
                         <CodeBlock code={result.result || t("anyCodeDisplay")}/>
@@ -213,7 +229,6 @@ const PuzzleList = ({
             <Pagination item={puzzleFinish?.item} maxPage={maxPage} currentPage={currentPage}
                         setCurrentPage={setCurrentPage} setSubmitCount={setIsSubmitted} itemPerPage={3}/>
         </div>
-
     );
 };
 

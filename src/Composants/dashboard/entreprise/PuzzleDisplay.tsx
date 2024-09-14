@@ -1,5 +1,4 @@
 import {DataToken, listPuzzleEntreprise, Pricing, PuzzlesEntreprise} from "../../../Interface/Interface.ts";
-import Card from "../../../ComposantsCommun/Card.tsx";
 import Button from "../../../ComposantsCommun/Button.tsx";
 import {deletePuzzle, getElementByEndpoint} from "../../../Helpers/apiHelper.ts";
 import PuzzleForm from "../../../ComposantsCommun/PuzzleForm.tsx";
@@ -45,7 +44,7 @@ const PuzzleDisplay = (
 
     const [tabPuzzlesEntreprise, setTabPuzzlesEntreprise] = useState<listPuzzleEntreprise>({item: [], total: 0});
     const itemPerPage = 4;
-    const maxPage = tabPuzzlesEntreprise.item.length > 0 ? Math.ceil(tabPuzzlesEntreprise.total / itemPerPage): 1;
+    const maxPage = tabPuzzlesEntreprise.item.length > 0 ? Math.ceil(tabPuzzlesEntreprise.total / itemPerPage) : 1;
 
 
     /**
@@ -77,9 +76,7 @@ const PuzzleDisplay = (
                 setNotificationMessage(t('puzzleDeleted'));
                 setNotificationType('success');
                 setShowNotification(true);
-                setTimeout(() => {
                     setIsSubmitted();
-                }, 2000);
             } else {
                 setNotificationMessage(t('failedDeletePuzzle'));
                 setNotificationType('error');
@@ -137,31 +134,44 @@ const PuzzleDisplay = (
             )}
             <div className="bg-tertiari shadow-xl overflow-hidden rounded-lg">
                 <div className="px-4 py-5 sm:p-6">
-                    <h3 className="text-lg leading-6 font-medium text-quaternary">{t("puzzleCreated")}</h3>
-                    <ul className="mt-3 w-full text-sm text-quaternary flex flex-wrap justify-center">
-                        {tabPuzzlesEntreprise?.item.map((puzzle: PuzzlesEntreprise) => (
-                            <li key={puzzle.id}
-                                className="bg-gris-chaud p-5 m-2 w-auto overflow-hidden rounded-lg shadow">
-                                <Card className="border-0">
-                                    <h1 className="text-xl text-center font-bold uppercase m-3 sm:m-5 text-tertiari break-words">{puzzle.title}</h1>
-                                    <div
-                                        className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center items-center m-5">
-                                        <Button type="button" onClick={() => openPopup(puzzle, "1")}
-                                                className="bg-petroleum-blue hover:shadow-md hover:shadow-light-blue text-tertiari font-bold py-2 px-4 rounded"
-                                                id="updateTitle">{t("modify")}</Button>
-                                        <Button type="button"
-                                                className="bg-olive-green hover:shadow-lg hover:shadow-olive-green text-tertiari font-bold py-2 px-4 rounded"
-                                                id="deleteTitle"
-                                                onClick={() => openPopup(puzzle, "2")}>{t("sendPuzzle")}</Button>
-                                        <Button type="button"
-                                                className="bg-[#D63864] hover:shadow-lg hover:shadow-rose-300 text-tertiari font-bold py-2 px-4 rounded"
-                                                id="deleteTitle"
-                                                onClick={() => handleClickDelete(puzzle.id)}>{t("delete")}</Button>
-                                    </div>
-                                </Card>
-                            </li>
-                        ))}
-                    </ul>
+                    <h3 className="text-lg leading-6 font-medium text-quaternary mb-5">{t("puzzleCreated")}</h3>
+                    <div className="overflow-hidden rounded-lg shadow-lg"> {/* Conteneur avec arrondis */}
+                        <table className="min-w-full mt-3 text-sm text-quaternary table-auto rounded-lg">
+                            <thead className="bg-tertiari">
+                            <tr>
+                                <th className="px-6 py-3 text-center text-xs font-medium text-secondary uppercase tracking-wider">{t("title")}</th>
+                                <th className="px-6 py-3 text-center text-xs font-medium text-secondary uppercase tracking-wider">{t("actions")}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {tabPuzzlesEntreprise?.item.map((puzzle: PuzzlesEntreprise) => (
+                                <tr key={puzzle.id}
+                                    className="bg-tertiari p-5 m-2 w-auto overflow-hidden rounded-lg shadow">
+                                    <td className="px-6 py-4 whitespace-nowrap text-xl text-center font-bold uppercase text-secondary break-words">
+                                        {puzzle.title}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div
+                                            className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center items-center">
+                                            <Button type="button" onClick={() => openPopup(puzzle, "1")}
+                                                    className="bg-petroleum-blue hover:shadow-md hover:shadow-light-blue text-tertiari font-bold py-2 px-4 rounded"
+                                                    id="updateTitle">{t("modify")}
+                                            </Button>
+                                            <Button type="button" onClick={() => openPopup(puzzle, "2")}
+                                                    className="bg-olive-green hover:shadow-lg hover:shadow-olive-green text-tertiari font-bold py-2 px-4 rounded"
+                                                    id="deleteTitle">{t("sendPuzzle")}
+                                            </Button>
+                                            <Button type="button" onClick={() => handleClickDelete(puzzle.id)}
+                                                    className="bg-[#D63864] hover:shadow-lg hover:shadow-rose-300 text-tertiari font-bold py-2 px-4 rounded"
+                                                    id="deleteTitle">{t("delete")}
+                                            </Button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
                     <Pagination
                         item={tabPuzzlesEntreprise?.item}
                         maxPage={maxPage}
@@ -173,6 +183,7 @@ const PuzzleDisplay = (
                     />
                 </div>
             </div>
+
             {isPopupOpenModify && (
                 <div
                     className="fixed top-0 left-0 w-full h-full overflow-auto flex items-center justify-center bg-black bg-opacity-100 md:bg-opacity-75 z-50">

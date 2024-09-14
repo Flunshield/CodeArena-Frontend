@@ -14,9 +14,9 @@ const PrivateRouteEntreprise: React.FC<PrivateRouteProps> = ({ children }) => {
     // Obliger de faire ces étapes pour récupérer les infos
     const infosUser = authContext?.infosUser as JwtPayload
     const infos = infosUser.aud as unknown as DataToken
-    const isAdmin = infos.data.groups.roles
+    const isEntreprise = infos.data.groups.roles
     // Redirigez vers la page de connexion si l'utilisateur n'est pas connecté
-    if (isAdmin !== GROUPS.ENTREPRISE) {
+    if (isEntreprise !== GROUPS.ENTREPRISE) {
         return <Navigate to="/myAccount" />;
     }
 

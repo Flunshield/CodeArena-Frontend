@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {User} from '../../Interface/Interface.ts';
+import {listUserEntreprise, User} from '../../Interface/Interface.ts';
 import {useTranslation} from 'react-i18next';
 import {deleteUser, getElementByEndpoint, resetPointsUser} from '../../Helpers/apiHelper.ts';
 import Button from '../../ComposantsCommun/Button.tsx';
 import {useAuthContext} from '../../AuthContext.tsx';
+import SearchBar from "../../ComposantsCommun/SearchBar.tsx";
+import Pagination from "../../ComposantsCommun/Pagination.tsx";
+import useUserInfos from "../../hook/useUserInfos.ts";
 
 interface ListUsersProps {
     setIsSubmitted: () => void;
@@ -14,12 +17,17 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
     const authContext = useAuthContext();
     const token = authContext?.accessToken ?? '';
     const {t} = useTranslation();
-    const [users, setUsers] = useState<User[]>([]);
+    const [users, setUsers] = useState<listUserEntreprise>({item: [], total: 0});
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const getUsers = getElementByEndpoint(`user/getUsers?page=${currentPage}`, {
+    const [itemPerPage, setItemPerPage] = useState(10);
+    const userInfos = useUserInfos();
+    const isAdmin = userInfos?.groups?.roles === 'admin';
+    const getUsers = getElementByEndpoint(`user/getUsers?page=${currentPage}&itemPerPage=${itemPerPage}&isEntreprise=${isAdmin}`, {
         token,
         data: '',
     });
+
+    const maxPage = Math.ceil(users.total / itemPerPage);
 
     const deleteUserFunction = async (user: User) => {
         const result = await deleteUser('admin/deleteUser', {token, user});
@@ -35,15 +43,13 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
         }
     };
 
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-        setIsSubmitted();
-    };
-
-    const prevPage = () => {
-        setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
-        setIsSubmitted();
-    };
+    async function onSearch(username: string) {
+        const result = await getElementByEndpoint(`user/getUsersByUsername?username=${username}&itemPerPage=${itemPerPage}&isEntreprise=${isAdmin}`, {
+            token,
+            data: '',
+        });
+        setUsers(await result.json());
+    }
 
     useEffect(() => {
         getUsers.then(async (response) => {
@@ -51,12 +57,18 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
             setUsers(result);
         });
     }, [submitCount]);
-
     return (
         <div className="">
             <div className="flex flex-row justify-between">
                 <h2 className="text-lg font-semibold text-tertiari mb-4">{t('listUtilisateurs')}</h2>
             </div>
+            <SearchBar
+                onSearch={onSearch}
+                setItemPerPage={setItemPerPage}
+                placeholder={t('serachByUsername')}
+                setCurrentPage={setCurrentPage}
+                isAdmin={isAdmin}
+            />
             <div className="flex flex-col justify-center w-full">
                 <div className="overflow-x-auto rounded-lg">
                     <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
@@ -87,7 +99,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
                         </tr>
                         </thead>
                         <tbody>
-                        {users.map((user: User) => (
+                        {users.item.map((user: User) => (
                             <tr key={user.id} className="bg-tertiari border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td className="py-4 px-6">{user.firstName}</td>
                                 <td className="py-4 px-6">{user.lastName}</td>
@@ -124,29 +136,15 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
                         </tbody>
                     </table>
                 </div>
-                <div className="flex justify-between items-center w-full mt-4">
-                    {currentPage > 1 ? (
-                        <button
-                            className="px-4 py-2 rounded bg-petroleum-blue text-tertiari"
-                            onClick={prevPage}
-                        >
-                            {t('previous')}
-                        </button>
-                    ) : (
-                        <div className="px-4 py-2 invisible">{t('previous')}</div>
-                    )}
-                    <p className="text-center flex-grow">{currentPage}</p>
-                    {users.length > 0 ? (
-                        <button
-                            className="px-4 py-2 rounded bg-petroleum-blue text-tertiari"
-                            onClick={nextPage}
-                        >
-                            {t('next')}
-                        </button>
-                    ) : (
-                        <div className="px-4 py-2 invisible">{t('next')}</div>
-                    )}
-                </div>
+                <Pagination
+                    item={users.item}
+                    maxPage={maxPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    setSubmitCount={setIsSubmitted}
+                    classNameCurrentPage="text-primary"
+                    itemPerPage={itemPerPage}
+                />
             </div>
         </div>
     );

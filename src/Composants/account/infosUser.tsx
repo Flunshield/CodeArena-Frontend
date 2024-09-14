@@ -10,8 +10,8 @@ import Button from "../../ComposantsCommun/Button.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuthContext} from "../../AuthContext.tsx";
 import {JwtPayload} from "jwt-decode";
-import {DataToken, User} from "../../Interface/Interface.ts";
-import {postElementByEndpoint} from "../../Helpers/apiHelper.ts";
+import {DataToken, Match, User} from "../../Interface/Interface.ts";
+import {getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import ListItem from "../../ComposantsCommun/ListItem.tsx";
 import ProfilePicture from "./profilePicture.tsx";
 import Badges from "./bagdes.tsx";
@@ -21,6 +21,8 @@ import {Container} from "../../ComposantsCommun/Container";
 import {FadeIn, FadeInStagger} from "../../ComposantsCommun/FadeIn";
 import clsx from "clsx";
 import Notification from "../../ComposantsCommun/Notification.tsx";
+import MatchHistory from "./MatchHistory.tsx";
+import Presentation from "./presentation.tsx";
 
 interface InfosUserProps {
     openPopup: () => void;
@@ -43,12 +45,15 @@ const InfosUser: React.FC<InfosUserProps> = ({
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
     const isEntreprise = infos.data.groups.roles === GROUPS.ENTREPRISE;
+    const isUser = infos.data.groups.roles === GROUPS.USER;
     const emailVerified = infosUserById?.emailVerified;
     const title = infosUserById?.titles?.label as unknown as string;
     const [isSendMail, setIsSendMail] = React.useState<boolean>(false);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [isPopupOpen, setPopupOpen] = useState(false);
+    const [historiqueMatch, setHistoriqueMatch] = useState<Match[]>([]);
 
     const valdMail = async () => {
         const response = await postElementByEndpoint("user/validMail", {
@@ -67,6 +72,24 @@ const InfosUser: React.FC<InfosUserProps> = ({
             setShowNotification(true);
         }
     };
+
+    function closePopup() {
+        setPopupOpen(false);
+    }
+
+    function getHistoriqueMatch() {
+        getElementByEndpoint("user/getHistoriqueMatch?id=" + infosUserById.id, {
+            token: authContext.accessToken ?? "",
+            data: "",
+        }).then(async (response) => {
+            if (response.status === 200) {
+                setHistoriqueMatch(await response.json());
+                setPopupOpen(true);
+            } else {
+                console.log("Erreur lors de la récupération de l'historique des matchs");
+            }
+        });
+    }
 
     return (
         <Container className="py-16 px-4">
@@ -91,6 +114,8 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                         ? `${infosUserById?.firstName} ${infosUserById?.lastName}`
                                         : infosUserById?.userName}
                                 </p>
+                                {isUser && <p className="text-petroleum-blue underline cursor-pointer"
+                                   onClick={() => getHistoriqueMatch()}>{t('historyMatch')}</p>}
                                 <p className="text-neutral-900 mb-5 uppercase font-semibold text-lg">
                                     {infosUserById?.firstName && infosUserById?.lastName
                                         ? infosUserById?.userName
@@ -188,14 +213,34 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                     />
                                 </FadeIn>
                             ) : (
-                                <FadeIn>
-                                    <Badges infosUserById={infosUserById}/>
-                                </FadeIn>
+                                <div className="flex align-baseline justify-between w-full space-x-5 mt-5">
+                                    <FadeIn>
+                                        <Badges infosUserById={infosUserById}/>
+                                    </FadeIn>
+                                    <FadeIn>
+                                        <Presentation infosUserById={infosUserById}/>
+                                    </FadeIn>
+                                </div>
                             )}
                         </div>
                     </div>
                 </FadeIn>
             </FadeInStagger>
+            {isPopupOpen && isUser && (
+                <div
+                    className="fixed top-0 left-0 z-50 p-4 lg:p-8 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="relative bg-gray-100 p-8 rounded-md shadow-lg max-h-full w-auto overflow-y-auto">
+                        {isUser && <MatchHistory historiqueMatch={historiqueMatch}/>}
+                        <button
+                            onClick={closePopup}
+                            className="absolute top-2 right-2 rounded-full bg-error hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+                        >
+                            X
+                        </button>
+                    </div>
+                </div>
+            )}
+
         </Container>
     );
 };

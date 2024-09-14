@@ -1,50 +1,37 @@
-import { useTranslation } from "react-i18next";
-import { Tournament } from "../../Interface/Interface.ts";
-import Card from "../../ComposantsCommun/Card.tsx";
-import CardContent from "../../ComposantsCommun/CardContent.tsx";
-import { formatDate } from "../../Helpers/formatHelper.ts";
-import { Link } from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {Tournament} from "../../Interface/Interface";
+import Card from "../../ComposantsCommun/Card";
+import CardContent from "../../ComposantsCommun/CardContent";
 import clsx from "clsx";
-import { FadeIn } from "../../ComposantsCommun/FadeIn.tsx";
+import {FadeIn} from "../../ComposantsCommun/FadeIn";
 
 interface TableauTournamentProps {
     infosTournament: Tournament[];
-    isImg: boolean;
     className?: string;
 }
 
-function TableauTournament(value: TableauTournamentProps): JSX.Element {
-    const { className, infosTournament } = value;
-    const { t } = useTranslation();
+function TableauTournament({className, infosTournament}: TableauTournamentProps): JSX.Element {
+    const {t} = useTranslation();
 
     return (
-      
-        <Card className={clsx(className, "border-2 border-tertiary shadow-lg bg-secondary rounded-lg")}>
+        <Card
+            className={clsx(className, "border-2 border-tertiary shadow-lg bg-secondary rounded-lg p-4 md:p-6 lg:p-8")}>
             <CardContent className="text-tertiari">
-                <p className="font-bold text-2xl lg:text-5xl" id="title-futurTournament">{t("futurTournament")}</p>
+                <p className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl" id="title-futurTournament">
+                    {t("futurTournament")}
+                </p>
             </CardContent>
             <FadeIn>
-            {infosTournament && infosTournament.length > 0 ? (
-                infosTournament.map((item: Tournament, index: number) => (
-                    <Card key={index} className="  rounded-xl m-5 border-quaternary bg-tertiari shadow-md">
-                        <CardContent className="text-secondary p-5">
-                            <div className="flex flex-col">
-                                <p className="font-bold text-2xl mb-5">{item.title}</p>
-                                <p className="mb-3">{formatDate(item.startDate, t)}</p>
-                                <p className="text-secondary text-justify">{item.description}</p>
-                                <div className="flex items-center mt-5">
-                                    <Link to={"/tournament/" + item.id} className="uppercase text-red-600 font-bold hover:underline mr-2">{t("seeMore")}</Link>
-                                    <img src="/assets/arrowRightRed.svg" className="h-5 mt-0.5" alt="flèche rouge"/>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                ))
-            ) : (
-                <p className="font-bold text-secondary text-xl m-5 pt-5 border-t-2">{t("noTournament")}</p>
-            )}
+                {infosTournament && infosTournament.length > 0 ? (
+                <p>TODO: AFFICHER LES TOURNOIS ICI</p>
+                ) : (
+                    <p className="font-bold text-secondary text-lg sm:text-xl md:text-2xl m-3 sm:m-5 md:m-6 pt-5 border-t-2">
+                        {t("noTournament")}
+                    </p>
+                )}
             </FadeIn>
         </Card>
+
     );
 }
 

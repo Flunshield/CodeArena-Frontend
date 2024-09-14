@@ -37,7 +37,7 @@ const PdfSection = ({
             token: authContext.accessToken ?? "",
             data: "",
         }).then(async (response) => {
-            const pdfDownloadPromise = downloadPdf(response);
+            const pdfDownloadPromise = downloadPdf(response, "cv.pdf");
             if (!pdfDownloadPromise) {
                 setNotificationMessage(t('errorUserInfos'));
                 setNotificationType('error');
