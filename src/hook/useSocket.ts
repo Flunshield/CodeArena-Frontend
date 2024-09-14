@@ -6,9 +6,9 @@ const useSocket = (
     id: number,
     setMatchFound: (value: boolean) => void,
     setRoomId: (value: string | null) => void,
-    setPuzzle: (value: Puzzle | null) => void,
-    setStartTimestamp: (value: number | null) => void,
-    setInQueue: (value: boolean) => void
+    setPuzzle?: (value: Puzzle | null) => void,
+    setStartTimestamp?: (value: number | null) => void,
+    setInQueue?: (value: boolean) => void
 ) => {
     const socket = useMemo(() => io(import.meta.env.VITE_API_BASE_URL_BACK), []);
 
@@ -18,10 +18,14 @@ const useSocket = (
             if (userId1 === id || userId2 === id) {
                 setMatchFound(true);
                 setRoomId(roomId);
-                setPuzzle({
-                    ...puzzle,
-                });
-                setStartTimestamp(startTimestamp);
+                if (setPuzzle) {
+                    setPuzzle({
+                        ...puzzle,
+                    });
+                }
+                if (setStartTimestamp) {
+                    setStartTimestamp(startTimestamp);
+                }
             }
         };
         socket.on('matchFound', handleMatchFound);

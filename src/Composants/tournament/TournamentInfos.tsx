@@ -56,7 +56,7 @@ function TournamentInfos(): JSX.Element {
             token: authContext.accessToken ?? "",
             userID: infosUser.id?.toString() ?? "",
             tournamentID: infosTournament?.id
-        }).then(response => {
+        }).then((response: { status: number; }) => {
             if (response.status === 200) {
                 setIsRegistered(false)
                 setNotificationMessage(t('unsubscribeSucces'));

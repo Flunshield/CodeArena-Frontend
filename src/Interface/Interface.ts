@@ -30,6 +30,7 @@ export interface User {
     siren?: string;
     commandeEntrepriseFormatted?: CommandeEntrepriseFormatted;
     userEvent?: UserEvent[];
+    userTournament?: UserTournament[];
 }
 
 export interface DataToken {
