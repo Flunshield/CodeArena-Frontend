@@ -69,6 +69,9 @@ jobs:
     name: release
     runs-on: ubuntu-latest
     steps:
+      - name: Install dependencies
+        run: npm install
+
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
         with:
@@ -82,8 +85,6 @@ jobs:
             echo "Error: No lock file found (package-lock.json, npm-shrinkwrap.json, or yarn.lock)."
             exit 1
           fi
-
-      - run: npm install
 
       # pinned version updated automatically by Renovate.
       # details at https://semantic-release.gitbook.io/semantic-release/usage/installation#global-installation
