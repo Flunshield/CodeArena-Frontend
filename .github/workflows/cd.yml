@@ -69,24 +69,29 @@ jobs:
     name: release
     runs-on: ubuntu-latest
     steps:
-      - name: Install dependencies
+      - name: 🚧 Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: ⏳ List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: ⏳ Install dependencies
         run: npm install
-        working-directory: ./front-app
 
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
         with:
           cache: npm
           node-version: lts/*
-
-      # Check for presence of lock file
-      - name: Verify lock file
-        run: |
-          if [ ! -f package-lock.json ] && [ ! -f npm-shrinkwrap.json ] && [ ! -f yarn.lock ]; then
-            echo "Error: No lock file found (package-lock.json, npm-shrinkwrap.json, or yarn.lock)."
-            exit 1
-          fi
-
+      - run: npm ci
       # pinned version updated automatically by Renovate.
       # details at https://semantic-release.gitbook.io/semantic-release/usage/installation#global-installation
       - run: npx semantic-release@21.0.2
