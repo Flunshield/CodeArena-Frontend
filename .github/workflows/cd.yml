@@ -6,6 +6,8 @@ on:
       - main
     tags:
       - '*'
+permissions:
+  contents: read # for checkout
 
 jobs:
 #  test:
@@ -59,37 +61,27 @@ jobs:
 #          npx cypress run
 
   release:
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    name: release
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Download node_modules cache
-        uses: actions/download-artifact@v3
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
         with:
-          name: node_modules
-          path: ~/.npm
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '20.8.1'
-
-      - name: Configure Git
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-      - name: Run standard-version
-        run: npx standard-version
-
-      - name: Push changes and tags
+          cache: npm
+          node-version: lts/*
+      - run: npm clean-install
+      - run: corepack npm audit signatures
+      # pinned version updated automatically by Renovate.
+      # details at https://semantic-release.gitbook.io/semantic-release/usage/installation#global-installation
+      - run: npx semantic-release@21.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git push --follow-tags origin main
-          git switch dev && git pull && git merge main && git push origin dev
+          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
