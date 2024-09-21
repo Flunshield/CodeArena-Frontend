@@ -93,12 +93,10 @@ jobs:
           cache: npm
           node-version: lts/*
 
-      - run: npm ci # Installer les dépendances via npm ci
-
       # Exécuter Semantic Release pour publier
       - run: npx semantic-release@21.0.2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # Utiliser ton PAT ici
           NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
 
   deploy:
