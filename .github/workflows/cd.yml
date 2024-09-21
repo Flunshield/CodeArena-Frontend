@@ -74,7 +74,17 @@ jobs:
         with:
           cache: npm
           node-version: lts/*
+
+      # Check for presence of lock file
+      - name: Verify lock file
+        run: |
+          if [ ! -f package-lock.json ] && [ ! -f npm-shrinkwrap.json ] && [ ! -f yarn.lock ]; then
+            echo "Error: No lock file found (package-lock.json, npm-shrinkwrap.json, or yarn.lock)."
+            exit 1
+          fi
+
       - run: npm install
+
       # pinned version updated automatically by Renovate.
       # details at https://semantic-release.gitbook.io/semantic-release/usage/installation#global-installation
       - run: npx semantic-release@21.0.2
@@ -87,12 +97,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
-
-      - name: Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
-        run: echo "VITE_API_BASE_URL_BACK=${{ secrets.VITE_API_BASE_URL_BACK }}" >> .env
-        env:
-          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
-
       - name: Déploiement sur le VPS
         uses: appleboy/ssh-action@master
         with:
