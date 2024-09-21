@@ -10,87 +10,92 @@ permissions:
   contents: read # for checkout
 
 jobs:
-#  test:
-#    runs-on: ubuntu-latest
+  #  test:
+  #    runs-on: ubuntu-latest
 
-#    steps:
-#      - name: ⏳ Checkout du code
-#        uses: actions/checkout@v2
-#
-#      - name: ⏳ Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
-#        env:
-#          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
-#        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
-#
-#      - name: ⏳ Afficher le contenu du fichier .env
-#        run: cat .env
-#
-#      - name: 🚧 Cache node modules
-#        id: cache-npm
-#        uses: actions/cache@v3
-#        with:
-#          path: ~/.npm
-#          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-#          restore-keys: |
-#            ${{ runner.os }}-build-
-#
-#      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-#        name: ⏳ List the state of node modules
-#        continue-on-error: true
-#        run: npm list
-#
-#      - name: ⏳ Install dependencies
-#        run: npm install
-#
-#      - name: 🚧 Save node_modules
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: node_modules
-#          path: ~/.npm
-#
-#      - name: ⏳ Lintage du code
-#        run: npm run lint
-#
-#      - name: 🚀 Lancement du projet en arrière-plan
-#        run: |
-#          npm run dev &
-#          sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
-#
-#      - name: 🚧 Exécuter les tests
-#        run: |
-#          npx cypress run
+  #    steps:
+  #      - name: ⏳ Checkout du code
+  #        uses: actions/checkout@v2
+  #
+  #      - name: ⏳ Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
+  #        env:
+  #          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
+  #        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
+  #
+  #      - name: ⏳ Afficher le contenu du fichier .env
+  #        run: cat .env
+  #
+  #      - name: 🚧 Cache node modules
+  #        id: cache-npm
+  #        uses: actions/cache@v3
+  #        with:
+  #          path: ~/.npm
+  #          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+  #          restore-keys: |
+  #            ${{ runner.os }}-build-
+  #
+  #      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+  #        name: ⏳ List the state of node modules
+  #        continue-on-error: true
+  #        run: npm list
+  #
+  #      - name: ⏳ Install dependencies
+  #        run: npm install
+  #
+  #      - name: 🚧 Save node_modules
+  #        uses: actions/upload-artifact@v3
+  #        with:
+  #          name: node_modules
+  #          path: ~/.npm
+  #
+  #      - name: ⏳ Lintage du code
+  #        run: npm run lint
+  #
+  #      - name: 🚀 Lancement du projet en arrière-plan
+  #        run: |
+  #          npm run dev &
+  #          sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
+  #
+  #      - name: 🚧 Exécuter les tests
+  #        run: |
+  #          npx cypress run
 
   release:
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    name: release
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js (si ton projet utilise Node.js)
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4.1.7 # Cloner le dépôt en premier
+      - name: 🚧 Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
         with:
-          node-version: '16'
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: ⏳ List the state of node modules
+        continue-on-error: true
+        run: npm list
 
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: ⏳ Install dependencies
+        run: npm install
+
+      - uses: actions/setup-node@v4.0.4 # Configurer la version de Node.js
+        with:
+          cache: npm
+          node-version: lts/*
+      - run: npm ci # Installer les dépendances via npm ci
+      # Exécuter Semantic Release pour publier
+      - run: npx semantic-release@21.0.2
         env:
-          GITHUB_TOKEN: ${{ secrets.CHANGELOG }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: "Release ${{ github.ref }}"
-          body: "Release auto-générée à partir du commit ${{ github.sha }}"
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Assets (optionnel)
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./path/to/your/asset.zip
-          asset_name: asset.zip
-          asset_content_type: application/zip
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
 
   deploy:
     runs-on: ubuntu-latest
