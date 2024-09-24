@@ -68,7 +68,7 @@ const Ranked = () => {
             {matchFound && roomId && id && username && (
                 <div className='w-[95%] mx-auto'>
                     <div className="text-center">
-                        <h1 className="text-3xl font-bold font-sans text-gray-800 mb-2">{puzzle?.title}</h1>
+                        <h1 className="mb-2 font-sans text-3xl font-bold text-gray-800">{puzzle?.title}</h1>
                         <p className="text-lg text-gray-600">{puzzle?.details}</p>
                     </div>
 
@@ -93,7 +93,7 @@ const Ranked = () => {
                                 <Button
                                     id="validate-button"
                                     type="button"
-                                    className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-tertiari text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                                    className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-green-600 rounded-md hover:bg-green-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                                     onClick={() => handleSubmitCode(code)}
                                 >
                                     {'Valider'}
@@ -106,12 +106,12 @@ const Ranked = () => {
                         <Chat roomId={roomId} userId={id} username={username} />
                     </div>
                     {testCallback && (
-                        <div className='mt-4 p-4 bg-tertiari rounded-lg'>
-                            <p className='text-lg font-semibold text-gray-800 mb-3'>{testCallback.message}</p>
+                        <div className='p-4 mt-4 rounded-lg bg-tertiari'>
+                            <p className='mb-3 text-lg font-semibold text-gray-800'>{testCallback.message}</p>
                             {testCallback.testPassed.length > 0 && (
                                 <div className='mb-3'>
-                                    <h4 className='text-green-700 font-medium'>Tests valides :</h4>
-                                    <ul className='list-disc list-inside text-green-600'>
+                                    <h4 className='font-medium text-green-700'>Tests valides :</h4>
+                                    <ul className='text-green-600 list-disc list-inside'>
                                         {testCallback.testPassed.map((test, index) => (
                                             <li key={index}>{test}</li>
                                         ))}
@@ -120,8 +120,8 @@ const Ranked = () => {
                             )}
                             {testCallback.testFailed.length > 0 && (
                                 <div>
-                                    <h4 className='text-red-700 font-medium'>Tests ratés :</h4>
-                                    <ul className='list-disc list-inside text-red-600'>
+                                    <h4 className='font-medium text-red-700'>Tests ratés :</h4>
+                                    <ul className='text-red-600 list-disc list-inside'>
                                         {testCallback.testFailed.map((test, index) => (
                                             <li key={index}>{test}</li>
                                         ))}
@@ -134,14 +134,15 @@ const Ranked = () => {
                 </div>
             )}
             <div className="m-2 text-tertiari flex flex-col items-center pb-[120px]">
+                
                 <div className='mb-4'>
-                    {(loading || (inQueue && !matchFound)) && <LoaderMatch msg={t(`Recherche d'un match en cours...`)} />}
+                    {(loading || (inQueue && !matchFound)) && <LoaderMatch msg={t(`Recherche d'un match en cours...`)} className='text-secondary' />}
                 </div>
                 {inQueue && !matchFound ? (
                     <Button
                         id="ranked-button"
                         type="button"
-                        className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-tertiari text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                        className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-red-600 rounded-md hover:bg-red-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                         onClick={handleLeaveQueue}
                     >
                         {'Quitter la file d\'attente'}
@@ -152,7 +153,7 @@ const Ranked = () => {
                         <Button
                             id="ranked-button"
                             type="button"
-                            className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-tertiari text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                            className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-green-600 rounded-md hover:bg-green-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                             onClick={handleJoinQueueClick}
                         >
                             Rechercher un match
@@ -164,7 +165,7 @@ const Ranked = () => {
                     <Button
                         id="leave-room-button"
                         type="button"
-                        className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-tertiari text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                        className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-red-600 rounded-md hover:bg-red-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                         onClick={handleLeaveRoom}
                     >
                         Quitter le match
