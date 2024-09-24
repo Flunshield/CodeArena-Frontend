@@ -14,7 +14,6 @@ const useSocket = (
 
     useEffect(() => {    
         const handleMatchFound = ({ userId1, userId2, roomId, puzzle, startTimestamp }: MatchFoundEvent) => {
-            console.log('Match found event received:', { userId1, userId2, roomId, puzzle, startTimestamp });
             if (userId1 === id || userId2 === id) {
                 setMatchFound(true);
                 setRoomId(roomId);

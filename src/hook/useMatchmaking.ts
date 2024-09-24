@@ -30,18 +30,7 @@ const useMatchmaking = () => {
     useEffect(() => {
         const newSocket = io(VITE_API_BASE_URL_BACK);
         setSocket(newSocket);
-        const handleMatchEnded = ({
-            success,
-            roomId,
-            userId,
-            message,
-        }: {
-            success: boolean;
-            roomId: string;
-            userId: number;
-            message: string;
-        }) => {
-            console.log('Match ended event received for room:', roomId, success, message, userId);
+        const handleMatchEnded = () => {
             setRoomId(null);
             setPuzzle(null);
             setStartTimestamp(null);
@@ -104,7 +93,6 @@ const useMatchmaking = () => {
 
         const responseData = await response.json();
         if (responseData.success) {
-            console.log("Ajouté à la file d'attente et recherche de match en cours"); //TODO
             setInQueue(true);
             setMatchEnded(false);
         } else {
@@ -147,7 +135,6 @@ const useMatchmaking = () => {
 
         const responseData = await response.json();
         if (responseData.success) {
-            console.log("Quitter la salle de match"); //TODO
             resetMatchState();
         } else {
             alert(responseData.message || "Erreur lors de la sortie de la salle de match");
@@ -169,7 +156,6 @@ const useMatchmaking = () => {
             });
 
             if (response.ok) {
-                console.log("Match terminé par timer."); //TODO
                 resetMatchState();
                 setMatchEnded(true);
             } else {
@@ -188,14 +174,11 @@ const useMatchmaking = () => {
         setMatchFound(false);
         setInQueue(false);
         setTestCallback(null);
-
     }, []);
 
     const handleSubmitCode = useCallback(async (code: string) => {
         if (!puzzle || !code) {
             alert("Code ou tests manquants !");
-            console.log('puzzle: ', puzzle);
-            console.log('code: ', code);
             return;
         }
     
@@ -220,7 +203,6 @@ const useMatchmaking = () => {
                     roomId: roomId,
                     userId: id,
                 });
-                console.log('Emit endMatchByWinner sent:', { userId: id, roomId: roomId }); //TODO
 
             } else {
                 const errorCallback: testCallBack = {
@@ -257,6 +239,8 @@ const useMatchmaking = () => {
         setPuzzle,
         setInQueue,
         setStartTimestamp,
+        resetMatchState,
+        setMatchEnded
     };
 }
 
