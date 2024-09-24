@@ -26,6 +26,9 @@ const useMatchmaking = () => {
     const [testCallback, setTestCallback] = useState<testCallBack | null >(null);
     const [code, setCode] = useState("");
     const [socket, setSocket] = useState<Socket | null>(null);
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     useEffect(() => {
         const newSocket = io(VITE_API_BASE_URL_BACK);
@@ -96,7 +99,9 @@ const useMatchmaking = () => {
             setInQueue(true);
             setMatchEnded(false);
         } else {
-            alert(responseData.message || "Erreur lors de la recherche de match");
+            setNotificationType('error');
+            setNotificationMessage(responseData.message || 'Erreur lors de la recherche de match');
+            setShowNotification(true);
         }
     }, [authContext.accessToken, id]);
 
@@ -116,7 +121,9 @@ const useMatchmaking = () => {
         if (responseData.success) {
             resetMatchState();
         } else {
-            alert(responseData.message || "Erreur lors de la sortie de la file d'attente");
+            setNotificationType('error');
+            setNotificationMessage(responseData.message || `Erreur lors de la sortie de la file d'attente`);
+            setShowNotification(true);
         }
         setLoading(false);
     }, [authContext.accessToken, id]);
@@ -137,7 +144,9 @@ const useMatchmaking = () => {
         if (responseData.success) {
             resetMatchState();
         } else {
-            alert(responseData.message || "Erreur lors de la sortie de la salle de match");
+            setNotificationType('error');
+            setNotificationMessage(responseData.message || ' Erreur lors de la sortie de la salle de match');
+            setShowNotification(true);
         }
         setLoading(false);
     }, [authContext.accessToken, id]);
@@ -178,7 +187,9 @@ const useMatchmaking = () => {
 
     const handleSubmitCode = useCallback(async (code: string) => {
         if (!puzzle || !code) {
-            alert("Code ou tests manquants !");
+            setNotificationType('info');
+            setNotificationMessage('Code manquants !');
+            setShowNotification(true);
             return;
         }
     
@@ -228,6 +239,9 @@ const useMatchmaking = () => {
         startTimestamp,
         code,
         testCallback,
+        showNotification,
+        notificationType,
+        notificationMessage,
         setCode,
         handleJoinQueue,
         handleLeaveQueue,
@@ -240,7 +254,10 @@ const useMatchmaking = () => {
         setInQueue,
         setStartTimestamp,
         resetMatchState,
-        setMatchEnded
+        setMatchEnded,
+        setShowNotification,
+        setNotificationType,
+        setNotificationMessage
     };
 }
 

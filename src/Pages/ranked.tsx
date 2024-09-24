@@ -5,10 +5,10 @@ import Button from '../ComposantsCommun/Button';
 import LoaderMatch from '../ComposantsCommun/LoaderMatch';
 import Chat from "../Composants/Chat/Chat";
 import useMatchmaking from '../hook/useMatchmaking';
+import Notification from "../ComposantsCommun/Notification.tsx";
 import useSocket from '../hook/useSocket';
 import CountdownTimer from './countDownTimer';
 import { useState } from 'react';
-
 
 const Ranked = () => {
     const { t } = useTranslation();
@@ -22,6 +22,9 @@ const Ranked = () => {
         puzzle,
         startTimestamp,
         testCallback,
+        showNotification,
+        notificationType,
+        notificationMessage,
         handleJoinQueue,
         handleLeaveQueue,
         handleLeaveRoom,
@@ -32,6 +35,9 @@ const Ranked = () => {
         setPuzzle,
         setInQueue,
         setStartTimestamp,
+        setShowNotification,
+        setNotificationType,
+        setNotificationMessage
     } = useMatchmaking();
 
     const [code, setCode] = useState("");
@@ -42,7 +48,9 @@ const Ranked = () => {
 
     const handleJoinQueueClick = () => {
         if (matchFound && roomId) {
-            alert("Vous êtes déjà dans une salle de match !");
+            setNotificationType('info');
+            setNotificationMessage('Vous êtes déjà dans une salle de match !');
+            setShowNotification(true);
         } else {
             handleJoinQueue();
         }
@@ -50,6 +58,13 @@ const Ranked = () => {
 
     return (
         <Layout>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    type={notificationType}
+                    onClose={() => setShowNotification(false)}
+                />
+            )}
             {matchFound && roomId && id && username && (
                 <div className='w-[95%] mx-auto'>
                     <div className="text-center">
