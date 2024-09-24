@@ -4,6 +4,7 @@ export interface ChatInterface {
     body: string;
     timestamp: string;
     roomId: string;
+    end: boolean;
 }
 
 export interface ChatProps {

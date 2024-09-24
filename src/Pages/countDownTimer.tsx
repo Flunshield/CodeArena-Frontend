@@ -11,13 +11,11 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ startTimestamp, onCompl
     const endDate = new Date(startTimestamp + 10 * 60 * 1000);
 
     const handleComplete = () => {
-        console.log('Décompte terminé');
         setIsCompleted(true);
     };
 
     useEffect(() => {
         if (isCompleted) {
-            console.log('Appel de handleEndMatch via onComplete');
             onComplete();
         }
     }, [isCompleted, onComplete]);
