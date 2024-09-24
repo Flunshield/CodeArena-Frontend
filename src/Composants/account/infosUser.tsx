@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import map from "/assets/icones/map-marker.png";
 import company from "/assets/icones/company.png";
 import school from "/assets/icones/school.png";
@@ -7,18 +7,18 @@ import link from "/assets/icones/link.png";
 import code from "/assets/icones/code.svg";
 import titles from "/assets/icones/flag.png";
 import Button from "../../ComposantsCommun/Button.tsx";
-import {useTranslation} from "react-i18next";
-import {useAuthContext} from "../../AuthContext.tsx";
-import {JwtPayload} from "jwt-decode";
-import {DataToken, Match, User} from "../../Interface/Interface.ts";
-import {getElementByEndpoint, postElementByEndpoint} from "../../Helpers/apiHelper.ts";
+import { useTranslation } from "react-i18next";
+import { useAuthContext } from "../../AuthContext.tsx";
+import { JwtPayload } from "jwt-decode";
+import { DataToken, Match, User } from "../../Interface/Interface.ts";
+import { getElementByEndpoint, postElementByEndpoint } from "../../Helpers/apiHelper.ts";
 import ListItem from "../../ComposantsCommun/ListItem.tsx";
 import ProfilePicture from "./profilePicture.tsx";
 import Badges from "./bagdes.tsx";
-import {GROUPS} from "../../constantes/constantes";
+import { GROUPS } from "../../constantes/constantes";
 import Administration from "./entreprise/Administration";
-import {Container} from "../../ComposantsCommun/Container";
-import {FadeIn, FadeInStagger} from "../../ComposantsCommun/FadeIn";
+import { Container } from "../../ComposantsCommun/Container";
+import { FadeIn, FadeInStagger } from "../../ComposantsCommun/FadeIn";
 import clsx from "clsx";
 import Notification from "../../ComposantsCommun/Notification.tsx";
 import MatchHistory from "./MatchHistory.tsx";
@@ -33,13 +33,13 @@ interface InfosUserProps {
 }
 
 const InfosUser: React.FC<InfosUserProps> = ({
-                                                 openPopup,
-                                                 setIsInformationGeneraleCliked,
-                                                 setIsHistoriqueOrderClicked,
-                                                 setIsSubmitted,
-                                                 infosUserById,
-                                             }) => {
-    const {t} = useTranslation();
+    openPopup,
+    setIsInformationGeneraleCliked,
+    setIsHistoriqueOrderClicked,
+    setIsSubmitted,
+    infosUserById,
+}) => {
+    const { t } = useTranslation();
     const authContext = useAuthContext();
     // Récupération des informations utilisateur
     const infosUser = authContext?.infosUser as JwtPayload;
@@ -115,7 +115,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                         : infosUserById?.userName}
                                 </p>
                                 {isUser && <p className="text-petroleum-blue underline cursor-pointer"
-                                   onClick={() => getHistoriqueMatch()}>{t('historyMatch')}</p>}
+                                    onClick={() => getHistoriqueMatch()}>{t('historyMatch')}</p>}
                                 <p className="text-neutral-900 mb-5 uppercase font-semibold text-lg">
                                     {infosUserById?.firstName && infosUserById?.lastName
                                         ? infosUserById?.userName
@@ -215,10 +215,10 @@ const InfosUser: React.FC<InfosUserProps> = ({
                             ) : (
                                 <div className="flex align-baseline justify-between w-full space-x-5 mt-5">
                                     <FadeIn>
-                                        <Badges infosUserById={infosUserById}/>
+                                        <Badges infosUserById={infosUserById} />
                                     </FadeIn>
                                     <FadeIn>
-                                        <Presentation infosUserById={infosUserById}/>
+                                        <Presentation infosUserById={infosUserById} />
                                     </FadeIn>
                                 </div>
                             )}
@@ -230,7 +230,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                 <div
                     className="fixed top-0 left-0 z-50 p-4 lg:p-8 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
                     <div className="relative bg-gray-100 p-8 rounded-md shadow-lg max-h-full w-auto overflow-y-auto">
-                        {isUser && <MatchHistory historiqueMatch={historiqueMatch}/>}
+                        {isUser && <MatchHistory historiqueMatch={historiqueMatch} />}
                         <button
                             onClick={closePopup}
                             className="absolute top-2 right-2 rounded-full bg-error hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105"

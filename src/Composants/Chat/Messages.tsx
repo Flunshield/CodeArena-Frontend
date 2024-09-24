@@ -33,7 +33,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
         if (systemMessage) {
             resetMatchState();
             setMatchEnded(true);
-            
+
             // Navigate to the same page to trigger a full re-render
             navigate(0);
         }

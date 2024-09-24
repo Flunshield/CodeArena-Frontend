@@ -23,7 +23,7 @@ const useMatchmaking = () => {
     const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
     const [startTimestamp, setStartTimestamp] = useState<number | null>(null);
     const [matchEnded, setMatchEnded] = useState(false);
-    const [testCallback, setTestCallback] = useState<testCallBack | null >(null);
+    const [testCallback, setTestCallback] = useState<testCallBack | null>(null);
     const [code, setCode] = useState("");
     const [socket, setSocket] = useState<Socket | null>(null);
     const [showNotification, setShowNotification] = useState(false);
@@ -41,7 +41,7 @@ const useMatchmaking = () => {
             setInQueue(false);
             setTestCallback(null);
         };
-        
+
         newSocket.on('endMatchByWinner', handleMatchEnded);
 
         return () => {
@@ -192,24 +192,24 @@ const useMatchmaking = () => {
             setShowNotification(true);
             return;
         }
-    
+
         const payload = {
             code: code,
             tests: puzzle.tests
         };
-    
+
         try {
             const response = await postTest('tests/js', payload);
             const responseData = await response.json();
-    
+
             if (response.ok && responseData.success) {
                 const successCallback: testCallBack = {
                     message: "Code et tests soumis avec succès !",
                     testPassed: responseData.testPassed || [],
                     testFailed: responseData.testFailed || [],
                 };
-                setTestCallback(successCallback);                
-                
+                setTestCallback(successCallback);
+
                 socket?.emit('endMatchByWinner', {
                     roomId: roomId,
                     userId: id,

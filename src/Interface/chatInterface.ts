@@ -27,9 +27,9 @@ export interface Puzzle {
     tournamentID: number | null;
     eventsID: number | null;
     tests: {
-      success: boolean;
-      testPassed: string[];
-      testFailed: string[];
+        success: boolean;
+        testPassed: string[];
+        testFailed: string[];
     };
     details: string;
     title: string;
