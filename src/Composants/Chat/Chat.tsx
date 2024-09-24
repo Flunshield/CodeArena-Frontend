@@ -21,7 +21,6 @@ const Chat = ({ roomId, userId, username }: ChatProps) => {
 
         // Vérification que socketRef.current n'est pas null
         socketRef.current?.on('connect', () => {
-            console.log('Socket connected, joining room:', roomId);
             if (socketRef.current && socketRef.current.id) {
                 localStorage.setItem(`socketSessionId_${userId}`, socketRef.current.id); // Sauvegarder l'ID de session
             }

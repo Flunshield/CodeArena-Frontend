@@ -3,6 +3,9 @@ import { ChatInterface } from '../../Interface/chatInterface';
 import { useAuthContext } from "../../AuthContext";
 import { JwtPayload } from "jwt-decode";
 import { DataToken } from "../../Interface/Interface";
+import useMatchmaking from "../../hook/useMatchmaking";
+import { useNavigate } from 'react-router-dom';
+
 
 interface MessagesProps {
     messages: ChatInterface[];
@@ -15,6 +18,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
     const infos = infosUser.aud as unknown as DataToken;
     const id = infos.data.id;
 
+    const { resetMatchState, setMatchEnded } = useMatchmaking();
     const messagesContainerRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -22,6 +26,18 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
             messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
         }
     };
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const systemMessage = messages.find(message => message.userId === 0 && message.end === true);
+        if (systemMessage) {
+            resetMatchState();
+            setMatchEnded(true);
+            
+            // Navigate to the same page to trigger a full re-render
+            navigate(0);
+        }
+    }, [messages, resetMatchState, navigate]);
 
     useEffect(() => {
         scrollToBottom();
@@ -41,31 +57,41 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
             ) : (
                 messages.map((message) => {
                     const isCurrentUser = message.userId === id;
+                    const isSystemMessage = message.userId === 0;
                     const initials = getInitials(message.username).toUpperCase();
 
                     return (
-                        <div key={message.timestamp} className="flex items-end gap-2">
-                            {!isCurrentUser && (
+                        <div
+                            key={message.timestamp}
+                            className={`flex items-end gap-2 ${isSystemMessage ? 'justify-center' : isCurrentUser ? 'ml-auto' : 'mr-auto'
+                                }`}
+                        >
+                            {!isSystemMessage && !isCurrentUser && (
                                 <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                     {initials}
                                 </span>
                             )}
+
                             <div
-                                className={`flex flex-col p-4 text-sm min-w-[200px] ${
-                                    isCurrentUser 
-                                        ? 'ml-auto max-w-[80%] md:max-w-[60%] rounded-l-xl rounded-tr-xl bg-blue-700 text-slate-100 dark:bg-blue-600 dark:text-slate-100' 
+                                className={`flex flex-col p-4 text-sm min-w-[200px] ${isSystemMessage
+                                    ? 'bg-green-600 text-white rounded-xl text-center'
+                                    : isCurrentUser
+                                        ? 'ml-auto max-w-[80%] md:max-w-[60%] rounded-l-xl rounded-tr-xl bg-blue-700 text-slate-100 dark:bg-blue-600 dark:text-slate-100'
                                         : 'mr-auto max-w-[80%] md:max-w-[60%] rounded-r-xl rounded-tl-xl bg-slate-100 text-black dark:bg-slate-800 dark:text-tertiari'
-                                }`}
+                                    }`}
                             >
-                                {!isCurrentUser && (
+                                {!isSystemMessage && !isCurrentUser && (
                                     <span className="font-semibold">{message.username}</span>
                                 )}
-                                <div className={`text-sm ${isCurrentUser ? '' : 'text-slate-700 dark:text-slate-300'}`}>
+                                <div className={`text-sm ${isSystemMessage ? '' : 'text-slate-700 dark:text-slate-300'}`}>
                                     {message.body}
                                 </div>
-                                <span className="ml-auto text-xs">{new Date(message.timestamp).toLocaleTimeString()}</span>
+                                <span className="ml-auto text-xs">
+                                    {new Date(message.timestamp).toLocaleTimeString()}
+                                </span>
                             </div>
-                            {isCurrentUser && (
+
+                            {!isSystemMessage && isCurrentUser && (
                                 <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                     {initials}
                                 </span>
@@ -74,6 +100,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
                     );
                 })
             )}
+
             {typingUsers.map(user => {
                 const isCurrentUser = user.userId === id;
                 return (
