@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 
 interface MessageInputProps {
     send: (value: string) => void;
@@ -7,7 +9,7 @@ interface MessageInputProps {
 
 const MessageInput = ({ send, setTyping }: MessageInputProps) => {
     const [value, setValue] = useState<string>('');
-
+    const { t } = useTranslation();
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter' && value.trim() !== '') {
             send(value);
@@ -34,12 +36,12 @@ const MessageInput = ({ send, setTyping }: MessageInputProps) => {
             <input
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
-                placeholder="Tape ton message"
+                placeholder={t('chatTyping')}
                 value={value}
-                className="border border-gray-300 rounded-lg py-2 px-4 w-full"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
             />
             <button
-                className="inline-flex justify-center text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600 items-center"
+                className="inline-flex items-center justify-center text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600"
                 onClick={handleSend}
             >
                 <svg

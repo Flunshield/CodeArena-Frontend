@@ -5,6 +5,7 @@ import { JwtPayload } from "jwt-decode";
 import { DataToken } from "../../Interface/Interface";
 import useMatchmaking from "../../hook/useMatchmaking";
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 
 interface MessagesProps {
@@ -16,6 +17,7 @@ interface MessagesProps {
 }
 
 const Messages = ({ messages, typingUsers, setShowNotification, setNotificationMessage, setNotificationType }: MessagesProps) => {
+    const { t } = useTranslation();
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
@@ -62,7 +64,7 @@ const Messages = ({ messages, typingUsers, setShowNotification, setNotificationM
     return (
         <div className="flex w-full flex-col gap-4 p-4 max-w-2xl mx-auto bg-tertiari rounded-lg shadow-lg h-[500px] overflow-y-auto" ref={messagesContainerRef}>
             {messages.length === 0 ? (
-                <p className="text-center text-gray-500 dark:text-gray-400">Pas de message ici</p>
+                <p className="text-center text-gray-500 dark:text-gray-400">{t('chatNothing')}</p>
             ) : (
                 messages.map((message) => {
                     const isCurrentUser = message.userId === id;
