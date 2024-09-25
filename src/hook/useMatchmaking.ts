@@ -29,6 +29,10 @@ const useMatchmaking = () => {
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
+    const [notificationDelay] = useState(3000);
+    const [nbGames, setNbGames] = useState(null);
+    const [userRanking, setUserRanking] = useState(null);
+    const [userPoint, setUserPoint] = useState(null);
 
     useEffect(() => {
         const newSocket = io(VITE_API_BASE_URL_BACK);
@@ -143,6 +147,9 @@ const useMatchmaking = () => {
         const responseData = await response.json();
         if (responseData.success) {
             resetMatchState();
+            setNotificationType('info');
+            setNotificationMessage('Vous avez abandonné la partie.');
+            setShowNotification(true);
         } else {
             setNotificationType('error');
             setNotificationMessage(responseData.message || ' Erreur lors de la sortie de la salle de match');
@@ -214,7 +221,6 @@ const useMatchmaking = () => {
                     roomId: roomId,
                     userId: id,
                 });
-
             } else {
                 const errorCallback: testCallBack = {
                     message: "Le code n'a pas passé tous les tests.",
@@ -227,6 +233,18 @@ const useMatchmaking = () => {
             console.error("Erreur lors de la soumission du code et des tests:", error);
         }
     }, [puzzle, id, roomId, socket]);
+
+    const fetchUserRanking = async () => {
+        getElementByEndpoint(`user/getUserRanking?userName=${userInfos.userName}`, {
+            token: authContext.accessToken ?? "",
+            data: ""
+        }).then(async (response) => {
+            const result = await response.json();
+            setUserRanking(result.user.userRanking[0].rankings.title);
+            setUserPoint(result.user.userRanking[0].points);
+            setNbGames(result.user.nbGames);
+        });
+    };
 
     return {
         loading,
@@ -242,6 +260,10 @@ const useMatchmaking = () => {
         showNotification,
         notificationType,
         notificationMessage,
+        notificationDelay,
+        nbGames,
+        userRanking,
+        userPoint,
         setCode,
         handleJoinQueue,
         handleLeaveQueue,
@@ -257,7 +279,8 @@ const useMatchmaking = () => {
         setMatchEnded,
         setShowNotification,
         setNotificationType,
-        setNotificationMessage
+        setNotificationMessage,
+        fetchUserRanking
     };
 }
 
