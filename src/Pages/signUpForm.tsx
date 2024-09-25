@@ -88,9 +88,12 @@ function SignUpForm() {
                                 validate={(values) => {
                                     const errors: Partial<SignUpFormValues> = {};
                                     const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                                    const regexUsername = /^[a-zA-Z0-9_]{3,30}$/;
 
                                     if (!values.userName) {
                                         errors.userName = 'Ce champ est requis';
+                                    } else if (!regexUsername.test(values.userName)) {
+                                        errors.userName = t('invalidUserName');
                                     }
                                     if (!values.password) {
                                         errors.password = 'Ce champ est requis';
