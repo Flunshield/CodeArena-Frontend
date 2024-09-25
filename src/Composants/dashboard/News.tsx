@@ -43,7 +43,7 @@ function TableauNews({ newsData, className }: TableauNewsProps) {
                     <p className="font-bold text-xl sm:text-2xl lg:text-5xl" id="title-news">{t("news")}</p>
                 </CardContent>
                 {news && news.length > 0 ? (
-                    <FadeInStagger className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8 lg:grid-cols-3">
+                    <FadeInStagger className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8 lg:grid-cols-3 p-4">
                         {news.map((item, index) => (
                             <FadeIn key={index} className="flex flex-col items-center">
                                 <Card className="bg-tertiari rounded-xl m-3 sm:m-5 border-tertiary shadow-md w-full">
