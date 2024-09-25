@@ -92,9 +92,9 @@ const Messages = ({ messages, typingUsers, setShowNotification, setNotificationM
                                     }`}
                             >
                                 {!isSystemMessage && !isCurrentUser && (
-                                    <span className="font-semibold">{message.username}</span>
+                                    <span className="font-semibold text-white dark:text-white">{message.username}</span>
                                 )}
-                                <div className={`text-sm ${isSystemMessage ? '' : 'text-slate-700 dark:text-slate-300'}`}>
+                                <div className={`text-sm ${isSystemMessage ? '' : 'text-white dark:text-white'}`}>
                                     {message.body}
                                 </div>
                                 <span className="ml-auto text-xs">
