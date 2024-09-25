@@ -10,9 +10,12 @@ import { useNavigate } from 'react-router-dom';
 interface MessagesProps {
     messages: ChatInterface[];
     typingUsers: { userId: number; username: string }[];
+    setShowNotification: (value: boolean) => void;
+    setNotificationMessage: (value: string) => void;
+    setNotificationType: (value: string) => void;
 }
 
-const Messages = ({ messages, typingUsers }: MessagesProps) => {
+const Messages = ({ messages, typingUsers, setShowNotification, setNotificationMessage, setNotificationType}: MessagesProps) => {
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
@@ -30,12 +33,16 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
 
     useEffect(() => {
         const systemMessage = messages.find(message => message.userId === 0 && message.end === true);
+        
         if (systemMessage) {
-            resetMatchState();
-            setMatchEnded(true);
-
-            // Navigate to the same page to trigger a full re-render
-            navigate(0);
+            setNotificationType('info');
+            setNotificationMessage(systemMessage.body || 'La partie est terminé !' );
+            setShowNotification(true);
+            setTimeout(() => {
+                resetMatchState();
+                setMatchEnded(true);
+                navigate(0);
+            }, 3000);
         }
     }, [messages, resetMatchState, navigate]);
 
@@ -67,7 +74,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
                                 }`}
                         >
                             {!isSystemMessage && !isCurrentUser && (
-                                <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                     {initials}
                                 </span>
                             )}
@@ -92,7 +99,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
                             </div>
 
                             {!isSystemMessage && isCurrentUser && (
-                                <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                     {initials}
                                 </span>
                             )}
@@ -106,7 +113,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
                 return (
                     <div key={user.userId} className="flex items-end gap-2">
                         {!isCurrentUser && (
-                            <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                            <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                 {getInitials(user.username)}
                             </span>
                         )}
@@ -116,7 +123,7 @@ const Messages = ({ messages, typingUsers }: MessagesProps) => {
                             <span className="size-1.5 rounded-full bg-slate-700 motion-safe:animate-[bounce_1s_ease-in-out_infinite] dark:bg-slate-300"></span>
                         </div>
                         {isCurrentUser && (
-                            <span className="flex size-8 items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-slate-100 text-sm font-bold tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                            <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                                 {getInitials(user.username)}
                             </span>
                         )}
