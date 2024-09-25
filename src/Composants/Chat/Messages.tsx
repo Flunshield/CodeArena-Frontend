@@ -10,12 +10,12 @@ import { useNavigate } from 'react-router-dom';
 interface MessagesProps {
     messages: ChatInterface[];
     typingUsers: { userId: number; username: string }[];
-    setShowNotification: (value: boolean) => void;
-    setNotificationMessage: (value: string) => void;
-    setNotificationType: (value: string) => void;
+    setShowNotification?: (value: boolean) => void;
+    setNotificationMessage?: (value: string) => void;
+    setNotificationType?: (value: string) => void;
 }
 
-const Messages = ({ messages, typingUsers, setShowNotification, setNotificationMessage, setNotificationType}: MessagesProps) => {
+const Messages = ({ messages, typingUsers, setShowNotification, setNotificationMessage, setNotificationType }: MessagesProps) => {
     const authContext = useAuthContext();
     const infosUser = authContext?.infosUser as JwtPayload;
     const infos = infosUser.aud as unknown as DataToken;
@@ -33,11 +33,13 @@ const Messages = ({ messages, typingUsers, setShowNotification, setNotificationM
 
     useEffect(() => {
         const systemMessage = messages.find(message => message.userId === 0 && message.end === true);
-        
+
         if (systemMessage) {
-            setNotificationType('info');
-            setNotificationMessage(systemMessage.body || 'La partie est terminé !' );
-            setShowNotification(true);
+            if (setNotificationType && setNotificationMessage && setShowNotification) {
+                setNotificationType('info');
+                setNotificationMessage(systemMessage.body || 'La partie est terminée !');
+                setShowNotification(true);
+            }
             setTimeout(() => {
                 resetMatchState();
                 setMatchEnded(true);
