@@ -7,24 +7,24 @@ import { SectionIntro } from "../../../ComposantsCommun/SectionIntro";
 const CASE_STUDIES = [
   {
     id: "1",
-    title: "Compétition",
-    description: "Combattez vos adversaires pour devenir le meilleur",
+    title: "competition",
+    description: "descriptionCompetition",
     images: [
       { src: "/assets/icones/Competition.jpg", alt: "Compétition" },
     ]
   },
   {
     id: "2",
-    title: "Événements",
-    description: "Participer à des événement en tout genre pour vous démarquez au prés des particuliers",
+    title: "event",
+    description: "eventDescription",
     images: [
       { src: "/assets/icones/Event.jpg", alt: "Événements" },
     ]
   },
   {
     id: "3",
-    title: "Puzzle",
-    description: "Entrainez vous à la résolution de puzzle et stimulez votre cerveau pour les résoudre !",
+    title: "puzzle",
+    description: "puzzleDescription",
     images: [
       { src: "/assets/icones/puzzle.jpg", alt: "Puzzle" },
     ]
@@ -63,10 +63,10 @@ function CaseStudies() {
                 </h3>
                 
                 <p className="mt-6 font-display text-2xl font-semibold text-neutral-950">
-                  {caseStudy.title}
+                  {t(caseStudy.title)}
                 </p>
                 <p className="mt-4 text-base text-neutral-600">
-                  {caseStudy.description}
+                  {t(caseStudy.description)}
                 </p>
               </article>
             </FadeIn>

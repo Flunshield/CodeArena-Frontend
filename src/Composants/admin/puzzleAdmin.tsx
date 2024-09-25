@@ -27,6 +27,7 @@ interface PuzzleFormValues {
     tests: string;
     rankingId?: number;
     eventId?: number;
+    example?: string;
 }
 
 const PuzzleSchema = Yup.object().shape({
@@ -60,19 +61,19 @@ const puzzleAdmin = ({
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
-
     const initialValues: PuzzleFormValues = {
         title: title || t("titlePuzzle"),
         tests: tests ? JSON.stringify(tests, null, 2) : JSON.stringify(DONNEES_TESTS, null, 2),
         details: details || "Sujet du puzzle",
         rankingId: undefined,
-        eventId: undefined
+        eventId: undefined,
+        example: ""
     };
 
 
     return (
         <div id="PuzzleForm" className={clsx(className, "m-5 rounded-lg bg-tertiari shadow-lg p-6")}>
-            <h3 className="text-lg font-semibold text-quaternary mb-4">{t("createPuzzleTitle")}</h3>
+            <h3 className="text-lg font-semibold text-quaternary mb-4">{t("updatePuzzle")}</h3>
             <Formik
                 initialValues={initialValues}
                 validationSchema={PuzzleSchema}
@@ -84,7 +85,8 @@ const puzzleAdmin = ({
                         "tests": JSON.parse(values.tests),
                         "user": userInfos,
                         "rankingId": values.rankingId,
-                        "eventId": values.eventId
+                        "eventId": values.eventId,
+                        "example": values.example
                     };
 
                     const result = await postElementByEndpoint(endpoint, {
@@ -155,6 +157,12 @@ const puzzleAdmin = ({
                                 (JSON)</label>
                             <Field as="textarea" id="tests" name="tests"
                                    className="h-96 mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"/>
+                            <ErrorMessage name="tests" component="div" className="text-error text-xs mt-1"/>
+                        </div>
+                        <div>
+                            <label htmlFor="example" className="block text-sm font-medium text-quaternary">{t("example")}</label>
+                            <Field as="textarea" id="example" name="example"
+                                   className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2"/>
                             <ErrorMessage name="tests" component="div" className="text-error text-xs mt-1"/>
                         </div>
                         <div className="flex justify-center">

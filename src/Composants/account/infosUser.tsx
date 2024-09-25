@@ -190,7 +190,7 @@ const InfosUser: React.FC<InfosUserProps> = ({
                                                 icon={code}
                                                 id="languagePreference"
                                                 text={infosUserById.languagePreference ?? ""}
-                                                classNameSvg="bg-tertiari"
+                                               
                                             />
                                         </ul>
                                     </div>

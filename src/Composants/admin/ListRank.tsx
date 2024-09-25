@@ -32,7 +32,7 @@ const ListRank: React.FC<ListRankProps> = ({ ranks }) => {
                     </thead>
                     <tbody>
                     {ranks.map((rank: Ranking) => (
-                        <tr key={rank.id} className="bg-tertiari border-b">
+                        <tr key={rank.id} className="bg-tertiari border-b hover:bg-soft-gray hover:text-secondary">
                             <th
                                 scope="row"
                                 className="px-6 py-4 font-medium text-light-blue whitespace-nowrap"

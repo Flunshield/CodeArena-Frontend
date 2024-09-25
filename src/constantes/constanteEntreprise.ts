@@ -20,6 +20,7 @@ export const CARD_EXPLANATION = [
     }
 ];
 
+
 export const PRICING = [
     {
         title: "Pack premium",
@@ -123,6 +124,12 @@ export const EXP_CODE = [
         src: "/assets/icones/recrutement.jpg",
         alt: "recrutement Logo",
         name: "Recrutement"
+    }
+]
+export const DEV_PICTURE = [
+    {
+        src: "/assets/dev.avif",
+        alt: "Image d'un dévellopeur"
     }
 ]
 
