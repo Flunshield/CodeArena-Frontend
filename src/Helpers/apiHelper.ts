@@ -1,4 +1,4 @@
-import {LoginForm, PuzzlesEntreprise, shortUser, Titles, User} from "../Interface/Interface.ts";
+import { LoginForm, PuzzlesEntreprise, shortUser, Titles, User } from "../Interface/Interface.ts";
 
 export const VITE_API_BASE_URL_BACK: string = import.meta.env.VITE_API_BASE_URL_BACK;
 const VITE_API_BASE_URL_TEST: string = import.meta.env.VITE_API_BASE_URL_TEST;

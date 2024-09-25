@@ -252,7 +252,7 @@ function AdminEventDashboard() {
 
                         <div className="flex space-x-5">
 
-                            {eventReceived?.accepted === false && (isAdmin || isEntreprise) && (
+                            {eventReceived?.accepted === false && (isEntreprise) && (
                                 <button
                                     type="submit"
                                     className="w-full py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all ease-in-out duration-200"

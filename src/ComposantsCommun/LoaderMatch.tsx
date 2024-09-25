@@ -4,24 +4,10 @@ import '../css/Loader-login.css';
 interface LoaderProps {
     msg: string;
     className?: string;
-    type?: string;
 }
-const LoaderMatch = ({ msg, className, type }: LoaderProps) => {
+const LoaderMatch = ({ msg, className }: LoaderProps) => {
     return (
         <div className={className}>
-            {type === "login" && (
-                <div className="spinner">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            )}
-            {type !== "login" && (
             <div className="loadingspinner">
                 <div id="square1"></div>
                 <div id="square2"></div>
@@ -29,8 +15,7 @@ const LoaderMatch = ({ msg, className, type }: LoaderProps) => {
                 <div id="square4"></div>
                 <div id="square5"></div>
             </div>
-                )}
-            <span className='text-tertiari flex justify-center font-bold text-xl'>{msg}</span>
+            <span className='flex justify-center text-xl font-bold'>{msg}</span>
         </div>
     );
 }

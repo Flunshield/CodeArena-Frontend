@@ -4,12 +4,16 @@ export interface ChatInterface {
     body: string;
     timestamp: string;
     roomId: string;
+    end: boolean;
 }
 
 export interface ChatProps {
     roomId: string;
     userId: number;
     username: string;
+    setShowNotification: (value: boolean) => void
+    setNotificationMessage: (value: string) => void
+    setNotificationType: (value: string) => void
 }
 
 export interface MatchFoundEvent {
@@ -26,9 +30,9 @@ export interface Puzzle {
     tournamentID: number | null;
     eventsID: number | null;
     tests: {
-      success: boolean;
-      testPassed: string[];
-      testFailed: string[];
+        success: boolean;
+        testPassed: string[];
+        testFailed: string[];
     };
     details: string;
     title: string;

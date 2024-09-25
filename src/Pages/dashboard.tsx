@@ -42,21 +42,21 @@ function Dashboard() {
         <Layout>
             <Container className="mt-12">
                 <SectionIntro title={t("Dashboard")}>
-                    <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+                    <div className="flex flex-col items-center justify-between mb-8 md:flex-row">
                         <p className="mb-4 md:mb-0">{t("Welcome")}</p>
-                        <Button className="bg-primary text-secondary rounded-lg py-3 px-6 shadow-lg hover:bg-yellow-500" type="button" id="game" onClick={() => { navigate("/ranked") }}>
+                        <Button className="px-6 py-3 rounded-lg shadow-lg bg-primary text-secondary hover:bg-yellow-500" type="button" id="game" onClick={() => { navigate("/ranked") }}>
                             {t("Jouez")}
                         </Button>
                     </div>
                 </SectionIntro>
-                <FadeInStagger className="mt-10 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-10 w-full">
+                <FadeInStagger className="grid w-full grid-cols-1 gap-10 mt-10 lg:grid-cols-2 xl:grid-cols-3">
                     <FadeIn className="lg:col-span-2 xl:col-span-2">
                         <TableauNews newsData={newsData} />
                     </FadeIn>
                     <FadeIn className="lg:col-span-2 xl:col-span-1">
                         <UserRank infosUserRank={infosUserRank} />
                     </FadeIn>
-                    <FadeIn className="col-span-1 lg:col-span-2 xl:col-span-3 mb-4">
+                    <FadeIn className="col-span-1 mb-4 lg:col-span-2 xl:col-span-3">
                         <TableauEvent infosEvents={infosEvents} isImg={false} />
                     </FadeIn>
                 </FadeInStagger>

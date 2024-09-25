@@ -1,16 +1,16 @@
 import Layout from "../../ComposantsCommun/Layout.tsx";
-import {useEffect, useState} from "react";
-import {getQueryParamValue} from "../../Helpers/methodeHelper.ts";
-import {useNavigate} from "react-router-dom";
-import {ERROR_PAGE, GAME_ENTREPRISE} from "../../constantes/constantesRoutes.ts";
-import {VITE_API_BASE_URL_BACK} from "../../Helpers/apiHelper.ts";
-import {useTranslation} from "react-i18next";
+import { useEffect, useState } from "react";
+import { getQueryParamValue } from "../../Helpers/methodeHelper.ts";
+import { useNavigate } from "react-router-dom";
+import { ERROR_PAGE, GAME_ENTREPRISE } from "../../constantes/constantesRoutes.ts";
+import { VITE_API_BASE_URL_BACK } from "../../Helpers/apiHelper.ts";
+import { useTranslation } from "react-i18next";
 import LoaderMatch from "../../ComposantsCommun/LoaderMatch.tsx";
 
 function LoadGame() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const token = getQueryParamValue("token");
     const fetchData = async () => {
         try {
@@ -27,7 +27,7 @@ function LoadGame() {
             const chunks = [];
             // eslint-disable-next-line no-constant-condition
             while (true) {
-                const {done, value} = await reader.read();
+                const { done, value } = await reader.read();
                 if (done) {
                     break;
                 }
@@ -49,11 +49,11 @@ function LoadGame() {
                 setTimeout(() => {
                     setLoading(false);
                     const reponse = JSON.parse(result);
-                    navigate(GAME_ENTREPRISE, {state: {puzzle: reponse.puzzle, mailID: reponse.mailID, token: token}});
+                    navigate(GAME_ENTREPRISE, { state: { puzzle: reponse.puzzle, mailID: reponse.mailID, token: token } });
                 }, 2000);
             }
         } catch
-            (error) {
+        (error) {
             console.error(error);
             navigate(ERROR_PAGE);
         }
@@ -67,7 +67,7 @@ function LoadGame() {
         <Layout>
             {loading && (
                 <div className="flex justify-center items-center h-screen">
-                    <LoaderMatch msg={t('loadTest')} className="z-50 bg-gris-chaud rounded-lg"/>
+                    <LoaderMatch msg={t('loadTest')} className="z-50 bg-gris-chaud rounded-lg" />
                 </div>
             )}
         </Layout>

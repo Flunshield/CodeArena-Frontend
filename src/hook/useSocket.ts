@@ -12,9 +12,8 @@ const useSocket = (
 ) => {
     const socket = useMemo(() => io(import.meta.env.VITE_API_BASE_URL_BACK), []);
 
-    useEffect(() => {    
+    useEffect(() => {
         const handleMatchFound = ({ userId1, userId2, roomId, puzzle, startTimestamp }: MatchFoundEvent) => {
-            console.log('Match found event received:', { userId1, userId2, roomId, puzzle, startTimestamp });
             if (userId1 === id || userId2 === id) {
                 setMatchFound(true);
                 setRoomId(roomId);
@@ -29,13 +28,13 @@ const useSocket = (
             }
         };
         socket.on('matchFound', handleMatchFound);
-    
+
         return () => {
             socket.off('matchFound', handleMatchFound);
             socket.disconnect(); // Ajout de la déconnexion propre
         };
     }, [id, socket, setMatchFound, setRoomId, setPuzzle, setStartTimestamp, setInQueue]);
-    
+
 
     return socket;
 };

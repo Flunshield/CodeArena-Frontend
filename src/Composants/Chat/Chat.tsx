@@ -5,7 +5,7 @@ import { ChatInterface, ChatProps } from '../../Interface/chatInterface';
 import Messages from './Messages';
 import MessageInput from './MessageInput';
 
-const Chat = ({ roomId, userId, username }: ChatProps) => {
+const Chat = ({ roomId, userId, username, setShowNotification, setNotificationMessage, setNotificationType }: ChatProps) => {
     const [messages, setMessages] = useState<ChatInterface[]>([]);
     const [typingUsers, setTypingUsers] = useState<{ userId: number; username: string }[]>([]);
     const socketRef = useRef<Socket | null>(null);
@@ -21,7 +21,6 @@ const Chat = ({ roomId, userId, username }: ChatProps) => {
 
         // Vérification que socketRef.current n'est pas null
         socketRef.current?.on('connect', () => {
-            console.log('Socket connected, joining room:', roomId);
             if (socketRef.current && socketRef.current.id) {
                 localStorage.setItem(`socketSessionId_${userId}`, socketRef.current.id); // Sauvegarder l'ID de session
             }
@@ -75,7 +74,7 @@ const Chat = ({ roomId, userId, username }: ChatProps) => {
     return (
         <div className="flex flex-col h-full w-[500px]">
             <div className="flex-1 overflow-y-auto">
-                <Messages messages={messages} typingUsers={typingUsers} />
+                <Messages messages={messages} typingUsers={typingUsers} setShowNotification={setShowNotification} setNotificationMessage={setNotificationMessage} setNotificationType={setNotificationType}/>
             </div>
             <div className="py-2">
                 <MessageInput send={send} setTyping={handleTyping} />

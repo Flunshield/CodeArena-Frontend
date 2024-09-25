@@ -19,7 +19,7 @@
   
   .loadingspinner div {
     display: inline-block;
-    background: grey;
+    background: #161B22;
     border: none;
     border-radius: 2px;
     width: var(--square);

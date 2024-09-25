@@ -23,25 +23,21 @@ const useMatchmaking = () => {
     const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
     const [startTimestamp, setStartTimestamp] = useState<number | null>(null);
     const [matchEnded, setMatchEnded] = useState(false);
-    const [testCallback, setTestCallback] = useState<testCallBack | null >(null);
+    const [testCallback, setTestCallback] = useState<testCallBack | null>(null);
     const [code, setCode] = useState("");
     const [socket, setSocket] = useState<Socket | null>(null);
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationType, setNotificationType] = useState('');
+    const [notificationMessage, setNotificationMessage] = useState('');
+    const [notificationDelay] = useState(3000);
+    const [nbGames, setNbGames] = useState(null);
+    const [userRanking, setUserRanking] = useState(null);
+    const [userPoint, setUserPoint] = useState(null);
 
     useEffect(() => {
         const newSocket = io(VITE_API_BASE_URL_BACK);
         setSocket(newSocket);
-        const handleMatchEnded = ({
-            success,
-            roomId,
-            userId,
-            message,
-        }: {
-            success: boolean;
-            roomId: string;
-            userId: number;
-            message: string;
-        }) => {
-            console.log('Match ended event received for room:', roomId, success, message, userId);
+        const handleMatchEnded = () => {
             setRoomId(null);
             setPuzzle(null);
             setStartTimestamp(null);
@@ -49,7 +45,7 @@ const useMatchmaking = () => {
             setInQueue(false);
             setTestCallback(null);
         };
-        
+
         newSocket.on('endMatchByWinner', handleMatchEnded);
 
         return () => {
@@ -104,11 +100,12 @@ const useMatchmaking = () => {
 
         const responseData = await response.json();
         if (responseData.success) {
-            console.log("Ajouté à la file d'attente et recherche de match en cours"); //TODO
             setInQueue(true);
             setMatchEnded(false);
         } else {
-            alert(responseData.message || "Erreur lors de la recherche de match");
+            setNotificationType('error');
+            setNotificationMessage(responseData.message || 'Erreur lors de la recherche de match');
+            setShowNotification(true);
         }
     }, [authContext.accessToken, id]);
 
@@ -128,7 +125,9 @@ const useMatchmaking = () => {
         if (responseData.success) {
             resetMatchState();
         } else {
-            alert(responseData.message || "Erreur lors de la sortie de la file d'attente");
+            setNotificationType('error');
+            setNotificationMessage(responseData.message || `Erreur lors de la sortie de la file d'attente`);
+            setShowNotification(true);
         }
         setLoading(false);
     }, [authContext.accessToken, id]);
@@ -147,10 +146,14 @@ const useMatchmaking = () => {
 
         const responseData = await response.json();
         if (responseData.success) {
-            console.log("Quitter la salle de match"); //TODO
             resetMatchState();
+            setNotificationType('info');
+            setNotificationMessage('Vous avez abandonné la partie.');
+            setShowNotification(true);
         } else {
-            alert(responseData.message || "Erreur lors de la sortie de la salle de match");
+            setNotificationType('error');
+            setNotificationMessage(responseData.message || ' Erreur lors de la sortie de la salle de match');
+            setShowNotification(true);
         }
         setLoading(false);
     }, [authContext.accessToken, id]);
@@ -169,7 +172,6 @@ const useMatchmaking = () => {
             });
 
             if (response.ok) {
-                console.log("Match terminé par timer."); //TODO
                 resetMatchState();
                 setMatchEnded(true);
             } else {
@@ -188,40 +190,37 @@ const useMatchmaking = () => {
         setMatchFound(false);
         setInQueue(false);
         setTestCallback(null);
-
     }, []);
 
     const handleSubmitCode = useCallback(async (code: string) => {
         if (!puzzle || !code) {
-            alert("Code ou tests manquants !");
-            console.log('puzzle: ', puzzle);
-            console.log('code: ', code);
+            setNotificationType('info');
+            setNotificationMessage('Code manquants !');
+            setShowNotification(true);
             return;
         }
-    
+
         const payload = {
             code: code,
             tests: puzzle.tests
         };
-    
+
         try {
             const response = await postTest('tests/js', payload);
             const responseData = await response.json();
-    
+
             if (response.ok && responseData.success) {
                 const successCallback: testCallBack = {
                     message: "Code et tests soumis avec succès !",
                     testPassed: responseData.testPassed || [],
                     testFailed: responseData.testFailed || [],
                 };
-                setTestCallback(successCallback);                
-                
+                setTestCallback(successCallback);
+
                 socket?.emit('endMatchByWinner', {
                     roomId: roomId,
                     userId: id,
                 });
-                console.log('Emit endMatchByWinner sent:', { userId: id, roomId: roomId }); //TODO
-
             } else {
                 const errorCallback: testCallBack = {
                     message: "Le code n'a pas passé tous les tests.",
@@ -235,6 +234,18 @@ const useMatchmaking = () => {
         }
     }, [puzzle, id, roomId, socket]);
 
+    const fetchUserRanking = async () => {
+        getElementByEndpoint(`user/getUserRanking?userName=${userInfos.userName}`, {
+            token: authContext.accessToken ?? "",
+            data: ""
+        }).then(async (response) => {
+            const result = await response.json();
+            setUserRanking(result.user.userRanking[0].rankings.title);
+            setUserPoint(result.user.userRanking[0].points);
+            setNbGames(result.user.nbGames);
+        });
+    };
+
     return {
         loading,
         inQueue,
@@ -246,6 +257,13 @@ const useMatchmaking = () => {
         startTimestamp,
         code,
         testCallback,
+        showNotification,
+        notificationType,
+        notificationMessage,
+        notificationDelay,
+        nbGames,
+        userRanking,
+        userPoint,
         setCode,
         handleJoinQueue,
         handleLeaveQueue,
@@ -257,6 +275,12 @@ const useMatchmaking = () => {
         setPuzzle,
         setInQueue,
         setStartTimestamp,
+        resetMatchState,
+        setMatchEnded,
+        setShowNotification,
+        setNotificationType,
+        setNotificationMessage,
+        fetchUserRanking
     };
 }
 

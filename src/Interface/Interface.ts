@@ -125,7 +125,7 @@ export interface Event {
     puzzles?: PuzzlesEntreprise[];
     accepted?: boolean;
     statusPayment?: string;
-    numberRegistered:number;
+    numberRegistered: number;
 }
 
 export interface priceDetails {
@@ -138,7 +138,7 @@ export interface priceDetails {
     finalPrice: number;
 }
 
-export interface News{
+export interface News {
     title: string;
     date: string;
     description: string;
@@ -157,9 +157,9 @@ export interface Match {
     rankingsID: number;
     rankings: Ranking;
     winnerID: number;
-    winner: {userName: string}
+    winner: { userName: string }
     looserID: number;
-    loser: {userName: string}
+    loser: { userName: string }
     loserPoints: number;
     winnerPoints: number;
 
