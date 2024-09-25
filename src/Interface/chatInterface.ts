@@ -11,6 +11,9 @@ export interface ChatProps {
     roomId: string;
     userId: number;
     username: string;
+    setShowNotification: (value: boolean) => void
+    setNotificationMessage: (value: string) => void
+    setNotificationType: (value: string) => void
 }
 
 export interface MatchFoundEvent {
