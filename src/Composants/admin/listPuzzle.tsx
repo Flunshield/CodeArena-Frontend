@@ -131,7 +131,7 @@ const ListPuzzle = ({className, submitCount, setIsSubmitted, ranks}: listPuzzleP
                     className={clsx("fixed top-0 left-0 w-full h-full flex flex-col bg-black items-center justify-center md:bg-opacity-75 z-50")}>
                     <Card className="w-2/3 lg:w-1/3 p-5 bg-tertiari text-secondary">
                         <div className="flex justify-between">
-                            <h2 className="text-xl font-semibold text-gray-700">{t('creatorCv')}</h2>
+                            <h2 className="text-xl font-semibold text-gray-700">{t('titlePuzzle')}</h2>
                             <button
                                 onClick={closePopup}
                                 className="rounded-full bg-error hover:bg-tertiary-light text-tertiari font-semibold py-2 px-4 shadow-md transition duration-300 ease-in-out transform hover:scale-105"

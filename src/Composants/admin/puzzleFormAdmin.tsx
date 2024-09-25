@@ -43,7 +43,6 @@ const PuzzleFormAdmin: React.FC<PuzzleFormProps> = ({initialValues, ranks, setIs
 
     return (
         <div className="max-w-2xl">
-            <h1 className="text-2xl font-bold mb-6">Update Puzzle</h1>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
