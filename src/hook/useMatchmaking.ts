@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState, useEffect, useCallback } from 'react';
 import { useAuthContext } from "../AuthContext";
 import { getElementByEndpoint, postElementByEndpoint, postTest } from "../Helpers/apiHelper";
@@ -9,6 +10,7 @@ import { VITE_API_BASE_URL_BACK } from "../Helpers/apiHelper.ts";
 import io, { Socket } from 'socket.io-client';
 
 const useMatchmaking = () => {
+    const { t } = useTranslation();
     const authContext = useAuthContext();
     const tokenInfos = authContext?.infosUser as JwtPayload;
     const userInfos = useUserInfos();
@@ -224,7 +226,7 @@ const useMatchmaking = () => {
                 });
             } else {
                 const errorCallback: testCallBack = {
-                    message: "Le code n'a pas passé tous les tests.",
+                    message: t('testMessage'),
                     testPassed: responseData.testPassed || [],
                     testFailed: responseData.testFailed || [],
                 };

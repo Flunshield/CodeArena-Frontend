@@ -35,6 +35,7 @@ export interface Puzzle {
         testFailed: string[];
     };
     details: string;
+    example: string;
     title: string;
 }
 
