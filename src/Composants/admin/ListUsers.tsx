@@ -56,7 +56,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
             const result = await response.json();
             setUsers(result);
         });
-    }, [submitCount]);
+    }, [submitCount, itemPerPage]);
     return (
         <div className="">
             <div className="flex flex-row justify-between">
@@ -65,7 +65,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
             <SearchBar
                 onSearch={onSearch}
                 setItemPerPage={setItemPerPage}
-                placeholder={t('serachByUsername')}
+                placeholder={t('searchByUsername')}
                 setCurrentPage={setCurrentPage}
                 isAdmin={isAdmin}
             />
@@ -100,7 +100,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
                         </thead>
                         <tbody>
                         {users.item.map((user: User) => (
-                            <tr key={user.id} className="bg-tertiari border-b dark:bg-gray-800 dark:border-gray-700">
+                            <tr key={user.id} className="bg-tertiari border-b hover:bg-soft-gray hover:text-secondary dark:bg-gray-800 dark:border-gray-700">
                                 <td className="py-4 px-6">{user.firstName}</td>
                                 <td className="py-4 px-6">{user.lastName}</td>
                                 <td className="py-4 px-6">{user.userName}</td>

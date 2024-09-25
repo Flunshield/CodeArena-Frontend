@@ -140,7 +140,7 @@ const PuzzleList = ({
         if (authContext?.connected) {
             getPuzzle().then(r => r);
         }
-    }, []);
+    }, [showNotification]);
 
     return (
         <div id="PuzzleList"

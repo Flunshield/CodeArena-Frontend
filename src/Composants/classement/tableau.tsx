@@ -9,7 +9,6 @@ import Pagination from "../../ComposantsCommun/Pagination.tsx";
 import {JwtPayload} from "jwt-decode";
 import {GROUPS} from "../../constantes/constantes.ts";
 import {Container} from "../../ComposantsCommun/Container.tsx";
-import {SectionIntro} from "../../ComposantsCommun/SectionIntro.tsx";
 import Card from "../../ComposantsCommun/Card.tsx";
 import CardContent from "../../ComposantsCommun/CardContent.tsx";
 import {FadeIn} from "../../ComposantsCommun/FadeIn.tsx";
@@ -130,14 +129,10 @@ function Tableau(): JSX.Element {
                     onClose={() => setShowNotification(false)}
                 />
             )}
-            <SectionIntro
-                title={t('listUtilisateurs')}
-                subtitle={t('serachByUsername')}
-                className="mb-8"
-            />
+          
             <FadeIn>
                 <Card className="bg-tertiari shadow-elevated p-6">
-                    <CardContent>
+                    <CardContent className="bg-white/50 rounded-lg">
                         <div className="flex flex-col md:flex-row items-center justify-between mb-6">
                             <h2 className="text-lg font-semibold text-secondary m-4 md:mb-0 shadow-lg bg-gray-200 dark:bg-gray-800 dark:text-gray-300 rounded-lg p-4">
                                 {t('listUtilisateurs')}
@@ -145,7 +140,7 @@ function Tableau(): JSX.Element {
                             <SearchBar
                                 onSearch={onSearch}
                                 setItemPerPage={setItemPerPage}
-                                placeholder={t('serachByUsername')}
+                                placeholder={t('searchByUsername')}
                                 setCurrentPage={setCurrentPage}
                                 setLanguagePreference={setLanguagePreference}
                                 isEntreprise={isEntreprise}

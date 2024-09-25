@@ -119,7 +119,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     const { t } = useTranslation();
 
     return (
-        <FadeIn duration={0.5} className='mt-10'>
+        <FadeIn duration={0.5} className='mt-16'>
             <footer className={clsx(className, "w-full text-secondary bottom-0 relative p-8")} 
                     style={{ background: 'linear-gradient(to bottom, white, #161B22)' }}>
                 <FadeIn duration={1.0}>
