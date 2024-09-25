@@ -56,7 +56,7 @@ const ListUsers: React.FC<ListUsersProps> = ({setIsSubmitted, submitCount}) => {
             const result = await response.json();
             setUsers(result);
         });
-    }, [submitCount]);
+    }, [submitCount, itemPerPage]);
     return (
         <div className="">
             <div className="flex flex-row justify-between">
