@@ -195,7 +195,7 @@ function AdminEventDashboard() {
             <SearchBar
                 setAccepted={setAccepted}
                 setItemPerPage={setItemPerPage}
-                placeholder={t('serachByTitre')}
+                placeholder={t('searchByTitre')}
                 setCurrentPage={setCurrentPage}
                 setOrder={setOrder}
                 isAdmin={true}

@@ -28,7 +28,7 @@ function Clients() {
                     <img
                       src={client.src}
                       alt={client.alt}
-                      className="w-20 h-20 object-contain mb-2"
+                      className="w-20 h-20 object-contain mb-2 transition-transform duration-300 ease-in-out transform hover:scale-125"
                     />
                     <h3 className="text-center text-lg sm:text-xl text-tertiari">
                       {client.name}
@@ -57,7 +57,7 @@ function Clients() {
                     <img
                       src={client.src}
                       alt={client.alt}
-                      className="w-20 h-20 object-contain mb-2"
+                      className="w-20 h-20 object-contain mb-2 transition-transform duration-300 ease-in-out transform hover:scale-125"
                     />
                     <h3 className="text-center text-lg sm:text-xl text-tertiari">
                       {client.name}
