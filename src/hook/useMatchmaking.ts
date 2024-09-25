@@ -31,6 +31,7 @@ const useMatchmaking = () => {
     const [notificationMessage, setNotificationMessage] = useState('');
     const [notificationDelay] = useState(3000);
     const [nbGames, setNbGames] = useState(null);
+    const [titles, setTitles] = useState(null);
     const [userRanking, setUserRanking] = useState(null);
     const [userPoint, setUserPoint] = useState(null);
 
@@ -239,10 +240,11 @@ const useMatchmaking = () => {
             token: authContext.accessToken ?? "",
             data: ""
         }).then(async (response) => {
-            const result = await response.json();
+            const result = await response.json();            
             setUserRanking(result.user.userRanking[0].rankings.title);
             setUserPoint(result.user.userRanking[0].points);
             setNbGames(result.user.nbGames);
+            setTitles(result.user.titlesWin);
         });
     };
 
@@ -264,6 +266,7 @@ const useMatchmaking = () => {
         nbGames,
         userRanking,
         userPoint,
+        titles,
         setCode,
         handleJoinQueue,
         handleLeaveQueue,

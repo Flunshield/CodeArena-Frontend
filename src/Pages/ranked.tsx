@@ -8,9 +8,9 @@ import useMatchmaking from '../hook/useMatchmaking';
 import Notification from "../ComposantsCommun/Notification.tsx";
 import useSocket from '../hook/useSocket';
 import CountdownTimer from './countDownTimer';
-import Example from '../ComposantsCommun/Disclosure';
+import Disclo from '../ComposantsCommun/Disclosure';
 import { useState } from 'react';
-import { AcademicCapIcon, TrophyIcon } from '@heroicons/react/20/solid'
+import { AcademicCapIcon, TrophyIcon, CheckBadgeIcon } from '@heroicons/react/20/solid'
 
 const Ranked = () => {
     const { t } = useTranslation();
@@ -31,6 +31,7 @@ const Ranked = () => {
         nbGames,
         userRanking,
         userPoint,
+        titles,
         handleJoinQueue,
         handleLeaveQueue,
         handleLeaveRoom,
@@ -69,7 +70,7 @@ const Ranked = () => {
             <div className="block md:hidden">
                 <div className="flex items-center justify-center h-screen text-center">
                     <p className="p-4 text-lg font-semibold text-red-600">
-                        Les matchs ne sont pas accessibles sur mobile. Merci de vous connecter depuis un ordinateur ou une tablette pour continuer.
+                    {t('matchMobile')}
                     </p>
                 </div>
             </div>
@@ -115,7 +116,7 @@ const Ranked = () => {
                                         className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-green-600 rounded-md hover:bg-green-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                                         onClick={() => handleSubmitCode(code)}
                                     >
-                                        Valider
+                                        {t('matchValider')}
                                         <img
                                             src="/assets/arrowRightWhite.svg"
                                             className="w-5 text-tertiari"
@@ -167,21 +168,18 @@ const Ranked = () => {
 
                 <div className="m-2 text-tertiari flex flex-col items-center pb-[120px]">
                     {!matchFound && (
-                        <div className="flex justify-between w-full h-[200px]">
-                            <div className="flex-1">
-                                <Example />
-                            </div>
-                            <div className="flex items-center justify-around flex-1 text-center text-black rounded">
-                                <div className="p-6 rounded bg-tertiari">
-                                    <h2 className="text-lg font-semibold">Ma progression</h2>
+                        <div>
+                            <div className="flex items-center justify-around text-center text-black h-[200px] w-full gap-4">
+                                <div className="flex-1 p-6 rounded-full bg-tertiari">
+                                    <h2 className="text-lg font-semibold">{t('matchProgression')}</h2>
                                     <div className="flex justify-center py-3">
                                         <AcademicCapIcon className="w-10" />
                                     </div>
+                                    <p className="text-base">{t('matchProgressionJouer')}</p>
                                     <p className="text-base">{nbGames}</p>
-                                    <p className="text-base">Matchs joués</p>
                                 </div>
-                                <div className="p-6 rounded bg-tertiari">
-                                    <h2 className="text-lg font-semibold">Mon classement</h2>
+                                <div className="flex-1 p-6 rounded-full bg-tertiari">
+                                    <h2 className="text-lg font-semibold">{t('matchClassement')}</h2>
                                     <div className="flex justify-center py-3">
                                         <TrophyIcon className="w-10" />
                                     </div>
@@ -190,13 +188,21 @@ const Ranked = () => {
                                         {userPoint ? userPoint + " points" : "0 point"}{" "}
                                     </p>
                                 </div>
+                                <div className="flex-1 p-6 rounded-full bg-tertiari">
+                                    <h2 className="text-lg font-semibold">{t('matchBadge')}</h2>
+                                    <div className="flex justify-center py-3">
+                                        <CheckBadgeIcon className="w-10" />
+                                    </div>
+                                    <p className="text-base">{titles ? titles : t('matchBadgeDesc')} </p>
+                                </div>
                             </div>
+                            <Disclo />
                         </div>
                     )}
 
                     <div className="mb-4">
                         {(loading || (inQueue && !matchFound)) && (
-                            <LoaderMatch msg={t(`Recherche d'un match en cours...`)} className="text-secondary" />
+                            <LoaderMatch msg={t('matchLoading')} className="text-secondary" />
                         )}
                     </div>
 
@@ -207,7 +213,7 @@ const Ranked = () => {
                             className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-red-600 rounded-md hover:bg-red-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                             onClick={handleLeaveQueue}
                         >
-                            Quitter la file d&apos;attente
+                            {t('matchQuitterFile')}
                             <img
                                 src="/assets/exitIcon.svg"
                                 className="w-5 text-tertiari"
@@ -219,10 +225,10 @@ const Ranked = () => {
                             <Button
                                 id="ranked-button"
                                 type="button"
-                                className="inline-flex items-center gap-1 px-4 py-2 mt-[150px] text-sm font-medium transition ease-in-out delay-75 bg-green-600 rounded-md hover:bg-green-700 text-tertiari hover:-translate-y-1 hover:scale-110"
+                                className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-green-600 rounded-md hover:bg-green-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                                 onClick={handleJoinQueueClick}
                             >
-                                Rechercher un match
+                                {t('matchRecherche')}
                                 <img
                                     src="/assets/arrowRightWhite.svg"
                                     className="w-5 text-tertiari"
@@ -239,7 +245,7 @@ const Ranked = () => {
                             className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-red-600 rounded-md hover:bg-red-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                             onClick={handleLeaveRoom}
                         >
-                            Quitter le match
+                            {t('matchQuitter')}
                             <img
                                 src="/assets/exitIcon.svg"
                                 className="w-5 text-tertiari"
