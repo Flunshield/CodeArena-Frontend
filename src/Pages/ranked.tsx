@@ -70,7 +70,7 @@ const Ranked = () => {
             <div className="block md:hidden">
                 <div className="flex items-center justify-center h-screen text-center">
                     <p className="p-4 text-lg font-semibold text-red-600">
-                    {t('matchMobile')}
+                        {t('matchMobile')}
                     </p>
                 </div>
             </div>
@@ -87,9 +87,12 @@ const Ranked = () => {
                     <div className="w-[95%] mx-auto">
                         <div className="text-center">
                             <h1 className="mb-2 font-sans text-3xl font-bold text-gray-800">
-                                {puzzle?.title}
+                                {t(puzzle?.title ?? '')}
                             </h1>
-                            <p className="text-lg text-gray-600">{puzzle?.details}</p>
+                            <p className="text-lg text-gray-600">{t(puzzle?.details ?? '')}</p>
+                            <h2 className="mt-4 text-lg font-semibold text-gray-800">
+                                {t('example')} :</h2>
+                            <p className='text-gray-600 tex-lg'>{puzzle?.example} </p>
                         </div>
 
                         <div className="flex gap-x-4">
@@ -143,21 +146,48 @@ const Ranked = () => {
                                 </p>
                                 {testCallback.testPassed.length > 0 && (
                                     <div className="mb-3">
-                                        <h4 className="font-medium text-green-700">Tests valides :</h4>
-                                        <ul className="text-green-600 list-disc list-inside">
-                                            {testCallback.testPassed.map((test, index) => (
-                                                <li key={index}>{test}</li>
-                                            ))}
+                                        <h4 className="font-medium text-green-700">{t('testValider')}:</h4>
+                                        <ul className="text-green-700 list-disc list-inside">
+                                            {testCallback?.testPassed.map((passedTest) => {
+                                                if (Array.isArray(puzzle?.tests)) {
+                                                    const matchedTest = puzzle.tests.find(test => test.name === passedTest);
+                                                    if (matchedTest) {
+                                                        return (
+                                                            <li key={matchedTest.name}>
+                                                                {matchedTest.name} - {matchedTest.condition}
+                                                            </li>
+                                                        );
+                                                    }
+                                                }
+                                                return null;
+                                            })}
                                         </ul>
+
                                     </div>
                                 )}
                                 {testCallback.testFailed.length > 0 && (
                                     <div>
-                                        <h4 className="font-medium text-red-700">Tests ratés :</h4>
+                                        <h4 className="font-medium text-red-700">
+                                            {(() => {
+                                                const firstErrorTest = testCallback?.testFailed.find(failedTest => failedTest.toLowerCase().includes('erreur'));
+                                                if (firstErrorTest) {
+                                                    const errorMessage = firstErrorTest.substring(firstErrorTest.toLowerCase().indexOf('erreur'));
+                                                    return `${t('testEchec')} - ${errorMessage}`;
+                                                } else {
+                                                    return `${t('testEchec')} :`;
+                                                }
+                                            })()}
+                                        </h4>
                                         <ul className="text-red-600 list-disc list-inside">
-                                            {testCallback.testFailed.map((test, index) => (
-                                                <li key={index}>{test}</li>
-                                            ))}
+                                            {testCallback?.testFailed.map((failedTest) => {
+                                                if (Array.isArray(puzzle?.tests)) {
+                                                    const matchedTest = puzzle.tests.find(test => failedTest.includes(test.name));
+                                                    if (matchedTest) {
+                                                        return <li key={matchedTest.name}>{matchedTest.name} - {matchedTest.condition}</li>;
+                                                    }
+                                                }
+                                                return null;
+                                            })}
                                         </ul>
                                     </div>
                                 )}
