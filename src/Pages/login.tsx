@@ -131,14 +131,14 @@ function LoginPage() {
                 />
             )}
             {loading ? (
-                <div className="flex justify-center items-center h-screen">
-                    <LoaderMatch msg={t('attemptConnexion')} className="z-50 p-5 bg-gris-chaud rounded-lg flex flex-col items-center" type="login" />
+                <div className="flex items-center justify-center h-screen">
+                    <LoaderMatch msg={t('attemptConnexion')} className="z-50 flex flex-col items-center p-5 rounded-lg bg-gris-chaud"/>
                 </div>
             ) : !isConnected ? (
                 <Container className="flex flex-col items-center justify-center min-h-screen ">
                     <FadeIn className="w-full max-w-md">
-                        <Card className="rounded-xl shadow-lg">
-                            <CardContent className=" text-secondary w-full ">
+                        <Card className="shadow-lg rounded-xl">
+                            <CardContent className="w-full text-secondary">
                                 <SectionIntro
                                     title={t('signIntoCodeArena')}
                                     className="mb-12 text-center"
@@ -187,10 +187,10 @@ function LoginPage() {
                                     </FadeInStagger>
                                     <div className="flex flex-col justify-center mt-10">
                                         <Button type="submit" id="connect"
-                                                className="bg-secondary hover:bg-button-hover text-tertiari w-full h-12 rounded-md uppercase transition duration-300">
+                                                className="w-full h-12 uppercase transition duration-300 rounded-md bg-secondary hover:bg-button-hover text-tertiari">
                                             {t('connect')}
                                         </Button>
-                                        <div className="flex flex-col text-center mt-5">
+                                        <div className="flex flex-col mt-5 text-center">
                                             <Button type="button" id="goToForgotPassword"
                                                     className="text-center hover:text-cyan-800 text-secondary"
                                                     onClick={goToForgotPassword}>

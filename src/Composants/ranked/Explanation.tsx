@@ -58,13 +58,13 @@ function Explanation() {
                 <FadeInStagger className="grid grid-cols-1 gap-8 lg:grid-cols-3">
 
                     <FadeIn className="flex">
-                        <article className="relative flex w-full flex-col rounded-3xl p-6 ring-1 ring-neutral-950/5 transition hover:bg-neutral-50 sm:p-8">
+                        <article className="relative flex flex-col w-full p-6 transition rounded-3xl ring-1 ring-neutral-950/5 hover:bg-neutral-50 sm:p-8">
                             <h3>
 
                                 <span className="absolute inset-0 rounded-3xl" />
                                 Vous souhaitez jouer ?
                             </h3>
-                            <p className="mt-6 flex gap-x-2 text-sm text-neutral-950">
+                            <p className="flex mt-6 text-sm gap-x-2 text-neutral-950">
 
                             </p>
                         </article>
@@ -80,7 +80,7 @@ function Explanation() {
                                 <Button
                                     id="ranked-button"
                                     type="button"
-                                    className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-tertiari text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                                    className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-red-600 rounded-md hover:bg-red-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                                     onClick={handleLeaveQueue}
                                 >
                                     {'Quitter la file d\'attente'}
@@ -91,7 +91,7 @@ function Explanation() {
                                     <Button
                                         id="ranked-button"
                                         type="button"
-                                        className="inline-flex items-center px-4 py-2 bg-green-600 transition ease-in-out delay-75 hover:bg-green-700 text-tertiari text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                                        className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-green-600 rounded-md hover:bg-green-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                                         onClick={handleJoinQueueClick}
                                     >
                                         Rechercher un match
@@ -103,7 +103,7 @@ function Explanation() {
                                 <Button
                                     id="leave-room-button"
                                     type="button"
-                                    className="inline-flex items-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-tertiari text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110 gap-1"
+                                    className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium transition ease-in-out delay-75 bg-red-600 rounded-md hover:bg-red-700 text-tertiari hover:-translate-y-1 hover:scale-110"
                                     onClick={handleLeaveRoom}
                                 >
                                     Quitter le match
