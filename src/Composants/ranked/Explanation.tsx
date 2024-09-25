@@ -71,7 +71,7 @@ function Explanation() {
                     </FadeIn>
                     <FadeIn className="mt-10">
                         {(loading || (inQueue && !matchFound)) && (
-                            <LoaderMatch msg={t(`Recherche d'un match en cours...`)} />
+                            <LoaderMatch msg={t('matchLoading')} />
                         )}
                     </FadeIn>
                     <FadeInStagger className="mt-10">
