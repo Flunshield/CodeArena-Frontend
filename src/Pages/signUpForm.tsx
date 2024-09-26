@@ -26,7 +26,6 @@ interface SignUpFormValues {
 function SignUpForm() {
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const allowedDomains = ['gmail.com', 'gmail.fr', 'yahoo.com', 'yahoo.fr', 'hotmail.com', 'hotmail.fr', 'outlook.fr', 'outlook.com'];
     const [showNotification, setShowNotification] = useState(false);
     const [notificationType, setNotificationType] = useState('');
     const [notificationMessage, setNotificationMessage] = useState('');
@@ -56,11 +55,6 @@ function SignUpForm() {
         }
     };
 
-    const validateEmail = (email: string) => {
-        const domain = email.split('@')[1];
-        return allowedDomains.includes(domain);
-    };
-
     const goToLogin = () => {
         navigate("/login");
     }
@@ -76,8 +70,8 @@ function SignUpForm() {
             )}
             <Container className="flex flex-col items-center justify-center min-h-screen py-12">
                 <FadeIn className="w-full max-w-md">
-                    <Card className="rounded-xl shadow-lg">
-                        <CardContent className=" text-secondary w-full pb-6 pt-6">
+                    <Card className="shadow-lg rounded-xl">
+                        <CardContent className="w-full pt-6 pb-6 text-secondary">
                             <SectionIntro
                                 title={t('signUp')}
                                 className="mb-12 text-center"
@@ -91,7 +85,7 @@ function SignUpForm() {
                                     const regexUsername = /^[a-zA-Z0-9_]{3,30}$/;
 
                                     if (!values.userName) {
-                                        errors.userName = 'Ce champ est requis';
+                                        errors.userName = t('requiredField');
                                     } else if (!regexUsername.test(values.userName)) {
                                         errors.userName = t('invalidUserName');
                                     }
@@ -103,8 +97,6 @@ function SignUpForm() {
                                     if (!values.email) {
                                         errors.email = 'Ce champ est requis';
                                     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                                        errors.email = 'Adresse e-mail invalide';
-                                    } else if (!validateEmail(values.email)) {
                                         errors.email = t('invalidEmailDomain');
                                     }
 
@@ -113,7 +105,7 @@ function SignUpForm() {
                                 onSubmit={handleSubmit}
                             >
                                 <Form className="space-y-6" id='createAccount'>
-                                    <FadeInStagger className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <FadeInStagger className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                         <FadeIn duration={1.6}>
                                             <Label id='userName' htmlFor="userName"
                                                 className="flex flex-col font-bold text-secondary">
@@ -166,10 +158,10 @@ function SignUpForm() {
                                     </FadeInStagger>
                                     <div className="flex flex-col justify-center mt-10">
                                         <Button id='submitButton' type="submit"
-                                            className="bg-secondary hover:bg-button-hover text-tertiari w-full h-12 rounded-md uppercase">
+                                            className="w-full h-12 uppercase rounded-md bg-secondary hover:bg-button-hover text-tertiari">
                                             {t('register')}
                                         </Button>
-                                        <div className="text-center mt-5">
+                                        <div className="mt-5 text-center">
                                             <Button type="button" id="goToLogin"
                                                 className="hover:text-cyan-800 text-secondary" onClick={goToLogin}>
                                                 {t('signIntoCodeArena')}
