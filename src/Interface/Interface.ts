@@ -195,6 +195,7 @@ export interface Puzzle {
     details: string;
     rankings?: Ranking;
     events?: Event;
+    example?: string;
 }
 
 export interface UserTournament {
