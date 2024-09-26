@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import {Puzzle, Ranking} from "../../Interface/Interface.ts";
 import {postElementByEndpoint} from "../../Helpers/apiHelper.ts";
 import {useAuthContext} from "../../AuthContext.tsx";
+import {useTranslation} from "react-i18next";
 
 interface PuzzleFormProps {
     initialValues: Puzzle;
@@ -15,6 +16,7 @@ interface PuzzleFormProps {
 const PuzzleFormAdmin: React.FC<PuzzleFormProps> = ({initialValues, ranks, setIsSubmitted, setPopupOpen}) => {
     const authContext = useAuthContext();
     const token = authContext?.accessToken ?? "";
+    const {t} = useTranslation();
     // Validation Schema avec Yup
     const validationSchema = Yup.object({
         title: Yup.string().required('Title is required'),
@@ -26,6 +28,7 @@ const PuzzleFormAdmin: React.FC<PuzzleFormProps> = ({initialValues, ranks, setIs
     });
 
     async function updatePuzzle(value: Puzzle) {
+        console.log(value);
         return await postElementByEndpoint("admin/updatePuzzleAdmin", {
             token: token, data: {value}
         }).then(async (response) => {
@@ -53,7 +56,7 @@ const PuzzleFormAdmin: React.FC<PuzzleFormProps> = ({initialValues, ranks, setIs
                         {/* Title */}
                         <div>
                             <label htmlFor="title-puzzle" className="block text-sm font-medium text-gray-700">
-                                Title
+                                {t('title')}
                             </label>
                             <Field
                                 id="title-puzzle"
@@ -66,16 +69,16 @@ const PuzzleFormAdmin: React.FC<PuzzleFormProps> = ({initialValues, ranks, setIs
 
                         {/* Description */}
                         <div>
-                            <label htmlFor="description-puzzle" className="block text-sm font-medium text-gray-700">
-                                Description
+                            <label htmlFor="example" className="block text-sm font-medium text-gray-700">
+                                {t('example')}
                             </label>
                             <Field
-                                id="description-puzzle"
-                                name="description"
+                                id="example"
+                                name="example"
                                 as="textarea"
                                 className="mt-1 block h-24 p-5 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
-                            <ErrorMessage name="description-puzzle" component="div" className="text-red-500 text-sm"/>
+                            <ErrorMessage name="example" component="div" className="text-red-500 text-sm"/>
                         </div>
 
                         {/* Tests */}
@@ -99,7 +102,7 @@ const PuzzleFormAdmin: React.FC<PuzzleFormProps> = ({initialValues, ranks, setIs
                         {/* Details */}
                         <div>
                             <label htmlFor="details-puzzle" className="block text-sm font-medium text-gray-700">
-                                Details
+                                {t('detailPuzzle')}
                             </label>
                             <Field
                                 id="details-puzzle"
@@ -113,7 +116,7 @@ const PuzzleFormAdmin: React.FC<PuzzleFormProps> = ({initialValues, ranks, setIs
                         {/* Ranking ID */}
                         <div>
                             <label htmlFor="rankingId-puzzle"
-                                   className="block text-sm font-medium text-quaternary">Classement</label>
+                                   className="block text-sm font-medium text-quaternary">{t('ranking')}</label>
                             <Field as="select" id="rankingId-puzzle" name="rankingsID"
                                    className="block h-12 p-2 w-full shadow-sm sm:text-sm border-gray-300 rounded-md mt-1">
                                 <option
@@ -132,7 +135,7 @@ const PuzzleFormAdmin: React.FC<PuzzleFormProps> = ({initialValues, ranks, setIs
                                 onClick={() => onSubmit(values)}
                                 className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
-                                Update Puzzle
+                                {t('updatePuzzle')}
                             </button>
                         </div>
                     </Form>
