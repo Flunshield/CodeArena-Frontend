@@ -64,7 +64,7 @@ const Messages = ({ messages, typingUsers, setShowNotification, setNotificationM
     return (
         <div className="flex w-full flex-col gap-4 p-4 max-w-2xl mx-auto bg-tertiari rounded-lg shadow-lg h-[500px] overflow-y-auto" ref={messagesContainerRef}>
             {messages.length === 0 ? (
-                <p className="text-center text-gray-500 dark:text-gray-400">{t('chatNothing')}</p>
+                <p className="text-center text-gray-400">{t('chatNothing')}</p>
             ) : (
                 messages.map((message) => {
                     const isCurrentUser = message.userId === id;
@@ -78,7 +78,7 @@ const Messages = ({ messages, typingUsers, setShowNotification, setNotificationM
                                 }`}
                         >
                             {!isSystemMessage && !isCurrentUser && (
-                                <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-700 bg-slate-800 text-slate-300">
                                     {initials}
                                 </span>
                             )}
@@ -87,14 +87,14 @@ const Messages = ({ messages, typingUsers, setShowNotification, setNotificationM
                                 className={`flex flex-col p-4 text-sm min-w-[200px] ${isSystemMessage
                                     ? 'bg-green-600 text-white rounded-xl text-center'
                                     : isCurrentUser
-                                        ? 'ml-auto max-w-[80%] md:max-w-[60%] rounded-l-xl rounded-tr-xl bg-blue-700 text-slate-100 dark:bg-blue-600 dark:text-slate-100'
-                                        : 'mr-auto max-w-[80%] md:max-w-[60%] rounded-r-xl rounded-tl-xl bg-slate-100 text-black dark:bg-slate-800 dark:text-tertiari'
+                                        ? 'ml-auto max-w-[80%] md:max-w-[60%] rounded-l-xl rounded-tr-xl bg-blue-600 text-slate-100'
+                                        : 'mr-auto max-w-[80%] md:max-w-[60%] rounded-r-xl rounded-tl-xl bg-slate-800 text-tertiari'
                                     }`}
                             >
                                 {!isSystemMessage && !isCurrentUser && (
-                                    <span className="font-semibold text-white dark:text-white">{message.username}</span>
+                                    <span className="font-semibold text-white">{message.username}</span>
                                 )}
-                                <div className={`text-sm ${isSystemMessage ? '' : 'text-white dark:text-white'}`}>
+                                <div className={`text-sm ${isSystemMessage ? '' : 'text-white'}`}>
                                     {message.body}
                                 </div>
                                 <span className="ml-auto text-xs">
@@ -103,7 +103,7 @@ const Messages = ({ messages, typingUsers, setShowNotification, setNotificationM
                             </div>
 
                             {!isSystemMessage && isCurrentUser && (
-                                <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-700 bg-slate-800 text-slate-300">
                                     {initials}
                                 </span>
                             )}
@@ -117,17 +117,17 @@ const Messages = ({ messages, typingUsers, setShowNotification, setNotificationM
                 return (
                     <div key={user.userId} className="flex items-end gap-2">
                         {!isCurrentUser && (
-                            <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                            <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-700 bg-slate-800 text-slate-300">
                                 {getInitials(user.username)}
                             </span>
                         )}
                         <div className={`flex gap-1 ${isCurrentUser ? 'ml-auto' : 'mr-auto'}`}>
-                            <span className="size-1.5 rounded-full bg-slate-700 motion-safe:animate-[bounce_1s_ease-in-out_infinite] dark:bg-slate-300"></span>
-                            <span className="size-1.5 rounded-full bg-slate-700 motion-safe:animate-[bounce_0.5s_ease-in-out_infinite] dark:bg-slate-300"></span>
-                            <span className="size-1.5 rounded-full bg-slate-700 motion-safe:animate-[bounce_1s_ease-in-out_infinite] dark:bg-slate-300"></span>
+                            <span className="size-1.5 rounded-full motion-safe:animate-[bounce_1s_ease-in-out_infinite] bg-slate-300"></span>
+                            <span className="size-1.5 rounded-full motion-safe:animate-[bounce_0.5s_ease-in-out_infinite] bg-slate-300"></span>
+                            <span className="size-1.5 rounded-full motion-safe:animate-[bounce_1s_ease-in-out_infinite] bg-slate-300"></span>
                         </div>
                         {isCurrentUser && (
-                            <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                            <span className="flex items-center justify-center overflow-hidden text-sm font-bold tracking-wider border rounded-full size-8 border-slate-700 bg-slate-800 text-slate-300">
                                 {getInitials(user.username)}
                             </span>
                         )}
