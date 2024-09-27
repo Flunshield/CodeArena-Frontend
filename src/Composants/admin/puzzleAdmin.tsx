@@ -73,7 +73,7 @@ const puzzleAdmin = ({
 
     return (
         <div id="PuzzleForm" className={clsx(className, "m-5 rounded-lg bg-tertiari shadow-lg p-6")}>
-            <h3 className="text-lg font-semibold text-quaternary mb-4">{t("updatePuzzle")}</h3>
+            <h3 className="text-lg font-semibold text-quaternary mb-4">{t("createPuzzle")}</h3>
             <Formik
                 initialValues={initialValues}
                 validationSchema={PuzzleSchema}
