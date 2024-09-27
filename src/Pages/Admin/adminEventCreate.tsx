@@ -314,7 +314,7 @@ function adminEventCreate() {
                 </div>
                 <div className="mt-6">
                     <p className="text-secondary font-semibold text-lg">
-                        Prix estimé : <span className="text-light-blue">{priceDetails.finalPrice.toFixed(2)}€</span>
+                        {t('estimatePrice')} : <span className="text-light-blue">{priceDetails.finalPrice.toFixed(2)}€</span>
                     </p>
                 </div>
                 <div className="bg-tertiari p-4 rounded-lg mt-6">
@@ -322,7 +322,7 @@ function adminEventCreate() {
                     <ul className="text-secondary">
                         <li>{t("basePrice")} : {priceDetails.basePrice}€</li>
                         <li>{t("majorationDateProche")} : {priceDetails.proximityCharge.toFixed(2)}€</li>
-                        <li>{t("majorationDuree")} ({(priceDetails.durationCharge / 50).toFixed(2)} jours)
+                        <li>{t("majorationDuree")} ({(priceDetails.durationCharge / 50).toFixed(2)} {t("day")})
                             : {priceDetails.durationCharge.toFixed(2)}€
                         </li>
                         <li>{t("addPlayers")} : {priceDetails.extraPlayersCharge.toFixed(2)}€</li>
