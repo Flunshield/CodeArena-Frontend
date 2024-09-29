@@ -247,7 +247,7 @@ function AdminEventDashboard() {
                         </p>
                         <p className="text-gray-700 mb-4">
                             <span
-                                className="font-semibold">{t('statusPayment')}</span> : {t(eventReceived?.statusPayment === "not paid" ? "notpaid" : eventReceived?.statusPayment ?? "")}
+                                className="font-semibold">{t('statusPayment')}</span> : {t(eventReceived?.statusPayment === "not paid" ? "notPaid" : eventReceived?.statusPayment ?? "")}
                         </p>
 
                         <div className="flex space-x-5">
