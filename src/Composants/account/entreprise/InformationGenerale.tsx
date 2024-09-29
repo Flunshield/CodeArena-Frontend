@@ -162,7 +162,7 @@ const informationGenerale = ({infosUserById, setIsSubmitted, className}: informa
                     delay={2000}
                 />
             )}
-            <h2 className="text-2xl text-center text-secondary font-bold">{t('generalinformation')}</h2>
+            <h2 className="text-2xl text-center text-secondary font-bold">{t('generalInformation')}</h2>
             <div className="flex max-lg:flex-col bg-tertiari m-5 rounded-lg shadow-lg">
                 <form onSubmit={handleSubmit} className="flex-1 m-5 p-6">
                     <h2 className="text-2xl text-center -mb-5 text-secondary font-bold">{t('modify')}</h2>

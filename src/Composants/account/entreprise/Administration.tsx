@@ -28,7 +28,7 @@ const Administration: React.FC<AdministrationProps> = ({
     const stats = [
         {
             id: 1,
-            value: t('generalinformation'),
+            value: t('generalInformation'),
             onclick: () => handleChangeAbonnement()
         },
         {
