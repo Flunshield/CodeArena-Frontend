@@ -6,102 +6,17 @@ on:
       - main
     tags:
       - '*'
+
 permissions:
-  contents: read # for checkout
+  contents: read
 
 jobs:
-  #  test:
-  #    runs-on: ubuntu-latest
-
-  #    steps:
-  #      - name: ⏳ Checkout du code
-  #        uses: actions/checkout@v2
-  #
-  #      - name: ⏳ Récupérer la variable d'environnement VITE_API_BASE_URL_BACK
-  #        env:
-  #          VITE_API_BASE_URL_BACK: ${{ secrets.VITE_API_BASE_URL_BACK }}
-  #        run: echo "VITE_API_BASE_URL_BACK=${VITE_API_BASE_URL_BACK}" >> .env
-  #
-  #      - name: ⏳ Afficher le contenu du fichier .env
-  #        run: cat .env
-  #
-  #      - name: 🚧 Cache node modules
-  #        id: cache-npm
-  #        uses: actions/cache@v3
-  #        with:
-  #          path: ~/.npm
-  #          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-  #          restore-keys: |
-  #            ${{ runner.os }}-build-
-  #
-  #      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-  #        name: ⏳ List the state of node modules
-  #        continue-on-error: true
-  #        run: npm list
-  #
-  #      - name: ⏳ Install dependencies
-  #        run: npm install
-  #
-  #      - name: 🚧 Save node_modules
-  #        uses: actions/upload-artifact@v3
-  #        with:
-  #          name: node_modules
-  #          path: ~/.npm
-  #
-  #      - name: ⏳ Lintage du code
-  #        run: npm run lint
-  #
-  #      - name: 🚀 Lancement du projet en arrière-plan
-  #        run: |
-  #          npm run dev &
-  #          sleep 30  # Attendre quelques secondes pour que le projet démarre complètement
-  #
-  #      - name: 🚧 Exécuter les tests
-  #        run: |
-  #          npx cypress run
-
-  release:
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
-    name: release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4.1.7 # Cloner le dépôt en premier
-      - name: 🚧 Cache node modules
-        id: cache-npm
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: ⏳ List the state of node modules
-        continue-on-error: true
-        run: npm list
-
-      - name: ⏳ Install dependencies
-        run: npm install
-
-      - uses: actions/setup-node@v4.0.4 # Configurer la version de Node.js
-        with:
-          cache: npm
-          node-version: lts/*
-      - run: npm ci # Installer les dépendances via npm ci
-      # Exécuter Semantic Release pour publier
-      - run: npx semantic-release@21.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_BOT_NPM_TOKEN }}
-
   deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
       - name: Déploiement sur le VPS
         uses: appleboy/ssh-action@master
         with:
@@ -110,7 +25,20 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd front-app/
-            docker compose down
-            git pull
-            docker compose up --build -d
+            cd CodeArena-Frontend/
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+            echo "Node version: $(node -v)"
+            echo "NPM version: $(npm -v)"
+
+            npm install
+            npm run build
+
+            if command -v docker-compose >/dev/null 2>&1; then
+              docker-compose down
+              docker-compose up --build -d
+            else
+              docker compose down
+              docker compose up --build -d
+            fi

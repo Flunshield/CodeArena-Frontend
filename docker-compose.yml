@@ -1,0 +1,23 @@
+services:
+  nginx:
+    container_name: nginxTest
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./dist:/usr/share/nginx/html
+    ports:
+      - "3443:3443"   # Utilisation du port 8081 pour HTTPS (remplacement du port 443)
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.codearena.rule=Host(`codearena.jbertrand.fr`)"
+      - "traefik.http.routers.codearena.entrypoints=websecure"
+      - "traefik.http.routers.codearena.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.codearena.service=codearena"
+      - "traefik.http.services.codearena.loadbalancer.server.port=3443"
+      - "traefik.docker.network=traefik_proxy"
+    networks:
+      - traefik_proxy
+
+networks:
+  traefik_proxy:
+    external: true
